@@ -245,6 +245,8 @@ public final class R {
         public static final int stats_layout=0x7f030006;
         public static final int tabs_layout=0x7f030007;
         public static final int team_layout=0x7f030008;
+        public static final int team_layout_a=0x7f030009;
+        public static final int team_layoutb=0x7f03000a;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

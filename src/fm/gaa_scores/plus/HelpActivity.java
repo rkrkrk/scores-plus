@@ -33,6 +33,6 @@ public class HelpActivity extends Activity {
 		// the help screens are formatted using html
 		// so they are loaded as html pages
 		textView.setText(Html.fromHtml(getString(ihelp)));
-
+  
 	}
 }
