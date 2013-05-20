@@ -648,7 +648,7 @@
         android:id="@+id/scrollView30"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.7" >
+        android:layout_weight="1.5" >
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -668,9 +668,11 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="26dp"
                     android:layout_marginTop="6dp"
+                    android:gravity="bottom|left"
                     android:padding="0dp"
                     android:text="Match Events:"
                     android:textSize="12sp"
@@ -679,7 +681,7 @@
                 <Button
                     android:id="@+id/buttonUndo"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttond_custom"
@@ -690,7 +692,7 @@
                 <Button
                     android:id="@+id/reset_all"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="2dp"
@@ -736,7 +738,7 @@
                 <Button
                     android:id="@+id/bTweetScore"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttond_custom"
                     android:minWidth="22dp"
@@ -747,7 +749,7 @@
                 <Button
                     android:id="@+id/bTweetLast"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="24dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
                     android:layout_weight="0.9"
@@ -758,7 +760,7 @@
                 <Button
                     android:id="@+id/bTweetRecent"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttond_custom"
                     android:padding="0dp"
@@ -779,7 +781,7 @@
                 <Button
                     android:id="@+id/bTextScore"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttond_custom"
                     android:padding="0dp"
@@ -789,7 +791,7 @@
                 <Button
                     android:id="@+id/bTextLast"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="24dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
                     android:layout_weight="0.9"
@@ -801,7 +803,7 @@
                 <Button
                     android:id="@+id/bTextRecent"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="24dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttond_custom"
                     android:padding="0dp"
