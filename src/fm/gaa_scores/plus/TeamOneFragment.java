@@ -90,7 +90,7 @@ public class TeamOneFragment extends Fragment {
 		String myTag = getTag();
 		((Startup) getActivity()).setTagFragmentTeamOne(myTag);
 		this.setHasOptionsMenu(true);
-		v.setBackgroundColor(Color.rgb(191,206,255));
+		v.setBackgroundColor(Color.rgb(204,255,204));
 
 		// set up text view and buttons
 		tTeamHome = (TextView)  v.findViewById(R.id.homeTeamName);

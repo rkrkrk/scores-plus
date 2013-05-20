@@ -88,8 +88,7 @@ public class TeamTwoFragment extends Fragment {
 		String myTag = getTag();
 		((Startup) getActivity()).setTagFragmentTeamTwo(myTag);
 		this.setHasOptionsMenu(true);
-		v.setBackgroundColor(Color.rgb(255,252,191
-				));
+		v.setBackgroundColor(Color.rgb(255,255,219));
 		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
 		if (tTeamHome.getText().equals("OWN TEAM")){
 			tTeamHome.setText("OPPOSITION");
