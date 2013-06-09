@@ -44,6 +44,7 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -77,6 +78,7 @@ public class TeamOneFragment extends Fragment {
 
 //	 setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
+	
 
 	@Override
 	// start main method to display screen
@@ -91,6 +93,11 @@ public class TeamOneFragment extends Fragment {
 		((Startup) getActivity()).setTagFragmentTeamOne(myTag);
 		this.setHasOptionsMenu(true);
 		v.setBackgroundColor(Color.rgb(204,255,204));
+		
+		//hide softkeyboard after entry
+//		getActivity().getWindow().setSoftInputMode(
+//			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 
 		// set up text view and buttons
 		tTeamHome = (TextView)  v.findViewById(R.id.homeTeamName);
@@ -105,7 +112,7 @@ public class TeamOneFragment extends Fragment {
 				"home_team_data", Context.MODE_PRIVATE);
 			
 		// setup input edittext boxes
-		panelName = sharedPref.getString("PANELNAME", "OWN TEAM");
+		panelName = sharedPref.getString("PANELNAME", "OWN TEAM"); 
 		sharedPref = getActivity().getSharedPreferences(
 				"opp_team_data", Context.MODE_PRIVATE);
 		oppTeamName = sharedPref.getString("PANELNAME", "OPPOSITION");
@@ -722,7 +729,7 @@ public class TeamOneFragment extends Fragment {
 											AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 											input = new EditText(getActivity());
 											input.setId(999);										
-											alert.setTitle("Enter new Player Name");										
+											alert.setTitle("enter name of new player");										
 											alert.setMessage("Enter Name:");
 											alert.setView(input);
 											alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {

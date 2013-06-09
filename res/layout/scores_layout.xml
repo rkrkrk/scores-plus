@@ -126,7 +126,6 @@
                     android:padding="0dp"
                     android:text="1st half"
                     android:textSize="12sp" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -223,7 +222,6 @@
                     android:text="00:00"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
         </LinearLayout>
 
@@ -263,47 +261,6 @@
                 android:textColor="#f00"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.04"
-            android:background="@drawable/bg_custom"
-            android:orientation="horizontal"
-            android:paddingBottom="2dp" >
-
-            <TextView
-                android:id="@+id/TextView01"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="4dp"
-                android:layout_weight="3"
-                android:gravity="right|center_vertical"
-                android:padding="0dp"
-                android:text="COMMENT:"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-      
-
-            <EditText
-                android:id="@+id/etLocn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:hint="additional details, hashtags, etc."
-                android:paddingBottom="0dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="0dp"
-                android:paddingTop="0dp"
-                android:textSize="14sp"
-                android:textStyle="bold" >
-                
-            </EditText>
         </LinearLayout>
 
         <LinearLayout
@@ -510,7 +467,6 @@
                 android:text="-"
                 android:textSize="14sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -595,7 +551,6 @@
                 android:textColor="#f00"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -620,7 +575,7 @@
                 android:minHeight="0dp"
                 android:minWidth="0dp"
                 android:padding="0dp"
-                android:text="enter stats"
+                android:text="ENTER STATS"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -637,10 +592,9 @@
                 android:minHeight="0dp"
                 android:minWidth="0dp"
                 android:padding="0dp"
-                android:text="enter stats"
+                android:text="ENTER STATS"
                 android:textSize="14sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -648,13 +602,47 @@
         android:id="@+id/scrollView30"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.5" >
+        android:layout_weight="1.1" >
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="3"
+                    android:gravity="right|center_vertical"
+                    android:padding="0dp"
+                    android:text="COMMENT:"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etLoc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:hint="additional details, hashtags, etc."
+                    android:paddingBottom="0dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="0dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" >
+                </EditText>
+            </LinearLayout>
 
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"

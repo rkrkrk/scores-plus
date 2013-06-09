@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -89,6 +90,12 @@ public class TeamTwoFragment extends Fragment {
 		((Startup) getActivity()).setTagFragmentTeamTwo(myTag);
 		this.setHasOptionsMenu(true);
 		v.setBackgroundColor(Color.rgb(255,255,219));
+		
+		//hide softkeyboard after entry
+//		getActivity().getWindow().setSoftInputMode(
+//			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+		
 		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
 		if (tTeamHome.getText().equals("OWN TEAM")){
 			tTeamHome.setText("OPPOSITION");

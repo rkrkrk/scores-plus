@@ -137,7 +137,7 @@ public class ScoresFragment extends Fragment {
 		// tPuckOutPlayer = (TextView) v.findViewById(R.id.textViewPuckPlayer);
 		tOurTeam = (TextView) v.findViewById(R.id.ourTeam);
 		tOppTeam = (TextView) v.findViewById(R.id.oppTeam);
-		tLoc = (EditText) v.findViewById(R.id.etLocn);
+		tLoc = (EditText) v.findViewById(R.id.etLoc);
 
 		bStartStop = (Button) v.findViewById(R.id.start_stop_timer);
 		bDecreaseTime = (Button) v.findViewById(R.id.decrease_timer);
