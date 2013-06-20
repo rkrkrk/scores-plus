@@ -196,6 +196,7 @@ public class TeamOneFragment extends Fragment {
 		}
 	};
 
+	
 	// tweet team selection
 	// write selection to bitmal and tweet bitmap
 	OnClickListener selTextListener = new OnClickListener() {
