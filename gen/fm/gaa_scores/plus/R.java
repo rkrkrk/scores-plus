@@ -21,11 +21,12 @@ public final class R {
         public static final int btn_blue=0x7f020002;
         public static final int btn_cyan=0x7f020003;
         public static final int btn_green=0x7f020004;
-        public static final int btn_yellow=0x7f020005;
-        public static final int button_custom=0x7f020006;
-        public static final int buttond_custom=0x7f020007;
-        public static final int greenBG=0x7f020009;
-        public static final int ic_launcher=0x7f020008;
+        public static final int btn_red=0x7f020005;
+        public static final int btn_yellow=0x7f020006;
+        public static final int button_custom=0x7f020007;
+        public static final int buttond_custom=0x7f020008;
+        public static final int greenBG=0x7f02000a;
+        public static final int ic_launcher=0x7f020009;
     }
     public static final class id {
         public static final int ButtonP01=0x7f0800b0;
@@ -88,15 +89,15 @@ public final class R {
         public static final int bPeriod=0x7f080067;
         public static final int bSendAll=0x7f08005f;
         public static final int bSub=0x7f0800b5;
-        public static final int bTextLast=0x7f08008a;
-        public static final int bTextRecent=0x7f08008b;
-        public static final int bTextScore=0x7f080089;
-        public static final int bTweetLast=0x7f080087;
-        public static final int bTweetRecent=0x7f080088;
-        public static final int bTweetScore=0x7f080086;
+        public static final int bTextLast=0x7f080087;
+        public static final int bTextRecent=0x7f080088;
+        public static final int bTextScore=0x7f080086;
+        public static final int bTweetLast=0x7f080084;
+        public static final int bTweetRecent=0x7f080085;
+        public static final int bTweetScore=0x7f080083;
         public static final int buttonShotHome=0x7f08007f;
-        public static final int buttonShotOpp=0x7f080080;
-        public static final int buttonUndo=0x7f080083;
+        public static final int buttonShotOpp=0x7f080081;
+        public static final int buttonUndo=0x7f080080;
         public static final int button_setup_reset=0x7f0800b6;
         public static final int createNewTeam=0x7f0800c8;
         public static final int dec_home_goals=0x7f080073;
@@ -162,12 +163,12 @@ public final class R {
         public static final int resetStats=0x7f0800c4;
         public static final int resetTeam=0x7f0800cb;
         public static final int resetTimer=0x7f0800c2;
-        public static final int reset_all=0x7f080084;
+        public static final int reset_all=0x7f08008b;
         public static final int rvTableShotsHome=0x7f08000b;
         public static final int rvTextView01=0x7f08000f;
         public static final int savePanel=0x7f0800be;
         public static final int scrollView22=0x7f0800ba;
-        public static final int scrollView30=0x7f080081;
+        public static final int scrollView30=0x7f080089;
         public static final int sel_share=0x7f0800b9;
         public static final int sel_text=0x7f0800b8;
         public static final int sel_tweet=0x7f0800b7;
@@ -225,7 +226,7 @@ public final class R {
         public static final int textViewRevHome=0x7f080005;
         public static final int textViewRevMid=0x7f080031;
         public static final int textViewRevOpp=0x7f080032;
-        public static final int textViewStats=0x7f080085;
+        public static final int textViewStats=0x7f08008a;
         public static final int textsetuplabel=0x7f0800b4;
         public static final int time_gone=0x7f08006a;
         public static final int time_left=0x7f080065;

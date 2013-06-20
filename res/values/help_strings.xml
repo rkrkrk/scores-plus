@@ -83,6 +83,7 @@ Touch <b>goals or points</b> buttons to increase score.<br/>
 Touch <b>-</b> buttons to decrease score.
 <br/>
 Touch <b>enter stats</b> button to get to stats recording screen.
+Touch <b>undo last stats entry</b> to delete last stats entry.<br/>
 
 </p>
 <p>
@@ -101,8 +102,7 @@ Touch on the <b>comment</b> field to enter any additional details/info such as l
 <b>MATCH EVENTS SECTION</b><br/>
 The last four match events recorded in the ENTER STATS screen are displayed here. (Swipe to
 the <b>STATS</b> screen to see the complete list of all match events.)<br/>
-Touch <b>undo last stats entry</b> to delete last stats entry.
-<br/>
+
 Touch <b>reset all</b> to delete all stats events, reset timer and reset scores to zero.
 </p>
 <p>
