@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/buttond_custom"
+                android:background="@drawable/btn_yellow"
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
@@ -346,7 +346,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@drawable/buttond_custom"
+                android:background="@drawable/btn_yellow"
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
@@ -360,7 +360,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:background="@drawable/buttond_custom"
+                android:background="@drawable/btn_yellow"
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
@@ -368,6 +368,57 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/sel_tweet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttond_custom"
+                android:gravity="center_vertical|center_horizontal"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="tweet selection"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/sel_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttond_custom"
+                android:gravity="center_vertical|center_horizontal"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="text selection"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/sel_share"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttond_custom"
+                android:gravity="center_vertical|center_horizontal"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="share selection"
+                android:textSize="12sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <ScrollView

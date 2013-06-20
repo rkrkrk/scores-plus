@@ -1890,6 +1890,10 @@ public class ScoresFragment extends Fragment {
 		return tLoc.getText().toString();		
 	}
 	
+	public String getPhone(){
+		return phone;		
+	}
+
 
 
 }

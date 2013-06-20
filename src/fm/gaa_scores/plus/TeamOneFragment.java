@@ -13,11 +13,17 @@
  */
 package fm.gaa_scores.plus;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import fm.gaa_scores.plus.R;
 
@@ -29,13 +35,23 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 
 import android.support.v4.app.Fragment;
+import android.text.Layout.Alignment;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,8 +60,6 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,12 +87,11 @@ public class TeamOneFragment extends Fragment {
 	private Date currentDate;
 	private SimpleDateFormat sdfdate;
 	private EditText input;
-	private int  index, indexOff, indexOn;
+	private int index, indexOff, indexOn;
 	private TextView tCards, tSubs;
 
-//	 setup uri to read panel from database using content provider
+	// setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
-	
 
 	@Override
 	// start main method to display screen
@@ -92,15 +105,14 @@ public class TeamOneFragment extends Fragment {
 		String myTag = getTag();
 		((Startup) getActivity()).setTagFragmentTeamOne(myTag);
 		this.setHasOptionsMenu(true);
-		v.setBackgroundColor(Color.rgb(204,255,204));
-		
-		//hide softkeyboard after entry
-//		getActivity().getWindow().setSoftInputMode(
-//			      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		v.setBackgroundColor(Color.rgb(204, 255, 204));
 
+		// hide softkeyboard after entry
+		// getActivity().getWindow().setSoftInputMode(
+		// WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// set up text view and buttons
-		tTeamHome = (TextView)  v.findViewById(R.id.homeTeamName);
+		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
 		Button bButtonReset = (Button) v.findViewById(R.id.button_setup_reset);
 		bButtonReset.setOnClickListener(resetTeamListener);
 		Button bSub = (Button) v.findViewById(R.id.bSub);
@@ -110,22 +122,22 @@ public class TeamOneFragment extends Fragment {
 		// read persisted stored data to set up screen on restart
 		SharedPreferences sharedPref = getActivity().getSharedPreferences(
 				"home_team_data", Context.MODE_PRIVATE);
-			
+
 		// setup input edittext boxes
-		panelName = sharedPref.getString("PANELNAME", "OWN TEAM"); 
-		sharedPref = getActivity().getSharedPreferences(
-				"opp_team_data", Context.MODE_PRIVATE);
+		panelName = sharedPref.getString("PANELNAME", "OWN TEAM");
+		sharedPref = getActivity().getSharedPreferences("opp_team_data",
+				Context.MODE_PRIVATE);
 		oppTeamName = sharedPref.getString("PANELNAME", "OPPOSITION");
-		tTeamHome.setText(panelName);		
+		tTeamHome.setText(panelName);
 		setButtons(v);
 		getTeam(panelName);
-		
-		tCards=(TextView) v.findViewById(R.id.tCards);
-		tSubs=(TextView) v.findViewById(R.id.tSubs);
+
+		tCards = (TextView) v.findViewById(R.id.tCards);
+		tSubs = (TextView) v.findViewById(R.id.tSubs);
 		updateCards();
 		updateSubsList();
-		
-			// Listener for reset team button
+
+		// Listener for reset team button
 		// resets team lineup and edittext fields
 		bButtonReset.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
@@ -136,9 +148,17 @@ public class TeamOneFragment extends Fragment {
 				return true;
 			}
 		});
+
+		Button bSelTweet = (Button) v.findViewById(R.id.sel_tweet);
+		bSelTweet.setOnClickListener(selTweetListener);
+		Button bSelText = (Button) v.findViewById(R.id.sel_text);
+		bSelText.setOnClickListener(selTextListener);
+		Button bSelShare = (Button) v.findViewById(R.id.sel_share);
+		bSelShare.setOnClickListener(selShareListener);
+
 		return v;
 	}
-	
+
 	@Override
 	public void onPause() {
 		// Save out the details so that they are available on restart
@@ -149,17 +169,186 @@ public class TeamOneFragment extends Fragment {
 		editor.putString("PANELNAME", panelName);
 		editor.commit();
 	}
-	
+
+	// tweet team selection
+	// write selection to bitmal and tweet bitmap
+	OnClickListener selShareListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// Create Bitmap to display team selection
+			StringBuilder sb = new StringBuilder("");
+			sb.append(panelName + " v. " + oppTeamName + ". ");
+
+			sb.append(((Startup) getActivity()).getFragmentScore().getLocText()
+					+ ". ");
+			sb.append(panelName + " team selection:\n ");
+			for (int i = 1; i <= 15; i++) {
+				sb.append(teamLineUpCurrent[i].length() > 2 ? String.valueOf(i)
+						+ ". " + String.valueOf(teamLineUpCurrent[i]) + "\n "
+						: String.valueOf(i) + ".\n ");
+			}
+			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+			emailIntent
+					.putExtra(Intent.EXTRA_SUBJECT, panelName + " v. " + oppTeamName + ". "+"Team Selection");
+			emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+			emailIntent.setType("text/plain");
+			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
+		}
+	};
+
+	// tweet team selection
+	// write selection to bitmal and tweet bitmap
+	OnClickListener selTextListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// Create Bitmap to display team selection
+			StringBuilder sb = new StringBuilder("");
+			sb.append(panelName + " v. " + oppTeamName + ". ");
+
+			sb.append(((Startup) getActivity()).getFragmentScore().getLocText()
+					+ ". ");
+			sb.append(panelName + " team selection:\n ");
+			for (int i = 1; i <= 15; i++) {
+				sb.append(teamLineUpCurrent[i].length() > 2 ? String.valueOf(i)
+						+ ". " + String.valueOf(teamLineUpCurrent[i]) + "\n "
+						: String.valueOf(i) + ".\n ");
+			}
+			try {
+				Intent intentText = new Intent(Intent.ACTION_VIEW);
+				intentText.setType("vnd.android-dir/mms-sms");
+				intentText.putExtra("sms_body", sb.toString());
+				intentText.setData(Uri.parse("sms: "
+						+ ((Startup) getActivity()).getFragmentScore()
+								.getPhone()));
+				startActivity(intentText);
+			} catch (Exception ex) {
+				Log.e("Error in Text", ex.toString());
+				Toast.makeText(getActivity(), "Unable to send text message",
+						Toast.LENGTH_LONG).show();
+			}
+		}
+	};
+
+	// tweet team selection
+	// write selection to bitmal and tweet bitmap
+	OnClickListener selTweetListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// Create Bitmap to display team selection
+			Bitmap bitmap = Bitmap.createBitmap(400, 600,
+					Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(bitmap);
+			canvas.drawColor(Color.LTGRAY);
+			Paint paint = new Paint();
+			paint.setColor(Color.BLACK);
+			paint.setAntiAlias(true);
+			paint.setTextSize(16);
+			// Write teams
+			canvas.drawText(panelName + " v. " + oppTeamName, 10, 20, paint);
+			paint.setTextSize(16);
+			// write comment - height can vary
+			TextPaint mTextPaint = new TextPaint();
+			mTextPaint.setTextSize(16);
+			StaticLayout mTextLayout = new StaticLayout(
+					((Startup) getActivity()).getFragmentScore().getLocText(),
+					mTextPaint, canvas.getWidth(), Alignment.ALIGN_NORMAL,
+					1.0f, 0.0f, false);
+			int commentLines = mTextLayout.getLineCount();
+			canvas.save();
+			canvas.translate(10, 30);
+			mTextLayout.draw(canvas);
+			canvas.restore();
+
+			paint.setTextSize(24);
+			canvas.drawText(panelName + " team selection ", 10,
+					65 + (commentLines * 20), paint);
+			String str;
+			for (int i = 1; i <= 15; i++) {
+				str = teamLineUpCurrent[i].length() > 2 ? String.valueOf(i)
+						+ ". " + String.valueOf(teamLineUpCurrent[i]) : String
+						.valueOf(i) + ".";
+				canvas.drawText(str, 10, 65 + (commentLines * 20) + (i * 30),
+						paint);
+			}
+			paint.setTextSize(13);
+			canvas.drawText("GAA Scores Stats Plus", 10, 65 + (commentLines * 20) + 470, paint);
+					
+			
+
+			File mPath = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+			OutputStream fout = null;
+			File imageFile = new File(mPath, "selTweet.jpg");
+
+			try {
+				mPath.mkdirs();
+				fout = new FileOutputStream(imageFile);
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+				fout.flush();
+				fout.close();
+				Log.e("file", "OK");
+				Uri uri = Uri.fromFile(imageFile);
+
+				try {
+					Intent shareIntent = findTwitterClient();
+					shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
+							+ " Team Selection");
+					shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+					startActivity(Intent.createChooser(shareIntent, "Share"));
+				} catch (Exception ex) {
+					Toast.makeText(
+							getActivity(),
+							"Can't find twitter client\n"
+									+ "Please install Twitter App\nand login to Twitter",
+							Toast.LENGTH_LONG).show();
+				}
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	};
+
+	public Intent findTwitterClient() {
+		final String[] twitterApps = {
+				// package // name - nb installs (thousands)
+				"com.twitter.android", // official - 10 000
+				"com.twidroid", // twidroid - 5 000
+				"com.handmark.tweetcaster", // Tweecaster - 5 000
+				"com.thedeck.android" }; // TweetDeck - 5 000 };
+		Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+		tweetIntent.setType("text/plain");
+		final PackageManager packageManager = getActivity().getPackageManager();
+		List<ResolveInfo> list = packageManager.queryIntentActivities(
+				tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+		for (int i = 0; i < twitterApps.length; i++) {
+			for (ResolveInfo resolveInfo : list) {
+				String p = resolveInfo.activityInfo.packageName;
+				if (p != null && p.startsWith(twitterApps[i])) {
+					tweetIntent.setPackage(p);
+					return tweetIntent;
+				}
+			}
+		}
+		return null;
+	}
+
 	private void getTeam(String teamName) {
 		// load panel from database and assign to arraylist
 		String[] projection = { TeamContentProvider.PANELID,
-				TeamContentProvider.NAME,TeamContentProvider.POSN };
+				TeamContentProvider.NAME, TeamContentProvider.POSN };
 		CursorLoader cL;
 		int posn;
-		//reset line up and read from database
+		// reset line up and read from database
 		for (int j = 1; j <= 15; j++) {
-			teamLineUpCurrent[j] = null; 
-			}
+			teamLineUpCurrent[j] = null;
+		}
 		cL = new CursorLoader(getActivity(), allTitles, projection,
 				TeamContentProvider.TEAM + " = '" + teamName + "'", null,
 				TeamContentProvider.NAME);
@@ -173,13 +362,13 @@ public class TeamOneFragment extends Fragment {
 				panelList.add(c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.NAME)));
 				// insert players into positions
-				posn=c1.getInt(c1
+				posn = c1.getInt(c1
 						.getColumnIndexOrThrow(TeamContentProvider.POSN));
-				if (posn>0){
-					teamLineUpCurrent[posn]=c1.getString(c1
-							.getColumnIndexOrThrow(TeamContentProvider.NAME));				
+				if (posn > 0) {
+					teamLineUpCurrent[posn] = c1.getString(c1
+							.getColumnIndexOrThrow(TeamContentProvider.NAME));
 				}
-											
+
 				posnList.add(c1.getInt(c1
 						.getColumnIndexOrThrow(TeamContentProvider.POSN)));
 
@@ -189,17 +378,17 @@ public class TeamOneFragment extends Fragment {
 								c1.getInt(c1
 										.getColumnIndexOrThrow(TeamContentProvider.PANELID)));
 			} while (c1.moveToNext());
-	
-		} 
-		
+
+		}
+
 		// remove from panellist names of players that are already selected and
 		// assigned to a button onscreen
 		for (int j = 1; j <= 15; j++) {
 			if (panelList.indexOf(teamLineUpCurrent[j]) != -1) {
 				panelList.remove(teamLineUpCurrent[j]);
-			}			
+			}
 		}
-		
+
 		// assign default number to rest
 		for (int j = 1; j <= 15; j++) {
 			if (teamLineUpCurrent[j] == null) {
@@ -214,7 +403,7 @@ public class TeamOneFragment extends Fragment {
 		panelList.add(0, "ENTER NEW PLAYER NAME");
 		c1.close();
 	}
-	
+
 	private void setButtons(View w) {
 		// Set buttonlisteners and use position numbers as default team lineup
 		for (int i = 1; i <= 15; i++) {
@@ -224,17 +413,17 @@ public class TeamOneFragment extends Fragment {
 					"fm.gaa_scores.plus"));
 			bTeam[i].setOnClickListener(teamSetupClickListener);
 		}
-	}	
-	
+	}
+
 	OnClickListener recordSub = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			//set up panelist 
-			strTemp2 = new String[panelList.size()-2];
-			for (int i = 0; i < panelList.size()-2; i++) {
-				strTemp2[i] = panelList.get(i+2);
+			// set up panelist
+			strTemp2 = new String[panelList.size() - 2];
+			for (int i = 0; i < panelList.size() - 2; i++) {
+				strTemp2[i] = panelList.get(i + 2);
 			}
-			strTemp=new String[15];
+			strTemp = new String[15];
 			for (int i = 1; i <= 15; i++) {
 				strTemp[i - 1] = i + ": " + teamLineUpCurrent[i];
 			}
@@ -250,7 +439,7 @@ public class TeamOneFragment extends Fragment {
 							indexOff = which + 1;
 							playerOff = teamLineUpCurrent[indexOff];
 							// dialog to see who is goping on
-							
+
 							// Get whois coming off swap with going on and write
 							// change to databse
 							AlertDialog.Builder builder1 = new AlertDialog.Builder(
@@ -262,10 +451,11 @@ public class TeamOneFragment extends Fragment {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											indexOn = which+2;// text in first 2
-											playerOn = panelList.get(which+2);
-												makeSub();
-								
+											indexOn = which + 2;// text in first
+																// 2
+											playerOn = panelList.get(which + 2);
+											makeSub();
+
 											dialog.dismiss();
 										}
 									});
@@ -278,15 +468,14 @@ public class TeamOneFragment extends Fragment {
 			alert.show();
 		}
 	};
-	
-	
+
 	private void makeSub() {
 		// update database
 		// Where a Player is not already selected
 		// for team the button text will be just the
 		// position number and so length < 3.
 		// assign player to button/teamlineup and
-	
+
 		if (playerOff.length() < 3) {
 			bTeam[indexOff].setText(playerOn);
 			teamLineUpCurrent[indexOff] = playerOn;
@@ -318,7 +507,7 @@ public class TeamOneFragment extends Fragment {
 			values.put("posn", indexOff);
 			Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI + "/"
 					+ playerIDLookUp.get(playerOn));
-	
+
 			getActivity().getContentResolver().update(uri, values, null, null);
 			// update position of removed player in database
 			values = new ContentValues();
@@ -331,13 +520,12 @@ public class TeamOneFragment extends Fragment {
 		// write to stats
 		String temp = (((Startup) getActivity()).getFragmentScore().getTime() == "") ? ""
 				: ((Startup) getActivity()).getFragmentScore().getTime()
-						+ " mins "+ ((Startup) getActivity()).getFragmentScore().bPeriod
-						.getText();
+						+ " mins "
+						+ ((Startup) getActivity()).getFragmentScore().bPeriod
+								.getText();
 		ContentValues values = new ContentValues();
-		values.put(
-				"line",
-				temp+" substitution "+panelName + "--> off: " + playerOff + "  on: "
-						+ playerOn);
+		values.put("line", temp + " substitution " + panelName + "--> off: "
+				+ playerOff + "  on: " + playerOn);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
 		updateSubsList();
@@ -345,7 +533,7 @@ public class TeamOneFragment extends Fragment {
 		((Startup) getActivity()).getFragmentReview().updateListView();
 	}
 
-	//reset team positions to numbers
+	// reset team positions to numbers
 	OnClickListener resetTeamListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -356,7 +544,7 @@ public class TeamOneFragment extends Fragment {
 					Toast.LENGTH_SHORT).show();
 		}
 	};
-	
+
 	private void resetTeam() {
 		// Reset team lineup to default position numbers
 		// and assign numbers ot buttons on screen
@@ -376,14 +564,14 @@ public class TeamOneFragment extends Fragment {
 		// which will set team names and team lineup
 	}
 
-	//change name of current team
+	// change name of current team
 	OnClickListener changeNameListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			changeName();
 		}
 	};
-	
+
 	private void changeName() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		input = new EditText(getActivity());
@@ -415,9 +603,7 @@ public class TeamOneFragment extends Fragment {
 						getActivity().getContentResolver().insert(
 								TeamContentProvider.CONTENT_URI, values);
 					}
-					
-					
-					
+
 					Toast.makeText(getActivity(), "panel renamed",
 							Toast.LENGTH_LONG).show();
 					// update title and panelname
@@ -427,11 +613,12 @@ public class TeamOneFragment extends Fragment {
 							panelName, "");
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
 							panelName, "");
-					((Startup) getActivity()).getFragmentReview().updateListView();
+					((Startup) getActivity()).getFragmentReview()
+							.updateListView();
 					((Startup) getActivity()).getFragmentScore().updateStats();
-					((Startup) getActivity()).getFragmentTeamTwo().setTeam(panelName);
+					((Startup) getActivity()).getFragmentTeamTwo().setTeam(
+							panelName);
 
-					
 				} else {
 					Toast.makeText(
 							getActivity(),
@@ -444,71 +631,69 @@ public class TeamOneFragment extends Fragment {
 		alert.create();
 		alert.show();
 	}
-	
 
-	
-	//create new team
+	// create new team
 	OnClickListener createNewTeamListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			createNewTeam();
 		}
 	};
-	
+
 	private void createNewTeam() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		input = new EditText(getActivity());
 		input.setId(996);
-		alert.setTitle("Enter New Team Name");			
+		alert.setTitle("Enter New Team Name");
 		alert.setMessage("Name:");
 		alert.setView(input);
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface indialog, int which) {
 				String inName = input.getText().toString();
-				if(inName.length()>2){
-					//Update name in database
+				if (inName.length() > 2) {
+					// Update name in database
 					// Reset team lineup to default position numbers
 					// and assign numbers ot buttons on screen
 					for (int i = 1; i <= 15; i++) {
 						teamLineUpCurrent[i] = String.valueOf(i);
 						bTeam[i].setText(String.valueOf(i));
 					}
-					panelName=inName;
-					tTeamHome.setText(panelName);	
+					panelName = inName;
+					tTeamHome.setText(panelName);
 					panelList.clear();
 					panelList.add(0, "RESET POSITION TO NUMBER");
 					panelList.add(0, "ENTER NEW PLAYER NAME");
-					playerIDLookUp.clear();		
+					playerIDLookUp.clear();
 					// add to database
 					ContentValues values = new ContentValues();
 					values.put("name", "...");
 					values.put("posn", 0);
 					values.put("team", panelName);
 					getActivity().getContentResolver().insert(
-							TeamContentProvider.CONTENT_URI, values);	
-	
-					//update other fragments
-					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
-							 panelName, "");
-					((Startup) getActivity()).getFragmentReview().setTeamNames(panelName,
-							"");
-					((Startup) getActivity()).getFragmentTeamTwo().setTeam(panelName);
+							TeamContentProvider.CONTENT_URI, values);
 
-					
+					// update other fragments
+					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
+							panelName, "");
+					((Startup) getActivity()).getFragmentReview().setTeamNames(
+							panelName, "");
+					((Startup) getActivity()).getFragmentTeamTwo().setTeam(
+							panelName);
+
 				} else {
-					Toast.makeText(getActivity(), "Invalid Name, Try Again\n"+
-							"Must be at least 3 characters long",
+					Toast.makeText(
+							getActivity(),
+							"Invalid Name, Try Again\n"
+									+ "Must be at least 3 characters long",
 							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 		alert.create();
-		alert.show();	
+		alert.show();
 	}
-	
-	
-	
+
 	// Load existing team
 	OnClickListener loadTeamListener = new OnClickListener() {
 		@Override
@@ -517,7 +702,7 @@ public class TeamOneFragment extends Fragment {
 			loadTeam();
 		}
 	};
-	
+
 	private void loadTeam() {
 		ArrayList<String> panelList = new ArrayList<String>();
 		String str;
@@ -534,7 +719,7 @@ public class TeamOneFragment extends Fragment {
 					panelList.add(str);
 			} while (c1.moveToNext());
 		}
-		//take out team in other page
+		// take out team in other page
 		panelList.remove(oppTeamName);
 		if (panelList.size() > 0) {
 			panel = new String[panelList.size()];
@@ -560,7 +745,8 @@ public class TeamOneFragment extends Fragment {
 									.setTeamLineUp(panelName, "");
 							((Startup) getActivity()).getFragmentReview()
 									.setTeamNames(panelName, "");
-							((Startup) getActivity()).getFragmentTeamTwo().setTeam(panelName);
+							((Startup) getActivity()).getFragmentTeamTwo()
+									.setTeam(panelName);
 							dialog.dismiss();
 						}
 					});
@@ -572,66 +758,66 @@ public class TeamOneFragment extends Fragment {
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
-	//delete player 
+
+	// delete player
 	OnClickListener deletePlayerListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			deletePlayer();
 		}
 	};
-	
+
 	private void deletePlayer() {
 		// get list of player names
-					ArrayList<String> panelList = new ArrayList<String>();
-					String[] projection = { TeamContentProvider.NAME };
-					CursorLoader cL = new CursorLoader(getActivity(), allTitles,
-							projection, TeamContentProvider.TEAM + " = '" + panelName + "'", null,
-							TeamContentProvider.NAME);
-					Cursor c1 = cL.loadInBackground();
-					if (c1.getCount() > 0) {
-						c1.moveToFirst();
-						do {
-							panelList.add(c1.getString(c1
-									.getColumnIndexOrThrow(TeamContentProvider.NAME)));
-						} while (c1.moveToNext());
-						panelList.remove("...");
-						panel = new String[panelList.size()];
-						for (int i = 0; i < panelList.size(); i++) {
-							panel[i] = panelList.get(i);
+		ArrayList<String> panelList = new ArrayList<String>();
+		String[] projection = { TeamContentProvider.NAME };
+		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
+				projection,
+				TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+				TeamContentProvider.NAME);
+		Cursor c1 = cL.loadInBackground();
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				panelList.add(c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.NAME)));
+			} while (c1.moveToNext());
+			panelList.remove("...");
+			panel = new String[panelList.size()];
+			for (int i = 0; i < panelList.size(); i++) {
+				panel[i] = panelList.get(i);
+			}
+			c1.close();
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("select player to delete");
+			builder.setSingleChoiceItems(panel, 0,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							player = panel[which];
+							getActivity()
+									.getContentResolver()
+									.delete(Uri
+											.parse(TeamContentProvider.CONTENT_URI
+													+ "/"
+													+ playerIDLookUp
+															.get(player)),
+											null, null);
+
+							getTeam(panelName);
+							dialog.dismiss();
 						}
-						c1.close();		
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								getActivity());
-						builder.setTitle("select player to delete");
-						builder.setSingleChoiceItems(panel, 0,
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										player = panel[which];
-										getActivity()
-										.getContentResolver()
-										.delete(Uri.parse(TeamContentProvider.CONTENT_URI
-												+ "/"
-												+ playerIDLookUp
-												.get(player)), null, null);
-								
-										getTeam(panelName);
-										dialog.dismiss();
-									}
-								});
-						AlertDialog alert = builder.create();
-						alert.show();
-					} else {
-						// error no teams available
-						Toast.makeText(getActivity(),
-								"There are no players to delete", Toast.LENGTH_SHORT)
-								.show();
-					}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
+		} else {
+			// error no teams available
+			Toast.makeText(getActivity(), "There are no players to delete",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
-	
-	//delete team
+
+	// delete team
 	OnClickListener deleteTeamListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -639,7 +825,7 @@ public class TeamOneFragment extends Fragment {
 			deleteTeam();
 		}
 	};
-		
+
 	private void deleteTeam() {
 		ArrayList<String> panelList = new ArrayList<String>();
 		String str;
@@ -689,12 +875,14 @@ public class TeamOneFragment extends Fragment {
 			alert.show();
 		} else {
 			// error no teams available
-			Toast.makeText(getActivity(), "There are no teams to delete \n\n"+"note: you can't delete teams\n which are currently loaded",
+			Toast.makeText(
+					getActivity(),
+					"There are no teams to delete \n\n"
+							+ "note: you can't delete teams\n which are currently loaded",
 					Toast.LENGTH_LONG).show();
 		}
 	}
-	
-	
+
 	// Listener to select team lineup
 	OnClickListener teamSetupClickListener = new OnClickListener() {
 		@Override
@@ -716,96 +904,137 @@ public class TeamOneFragment extends Fragment {
 									Uri uri;
 									String posnNo = getResources()
 											.getResourceName(b.getId());
-									index = Integer.parseInt(posnNo
-											.substring(posnNo.length() - 2,
-													posnNo.length()));
+									index = Integer.parseInt(posnNo.substring(
+											posnNo.length() - 2,
+											posnNo.length()));
 									//
 									// Deal with Enter New Player
-									if (which==0){
-										//enter new player dialog
-										
-											// set up dialog to get filename use edittext in an alertdialog to
-											// Prompt for filename											
-											AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-											input = new EditText(getActivity());
-											input.setId(999);										
-											alert.setTitle("enter name of new player");										
-											alert.setMessage("Enter Name:");
-											alert.setView(input);
-											alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface indialog, int which) {
-													String inName = input.getText().toString();
-													if (inName.length()>2) {													
-														//write to database
-														ContentValues values = new ContentValues();
-														values.put("name", inName);
-														values.put("posn", index);
-														values.put("team", panelName);
-														getActivity().getContentResolver().insert(
-																TeamContentProvider.CONTENT_URI, values);	
-														//write to teamlist
-														teamLineUpCurrent[index] = inName;
-														//write to button
-														if (b.getText().length() < 3) {
-															b.setText(inName);
-														}
-														else {
-															String s = (String) b.getText();
-															b.setText(inName);
-															panelList.add(s);
-															panelList.remove("RESET POSITION TO NUMBER");
-															panelList.remove("ENTER NEW PLAYER NAME");
-															Collections.sort(panelList);
-															panelList.add(0, "RESET POSITION TO NUMBER");
-															panelList.add(0, "ENTER NEW PLAYER NAME");		
-															//update position of removed player in database
-															values = new ContentValues();
-															values.put("posn", -1);
+									if (which == 0) {
+										// enter new player dialog
+
+										// set up dialog to get filename use
+										// edittext in an alertdialog to
+										// Prompt for filename
+										AlertDialog.Builder alert = new AlertDialog.Builder(
+												getActivity());
+										input = new EditText(getActivity());
+										input.setId(999);
+										alert.setTitle("enter name of new player");
+										alert.setMessage("Enter Name:");
+										alert.setView(input);
+										alert.setPositiveButton(
+												"OK",
+												new DialogInterface.OnClickListener() {
+													@Override
+													public void onClick(
+															DialogInterface indialog,
+															int which) {
+														String inName = input
+																.getText()
+																.toString();
+														if (inName.length() > 2) {
+															// write to database
+															ContentValues values = new ContentValues();
+															values.put("name",
+																	inName);
+															values.put("posn",
+																	index);
+															values.put("team",
+																	panelName);
 															getActivity()
-																.getContentResolver()
-																.update(Uri.parse(TeamContentProvider.CONTENT_URI
-																		+ "/"
-																		+ playerIDLookUp
-																		.get(s)), values, null, null);
-														}	
-														getTeam(panelName);
-													} else {
-														Toast.makeText(getActivity(), "Invalid Name, Try Again\n"+
-																"Must be at least 3 characters long",
-																Toast.LENGTH_SHORT).show();
+																	.getContentResolver()
+																	.insert(TeamContentProvider.CONTENT_URI,
+																			values);
+															// write to teamlist
+															teamLineUpCurrent[index] = inName;
+															// write to button
+															if (b.getText()
+																	.length() < 3) {
+																b.setText(inName);
+															} else {
+																String s = (String) b
+																		.getText();
+																b.setText(inName);
+																panelList
+																		.add(s);
+																panelList
+																		.remove("RESET POSITION TO NUMBER");
+																panelList
+																		.remove("ENTER NEW PLAYER NAME");
+																Collections
+																		.sort(panelList);
+																panelList
+																		.add(0,
+																				"RESET POSITION TO NUMBER");
+																panelList
+																		.add(0,
+																				"ENTER NEW PLAYER NAME");
+																// update
+																// position of
+																// removed
+																// player in
+																// database
+																values = new ContentValues();
+																values.put(
+																		"posn",
+																		-1);
+																getActivity()
+																		.getContentResolver()
+																		.update(Uri
+																				.parse(TeamContentProvider.CONTENT_URI
+																						+ "/"
+																						+ playerIDLookUp
+																								.get(s)),
+																				values,
+																				null,
+																				null);
+															}
+															getTeam(panelName);
+														} else {
+															Toast.makeText(
+																	getActivity(),
+																	"Invalid Name, Try Again\n"
+																			+ "Must be at least 3 characters long",
+																	Toast.LENGTH_SHORT)
+																	.show();
+														}
 													}
-												}
-											});
-											alert.create();
-											alert.show();
+												});
+										alert.create();
+										alert.show();
 									}
-									
-									//Deal with reset
-									else if (which==1) {  
+
+									// Deal with reset
+									else if (which == 1) {
 										// if its just the number do nothing
-										if (b.getText().length() > 2){
+										if (b.getText().length() > 2) {
 											String s = (String) b.getText();
 											b.setText(String.valueOf(index));
-											teamLineUpCurrent[index]=String.valueOf(index);
-												panelList.add(s);
-												panelList.remove("RESET POSITION TO NUMBER");
-												panelList.remove("ENTER NEW PLAYER NAME");
-												Collections.sort(panelList);
-												panelList.add(0, "RESET POSITION TO NUMBER");
-												panelList.add(0, "ENTER NEW PLAYER NAME");
-												values = new ContentValues();
-												values.put("posn", -1);
-												getActivity()
-														.getContentResolver()
-														.update(Uri.parse(TeamContentProvider.CONTENT_URI
-																+ "/"
-																+ playerIDLookUp
-																.get(s)), values, null, null);
-							
+											teamLineUpCurrent[index] = String
+													.valueOf(index);
+											panelList.add(s);
+											panelList
+													.remove("RESET POSITION TO NUMBER");
+											panelList
+													.remove("ENTER NEW PLAYER NAME");
+											Collections.sort(panelList);
+											panelList.add(0,
+													"RESET POSITION TO NUMBER");
+											panelList.add(0,
+													"ENTER NEW PLAYER NAME");
+											values = new ContentValues();
+											values.put("posn", -1);
+											getActivity()
+													.getContentResolver()
+													.update(Uri.parse(TeamContentProvider.CONTENT_URI
+															+ "/"
+															+ playerIDLookUp
+																	.get(s)),
+															values, null, null);
+
 										}
 									}
-									
+
 									// Where a Player is not already selected
 									// for team the button text will be just the
 									// position number and so length < 3.
@@ -840,12 +1069,17 @@ public class TeamOneFragment extends Fragment {
 												.get(which);
 										panelList.remove(which);
 										panelList.add(s);
-										panelList.remove("RESET POSITION TO NUMBER");
-										panelList.remove("ENTER NEW PLAYER NAME");
+										panelList
+												.remove("RESET POSITION TO NUMBER");
+										panelList
+												.remove("ENTER NEW PLAYER NAME");
 										Collections.sort(panelList);
-										panelList.add(0, "RESET POSITION TO NUMBER");
-										panelList.add(0, "ENTER NEW PLAYER NAME");
-										//update position of selected player in database
+										panelList.add(0,
+												"RESET POSITION TO NUMBER");
+										panelList.add(0,
+												"ENTER NEW PLAYER NAME");
+										// update position of selected player in
+										// database
 										values = new ContentValues();
 										values.put("posn", index);
 										uri = Uri.parse(TeamContentProvider.CONTENT_URI
@@ -855,13 +1089,14 @@ public class TeamOneFragment extends Fragment {
 										getActivity()
 												.getContentResolver()
 												.update(uri, values, null, null);
-										//update position of removed player in database
+										// update position of removed player in
+										// database
 										values = new ContentValues();
 										values.put("posn", -1);
-										uri = Uri.parse(TeamContentProvider.CONTENT_URI
-												+ "/"
-												+ playerIDLookUp
-														.get(s));
+										uri = Uri
+												.parse(TeamContentProvider.CONTENT_URI
+														+ "/"
+														+ playerIDLookUp.get(s));
 										getActivity()
 												.getContentResolver()
 												.update(uri, values, null, null);
@@ -871,8 +1106,8 @@ public class TeamOneFragment extends Fragment {
 							}).create().show();
 		}
 	};
-	
-	public void updateCards() {		
+
+	public void updateCards() {
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
 				TeamContentProvider.STATSLINE };
@@ -889,11 +1124,10 @@ public class TeamOneFragment extends Fragment {
 				// insert players into positions
 				str[i] = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-					if (((str[i].indexOf("red card") >= 0)
-						|| (str[i].indexOf("black card") >= 0) 
-						|| (str[i].indexOf("yellow card") >= 0))
-						&& (str[i].indexOf(tTeamHome.getText().toString()) >= 0))
-				{
+				if (((str[i].indexOf("red card") >= 0)
+						|| (str[i].indexOf("black card") >= 0) || (str[i]
+						.indexOf("yellow card") >= 0))
+						&& (str[i].indexOf(tTeamHome.getText().toString()) >= 0)) {
 					strBuilder.append("\n" + str[i]);
 				}
 				i++;
@@ -903,8 +1137,8 @@ public class TeamOneFragment extends Fragment {
 			tCards.setText(strBuilder.toString());
 		}
 	}
-	
-	public void updateSubsList() {		
+
+	public void updateSubsList() {
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
 				TeamContentProvider.STATSLINE };
@@ -921,8 +1155,8 @@ public class TeamOneFragment extends Fragment {
 				// insert players into positions
 				str[i] = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-					if ((str[i].indexOf("--> off:") >= 0) && (str[i].indexOf(panelName)>=0))					
-					{
+				if ((str[i].indexOf("--> off:") >= 0)
+						&& (str[i].indexOf(panelName) >= 0)) {
 					strBuilder.append("\n" + str[i]);
 				}
 				i++;
@@ -932,37 +1166,38 @@ public class TeamOneFragment extends Fragment {
 			tSubs.setText(strBuilder.toString());
 		}
 	}
-	
-	public void setTeam(String team){
-		oppTeamName=team;		
+
+	public void setTeam(String team) {
+		oppTeamName = team;
 	}
-	
-	public void resetCardsSubs(){
-		tCards.setText("");		
-		tSubs.setText("");		
+
+	public void resetCardsSubs() {
+		tCards.setText("");
+		tSubs.setText("");
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        inflater.inflate(R.menu.team1_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+		inflater.inflate(R.menu.team1_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
 	// set up help menu in action bar
-	//@Override
-	
+	// @Override
+
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)	{
+	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent ihelp;
 
 		switch (item.getItemId()) {
 		case 0:
-			//menu pointer do nothing
+			// menu pointer do nothing
 		case R.id.helpTeam:
 			ihelp = new Intent(getActivity(), HelpActivity.class);
 			ihelp.putExtra("HELP_ID", R.string.teamHelp);
 			startActivity(ihelp);
-			return true;	
-			case R.id.deletePlayer:
+			return true;
+		case R.id.deletePlayer:
 			deletePlayer();
 			return true;
 		case R.id.createNewTeam:
@@ -977,9 +1212,8 @@ public class TeamOneFragment extends Fragment {
 		case R.id.resetTeam:
 			resetTeam();
 			return true;
-		}	
-	    return super.onOptionsItemSelected(item);	
+		}
+		return super.onOptionsItemSelected(item);
 	}
-	
 
 }
