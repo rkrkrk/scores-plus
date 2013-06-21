@@ -796,7 +796,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
-                    android:layout_weight="6"
+                    android:layout_weight="7"
                     android:background="@drawable/btn_red"
                     android:gravity="center_vertical|center_horizontal"
                     android:minHeight="0dp"

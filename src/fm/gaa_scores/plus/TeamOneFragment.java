@@ -28,7 +28,6 @@ import java.util.List;
 import fm.gaa_scores.plus.R;
 
 import android.app.AlertDialog;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -45,6 +44,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 
 import android.support.v4.app.Fragment;
 import android.text.Layout.Alignment;
@@ -89,6 +89,7 @@ public class TeamOneFragment extends Fragment {
 	private EditText input;
 	private int index, indexOff, indexOn;
 	private TextView tCards, tSubs;
+	private boolean bloodSub=false;
 
 	// setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
@@ -111,12 +112,16 @@ public class TeamOneFragment extends Fragment {
 		// getActivity().getWindow().setSoftInputMode(
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+	
+		
 		// set up text view and buttons
 		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
 		Button bButtonReset = (Button) v.findViewById(R.id.button_setup_reset);
 		bButtonReset.setOnClickListener(resetTeamListener);
 		Button bSub = (Button) v.findViewById(R.id.bSub);
 		bSub.setOnClickListener(recordSub);
+		Button bBlood = (Button) v.findViewById(R.id.bBlood);
+		bBlood.setOnClickListener(recordSub);
 		Button bButtonChange = (Button) v.findViewById(R.id.homeTeam);
 		bButtonChange.setOnClickListener(changeNameListener);
 		// read persisted stored data to set up screen on restart
@@ -159,6 +164,8 @@ public class TeamOneFragment extends Fragment {
 		return v;
 	}
 
+	// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	// ///////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void onPause() {
 		// Save out the details so that they are available on restart
@@ -195,7 +202,6 @@ public class TeamOneFragment extends Fragment {
 			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 		}
 	};
-
 	
 	// tweet team selection
 	// write selection to bitmal and tweet bitmap
@@ -272,14 +278,15 @@ public class TeamOneFragment extends Fragment {
 						paint);
 			}
 			paint.setTextSize(13);
-			canvas.drawText("GAA Scores Stats Plus", 10, 65 + (commentLines * 20) + 470, paint);
+			canvas.drawText("GAA Scores Stats Plus - Android App", 10, 65 + (commentLines * 20) + 470, paint);
 					
 			
-
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			OutputStream fout = null;
 			File imageFile = new File(mPath, "selTweet.jpg");
+			Uri uri = Uri.fromFile(imageFile);
+
 
 			try {
 				mPath.mkdirs();
@@ -287,29 +294,33 @@ public class TeamOneFragment extends Fragment {
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
 				fout.flush();
 				fout.close();
-				Log.e("file", "OK");
-				Uri uri = Uri.fromFile(imageFile);
-
-				try {
-					Intent shareIntent = findTwitterClient();
-					shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
-							+ " Team Selection");
-					shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-					startActivity(Intent.createChooser(shareIntent, "Share"));
-				} catch (Exception ex) {
-					Toast.makeText(
-							getActivity(),
-							"Can't find twitter client\n"
-									+ "Please install Twitter App\nand login to Twitter",
-							Toast.LENGTH_LONG).show();
-				}
-
+		
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			try {
+				final Intent shareIntent = findTwitterClient();
+				shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
+						+ " Team Selection");
+				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+				//introduce delay to give time to read in bitmap before sending tweet
+			    Handler handler = new Handler(); 
+			    handler.postDelayed(new Runnable() { 
+			         public void run() { 
+			        	 startActivity(Intent.createChooser(shareIntent, "Share")); 
+			         } 
+			    }, 350); 				    
+				} catch (Exception ex) {
+				Toast.makeText(
+						getActivity(),
+						"Can't find twitter client\n"
+								+ "Please install Twitter App\nand login to Twitter",
+						Toast.LENGTH_LONG).show();
 			}
 
 		}
@@ -419,6 +430,12 @@ public class TeamOneFragment extends Fragment {
 	OnClickListener recordSub = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			
+			int txtButton = ((Button) v).getId();
+			if (txtButton==R.id.bBlood){
+				bloodSub=true;
+			}
+
 			// set up panelist
 			strTemp2 = new String[panelList.size() - 2];
 			for (int i = 0; i < panelList.size() - 2; i++) {
@@ -455,7 +472,7 @@ public class TeamOneFragment extends Fragment {
 											indexOn = which + 2;// text in first
 																// 2
 											playerOn = panelList.get(which + 2);
-											makeSub();
+											makeSub(bloodSub);
 
 											dialog.dismiss();
 										}
@@ -470,7 +487,7 @@ public class TeamOneFragment extends Fragment {
 		}
 	};
 
-	private void makeSub() {
+	private void makeSub(boolean bloodSub) {
 		// update database
 		// Where a Player is not already selected
 		// for team the button text will be just the
@@ -525,7 +542,8 @@ public class TeamOneFragment extends Fragment {
 						+ ((Startup) getActivity()).getFragmentScore().bPeriod
 								.getText();
 		ContentValues values = new ContentValues();
-		values.put("line", temp + " substitution " + panelName + "--> off: "
+		String temp2=(bloodSub) ? " blood sub " : " substitution ";
+		values.put("line", temp + temp2 + panelName + "--> off: "
 				+ playerOff + "  on: " + playerOn);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
