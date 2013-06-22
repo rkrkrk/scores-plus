@@ -13,10 +13,13 @@
  */
 package fm.gaa_scores.plus;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,7 +92,7 @@ public class TeamOneFragment extends Fragment {
 	private EditText input;
 	private int index, indexOff, indexOn;
 	private TextView tCards, tSubs;
-	private boolean bloodSub=false;
+	private boolean bloodSub = false;
 
 	// setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
@@ -112,8 +115,6 @@ public class TeamOneFragment extends Fragment {
 		// getActivity().getWindow().setSoftInputMode(
 		// WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-	
-		
 		// set up text view and buttons
 		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
 		Button bButtonReset = (Button) v.findViewById(R.id.button_setup_reset);
@@ -195,14 +196,14 @@ public class TeamOneFragment extends Fragment {
 						: String.valueOf(i) + ".\n ");
 			}
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-			emailIntent
-					.putExtra(Intent.EXTRA_SUBJECT, panelName + " v. " + oppTeamName + ". "+"Team Selection");
+			emailIntent.putExtra(Intent.EXTRA_SUBJECT, panelName + " v. "
+					+ oppTeamName + ". " + "Team Selection");
 			emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 			emailIntent.setType("text/plain");
 			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 		}
 	};
-	
+
 	// tweet team selection
 	// write selection to bitmal and tweet bitmap
 	OnClickListener selTextListener = new OnClickListener() {
@@ -272,21 +273,20 @@ public class TeamOneFragment extends Fragment {
 			String str;
 			for (int i = 1; i <= 15; i++) {
 				str = teamLineUpCurrent[i].length() > 2 ? String.valueOf(i)
-						+ ". " + String.valueOf(teamLineUpCurrent[i]) : String
+						+ ": " + String.valueOf(teamLineUpCurrent[i]) : String
 						.valueOf(i) + ".";
 				canvas.drawText(str, 10, 65 + (commentLines * 20) + (i * 30),
 						paint);
 			}
 			paint.setTextSize(13);
-			canvas.drawText("GAA Scores Stats Plus - Android App", 10, 65 + (commentLines * 20) + 470, paint);
-					
-			
+			canvas.drawText("GAA Scores Stats Plus - Android App", 10,
+					65 + (commentLines * 20) + 470, paint);
+
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			OutputStream fout = null;
 			File imageFile = new File(mPath, "selTweet.jpg");
 			Uri uri = Uri.fromFile(imageFile);
-
 
 			try {
 				mPath.mkdirs();
@@ -294,7 +294,7 @@ public class TeamOneFragment extends Fragment {
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
 				fout.flush();
 				fout.close();
-		
+
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -302,20 +302,23 @@ public class TeamOneFragment extends Fragment {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			try {
 				final Intent shareIntent = findTwitterClient();
 				shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
 						+ " Team Selection");
 				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-				//introduce delay to give time to read in bitmap before sending tweet
-			    Handler handler = new Handler(); 
-			    handler.postDelayed(new Runnable() { 
-			         public void run() { 
-			        	 startActivity(Intent.createChooser(shareIntent, "Share")); 
-			         } 
-			    }, 350); 				    
-				} catch (Exception ex) {
+				// introduce delay to give time to read in bitmap before sending
+				// tweet
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						startActivity(Intent
+								.createChooser(shareIntent, "Share"));
+					}
+				}, 400);
+			} catch (Exception ex) {
 				Toast.makeText(
 						getActivity(),
 						"Can't find twitter client\n"
@@ -430,10 +433,10 @@ public class TeamOneFragment extends Fragment {
 	OnClickListener recordSub = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
+
 			int txtButton = ((Button) v).getId();
-			if (txtButton==R.id.bBlood){
-				bloodSub=true;
+			if (txtButton == R.id.bBlood) {
+				bloodSub = true;
 			}
 
 			// set up panelist
@@ -542,9 +545,9 @@ public class TeamOneFragment extends Fragment {
 						+ ((Startup) getActivity()).getFragmentScore().bPeriod
 								.getText();
 		ContentValues values = new ContentValues();
-		String temp2=(bloodSub) ? " blood sub " : " substitution ";
-		values.put("line", temp + temp2 + panelName + "--> off: "
-				+ playerOff + "  on: " + playerOn);
+		String temp2 = (bloodSub) ? " blood sub " : " substitution ";
+		values.put("line", temp + temp2 + panelName + "--> off: " + playerOff
+				+ "  on: " + playerOn);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
 		updateSubsList();
@@ -723,7 +726,7 @@ public class TeamOneFragment extends Fragment {
 	};
 
 	private void loadTeam() {
-		ArrayList<String> panelList = new ArrayList<String>();
+		ArrayList<String> panelTeam = new ArrayList<String>();
 		String str;
 		String[] projection = { TeamContentProvider.TEAM };
 		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
@@ -734,16 +737,16 @@ public class TeamOneFragment extends Fragment {
 			do {
 				str = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.TEAM));
-				if (!panelList.contains(str))
-					panelList.add(str);
+				if (!panelTeam.contains(str))
+					panelTeam.add(str);
 			} while (c1.moveToNext());
 		}
 		// take out team in other page
-		panelList.remove(oppTeamName);
-		if (panelList.size() > 0) {
-			panel = new String[panelList.size()];
-			for (int i = 0; i < panelList.size(); i++) {
-				panel[i] = panelList.get(i);
+		panelTeam.remove(oppTeamName);
+		if (panelTeam.size() > 0) {
+			panel = new String[panelTeam.size()];
+			for (int i = 0; i < panelTeam.size(); i++) {
+				panel[i] = panelTeam.get(i);
 			}
 			c1.close();
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -1190,6 +1193,127 @@ public class TeamOneFragment extends Fragment {
 		oppTeamName = team;
 	}
 
+	public void importTeam() {
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.setType("file/*");
+		startActivityForResult(intent, 1);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String fname = data.getData().getPath();
+		StringBuffer buf = new StringBuffer();
+
+		try {
+			FileInputStream fileStream = new FileInputStream(fname);
+			InputStreamReader inStreamReader = new InputStreamReader(fileStream);
+			String str = "";
+			BufferedReader reader = new BufferedReader(inStreamReader);
+			if (inStreamReader != null) {
+				while ((str = reader.readLine()) != null) {
+					buf.append(str);
+				}
+			}
+			Log.e("read", "+" + buf);
+			// create team name
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM" + "_" + "HH:mm");
+			Date date = new Date(System.currentTimeMillis());
+			panelName = "team" + sdf.format(date);
+			tTeamHome.setText(panelName);
+			panelList.clear();
+			panelList.add(0, "RESET POSITION TO NUMBER");
+			panelList.add(0, "ENTER NEW PLAYER NAME");
+			playerIDLookUp.clear();
+			// add to database
+			ContentValues values = new ContentValues();
+			values.put("name", "...");
+			values.put("posn", 0);
+			values.put("team", panelName);
+			getActivity().getContentResolver().insert(
+					TeamContentProvider.CONTENT_URI, values);			
+			((Startup) getActivity()).getFragmentScore().setTeamLineUp(
+					panelName, "");
+			((Startup) getActivity()).getFragmentReview().setTeamNames(
+					panelName, "");
+			((Startup) getActivity()).getFragmentTeamTwo().setTeam(
+					panelName);	
+
+			// check if format is correct
+			if ((buf.toString().toLowerCase().startsWith("teamstart"))
+					&& (buf.toString().toLowerCase().endsWith("teamend"))) {
+				// good to go
+				// chop off start and end
+				String s[] = buf.toString()
+						.substring(10, buf.toString().length() - 8)
+						.split(",", -1);
+				for (int i = 0; i < s.length; i++) {
+					Log.e("read s", i + " " + s[i]);
+				}
+				// if more than 15 read in
+				if (s.length > 15) {
+					for (int i = 0; i < 15; i++) {
+						if (s[i].length() > 2) {
+//							teamLineUpCurrent[i + 1] = s[i];
+//							bTeam[i + 1].setText(s[i]);
+							values = new ContentValues();
+							values.put("name", s[i]);
+							values.put("posn", String.valueOf(i + 1));
+							values.put("team", panelName);
+							getActivity().getContentResolver().insert(
+									TeamContentProvider.CONTENT_URI, values);
+						} else {
+//							teamLineUpCurrent[i + 1] = String.valueOf(i);
+//							bTeam[i + 1].setText(String.valueOf(i));
+						}
+					}
+					for (int i = 15; i < s.length; i++) {
+						if (s[i].length() > 2) {
+							values = new ContentValues();
+							values.put("name", s[i]);
+							values.put("posn", -1);
+							values.put("team", panelName);
+							getActivity().getContentResolver().insert(
+									TeamContentProvider.CONTENT_URI, values);
+						}
+					}
+				} else {
+					// less than or equal to 15
+					for (int i = 0; i < s.length; i++) {
+						if (s[i].length() > 2) {
+//							teamLineUpCurrent[i + 1] = s[i];
+//							bTeam[i + 1].setText(s[i]);
+							values = new ContentValues();
+							values.put("name", s[i]);
+							values.put("posn", String.valueOf(i + 1));
+							values.put("team", panelName);
+							getActivity().getContentResolver().insert(
+									TeamContentProvider.CONTENT_URI, values);
+						} else {
+//							teamLineUpCurrent[i + 1] = String.valueOf(i);
+//							bTeam[i + 1].setText(String.valueOf(i));
+						}
+					}
+					// reset the rest
+//					for (int i = s.length + 1; i <= 15; i++) {
+//						teamLineUpCurrent[i] = String.valueOf(i);
+//						bTeam[i].setText(String.valueOf(i));
+//					}
+				}
+			getTeam(panelName);
+			} else {
+				Log.e("file format", "wrong file format");
+				Toast.makeText(getActivity(), "file format is wrong",
+						Toast.LENGTH_LONG).show();
+
+			}
+
+		} catch (IOException e) {
+			Log.e("file read failed", e.getMessage(), e);
+			Toast.makeText(getActivity(), "unable to read file",
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
 	public void resetCardsSubs() {
 		tCards.setText("");
 		tSubs.setText("");
@@ -1230,6 +1354,9 @@ public class TeamOneFragment extends Fragment {
 			return true;
 		case R.id.resetTeam:
 			resetTeam();
+			return true;
+		case R.id.importTeam:
+			importTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

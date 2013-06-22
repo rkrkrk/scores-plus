@@ -119,6 +119,7 @@ public final class R {
         public static final int home_goals=0x7f080074;
         public static final int home_points=0x7f080075;
         public static final int home_total=0x7f08007b;
+        public static final int importTeam=0x7f0800cd;
         public static final int increase_timer=0x7f08006b;
         public static final int layoutRecorddm=0x7f080061;
         public static final int layoutRev=0x7f080003;

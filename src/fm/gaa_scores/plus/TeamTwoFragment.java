@@ -311,7 +311,8 @@ public class TeamTwoFragment extends Fragment {
 				//introduce delay to give time to read in bitmap before sending tweet
 			    Handler handler = new Handler(); 
 			    handler.postDelayed(new Runnable() { 
-			         public void run() { 
+			         @Override
+					public void run() { 
 			        	 startActivity(Intent.createChooser(shareIntent, "Share")); 
 			         } 
 			    }, 350); 				    
