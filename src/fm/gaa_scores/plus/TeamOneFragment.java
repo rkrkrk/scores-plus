@@ -654,6 +654,12 @@ public class TeamOneFragment extends Fragment {
 		alert.show();
 	}
 
+	
+	
+	
+	
+	
+	
 	// create new team
 	OnClickListener createNewTeamListener = new OnClickListener() {
 		@Override
@@ -716,6 +722,12 @@ public class TeamOneFragment extends Fragment {
 		alert.show();
 	}
 
+
+	
+	
+	
+	
+	
 	// Load existing team
 	OnClickListener loadTeamListener = new OnClickListener() {
 		@Override
@@ -781,6 +793,14 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
 	// delete player
 	OnClickListener deletePlayerListener = new OnClickListener() {
 		@Override
@@ -1256,6 +1276,17 @@ public class TeamOneFragment extends Fragment {
 				((Startup) getActivity()).getFragmentTeamTwo().setTeam(panelName);
 
 				
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				String s[]=new String[inputNum];
 				for (int i=0;i<inputNum;i++){
 					s[i]=strTemp[i];
@@ -1327,7 +1358,6 @@ public class TeamOneFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent ihelp;
-
 		switch (item.getItemId()) {
 		case 0:
 			// menu pointer do nothing
