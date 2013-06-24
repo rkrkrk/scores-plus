@@ -1214,56 +1214,62 @@ public class TeamOneFragment extends Fragment {
 					buf.append(str);
 				}
 			}
-			Log.e("read", "+" + buf);
 			// create team name
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM" + "_" + "HH:mm");
-			Date date = new Date(System.currentTimeMillis());
-			panelName = "team" + sdf.format(date);
-			tTeamHome.setText(panelName);
-			panelList.clear();
-			panelList.add(0, "RESET POSITION TO NUMBER");
-			panelList.add(0, "ENTER NEW PLAYER NAME");
-			playerIDLookUp.clear();
-			// add to database
-			ContentValues values = new ContentValues();
-			values.put("name", "...");
-			values.put("posn", 0);
-			values.put("team", panelName);
-			getActivity().getContentResolver().insert(
-					TeamContentProvider.CONTENT_URI, values);			
-			((Startup) getActivity()).getFragmentScore().setTeamLineUp(
-					panelName, "");
-			((Startup) getActivity()).getFragmentReview().setTeamNames(
-					panelName, "");
-			((Startup) getActivity()).getFragmentTeamTwo().setTeam(
-					panelName);	
-
+			
 			// check if format is correct
-			if ((buf.toString().toLowerCase().startsWith("teamstart"))
-					&& (buf.toString().toLowerCase().endsWith("teamend"))) {
+			if ((buf.toString().toLowerCase().startsWith("teamstart,"))
+					&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
 				// good to go
 				// chop off start and end
-				String s[] = buf.toString()
+				String strTemp[] = buf.toString()
 						.substring(10, buf.toString().length() - 8)
 						.split(",", -1);
-				for (int i = 0; i < s.length; i++) {
-					Log.e("read s", i + " " + s[i]);
+				int inputNum=strTemp.length;
+				// check for name
+				if ((strTemp[strTemp.length-1].toLowerCase()
+						.startsWith("teamname:"))
+						&& (strTemp[strTemp.length-1].split(":").length == 2)){
+					panelName = strTemp[strTemp.length-1].split(":")[1];
+					inputNum=inputNum-1;
+				} else{
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM" + "_" + "HH:mm");
+					Date date = new Date(System.currentTimeMillis());
+					panelName = "team" + sdf.format(date);					
+				}
+				
+				tTeamHome.setText(panelName);
+				panelList.clear();
+				panelList.add(0, "RESET POSITION TO NUMBER");
+				panelList.add(0, "ENTER NEW PLAYER NAME");
+				playerIDLookUp.clear();
+				// add to database
+				ContentValues values = new ContentValues();
+				values.put("name", "...");
+				values.put("posn", 0);
+				values.put("team", panelName);
+				getActivity().getContentResolver().insert(
+						TeamContentProvider.CONTENT_URI, values);
+				((Startup) getActivity()).getFragmentScore().setTeamLineUp(
+						panelName, "");
+				((Startup) getActivity()).getFragmentReview().setTeamNames(
+						panelName, "");
+				((Startup) getActivity()).getFragmentTeamTwo().setTeam(panelName);
+
+				
+				String s[]=new String[inputNum];
+				for (int i=0;i<inputNum;i++){
+					s[i]=strTemp[i];
 				}
 				// if more than 15 read in
 				if (s.length > 15) {
 					for (int i = 0; i < 15; i++) {
 						if (s[i].length() > 2) {
-//							teamLineUpCurrent[i + 1] = s[i];
-//							bTeam[i + 1].setText(s[i]);
 							values = new ContentValues();
 							values.put("name", s[i]);
 							values.put("posn", String.valueOf(i + 1));
 							values.put("team", panelName);
 							getActivity().getContentResolver().insert(
 									TeamContentProvider.CONTENT_URI, values);
-						} else {
-//							teamLineUpCurrent[i + 1] = String.valueOf(i);
-//							bTeam[i + 1].setText(String.valueOf(i));
 						}
 					}
 					for (int i = 15; i < s.length; i++) {
@@ -1280,26 +1286,16 @@ public class TeamOneFragment extends Fragment {
 					// less than or equal to 15
 					for (int i = 0; i < s.length; i++) {
 						if (s[i].length() > 2) {
-//							teamLineUpCurrent[i + 1] = s[i];
-//							bTeam[i + 1].setText(s[i]);
 							values = new ContentValues();
 							values.put("name", s[i]);
 							values.put("posn", String.valueOf(i + 1));
 							values.put("team", panelName);
 							getActivity().getContentResolver().insert(
 									TeamContentProvider.CONTENT_URI, values);
-						} else {
-//							teamLineUpCurrent[i + 1] = String.valueOf(i);
-//							bTeam[i + 1].setText(String.valueOf(i));
 						}
 					}
-					// reset the rest
-//					for (int i = s.length + 1; i <= 15; i++) {
-//						teamLineUpCurrent[i] = String.valueOf(i);
-//						bTeam[i].setText(String.valueOf(i));
-//					}
 				}
-			getTeam(panelName);
+				getTeam(panelName);
 			} else {
 				Log.e("file format", "wrong file format");
 				Toast.makeText(getActivity(), "file format is wrong",
