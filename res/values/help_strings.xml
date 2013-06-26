@@ -4,7 +4,8 @@
     <string name="teamHelp">
 <![CDATA[
  <h1>HELP - TEAM SCREEN</h1>
-<p>Touch <b>change team name</b> button to enter a new name for the current team.<br/><br/></p>
+<p>Touch <b>change team name</b> button to enter a new name for the current team. (Dont use 
+duplicate team names. Always use a unique name.<br/><br/></p>
 <p>
 <b>TEAM SELECTION</b><br/>
 Select the team lineup by touching any of the position buttons to get option to <b>enter 
@@ -18,7 +19,7 @@ To change the name of an entered player or correct mistakes you need to delete t
 <p>
 <b>ADDITIONAL PLAYERS / SUBS</b><br/>
 If you have more than 15 players it is best to enter all names before the start so that they 
-can be swapped in as subs during the match. <br/>Add additional players by clicking on a position
+can be swapped in as subs during the match. <br/>Add additional players by clicking on any position
 button and choosing the <b>enter new player name</b> option. Repeat on the same button until 
 all players on the panel are entered. Then touch on the position button again and swap back in
 the original player selected.<br/><br/>
@@ -26,7 +27,7 @@ Touch <b>make substitution</b> or
  <b>make blood sub</b> to record a substituion in the list of match/stats events.
  You will be asked to select which player is coming off and then select player going on.
  (Note that the name of the player going on must exist on the team already i.e. their
- name must have been entered previously.) <br/><br/></p>
+ name must have been entered previously (see paragraph above).) <br/><br/></p>
 <p>Touch <b>reset team selection</b> to reset all positions back to a number.  Note that player 
 names already entered are saved for reuse.</p>
 </p> 
@@ -36,11 +37,15 @@ be displayed here</p>
 
 <p><b>tweet selection</b><br/>
 To send Tweets, you need to have the Twitter App, or equivalent, installed on your device and you must
-be logged in.<br/>
-Touch <b>Tweet selection</b> to tweet an image containing your current team selection/lineup from 1 to 15.</p>
+be logged in on Twitter.<br/>
+Touch <b>Tweet selection</b> to tweet an image/picture containing your current team selection from 1 to 15. 
+(Note that on some 
+devices the picture may not be visible on the send Twitter screen but it will be added
+when you send the tweet.)</p>
 
 <p><b>text selection</b><br/>
-To send texts, your device must be capable of sending sms messages.  You can setup the number or numbers to send texts to in the 
+To send texts, your device must be capable of sending sms messages.  You can setup the 
+phone number or numbers to send texts to in the 
 <b>MENU</b> section of the <b>SCORES</b> page.<br/>
  Touch <b>Text selection</b> to text your current team selection/lineup from 1 to 15.</p>
 <p><b>Share selection</b><br/>
@@ -58,6 +63,58 @@ loaded in the other team screen will not be available<br/>
 currently active teams can not be deleted.<br/>
 <b>reset current team selection</b> - reset all positions back to a number.  Note that player 
 names already entered are saved for reuse.<br/>
+<b>import team from text file</b> - see below.<br/>
+</p>
+
+<p>
+<b>IMPORT TEAM FROM TEXT FILE</b><br/>
+This options allows you to type out a team/panel in a text editor or word processor, save or
+copy or email etc. it to the device and then import it into this App.<br/><br/>
+<b>Steps</b><br/><br/>
+<b>1. prerequisite: </b> You must have a File Explorer/Manager App installed which allows 
+you to navigate your devices file system e.g. ES File Explorer.<br/><br/>
+<b>2. create text file: </b> Use a simple text editor or word processor to create
+a file in the following exact format:<br/><br/>
+<b>teamstart,<br/>
+Anthony Nosh,<br/>
+Jackie Tyrant,<br/>
+Noel Stickey,<br/>
+Joel Coen,<br/>
+Tommy Whoosh,<br/>
+Seanie MacNificent,<br/>
+Sean Og OHelpme,<br/>
+Michael Funnily,<br/>
+Alan McLobster,<br/>
+Eoin Lurkin,<br/>
+Henry Shufflin,<br/>
+Da Burke,<br/>
+DJ Scarey,<br/>
+Joe Cunning,<br/>
+John Mullet,<br/>
+Michael Nice,<br/>
+Shane Hooley,<br/>
+Michael Curtins,<br/>
+Block Walsh,<br/>
+teamend<br/><br/>
+</b>
+Firstline must be <b><i>teamstart,</i></b> (note comma at end of line)<br/>
+Then enter one name per line with a comma at the end of the line<br/>
+The first 15 names will be assigned to positions 1 to 15 in the 
+order they are entered.<br/>
+The final line must be <b><i>teamend</i></b> (no comma)<br/><br/>
+<b>3. save file </b> save the file somewhere as a text file with suffix <i>.txt</i>  
+(if using a word 
+processor you will need to <i>save as</i> or "export</i> to a text file format).<br/><br/>
+<b>4. get file onto device </b> transfer or save your text file onto your device
+into a directory or location where you can find it. (email, bluetooth, sdcard, usb cable
+etc. maybe used to get file onto device depending on what you are doing. <br/><br/>
+<b>5. select the <i>import team from text file</i> option from the App menu</b> 
+You should now be able to use your pre installed File Explorer App to navigate to the
+text file and select it<br/><br/>
+<b>6. change team name </b> The text file will be read in and a new team created.
+Use the <b> change team name</b> button to give your team a meaningful name and you are done.
+ <br/><br/>
+
 </p>
 
  

@@ -267,7 +267,7 @@ public class TeamOneFragment extends Fragment {
 			mTextLayout.draw(canvas);
 			canvas.restore();
 
-			paint.setTextSize(24);
+			paint.setTextSize(20);
 			canvas.drawText(panelName + " team selection ", 10,
 					65 + (commentLines * 20), paint);
 			String str;
@@ -654,12 +654,6 @@ public class TeamOneFragment extends Fragment {
 		alert.show();
 	}
 
-	
-	
-	
-	
-	
-	
 	// create new team
 	OnClickListener createNewTeamListener = new OnClickListener() {
 		@Override
@@ -722,12 +716,6 @@ public class TeamOneFragment extends Fragment {
 		alert.show();
 	}
 
-
-	
-	
-	
-	
-	
 	// Load existing team
 	OnClickListener loadTeamListener = new OnClickListener() {
 		@Override
@@ -793,14 +781,6 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
 	// delete player
 	OnClickListener deletePlayerListener = new OnClickListener() {
 		@Override
@@ -1215,129 +1195,128 @@ public class TeamOneFragment extends Fragment {
 
 	public void importTeam() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("file/*");
+		intent.setType("file/plain");
 		startActivityForResult(intent, 1);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String fname = data.getData().getPath();
-		StringBuffer buf = new StringBuffer();
+		if (resultCode != 0) {
+			String fname = data.getData().getPath();
+			StringBuffer buf = new StringBuffer();
 
-		try {
-			FileInputStream fileStream = new FileInputStream(fname);
-			InputStreamReader inStreamReader = new InputStreamReader(fileStream);
-			String str = "";
-			BufferedReader reader = new BufferedReader(inStreamReader);
-			if (inStreamReader != null) {
-				while ((str = reader.readLine()) != null) {
-					buf.append(str);
+			try {
+				FileInputStream fileStream = new FileInputStream(fname);
+				InputStreamReader inStreamReader = new InputStreamReader(
+						fileStream);
+				String str = "";
+				BufferedReader reader = new BufferedReader(inStreamReader);
+				if (inStreamReader != null) {
+					while ((str = reader.readLine()) != null) {
+						buf.append(str);
+					}
 				}
-			}
-			// create team name
-			
-			// check if format is correct
-			if ((buf.toString().toLowerCase().startsWith("teamstart,"))
-					&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
-				// good to go
-				// chop off start and end
-				String strTemp[] = buf.toString()
-						.substring(10, buf.toString().length() - 8)
-						.split(",", -1);
-				int inputNum=strTemp.length;
-				// check for name
-				if ((strTemp[strTemp.length-1].toLowerCase()
-						.startsWith("teamname:"))
-						&& (strTemp[strTemp.length-1].split(":").length == 2)){
-					panelName = strTemp[strTemp.length-1].split(":")[1];
-					inputNum=inputNum-1;
-				} else{
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM" + "_" + "HH:mm");
-					Date date = new Date(System.currentTimeMillis());
-					panelName = "team" + sdf.format(date);					
-				}
-				
-				tTeamHome.setText(panelName);
-				panelList.clear();
-				panelList.add(0, "RESET POSITION TO NUMBER");
-				panelList.add(0, "ENTER NEW PLAYER NAME");
-				playerIDLookUp.clear();
-				// add to database
-				ContentValues values = new ContentValues();
-				values.put("name", "...");
-				values.put("posn", 0);
-				values.put("team", panelName);
-				getActivity().getContentResolver().insert(
-						TeamContentProvider.CONTENT_URI, values);
-				((Startup) getActivity()).getFragmentScore().setTeamLineUp(
-						panelName, "");
-				((Startup) getActivity()).getFragmentReview().setTeamNames(
-						panelName, "");
-				((Startup) getActivity()).getFragmentTeamTwo().setTeam(panelName);
+				// create team name
 
-				
-			
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				String s[]=new String[inputNum];
-				for (int i=0;i<inputNum;i++){
-					s[i]=strTemp[i];
-				}
-				// if more than 15 read in
-				if (s.length > 15) {
-					for (int i = 0; i < 15; i++) {
-						if (s[i].length() > 2) {
-							values = new ContentValues();
-							values.put("name", s[i]);
-							values.put("posn", String.valueOf(i + 1));
-							values.put("team", panelName);
-							getActivity().getContentResolver().insert(
-									TeamContentProvider.CONTENT_URI, values);
+				// check if format is correct
+				if ((buf.toString().toLowerCase().startsWith("teamstart,"))
+						&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
+					// good to go
+					// chop off start and end
+					String strTemp[] = buf.toString()
+							.substring(10, buf.toString().length() - 8)
+							.split(",", -1);
+					int inputNum = strTemp.length;
+					// check for name
+					if ((strTemp[strTemp.length - 1].toLowerCase()
+							.startsWith("teamname:"))
+							&& (strTemp[strTemp.length - 1].split(":").length == 2)) {
+						panelName = strTemp[strTemp.length - 1].split(":")[1];
+						inputNum = inputNum - 1;
+					} else {
+						SimpleDateFormat sdf = new SimpleDateFormat("HHmmddMMyyyy");
+						Date date = new Date(System.currentTimeMillis());
+						panelName = "team." + sdf.format(date);
+					}
+
+					tTeamHome.setText(panelName);
+					panelList.clear();
+					panelList.add(0, "RESET POSITION TO NUMBER");
+					panelList.add(0, "ENTER NEW PLAYER NAME");
+					playerIDLookUp.clear();
+					// add to database
+					ContentValues values = new ContentValues();
+					values.put("name", "...");
+					values.put("posn", 0);
+					values.put("team", panelName);
+					getActivity().getContentResolver().insert(
+							TeamContentProvider.CONTENT_URI, values);
+					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
+							panelName, "");
+					((Startup) getActivity()).getFragmentReview().setTeamNames(
+							panelName, "");
+					((Startup) getActivity()).getFragmentTeamTwo().setTeam(
+							panelName);
+
+					String s[] = new String[inputNum];
+					for (int i = 0; i < inputNum; i++) {
+						s[i] = strTemp[i];
+					}
+
+					// if more than 15 read in
+					if (s.length > 15) {
+						for (int i = 0; i < 15; i++) {
+							if (s[i].length() > 2) {
+								values = new ContentValues();
+								values.put("name", s[i]);
+								values.put("posn", String.valueOf(i + 1));
+								values.put("team", panelName);
+								getActivity()
+										.getContentResolver()
+										.insert(TeamContentProvider.CONTENT_URI,
+												values);
+							}
+						}
+						for (int i = 15; i < s.length; i++) {
+							if (s[i].length() > 2) {
+								values = new ContentValues();
+								values.put("name", s[i]);
+								values.put("posn", -1);
+								values.put("team", panelName);
+								getActivity()
+										.getContentResolver()
+										.insert(TeamContentProvider.CONTENT_URI,
+												values);
+							}
+						}
+					} else {
+						// less than or equal to 15
+						for (int i = 0; i < s.length; i++) {
+							if (s[i].length() > 2) {
+								values = new ContentValues();
+								values.put("name", s[i]);
+								values.put("posn", String.valueOf(i + 1));
+								values.put("team", panelName);
+								getActivity()
+										.getContentResolver()
+										.insert(TeamContentProvider.CONTENT_URI,
+												values);
+							}
 						}
 					}
-					for (int i = 15; i < s.length; i++) {
-						if (s[i].length() > 2) {
-							values = new ContentValues();
-							values.put("name", s[i]);
-							values.put("posn", -1);
-							values.put("team", panelName);
-							getActivity().getContentResolver().insert(
-									TeamContentProvider.CONTENT_URI, values);
-						}
-					}
+					getTeam(panelName);
 				} else {
-					// less than or equal to 15
-					for (int i = 0; i < s.length; i++) {
-						if (s[i].length() > 2) {
-							values = new ContentValues();
-							values.put("name", s[i]);
-							values.put("posn", String.valueOf(i + 1));
-							values.put("team", panelName);
-							getActivity().getContentResolver().insert(
-									TeamContentProvider.CONTENT_URI, values);
-						}
-					}
+					Log.e("file format", "wrong file format");
+					Toast.makeText(getActivity(), "file format is wrong",
+							Toast.LENGTH_LONG).show();
+
 				}
-				getTeam(panelName);
-			} else {
-				Log.e("file format", "wrong file format");
-				Toast.makeText(getActivity(), "file format is wrong",
+
+			} catch (IOException e) {
+				Log.e("file read failed", e.getMessage(), e);
+				Toast.makeText(getActivity(), "unable to read file",
 						Toast.LENGTH_LONG).show();
-
 			}
-
-		} catch (IOException e) {
-			Log.e("file read failed", e.getMessage(), e);
-			Toast.makeText(getActivity(), "unable to read file",
-					Toast.LENGTH_LONG).show();
 		}
 	}
 
