@@ -63,7 +63,23 @@ loaded in the other team screen will not be available<br/>
 currently active teams can not be deleted.<br/>
 <b>reset current team selection</b> - reset all positions back to a number.  Note that player 
 names already entered are saved for reuse.<br/>
+<b>import downloaded team</b> - see below.<br/>
 <b>import team from text file</b> - see below.<br/>
+</p>
+
+<p>
+<b>IMPORT DOWNLOADED TEAM</b><br/>
+This option enables you to automatically download team panels which are made
+available through the @gaaapps twitter account.  Go to the the @gaaapps
+twitter account and click on the download link in the relevant tweet for the team you want.
+You must select the options to <b><i>download</b></i> the file, not just view it in a browser
+or screen.  Once download is complete come back to this App and selecting
+this option should automatically import the downloaded team.<br/><br/>
+
+If it does not work check that a file named <b><i>appGAASCORESSTAT.txt</i></b> has been
+downloaded to your <b>Downloads</b> folder.  If not, use the <b>import team from text file</b>
+option below to manually find and import the downloaded file.
+
 </p>
 
 <p>
@@ -198,6 +214,13 @@ separate the phone numbers.<br/>
 <h1>HELP - REVIEW SCREEN</h1>
 <p>
 Summary of match stats is shown at top of screen.<br/><br/>
+<b>** Out for 45/65</b> - this stat is incremented each time you record <b><i>from 45/65</i></b>
+from the stats screen. So, make sure you record some outcome, be it goal/
+point/wide/off posts/saved/short, for each 45/65 taken.<br/><br/>
+<b>*** Total Puckouts</b> - this stat is incremented every time you record 
+a <b><i>goal</i></b> or <b><i>point</i></b> or <b><i>wide</i></b>
+from the stats screen for the opposite team. <br/><br/>
+<br/><br/>
 List of match/stats events recorded is displayed at the bottom of the screen. Swipe up/down
 to scroll.
 </p>

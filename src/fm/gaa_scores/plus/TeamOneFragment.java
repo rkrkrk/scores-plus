@@ -594,6 +594,8 @@ public class TeamOneFragment extends Fragment {
 		}
 	};
 
+	
+	
 	private void changeName() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		input = new EditText(getActivity());
@@ -1202,121 +1204,198 @@ public class TeamOneFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != 0) {
-			String fname = data.getData().getPath();
-			StringBuffer buf = new StringBuffer();
+			Log.e("impotteam", "+" + data.getData().getPath());
+			readTeam(data.getData().getPath());
+		}
+	}
 
-			try {
-				FileInputStream fileStream = new FileInputStream(fname);
-				InputStreamReader inStreamReader = new InputStreamReader(
-						fileStream);
-				String str = "";
-				BufferedReader reader = new BufferedReader(inStreamReader);
-				if (inStreamReader != null) {
-					while ((str = reader.readLine()) != null) {
-						buf.append(str);
-					}
+	public void readTeam(String fname) {
+		StringBuffer buf = new StringBuffer();
+
+		try {
+			FileInputStream fileStream = new FileInputStream(fname);
+			InputStreamReader inStreamReader = new InputStreamReader(fileStream);
+			String str = "";
+			BufferedReader reader = new BufferedReader(inStreamReader);
+			if (inStreamReader != null) {
+				while ((str = reader.readLine()) != null) {
+					buf.append(str);
 				}
-				// create team name
+			}
+			// create team name
 
-				// check if format is correct
-				if ((buf.toString().toLowerCase().startsWith("teamstart,"))
-						&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
-					// good to go
-					// chop off start and end
-					String strTemp[] = buf.toString()
-							.substring(10, buf.toString().length() - 8)
-							.split(",", -1);
-					int inputNum = strTemp.length;
-					// check for name
-					if ((strTemp[strTemp.length - 1].toLowerCase()
-							.startsWith("teamname:"))
-							&& (strTemp[strTemp.length - 1].split(":").length == 2)) {
-						panelName = strTemp[strTemp.length - 1].split(":")[1];
-						inputNum = inputNum - 1;
-					} else {
-						SimpleDateFormat sdf = new SimpleDateFormat("HHmmddMMyyyy");
-						Date date = new Date(System.currentTimeMillis());
-						panelName = "team." + sdf.format(date);
-					}
-
-					tTeamHome.setText(panelName);
-					panelList.clear();
-					panelList.add(0, "RESET POSITION TO NUMBER");
-					panelList.add(0, "ENTER NEW PLAYER NAME");
-					playerIDLookUp.clear();
-					// add to database
-					ContentValues values = new ContentValues();
-					values.put("name", "...");
-					values.put("posn", 0);
-					values.put("team", panelName);
-					getActivity().getContentResolver().insert(
-							TeamContentProvider.CONTENT_URI, values);
-					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
-							panelName, "");
-					((Startup) getActivity()).getFragmentReview().setTeamNames(
-							panelName, "");
-					((Startup) getActivity()).getFragmentTeamTwo().setTeam(
-							panelName);
-
-					String s[] = new String[inputNum];
-					for (int i = 0; i < inputNum; i++) {
-						s[i] = strTemp[i];
-					}
-
-					// if more than 15 read in
-					if (s.length > 15) {
-						for (int i = 0; i < 15; i++) {
-							if (s[i].length() > 2) {
-								values = new ContentValues();
-								values.put("name", s[i]);
-								values.put("posn", String.valueOf(i + 1));
-								values.put("team", panelName);
-								getActivity()
-										.getContentResolver()
-										.insert(TeamContentProvider.CONTENT_URI,
-												values);
-							}
-						}
-						for (int i = 15; i < s.length; i++) {
-							if (s[i].length() > 2) {
-								values = new ContentValues();
-								values.put("name", s[i]);
-								values.put("posn", -1);
-								values.put("team", panelName);
-								getActivity()
-										.getContentResolver()
-										.insert(TeamContentProvider.CONTENT_URI,
-												values);
-							}
-						}
-					} else {
-						// less than or equal to 15
-						for (int i = 0; i < s.length; i++) {
-							if (s[i].length() > 2) {
-								values = new ContentValues();
-								values.put("name", s[i]);
-								values.put("posn", String.valueOf(i + 1));
-								values.put("team", panelName);
-								getActivity()
-										.getContentResolver()
-										.insert(TeamContentProvider.CONTENT_URI,
-												values);
-							}
-						}
-					}
-					getTeam(panelName);
+			// check if format is correct
+			if ((buf.toString().toLowerCase().startsWith("teamstart,"))
+					&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
+				// good to go
+				// chop off start and end
+				String strTemp[] = buf.toString()
+						.substring(10, buf.toString().length() - 8)
+						.split(",", -1);
+				int inputNum = strTemp.length;
+				// check for name
+				if ((strTemp[strTemp.length - 1].toLowerCase()
+						.startsWith("teamname:"))
+						&& (strTemp[strTemp.length - 1].split(":").length == 2)) {
+					panelName = strTemp[strTemp.length - 1].split(":")[1];
+					inputNum = inputNum - 1;
 				} else {
-					Log.e("file format", "wrong file format");
-					Toast.makeText(getActivity(), "file format is wrong",
-							Toast.LENGTH_LONG).show();
-
+					SimpleDateFormat sdf = new SimpleDateFormat("HHmmddMMyyyy");
+					Date date = new Date(System.currentTimeMillis());
+					panelName = "team." + sdf.format(date);
 				}
 
-			} catch (IOException e) {
-				Log.e("file read failed", e.getMessage(), e);
-				Toast.makeText(getActivity(), "unable to read file",
+				tTeamHome.setText(panelName);
+				panelList.clear();
+				panelList.add(0, "RESET POSITION TO NUMBER");
+				panelList.add(0, "ENTER NEW PLAYER NAME");
+				playerIDLookUp.clear();
+				// add to database
+				ContentValues values = new ContentValues();
+				values.put("name", "...");
+				values.put("posn", 0);
+				values.put("team", panelName);
+				getActivity().getContentResolver().insert(
+						TeamContentProvider.CONTENT_URI, values);
+				((Startup) getActivity()).getFragmentScore().setTeamLineUp(
+						panelName, "");
+				((Startup) getActivity()).getFragmentReview().setTeamNames(
+						panelName, "");
+				((Startup) getActivity()).getFragmentTeamTwo().setTeam(
+						panelName);
+
+				String s[] = new String[inputNum];
+				for (int i = 0; i < inputNum; i++) {
+					s[i] = strTemp[i];
+				}
+
+				// if more than 15 read in
+				if (s.length > 15) {
+					for (int i = 0; i < 15; i++) {
+						if (s[i].length() > 2) {
+							values = new ContentValues();
+							values.put("name", s[i]);
+							values.put("posn", String.valueOf(i + 1));
+							values.put("team", panelName);
+							getActivity().getContentResolver().insert(
+									TeamContentProvider.CONTENT_URI, values);
+						}
+					}
+					for (int i = 15; i < s.length; i++) {
+						if (s[i].length() > 2) {
+							values = new ContentValues();
+							values.put("name", s[i]);
+							values.put("posn", -1);
+							values.put("team", panelName);
+							getActivity().getContentResolver().insert(
+									TeamContentProvider.CONTENT_URI, values);
+						}
+					}
+				} else {
+					// less than or equal to 15
+					for (int i = 0; i < s.length; i++) {
+						if (s[i].length() > 2) {
+							values = new ContentValues();
+							values.put("name", s[i]);
+							values.put("posn", String.valueOf(i + 1));
+							values.put("team", panelName);
+							getActivity().getContentResolver().insert(
+									TeamContentProvider.CONTENT_URI, values);
+						}
+					}
+				}
+				getTeam(panelName);
+			} else {
+				Log.e("file format", "wrong file format");
+				Toast.makeText(getActivity(), "file format is wrong",
+						Toast.LENGTH_LONG).show();
+
+			}
+
+		} catch (IOException e) {
+			Log.e("file read failed", e.getMessage(), e);
+			Toast.makeText(getActivity(), "unable to read file",
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
+	public void downloadTeam() {
+		try {
+			List<File> fileList = new ArrayList<File>();
+			File root = new File(Environment.getExternalStoragePublicDirectory(
+					Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+			// list files in directory
+			// filter only ones starting with appGAASCORESSTATS
+			// then get most recent one
+			File[] files = root.listFiles();
+			for (File f : files) {
+				if (f.getName().length() >= 18) {
+					if (f.getName().substring(0, 17)
+							.equals("appGAASCORESSTATS")) {
+						fileList.add(f);
+					}
+				}
+			}
+			if (fileList.size() > 0) {
+
+				String fName = fileList.get(0).getPath();
+				long datemod = fileList.get(0).lastModified();
+				for (int i = 1; i < fileList.size(); i++) {
+					if (fileList.get(i).lastModified() > datemod) {
+						fName = fileList.get(i).getPath();
+					}
+				}
+				/////////////read in team
+				readTeam(fName);
+				//// wait a second to read file then delete files
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						Log.v("start file delete","OK");
+						deleteDownloads();
+					}
+				}, 5000);
+				
+			} else {
+				Toast.makeText(
+						getActivity(),
+						"Can't find downloaded file.\nTry downloading file in Twitter @gaaapps again\nor try ? HELP screen for suggestions",
 						Toast.LENGTH_LONG).show();
 			}
+		}
+
+		catch (Exception ex) {
+			Toast.makeText(
+					getActivity(),
+					"Can't find downloaded file.\nHave a look in ? HELP screen"
+							+ "for suggestions ", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	public void deleteDownloads() {
+		try {
+			List<File> fileList = new ArrayList<File>();
+			File root = new File(Environment.getExternalStoragePublicDirectory(
+					Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+			// list files in directory
+			// filter only ones starting with appGAASCORESSTATS
+			// then get most recent one
+			File[] files = root.listFiles();
+			for (File f : files) {
+				if (f.getName().length() >= 18) {
+						if (f.getName().substring(0, 17)
+							.equals("appGAASCORESSTATS")) {
+						Log.v("deleting",f.getName());					
+						f.delete();
+						Log.v("file deleted","OK");
+					}
+				}
+			}
+		}
+
+		catch (Exception ex) {
+			Log.e("error with deleting downloads", ex.toString());
 		}
 	}
 
@@ -1359,6 +1438,9 @@ public class TeamOneFragment extends Fragment {
 			return true;
 		case R.id.resetTeam:
 			resetTeam();
+			return true;
+		case R.id.downloadTeam:
+			downloadTeam();
 			return true;
 		case R.id.importTeam:
 			importTeam();

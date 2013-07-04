@@ -31,6 +31,10 @@
         android:showAsAction="ifRoom"
         android:title="reset current team selection"/>
     <item
+        android:id="@+id/downloadTeam"
+        android:showAsAction="ifRoom"
+        android:title="import downloaded team"/>
+  <item
         android:id="@+id/importTeam"
         android:showAsAction="ifRoom"
         android:title="import team from text file"/>

@@ -990,6 +990,9 @@ public class ScoresFragment extends Fragment {
 			// for home team commit
 			// WRITE TO REVIEW PAGE///////////////////////////////////
 			if (stats1.equals("goal")) {
+				//increment puckout total
+				((Startup) getActivity()).getFragmentReview()
+				.addPuckTotOpp(count);
 				// increment goal counter
 				if (homeGoals + count >= 0) {
 					homeGoals = homeGoals + count;
@@ -1020,6 +1023,9 @@ public class ScoresFragment extends Fragment {
 							.addtShotGoalsPlayHome(count);
 				}
 			} else if (stats1.equals("point")) {
+				//increment puckout total
+				((Startup) getActivity()).getFragmentReview()
+				.addPuckTotOpp(count);
 				// increment points counter
 				if (homePoints + count >= 0) {
 					homePoints = homePoints + count;
@@ -1053,7 +1059,9 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotWidesHome(count);
-			} else if (stats1.equals("saved")) {
+				((Startup) getActivity()).getFragmentReview()
+				.addPuckTotOpp(count);
+			} else if (stats1.equals("saved/short")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotSavedHome(count);
@@ -1074,12 +1082,20 @@ public class ScoresFragment extends Fragment {
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanHome(count);
 			}
+			if (stats2.equals("from 45/65")){
+				((Startup) getActivity()).getFragmentReview()
+				.addtShot45Home(count);
+			}
 			break;
+			
 		case R.id.buttonShotOpp:
 			team = tOppTeam.getText().toString();
 			// for opposition team
 			// WRITE TO REVIEW PAGE///////////////////////////////////
 			if (stats1.equals("goal")) {
+				//increment puckout total
+				((Startup) getActivity()).getFragmentReview()
+				.addPuckTotHome(count);
 				// increment goal counter
 				if (oppGoals + count >= 0) {
 					oppGoals = oppGoals + count;
@@ -1107,6 +1123,9 @@ public class ScoresFragment extends Fragment {
 							.addtShotGoalsPlayOpp(count);
 				}
 			} else if (stats1.equals("point")) {
+				//increment puckout total
+				((Startup) getActivity()).getFragmentReview()
+				.addPuckTotHome(count);
 				// increment points counter
 				if (oppPoints + count >= 0) {
 					oppPoints = oppPoints + count;
@@ -1129,15 +1148,18 @@ public class ScoresFragment extends Fragment {
 				if ((!stats2.equals("from free"))
 						&& (!stats2.equals("from penalty"))
 						&& (!stats2.equals("from sideline"))
-						&& (!stats2.equals("45/65"))) {
+						&& (!stats2.equals("from 45/65"))) {
 					((Startup) getActivity()).getFragmentReview()
 							.addtShotPointsPlayOpp(count);
 				}
 			} else if (stats1.equals("wide")) {
+				//increment puckout total
+				((Startup) getActivity()).getFragmentReview()
+				.addPuckTotHome(count);
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotWidesOpp(
 						count);
-			} else if (stats1.equals("saved")) {
+			} else if (stats1.equals("saved/short")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotSavedOpp(
 						count);
@@ -1157,6 +1179,10 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanOpp(count);
+			}
+			if (stats2.equals("from 45/65")){
+				((Startup) getActivity()).getFragmentReview()
+				.addtShot45Opp(count);
 			}
 			break;
 		}
@@ -1601,6 +1627,9 @@ public class ScoresFragment extends Fragment {
 				if (strTemp.indexOf("goal") >= 0) {
 					// check which team
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+						//decrement puckout total
+						((Startup) getActivity()).getFragmentReview()
+						.addPuckTotOpp(-1);
 						if (homeGoals - 1 >= 0) {
 							homeGoals = homeGoals - 1;
 							bHomeGoals.setText(String.valueOf(homeGoals));
@@ -1627,6 +1656,9 @@ public class ScoresFragment extends Fragment {
 							}
 						}
 					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+						//decrement puckout total
+						((Startup) getActivity()).getFragmentReview()
+						.addPuckTotHome(-1);
 						if (oppGoals - 1 >= 0) {
 							oppGoals = oppGoals - 1;
 							bOppGoals.setText(String.valueOf(oppGoals));
@@ -1658,6 +1690,9 @@ public class ScoresFragment extends Fragment {
 				else if (strTemp.indexOf("point") >= 0) {
 					// check which team
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+						//decrement puckout total
+						((Startup) getActivity()).getFragmentReview()
+						.addPuckTotOpp(-1);
 						if (homePoints - 1 >= 0) {
 							homePoints = homePoints - 1;
 							bHomePoints.setText(String.valueOf(homePoints));
@@ -1684,6 +1719,9 @@ public class ScoresFragment extends Fragment {
 							}
 						}
 					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+						//decrement puckout total
+						((Startup) getActivity()).getFragmentReview()
+						.addPuckTotHome(-1);
 						if (oppPoints - 1 >= 0) {
 							oppPoints = oppPoints - 1;
 							bOppPoints.setText(String.valueOf(oppPoints));
@@ -1717,9 +1755,15 @@ public class ScoresFragment extends Fragment {
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 						((Startup) getActivity()).getFragmentReview()
 								.addtShotWidesHome(-1);
+						//decrement puckout total
+						((Startup) getActivity()).getFragmentReview()
+						.addPuckTotOpp(-1);
 					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 						((Startup) getActivity()).getFragmentReview()
 								.addtShotWidesOpp(-1);
+						//decrement puckout total
+						((Startup) getActivity()).getFragmentReview()
+						.addPuckTotHome(-1);
 					}
 				}
 				// check for off posts
@@ -1734,7 +1778,7 @@ public class ScoresFragment extends Fragment {
 					}
 				}
 				// check for saved
-				else if (strTemp.indexOf("saved") >= 0) {
+				else if (strTemp.indexOf("saved/short") >= 0) {
 					// check which team
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 						((Startup) getActivity()).getFragmentReview()
@@ -1771,6 +1815,18 @@ public class ScoresFragment extends Fragment {
 								.addFreeConcededOpp(-1);
 					}
 				}
+				// check for out for 45/65
+				if (strTemp.indexOf("from 45/65") >= 0) {
+					// check which team
+					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShot45Home(-1);
+					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShot45Opp(-1);
+					}
+				}				
+
 
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"

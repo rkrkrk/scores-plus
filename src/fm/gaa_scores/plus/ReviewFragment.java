@@ -46,7 +46,8 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotPointsHome;
 	private TextView tShotSavedHome; 
 	private TextView tShotPostsHome;
-
+	private TextView tShot45Home;
+	private TextView tTotPuckHome;
 	private TextView tShotGoalsPlayHome;
 	private TextView tShotPointsPlayHome;
 	private TextView tFreeConcededHome;
@@ -66,7 +67,9 @@ public class ReviewFragment extends Fragment {
 	private int shotWidesHome = 0,  shotSavedHome = 0,
 			 shotPostsHome = 0;
 	private int freeConcededHome = 0;
-	private int freeConcededOpp = 00;
+	private int freeConcededOpp = 0;
+	private int shot45Home = 0, shot45Opp=0;
+	private int totPHome = 0, totPOpp=0;
 	int puckWonCleanHome = 0, puckWonCleanHomePerCent = 0;
 	int puckLostCleanHome = 0, puckLostCleanHomePerCent = 0;
 	int puckWonBreakHome = 0, puckWonBreakHomePerCent = 0;
@@ -85,6 +88,8 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotPointsOpp;
 	private TextView tShotSavedOpp;
 	private TextView tShotPostsOpp;
+	private TextView tShot45Opp;
+	private TextView tTotPuckOpp;
 	private int shotGoalsOpp = 0, shotPointsOpp = 0;
 	private int shotWidesOpp = 0, shotSavedOpp = 0,
 			 shotPostsOpp = 0;
@@ -137,6 +142,11 @@ public class ReviewFragment extends Fragment {
 		tShotSavedOpp = (TextView) v.findViewById(R.id.tVwShotsSavedOppNo);
 		tShotPostsOpp = (TextView) v.findViewById(R.id.tVwShotsPostsOppNo);
 
+	    tShot45Home= (TextView) v.findViewById(R.id.tVwHome45);
+		tTotPuckHome= (TextView) v.findViewById(R.id.tVwHomeTotPuck);
+	    tShot45Opp= (TextView) v.findViewById(R.id.tVwOpp45);
+		tTotPuckOpp= (TextView) v.findViewById(R.id.tVwOppTotPuck);
+		
 		// Set up output for frees
 		tFreeConcededHome = (TextView) v.findViewById(R.id.tVwFreeWonHome);
 		tFreeConcededOpp = (TextView) v.findViewById(R.id.tVwFreeWonOpp);
@@ -170,6 +180,7 @@ public class ReviewFragment extends Fragment {
 		shotPostsHome = sharedPref.getInt("SHOTPOSTSHOME", 0);
 		shotGoalsPlayHome = sharedPref.getInt("SHOTGOALSPLAYHOME", 0);
 		shotPointsPlayHome = sharedPref.getInt("SHOTPOINTSPLAYHOME", 0);
+		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
 		addtShotGoalsHome(0); 
 		addtShotGoalsPlayHome(0);
 		addtShotPointsHome(0); 
@@ -177,6 +188,7 @@ public class ReviewFragment extends Fragment {
 		addtShotWidesHome(0) ;
 		addtShotSavedHome(0) ;
 		addtShotPostsHome(0) ;
+		addtShot45Home(0) ;
 
 		shotGoalsOpp = sharedPref.getInt("SHOTGOALSOPP", 0);
 		shotPointsOpp = sharedPref.getInt("SHOTPOINTSOPP", 0);
@@ -185,6 +197,7 @@ public class ReviewFragment extends Fragment {
 		shotPostsOpp = sharedPref.getInt("SHOTPOSTSOPP", 0);
 		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
 		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
+		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
 		addtShotGoalsOpp(0); 
 		addtShotGoalsPlayOpp(0);
 		addtShotPointsOpp(0); 
@@ -192,6 +205,7 @@ public class ReviewFragment extends Fragment {
 		addtShotWidesOpp(0) ;
 		addtShotSavedOpp(0) ;
 		addtShotPostsOpp(0) ;
+		addtShot45Opp(0) ;
 
 
 		freeConcededHome = sharedPref.getInt("FREEWONHOME", 0);
@@ -199,13 +213,17 @@ public class ReviewFragment extends Fragment {
 		addFreeConcededHome(0);
 		addFreeConcededOpp(0); 
 
+		totPHome = sharedPref.getInt("TOTPHOME", 0);
 		puckWonCleanHome = sharedPref.getInt("PUCKWONCLEANHOME", 0);
 		puckLostCleanHome = sharedPref.getInt("PUCKLOSTCLEANHOME", 0);
 
+		totPOpp = sharedPref.getInt("TOTPOPP", 0);
 		puckWonCleanOpp = sharedPref.getInt("PUCKWONCLEANOPP", 0);
 		puckLostCleanOpp = sharedPref.getInt("PUCKLOSTCLEANOPP", 0);
+		addPuckTotHome(0); 
 		addPuckWonCleanHome(0); 
 		addPuckLostCleanHome(0) ;
+		addPuckTotOpp(0) ;
 		addPuckWonCleanOpp(0) ;
 		addPuckLostCleanOpp(0); 
 		
@@ -258,6 +276,12 @@ public class ReviewFragment extends Fragment {
 		shotPostsHome = shotPostsHome + i;
 		tShotPostsHome.setText(String.valueOf(shotPostsHome));
 	}
+	
+	public void addtShot45Home(int i) {
+		shot45Home = shot45Home + i;
+		tShot45Home.setText(String.valueOf(shot45Home));
+	}
+
 
 	// *******************Opp Shots********************///
 	// increment counters for opposition team shots
@@ -295,6 +319,13 @@ public class ReviewFragment extends Fragment {
 		shotPostsOpp = shotPostsOpp + i;
 		tShotPostsOpp.setText(String.valueOf(shotPostsOpp));
 	}
+	
+	public void addtShot45Opp(int i) {
+		shot45Opp = shot45Opp + i;
+		tShot45Opp.setText(String.valueOf(shot45Opp));
+	}
+
+
 
 	// ////////////////Update Free Section////////////////////////////
 	// increment counters for frees
@@ -310,6 +341,11 @@ public class ReviewFragment extends Fragment {
 
 	// ////////////////Update PuckOuts Section////////////////////////////
 	// increment counters for puck outs
+	public void addPuckTotHome(int i) {// ///
+		totPHome = totPHome + i;
+		tTotPuckHome.setText(String.valueOf(totPHome));
+	}
+
 	public void addPuckWonCleanHome(int i) {// ///
 		puckWonCleanHome = puckWonCleanHome + i;
 		tPuckWonCleanHome.setText(String.valueOf(puckWonCleanHome));
@@ -319,6 +355,12 @@ public class ReviewFragment extends Fragment {
 		puckLostCleanHome = puckLostCleanHome + i;
 		tPuckLostCleanHome.setText(String.valueOf(puckLostCleanHome));
 	}
+	
+	public void addPuckTotOpp(int i) {// ///
+		totPOpp = totPOpp + i;
+		tTotPuckOpp.setText(String.valueOf(totPOpp));
+	}
+
 
 	public void addPuckWonCleanOpp(int i) {
 		puckWonCleanOpp = puckWonCleanOpp + i;
@@ -377,6 +419,8 @@ public class ReviewFragment extends Fragment {
 		tShotGoalsPlayHome.setText("0");
 		shotPointsPlayHome = 0;
 		tShotPointsPlayHome.setText("0");
+		shot45Home = 0;
+		tShot45Home.setText("0");
 
 		shotGoalsOpp = 0;
 		tShotGoalsOpp.setText("0");
@@ -392,6 +436,9 @@ public class ReviewFragment extends Fragment {
 		tShotGoalsPlayOpp.setText("0");
 		shotPointsPlayOpp = 0;
 		tShotPointsPlayOpp.setText("0");
+		shot45Opp = 0;
+		tShot45Opp.setText("0");
+
 
 		freeConcededHome = 0;
 		tFreeConcededHome.setText("0");
@@ -406,6 +453,10 @@ public class ReviewFragment extends Fragment {
 		tPuckWonCleanOpp.setText("0");
 		puckLostCleanOpp = 0;
 		tPuckLostCleanOpp.setText("0");
+		totPHome = 0;
+		tTotPuckHome.setText("0");
+		totPOpp = 0;
+		tTotPuckOpp.setText("0");
 
 	}
 
@@ -449,6 +500,12 @@ public class ReviewFragment extends Fragment {
 		editor.putInt("PUCKLOSTCLEANHOME", puckLostCleanHome);
 		editor.putInt("PUCKWONCLEANOPP", puckWonCleanOpp);
 		editor.putInt("PUCKLOSTCLEANOPP", puckLostCleanOpp);
+		
+		editor.putInt("SHOT45HOME", shot45Home);
+		editor.putInt("SHOT45OPP", shot45Opp);
+		editor.putInt("TOTPHOME", totPHome);
+		editor.putInt("TOTPOPP",totPOpp);
+
 
 		editor.commit();
 	}
@@ -573,9 +630,11 @@ public class ReviewFragment extends Fragment {
 			sb.append(shotGoalsHome +" Goals,  "+shotPointsHome+" Points.  Total:"+tHomeTotal.getText()+"\n");
 			sb.append(shotGoalsPlayHome+" goals from play  "+shotPointsPlayHome+" points from play \n");
 			sb.append("wides: "+shotWidesHome+"\n");
-			sb.append("saved: "+shotSavedHome+"\n");
+			sb.append("out for 45/65: "+shot45Home+"\n");
+			sb.append("saved/short: "+shotSavedHome+"\n");
 			sb.append("off posts: "+shotPostsHome+"\n");
 			sb.append("frees conceded: "+freeConcededHome+"\n");
+			sb.append("Total puckouts: "+totPHome+"\n");
 			sb.append("own puckouts won: "+puckWonCleanHome+"\n");
 			sb.append("own puckouts lost: "+puckLostCleanHome+"\n");
 			
@@ -583,9 +642,11 @@ public class ReviewFragment extends Fragment {
 			sb.append(shotGoalsOpp +" Goals,  "+shotPointsOpp+" Points.  Total:"+tOppTotal.getText()+"\n");
 			sb.append(shotGoalsPlayOpp+" goals from play  "+shotPointsPlayOpp+" points from play \n");
 			sb.append("wides: "+shotWidesOpp+"\n");
-			sb.append("saved: "+shotSavedOpp+"\n");
+			sb.append("out for 45/65: "+shot45Opp+"\n");
+			sb.append("saved/short: "+shotSavedOpp+"\n");
 			sb.append("off posts: "+shotPostsOpp+"\n");
 			sb.append("frees conceded: "+freeConcededOpp+"\n");
+			sb.append("Total puckouts: "+totPOpp+"\n");
 			sb.append("own puckouts won: "+puckWonCleanOpp+"\n");
 			sb.append("own puckouts lost: "+puckLostCleanOpp+"\n");
 			
