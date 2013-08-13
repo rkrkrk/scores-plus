@@ -26,23 +26,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class TeamContentProvider extends DatabaseSetup {
 	// set up uri for content provider
 	public static final String PROVIDER_NAME = "fm.gaa_scores.plus.provider.team";
 	public static final String BASE_PATH = "players";
 	public static final String BASE_PATH_2 = "stats";
+	public static final String BASE_PATH_3 = "scores";
 
 	public static final Uri CONTENT_URI = Uri.parse("content://"
 			+ PROVIDER_NAME + "/" + BASE_PATH);
 	public static final Uri CONTENT_URI_2 = Uri.parse("content://"
 			+ PROVIDER_NAME + "/" + BASE_PATH_2);
+	public static final Uri CONTENT_URI_3 = Uri.parse("content://"
+			+ PROVIDER_NAME + "/" + BASE_PATH_3);
 //
 	public static final String _ID = "_id";
 	private static final int PLAYERS = 1;
 	private static final int PLAYERS_ID = 2;
 	private static final int STATS = 3;
 	private static final int STATS_ID = 4; 
+	private static final int SCORES = 5;
+	private static final int SCORES_ID = 6; 
 
 	// use urimatcher to parse input uri from contentresolver
 	private static final UriMatcher uriMatcher;
@@ -52,6 +58,8 @@ public class TeamContentProvider extends DatabaseSetup {
 		uriMatcher.addURI(PROVIDER_NAME, BASE_PATH + "/#", PLAYERS_ID);
 		uriMatcher.addURI(PROVIDER_NAME, BASE_PATH_2, STATS);
 		uriMatcher.addURI(PROVIDER_NAME, BASE_PATH_2 + "/#", STATS_ID);
+		uriMatcher.addURI(PROVIDER_NAME, BASE_PATH_3, SCORES);
+		uriMatcher.addURI(PROVIDER_NAME, BASE_PATH_3 + "/#", SCORES_ID);
 	}
 
 	// ---for database use--- 
@@ -65,11 +73,23 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String DATABASE_TABLE_STATS = "stats";
 	public static final String STATSID = "_id";
 	public static final String STATSLINE = "line";
-	
+
+	public static final String DATABASE_TABLE_SCORES = "scores";
+	public static final String SCORESID = "_id";
+	public static final String SCORESNAME = "name";
+	public static final String SCORESTEAM = "team";
+	public static final String SCORESGOALS = "goals";
+	public static final String SCORESPOINTS = "points";
+	public static final String SCORESGOALSFREE = "goalsfree";
+	public static final String SCORESPOINTSFREE = "pointsfree";
+	public static final String SCORESMISS = "miss";
+
 
 	@Override
 	// open connection to team defined in BaseProvider Class
 	public boolean onCreate() {
+		Log.e("qqq","cp");
+		
 		Context context = getContext();
 		DatabaseHelper dbHelper = new DatabaseHelper(context);
 		matchAppDB = dbHelper.getWritableDatabase();
@@ -103,6 +123,18 @@ public class TeamContentProvider extends DatabaseSetup {
 			count = matchAppDB.delete(DATABASE_TABLE_STATS, _ID
 					+ " = "
 					+ id1
+					+ (!TextUtils.isEmpty(selection) ? " AND (" + selection
+							+ ')' : ""), selectionArgs);
+			break;
+		case SCORES:
+			count = matchAppDB.delete(DATABASE_TABLE_SCORES, selection, selectionArgs);
+			break;
+		// delete single player
+		case SCORES_ID:
+			String id2 = uri.getPathSegments().get(1);
+			count = matchAppDB.delete(DATABASE_TABLE_SCORES, _ID
+					+ " = "
+					+ id2
 					+ (!TextUtils.isEmpty(selection) ? " AND (" + selection
 							+ ')' : ""), selectionArgs);
 			break;
@@ -150,6 +182,14 @@ public class TeamContentProvider extends DatabaseSetup {
 				getContext().getContentResolver().notifyChange(_uri, null);
 			}
 			break;
+		case SCORES:
+			long rowID3 = matchAppDB.insert(DATABASE_TABLE_SCORES, "", values);
+			if (rowID3 > 0) {
+				_uri = ContentUris.withAppendedId(CONTENT_URI_2, rowID3);
+				// notify contentresolver of change
+				getContext().getContentResolver().notifyChange(_uri, null);
+			}
+			break;
 		default:
 
 			throw new SQLException("Failed to insert row into " + uri);
@@ -162,6 +202,7 @@ public class TeamContentProvider extends DatabaseSetup {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
+		Log.v("uri"," -"+uri);
 		switch (uriMatcher.match(uri)) {
 		case PLAYERS:
 			sqlBuilder.setTables(DATABASE_TABLE_PANEL);
@@ -181,6 +222,16 @@ public class TeamContentProvider extends DatabaseSetup {
 						+ uri.getPathSegments().get(1));
 			if (sortOrder == null || sortOrder == "")
 				sortOrder = STATSID;
+			break;
+
+		case SCORES:
+			sqlBuilder.setTables(DATABASE_TABLE_SCORES);
+			if (uriMatcher.match(uri) == SCORES_ID)
+				// ---if getting a particular player---
+				sqlBuilder.appendWhere(_ID + " = "
+						+ uri.getPathSegments().get(1));
+			if (sortOrder == null || sortOrder == "")
+				sortOrder = SCORESID;
 			break;
 
 		}
@@ -220,6 +271,21 @@ public class TeamContentProvider extends DatabaseSetup {
 		case STATS_ID:
 			count = matchAppDB.update(
 					DATABASE_TABLE_STATS,
+					values,
+					_ID
+							+ " = "
+							+ uri.getPathSegments().get(1)
+							+ (!TextUtils.isEmpty(selection) ? " AND ("
+									+ selection + ')' : ""), selectionArgs);
+			break;
+		case SCORES:
+			count = matchAppDB.update(DATABASE_TABLE_SCORES, values, selection,
+					selectionArgs);
+			break;
+		// update all players
+		case SCORES_ID:
+			count = matchAppDB.update(
+					DATABASE_TABLE_SCORES,
 					values,
 					_ID
 							+ " = "

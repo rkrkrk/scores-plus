@@ -15,15 +15,16 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public abstract class DatabaseSetup extends ContentProvider {
 
 	DatabaseHelper dbHelper;
 
 	public static final String DATABASE_NAME = "teams";
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 
-	// setup table to store panel player details
+	// setup table to store panel player details 
 	private static final String CREATE_TABLE_PANEL = "create table "
 			+ TeamContentProvider.DATABASE_TABLE_PANEL
 			+ " (_id integer primary key autoincrement, "
@@ -35,6 +36,17 @@ public abstract class DatabaseSetup extends ContentProvider {
 			+ TeamContentProvider.DATABASE_TABLE_STATS
 			+ " (_id integer primary key autoincrement, " 
 			+ TeamContentProvider.STATSLINE + " text);";
+	
+	private static final String CREATE_TABLE_SCORES = "create table "
+			+ TeamContentProvider.DATABASE_TABLE_SCORES
+			+ " (_id integer primary key autoincrement, " 
+			+ TeamContentProvider.SCORESNAME + " text, " 
+			+ TeamContentProvider.SCORESTEAM + " text, " 
+			+ TeamContentProvider.SCORESGOALS + " integer, " 
+			+ TeamContentProvider.SCORESPOINTS + " integer, " 
+			+ TeamContentProvider.SCORESGOALSFREE + " integer, " 
+			+ TeamContentProvider.SCORESPOINTSFREE + " integer, " 
+			+ TeamContentProvider.SCORESMISS + " text);";
 
 	// inner class to create database
 	static class DatabaseHelper extends SQLiteOpenHelper {
@@ -45,15 +57,19 @@ public abstract class DatabaseSetup extends ContentProvider {
 		@Override
 		// method to create database tables defined above
 		public void onCreate(SQLiteDatabase db) {
+			Log.e("qqq","wer");
 			db.execSQL(CREATE_TABLE_PANEL);
 			db.execSQL(CREATE_TABLE_STATS); 
-		}
+	}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// code to upgrade your db here (all of your tables, indexes,
 			// triggers...)
 			// upgrade to add panelname to DB
+			if ( newVersion >1) {
+				db.execSQL(CREATE_TABLE_SCORES);
+			}
 		}
 	}
 
