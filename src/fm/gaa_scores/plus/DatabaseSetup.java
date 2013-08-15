@@ -44,6 +44,7 @@ public abstract class DatabaseSetup extends ContentProvider {
 			+ TeamContentProvider.SCORESTEAM + " text, " 
 			+ TeamContentProvider.SCORESGOALS + " integer, " 
 			+ TeamContentProvider.SCORESPOINTS + " integer, " 
+			+ TeamContentProvider.SCORESTOTAL + " integer, " 
 			+ TeamContentProvider.SCORESGOALSFREE + " integer, " 
 			+ TeamContentProvider.SCORESPOINTSFREE + " integer, " 
 			+ TeamContentProvider.SCORESMISS + " text);";

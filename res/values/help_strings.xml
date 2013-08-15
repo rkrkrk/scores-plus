@@ -4,8 +4,10 @@
     <string name="teamHelp">
 <![CDATA[
  <h1>HELP - TEAM SCREEN</h1>
+<p><b>NB: Dont change team name or load a new team or import a team during a match i.e.
+when the match timer is running. Doing so may break stuff!</b></p> 
 <p>Touch <b>change team name</b> button to enter a new name for the current team. (Dont use 
-duplicate team names. Always use a unique name.<br/><br/></p>
+duplicate team names. Always use a unique name.)<br/><br/></p>
 <p>
 <b>TEAM SELECTION</b><br/>
 Select the team lineup by touching any of the position buttons to get option to <b>enter 

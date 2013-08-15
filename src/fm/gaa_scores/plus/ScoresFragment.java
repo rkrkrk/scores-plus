@@ -91,6 +91,7 @@ public class ScoresFragment extends Fragment {
 	private HashMap<String, Integer> playerIDLookUp = new HashMap<String, Integer>();
 	// setup uri to read panel from database
 	private ArrayList<String> undoList = new ArrayList();
+	private ArrayList<String> playerList = new ArrayList();
 	private ArrayList<String> txtList = new ArrayList<String>();
 	private ArrayList txtListOut = new ArrayList<String>();
 	private long rowId;
@@ -1189,7 +1190,9 @@ public class ScoresFragment extends Fragment {
 					TeamContentProvider.CONTENT_URI_2, values);
 		}
 		// add to scorers database
-		updateScorers(stats1, stats2, player, team);
+		if (!team.equals("")) {
+			updateScorers(stats1, stats2, player, team);
+		}
 
 		// update display list
 		updateStatsList();
@@ -1200,8 +1203,8 @@ public class ScoresFragment extends Fragment {
 		if ((stats1.equals("goal")) || (stats1.equals("point"))
 				|| (stats1.equals("wide")) || (stats1.equals("saved/short"))
 				|| (stats1.equals("off posts"))) {
-			player = (player == "") ? "other" : player;
-			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0,id;
+			player = (player == "") ? "unknown" : player;
+			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, id;
 			// deal with goal
 			if (stats1.equals("goal")) {
 				goal++;
@@ -1230,13 +1233,14 @@ public class ScoresFragment extends Fragment {
 			String[] args = { player, team };
 			Cursor c1 = getActivity().getContentResolver().query(allTitles,
 					null, "name=? AND team=?", args, null);
-				if (c1.getCount() <= 0) {
+			if (c1.getCount() <= 0) {
 				// add new entry to database
 				ContentValues values = new ContentValues();
 				values.put(TeamContentProvider.SCORESNAME, player);
 				values.put(TeamContentProvider.SCORESTEAM, team);
 				values.put(TeamContentProvider.SCORESGOALS, goal);
 				values.put(TeamContentProvider.SCORESPOINTS, point);
+				values.put(TeamContentProvider.SCORESTOTAL, (goal*3)+point);
 				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 				values.put(TeamContentProvider.SCORESMISS, miss);
@@ -1268,13 +1272,15 @@ public class ScoresFragment extends Fragment {
 				values.put(TeamContentProvider.SCORESTEAM, team);
 				values.put(TeamContentProvider.SCORESGOALS, goal);
 				values.put(TeamContentProvider.SCORESPOINTS, point);
+				values.put(TeamContentProvider.SCORESTOTAL, (goal*3)+point);
 				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 				values.put(TeamContentProvider.SCORESMISS, miss);
-				Uri uri = Uri
-						.parse(TeamContentProvider.CONTENT_URI_3 + "/" + id);
-				getActivity().getContentResolver().update(uri, values, null, null);
-				
+				Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_3 + "/"
+						+ id);
+				getActivity().getContentResolver().update(uri, values, null,
+						null);
+
 				((Startup) getActivity()).getFragmentScorers().fillData();
 			} else {
 				Toast.makeText(getActivity(),
@@ -1282,22 +1288,6 @@ public class ScoresFragment extends Fragment {
 						.show();
 			}
 		}
-
-		// player = (player == "") ? "unknown" : player;
-		// ContentValues values = new ContentValues();
-		// if (stats1.equals("goal")) {
-		// values.put(TeamContentProvider.SCORESNAME, player);
-		// values.put(TeamContentProvider.SCORESTEAM, team);
-		// values.put(TeamContentProvider.SCORESGOALS, 1);
-		// values.put(TeamContentProvider.SCORESPOINTS, 0);
-		// values.put(TeamContentProvider.SCORESGOALSFREE, 0);
-		// values.put(TeamContentProvider.SCORESPOINTSFREE, 0);
-		// values.put(TeamContentProvider.SCORESMISS, 0);
-		// getActivity().getContentResolver().insert(
-		// TeamContentProvider.CONTENT_URI_3, values);
-		// ((Startup) getActivity()).getFragmentScorers().fillData();
-		// }
-		//
 	}
 
 	public void updateStatsList() {
@@ -1705,7 +1695,7 @@ public class ScoresFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			Uri allTitles = TeamContentProvider.CONTENT_URI_2;
-			String strTemp;
+			String strTemp = null;
 			String[] projection = { TeamContentProvider.STATSID,
 					TeamContentProvider.STATSLINE };
 			CursorLoader cL;
@@ -1926,12 +1916,156 @@ public class ScoresFragment extends Fragment {
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 								+ rowId), null, null);
+
+				undoScorers(strTemp);
 			}
 
 			updateStatsList();
+
 			c1.close();
 		}
 	};
+
+	private void undoScorers(String str) {
+		// check if its a shot
+		if ((str.indexOf("goal") >= 0) || (str.indexOf("point") >= 0)
+				|| (str.indexOf("wide") >= 0)
+				|| (str.indexOf("off posts") >= 0)
+				|| (str.indexOf("saved/short") >= 0)) {
+
+			String playerTmp = "", teamTmp = "";
+
+			// check which team
+			if (str.indexOf(tOurTeam.getText().toString()) >= 0) {
+				teamTmp = tOurTeam.getText().toString();
+			} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+				teamTmp = tOppTeam.getText().toString();
+			} else {
+				Toast.makeText(
+						getActivity(),
+						"error: unable to undo scorers listing\n did not find team name",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
+			// get list of players in database
+			Uri allTitles = TeamContentProvider.CONTENT_URI_3;
+			String[] args = { teamTmp };
+			Cursor c1 = getActivity().getContentResolver().query(allTitles,
+					null, "team=?", args, null);
+			if (c1.getCount() > 0) {
+				c1.moveToFirst();
+				// check if player in string
+				do {
+					playerTmp = c1
+							.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESNAME));
+
+					if (str.indexOf(playerTmp) >= 0) {
+						break;
+					}
+					playerTmp = "";
+				} while (c1.moveToNext());
+				// get unknown id if no player found
+				if (playerTmp.equals("")) {
+					c1.moveToFirst();
+					do {
+						playerTmp = c1
+								.getString(c1
+										.getColumnIndexOrThrow(TeamContentProvider.SCORESNAME));
+
+						if (playerTmp.equals("unknown")) {
+							break;
+						}
+						playerTmp = "";
+					} while (c1.moveToNext());
+				}
+				if (playerTmp.equals("")) {
+					Toast.makeText(
+							getActivity(),
+							"error: unable to undo scorers listing\n did not find player",
+							Toast.LENGTH_LONG).show();
+					return;
+				}
+			} else {
+				Toast.makeText(
+						getActivity(),
+						"error: unable to undo scorers listing\n did not find any scorers to undo",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
+
+			// OK, have database ID, move on
+			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, id;
+			// deal with goal
+			if (str.indexOf("goal") >= 0) {
+				goal--;
+				if ((str.indexOf("from free") >= 0)
+						|| (str.indexOf("from penalty") >= 0)
+						|| (str.indexOf("from sideline") >= 0)
+						|| (str.indexOf("from 45/65") >= 0)) {
+					goalF--;
+				}
+			}
+			// deal with goal
+			else if (str.indexOf("point") >= 0) {
+				point--;
+				if ((str.indexOf("from free") >= 0)
+						|| (str.indexOf("from penalty") >= 0)
+						|| (str.indexOf("from sideline") >= 0)
+						|| (str.indexOf("from 45/65") >= 0)) {
+					pointF--;
+				}
+			} else if ((str.indexOf("wide") >= 0)
+					|| (str.indexOf("off posts") >= 0)
+					|| (str.indexOf("saved/short") >= 0)) {
+				miss--;
+			}
+
+			allTitles = TeamContentProvider.CONTENT_URI_3;
+			String[] args2 = { playerTmp, teamTmp };
+			c1 = getActivity().getContentResolver().query(allTitles, null,
+					"name=? AND team=?", args2, null);
+			c1.moveToFirst();
+			goal = goal
+					+ c1.getInt(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALS));
+			point = point
+					+ c1.getInt(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTS));
+			goalF = goalF
+					+ c1.getInt(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALSFREE));
+			pointF = pointF
+					+ c1.getInt(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTSFREE));
+			miss = miss
+					+ c1.getInt(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS));
+			id = c1.getInt(c1
+					.getColumnIndexOrThrow(TeamContentProvider.SCORESID));
+			ContentValues values = new ContentValues();
+			values.put(TeamContentProvider.SCORESNAME, playerTmp);
+			values.put(TeamContentProvider.SCORESTEAM, teamTmp);
+			values.put(TeamContentProvider.SCORESGOALS, goal);
+			values.put(TeamContentProvider.SCORESPOINTS, point);
+			values.put(TeamContentProvider.SCORESTOTAL,(goal*3)+ point);
+			values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
+			values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
+			values.put(TeamContentProvider.SCORESMISS, miss);
+			// if everything zero delete otherwise update
+			if (goal + point + goalF + pointF + miss == 0) {
+				Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_3 + "/"
+						+ id);
+				getActivity().getContentResolver().delete(uri, null, null);
+			} else {
+				Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_3 + "/"
+						+ id);
+				getActivity().getContentResolver().update(uri, values, null,
+						null);
+			}
+			((Startup) getActivity()).getFragmentScorers().fillData();
+		}
+	}
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {

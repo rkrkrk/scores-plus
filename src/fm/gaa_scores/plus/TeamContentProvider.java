@@ -80,6 +80,7 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String SCORESTEAM = "team";
 	public static final String SCORESGOALS = "goals";
 	public static final String SCORESPOINTS = "points";
+	public static final String SCORESTOTAL = "total";
 	public static final String SCORESGOALSFREE = "goalsfree";
 	public static final String SCORESPOINTSFREE = "pointsfree";
 	public static final String SCORESMISS = "miss";

@@ -1337,7 +1337,6 @@ public class TeamTwoFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != 0) {
-			Log.e("imoirtteam", "+" + data.getData().getPath());
 			readTeam(data.getData().getPath());
 		}
 	}

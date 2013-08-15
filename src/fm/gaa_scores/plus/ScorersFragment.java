@@ -87,19 +87,17 @@ public class ScorersFragment extends ListFragment {
 		// adapter to display on screen
 		String[] args = { ownTeam };
 		Cursor c1 = getActivity().getContentResolver().query(allTitles, null, "team=?", args,
-				TeamContentProvider.SCORESNAME);
+				TeamContentProvider.SCORESTOTAL+" DESC");
 		SimpleCursorAdapter reminders = new SimpleCursorAdapter(getActivity(),
 				R.layout.scorers_row, c1, from, to, 0);
 		lv1.setAdapter(reminders);
-		Log.e("get ownTeam "," "+ownTeam+"  c : "+c1.getCount());
-
+	
 		String[] args1 = { oppTeam };
 		Cursor c2 = getActivity().getContentResolver().query(allTitles, null, "team=?", args1,
-				TeamContentProvider.SCORESNAME);
+				TeamContentProvider.SCORESTOTAL+" DESC");
 		SimpleCursorAdapter reminders2 = new SimpleCursorAdapter(getActivity(),
 				R.layout.scorers_row, c2, from, to, 0);
 		lv2.setAdapter(reminders2);
-		Log.e("get oppTeam "," "+oppTeam+"  c : "+c2.getCount());
 
 	}
 	
