@@ -660,7 +660,7 @@ public class TeamTwoFragment extends Fragment {
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
 		updateSubsList();
-		((Startup) getActivity()).getFragmentScore().updateStats();
+		((Startup) getActivity()).getFragmentScore().updateStatsList();
 		((Startup) getActivity()).getFragmentReview().updateListView();
 	}
 
@@ -750,9 +750,11 @@ public class TeamTwoFragment extends Fragment {
 							"", panelName);
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
 							"", panelName);
+					((Startup) getActivity()).getFragmentScorers().setTeamNames(
+							"", panelName);
 					((Startup) getActivity()).getFragmentReview()
 							.updateListView();
-					((Startup) getActivity()).getFragmentScore().updateStats();
+					((Startup) getActivity()).getFragmentScore().updateStatsList();
 					((Startup) getActivity()).getFragmentTeamOne().setTeam(
 							panelName);
 
@@ -820,6 +822,8 @@ public class TeamTwoFragment extends Fragment {
 					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
 							"", panelName);
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
+							"", panelName);
+					((Startup) getActivity()).getFragmentScorers().setTeamNames(
 							"", panelName);
 					((Startup) getActivity()).getFragmentTeamOne().setTeam(
 							panelName);
@@ -894,8 +898,10 @@ public class TeamTwoFragment extends Fragment {
 							((Startup) getActivity()).getFragmentScore()
 									.setTeamLineUp("", panelName);
 							((Startup) getActivity()).getFragmentReview()
-									.setTeamNames("", panelName);
-							((Startup) getActivity()).getFragmentTeamOne()
+							.setTeamNames("", panelName);
+							((Startup) getActivity()).getFragmentScorers()
+							.setTeamNames("", panelName);
+						((Startup) getActivity()).getFragmentTeamOne()
 									.setTeam(panelName);
 
 							dialog.dismiss();
@@ -1395,6 +1401,8 @@ public class TeamTwoFragment extends Fragment {
 				((Startup) getActivity()).getFragmentScore().setTeamLineUp("",
 						panelName);
 				((Startup) getActivity()).getFragmentReview().setTeamNames("",
+						panelName);
+				((Startup) getActivity()).getFragmentScorers().setTeamNames("",
 						panelName);
 				((Startup) getActivity()).getFragmentTeamOne().setTeam(
 						panelName);

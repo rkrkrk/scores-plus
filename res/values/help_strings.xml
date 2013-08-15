@@ -140,7 +140,7 @@ Use the <b> change team name</b> button to give your team a meaningful name and 
     
     <string name="scoresHelp">
 <![CDATA[
-<h1>HELP - SCORES SCREEN</h1>
+<h1>HELP - MATCH SCREEN</h1>
 <p>
 <b>TIMER SECTION</b><br/>
 Touch <b>start/stop</b> button to control timer.<br/>
@@ -233,6 +233,23 @@ list of match/stats events recorded.
 
 ]]>
     </string>
+    
+    <string name="scorersHelp">
+<![CDATA[
+<h1>HELP - SCORERS SCREEN</h1>
+<p>
+Summary of scorers recorded using the 
+<b><i>ENTER STATS</i></b> on the MATCH 
+screen is shown for both teams.<br/><br/>
+First Column is total scored.<br/><br/>
+Second Column is scores from frees, penalties, 45/65s and sidelines.<br/><br/>
+Third Column - <b><i>misses**</i></b> - is sum of wides, off posts and saved/short. 
+</p>
+
+
+
+]]>
+    </string>    
     
 
 </resources>

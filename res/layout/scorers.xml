@@ -1,113 +1,408 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:background="#cfc"
         android:clickable="false"
         android:orientation="horizontal"
-        android:paddingBottom="2dp" >
+        android:paddingBottom="1dp" >
 
         <TextView
+            android:id="@+id/score1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:padding="2dp"
-            android:text="Scorers"
+            android:text="SCORERS"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight=".8"
+        android:background="#cfc"
+        android:clickable="false"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp" >
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="8dp"
+            android:layout_weight="2"
+            android:background="#aaa"
+            android:gravity="bottom|center_horizontal"
+            android:text="Total"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="4dp"
+            android:layout_weight="2"
+            android:background="#bbdddd"
+            android:gravity="bottom|center_horizontal"
+            android:paddingBottom="0dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="frees/65s etc."
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/TextView03"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1.5"
+            android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textSize="9sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearhead"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        android:background="#cfc"
         android:clickable="false"
         android:orientation="horizontal"
-        android:paddingBottom="4dp" >
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp" >
 
         <TextView
             android:id="@+id/head1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_weight="5"
             android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
             android:text="player"
-            android:textSize="9sp" />
-
-        <TextView
-            android:id="@+id/head2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center_horizontal"
-            android:text="team"
-            android:textSize="9sp" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/head3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginTop="0dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
+            android:background="#aaa"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
             android:text="goals"
             android:textSize="9sp" />
 
         <TextView
             android:id="@+id/head4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
+            android:background="#aaa"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="0dp"
             android:text="points"
             android:textSize="9sp" />
 
         <TextView
             android:id="@+id/head5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
+            android:background="#bbdddd"
             android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
             android:text="goals"
             android:textSize="9sp" />
 
         <TextView
             android:id="@+id/head6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
+            android:background="#bbdddd"
             android:gravity="center_horizontal"
+            android:paddingTop="0dp"
             android:text="points"
             android:textSize="9sp" />
 
         <TextView
-            android:id="@+id/head6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="missed"
+            android:id="@+id/head7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1.5"
+            android:background="#ccc"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="missed*"
             android:textSize="9sp" />
+
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="#cfc"
+        android:orientation="horizontal" >
 
         <ListView
             android:id="@+id/android:list"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/android:empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No scorers recorder yet" />
+            android:text="@string/no_names" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1.2"
+        android:background="#ffc"
+        android:clickable="false"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/score2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="#ffc"
+            android:gravity="bottom|center_horizontal"
+            android:text="SCORERS"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".8"
+        android:background="#ffc"
+        android:clickable="false"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp" >
+
+        <TextView
+            android:id="@+id/TextView06"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView08"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="8dp"
+            android:layout_weight="2"
+            android:background="#aaa"
+            android:gravity="bottom|center_horizontal"
+            android:text="Total"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="4dp"
+            android:layout_weight="2"
+            android:background="#bbdddd"
+            android:gravity="bottom|center_horizontal"
+            android:paddingBottom="0dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="frees/65s etc."
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/TextView07"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1.5"
+            android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout03"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffc"
+        android:clickable="false"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp" >
+
+        <TextView
+            android:id="@+id/TextView12"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_weight="5"
+            android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:text="player"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextView14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:background="#aaa"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="goals"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView13"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:background="#aaa"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="0dp"
+            android:text="points"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:background="#bbdddd"
+            android:gravity="center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="goals"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView09"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:background="#bbdddd"
+            android:gravity="center_horizontal"
+            android:paddingTop="0dp"
+            android:text="points"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView11"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1.5"
+            android:background="#ccc"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="missed*"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="#ffc"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/list2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffc" />
+
+        <TextView
+            android:id="@+id/android:empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_names" />
     </LinearLayout>
 
 </LinearLayout>

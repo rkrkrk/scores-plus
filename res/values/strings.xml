@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">gaa scores stats plus</string>
+    <string name="no_names">No scorers recorded yet</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
 

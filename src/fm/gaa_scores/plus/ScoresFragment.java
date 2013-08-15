@@ -115,7 +115,6 @@ public class ScoresFragment extends Fragment {
 				"team_stats_record_data", Context.MODE_PRIVATE);
 		phone = sharedPref.getString("PHONE", "");
 
-
 		// get the tag name of this Fragment and pass it up to the parent
 		// activity MatchApplication so that this Fragment may be accessed
 		// by other fragments through using a reference created from tag name
@@ -130,11 +129,6 @@ public class ScoresFragment extends Fragment {
 		tHomeDifference = (TextView) v.findViewById(R.id.home_difference);
 		tOppTotal = (TextView) v.findViewById(R.id.opp_total);
 		tStats = (TextView) v.findViewById(R.id.textViewStats);
-		// tFreeReason = (TextView) v.findViewById(R.id.textViewFreeType);
-		// tFreePlayer = (TextView) v.findViewById(R.id.textViewFreePlayer);
-		// tFreePosn = (TextView) v.findViewById(R.id.textViewFreePosn);
-		// tPuckOutReason = (TextView) v.findViewById(R.id.textViewPuckType);
-		// tPuckOutPlayer = (TextView) v.findViewById(R.id.textViewPuckPlayer);
 		tOurTeam = (TextView) v.findViewById(R.id.ourTeam);
 		tOppTeam = (TextView) v.findViewById(R.id.oppTeam);
 		tLoc = (EditText) v.findViewById(R.id.etLoc);
@@ -217,12 +211,14 @@ public class ScoresFragment extends Fragment {
 		// set text on screen according to whether in first half or 2nd half
 		// and whether timer is running or not
 		if ((sharedPref.getString("TIMERBUTTON", "start").equals("stop"))
-				&& (sharedPref.getString("PERIOD", "1st half").equals("1st half"))) {
+				&& (sharedPref.getString("PERIOD", "1st half")
+						.equals("1st half"))) {
 			str = settTimer("start", "1st half");
 			bStartStop.setText(str[0]);
 			bPeriod.setText(str[1]);
 		} else if ((sharedPref.getString("TIMERBUTTON", "start").equals("stop"))
-				&& (sharedPref.getString("PERIOD", "1st half").equals("2nd half"))) {
+				&& (sharedPref.getString("PERIOD", "1st half")
+						.equals("2nd half"))) {
 			str = settTimer("start", "2nd half");
 			bStartStop.setText(str[0]);
 			bPeriod.setText(str[1]);
@@ -305,7 +301,7 @@ public class ScoresFragment extends Fragment {
 				}
 				getActivity().getContentResolver().insert(
 						TeamContentProvider.CONTENT_URI_2, values);
-				updateStats();
+				updateStatsList();
 				b.setText(str[0]);
 				bPeriod.setText(str[1]);
 			}
@@ -483,9 +479,9 @@ public class ScoresFragment extends Fragment {
 		if (getTime().equals("")) {
 			if (str2.contains("Start T")) {
 				str = "";
-			} else if ((str2.contains("1st Half"))&&(!str2.contains("Extra"))) {
+			} else if ((str2.contains("1st Half")) && (!str2.contains("Extra"))) {
 				str = "half time-";
-			} else if ((str2.contains("2nd Half"))&&(!str2.contains("Extra"))) {
+			} else if ((str2.contains("2nd Half")) && (!str2.contains("Extra"))) {
 				str = "full time-";
 
 			} else if (str2.contains("Time-1")) {
@@ -542,14 +538,14 @@ public class ScoresFragment extends Fragment {
 				} while (c1.moveToNext());
 			}
 			c1.close();
-			//add in score
-			int j=1;
+			// add in score
+			int j = 1;
 			txtList.add(0,
 					getScore().replace((tLoc.getText().toString() + ". "), ""));
-			//add in comment  if it exists
+			// add in comment if it exists
 			if (tLoc.getText().length() > 1) {
 				txtList.add(0, tLoc.getText().toString());
-				j=2;
+				j = 2;
 			}
 			// just get last 10 events
 			if (txtList.size() >= 10) {
@@ -559,17 +555,17 @@ public class ScoresFragment extends Fragment {
 				tList = new String[txtList.size()];
 				tListChecked = new boolean[txtList.size()];
 			}
-			
-			if(j==1){
-				tList[0]=txtList.get(0);	
-			}else{
-				tList[0]=txtList.get(0);
-				tList[1]=txtList.get(1);
+
+			if (j == 1) {
+				tList[0] = txtList.get(0);
+			} else {
+				tList[0] = txtList.get(0);
+				tList[1] = txtList.get(1);
 			}
 
 			String strA;
 			for (int i = 0 + j; i < (txtList.size() > 10 ? 10 : txtList.size()); i++) {
-				//parse string to get rid of time stamp
+				// parse string to get rid of time stamp
 				strA = txtList.get(i);
 				if (((strA.contains("1st half")) || (strA.contains("2nd half")))
 						&& (strA.contains("mins "))) {
@@ -583,8 +579,8 @@ public class ScoresFragment extends Fragment {
 					tList[i] = strA;
 				}
 
-			tListChecked[i] = false;
-	}
+				tListChecked[i] = false;
+			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("select what to tweet/text");
@@ -663,7 +659,7 @@ public class ScoresFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			txtButton = ((Button) v).getId();
-			String strA="",str="";
+			String strA = "", str = "";
 			Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 			String[] projection = { TeamContentProvider.STATSLINE };
 			CursorLoader cL;
@@ -673,32 +669,27 @@ public class ScoresFragment extends Fragment {
 			txtList.clear();// ////////////??????????
 			txtListOut.clear();
 			if (c1.getCount() > 0) {
-				c1.moveToFirst();			
-					// read in player nicknames
-					strA=" "+c1.getString(c1
-							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));			
+				c1.moveToFirst();
+				// read in player nicknames
+				strA = " "
+						+ c1.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
 			}
-			
-			
+
 			if (((strA.contains("1st half")) || (strA.contains("2nd half")))
 					&& (strA.contains("mins "))) {
-				str = strA.substring(strA.indexOf("half") + 5,
-						strA.length());
-			} else if (((strA.contains("ET 1st")) || (strA
-					.contains("ET 2nd")))) {
-				str = strA.substring(strA.indexOf("ET") + 7,
-						strA.length());
+				str = strA.substring(strA.indexOf("half") + 5, strA.length());
+			} else if (((strA.contains("ET 1st")) || (strA.contains("ET 2nd")))) {
+				str = strA.substring(strA.indexOf("ET") + 7, strA.length());
 			} else {
 				str = strA;
 			}
-
-
 
 			switch (txtButton) {
 			case R.id.bTweetLast:
 				try {
 					Intent shareIntent = findTwitterClient();
-					shareIntent.putExtra(Intent.EXTRA_TEXT, getScore()+str);
+					shareIntent.putExtra(Intent.EXTRA_TEXT, getScore() + str);
 					startActivity(Intent.createChooser(shareIntent, "Share"));
 				} catch (Exception ex) {
 					Log.e("Error in Tweet", ex.toString());
@@ -713,7 +704,7 @@ public class ScoresFragment extends Fragment {
 				try {
 					Intent intentText = new Intent(Intent.ACTION_VIEW);
 					intentText.setType("vnd.android-dir/mms-sms");
-					intentText.putExtra("sms_body", getScore()+str);
+					intentText.putExtra("sms_body", getScore() + str);
 					intentText.setData(Uri.parse("sms: " + phone));
 					startActivity(intentText);
 				} catch (Exception ex) {
@@ -726,7 +717,7 @@ public class ScoresFragment extends Fragment {
 			}
 		}
 	};
-	
+
 	OnClickListener tweetScoreListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -756,10 +747,9 @@ public class ScoresFragment extends Fragment {
 					startActivity(intentText);
 				} catch (Exception ex) {
 					Log.e("Error in Text", ex.toString());
-					Toast.makeText(
-							getActivity(),
-							"Unable to send text message",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(),
+							"Unable to send text message", Toast.LENGTH_LONG)
+							.show();
 				}
 				break;
 			}
@@ -791,7 +781,6 @@ public class ScoresFragment extends Fragment {
 		return null;
 	}
 
-	
 	// for reset buttons diplay message to long click, won't work with ordinary
 	// click
 	OnClickListener resetClickListener = new OnClickListener() {
@@ -851,14 +840,13 @@ public class ScoresFragment extends Fragment {
 		// delete stats in database
 		getActivity().getContentResolver().delete(
 				TeamContentProvider.CONTENT_URI_2, null, null);
-		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE };
-		CursorLoader cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
-				TeamContentProvider.STATSID);
+		getActivity().getContentResolver().delete(
+				TeamContentProvider.CONTENT_URI_3, null, null);
+		((Startup) getActivity()).getFragmentScorers().fillData();
 		((Startup) getActivity()).getFragmentReview().resetStats();
 		((Startup) getActivity()).getFragmentTeamOne().resetCardsSubs();
 		((Startup) getActivity()).getFragmentTeamTwo().resetCardsSubs();
-		updateStats();
+		updateStatsList();
 		tStats.setText("");
 	}
 
@@ -886,7 +874,7 @@ public class ScoresFragment extends Fragment {
 						+ sdf.format(currentDate));
 			}
 			timer = new Timer();
-			tTimeLeft.setText("time left");//new
+			tTimeLeft.setText("time left");// new
 			h.postDelayed(run, 0);
 			str[0] = "stop";
 			str[1] = "2nd half";
@@ -906,7 +894,7 @@ public class ScoresFragment extends Fragment {
 						+ sdf.format(currentDate));
 			}
 			timer = new Timer();
-			tTimeLeft.setText("time left");//new
+			tTimeLeft.setText("time left");// new
 			h.postDelayed(run, 0);
 			str[0] = "stop";
 			str[1] = "ET 2nd";
@@ -967,7 +955,7 @@ public class ScoresFragment extends Fragment {
 						+ sdf.format(currentDate));
 			}
 			timer = new Timer();
-			tTimeLeft.setText("time left");//new
+			tTimeLeft.setText("time left");// new
 
 			h.postDelayed(run, 0);
 			str[0] = "stop";
@@ -983,16 +971,16 @@ public class ScoresFragment extends Fragment {
 
 	// //////////////////////////////////////////////////////////////////////
 	// method to update score and update shots data in review scrreen
-	public void updateStats(int button, int count) {
+	public void updateStatsDatabase(int button, int count) {
 		switch (button) {
 		case R.id.buttonShotHome:
 			team = tOurTeam.getText().toString();
 			// for home team commit
 			// WRITE TO REVIEW PAGE///////////////////////////////////
 			if (stats1.equals("goal")) {
-				//increment puckout total
-				((Startup) getActivity()).getFragmentReview()
-				.addPuckTotOpp(count);
+				// increment puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(
+						count);
 				// increment goal counter
 				if (homeGoals + count >= 0) {
 					homeGoals = homeGoals + count;
@@ -1023,9 +1011,9 @@ public class ScoresFragment extends Fragment {
 							.addtShotGoalsPlayHome(count);
 				}
 			} else if (stats1.equals("point")) {
-				//increment puckout total
-				((Startup) getActivity()).getFragmentReview()
-				.addPuckTotOpp(count);
+				// increment puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(
+						count);
 				// increment points counter
 				if (homePoints + count >= 0) {
 					homePoints = homePoints + count;
@@ -1059,8 +1047,8 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotWidesHome(count);
-				((Startup) getActivity()).getFragmentReview()
-				.addPuckTotOpp(count);
+				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(
+						count);
 			} else if (stats1.equals("saved/short")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
@@ -1082,20 +1070,20 @@ public class ScoresFragment extends Fragment {
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanHome(count);
 			}
-			if (stats2.equals("from 45/65")){
-				((Startup) getActivity()).getFragmentReview()
-				.addtShot45Home(count);
+			if (stats2.equals("from 45/65")) {
+				((Startup) getActivity()).getFragmentReview().addtShot45Home(
+						count);
 			}
 			break;
-			
+
 		case R.id.buttonShotOpp:
 			team = tOppTeam.getText().toString();
 			// for opposition team
 			// WRITE TO REVIEW PAGE///////////////////////////////////
 			if (stats1.equals("goal")) {
-				//increment puckout total
-				((Startup) getActivity()).getFragmentReview()
-				.addPuckTotHome(count);
+				// increment puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotHome(
+						count);
 				// increment goal counter
 				if (oppGoals + count >= 0) {
 					oppGoals = oppGoals + count;
@@ -1123,9 +1111,9 @@ public class ScoresFragment extends Fragment {
 							.addtShotGoalsPlayOpp(count);
 				}
 			} else if (stats1.equals("point")) {
-				//increment puckout total
-				((Startup) getActivity()).getFragmentReview()
-				.addPuckTotHome(count);
+				// increment puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotHome(
+						count);
 				// increment points counter
 				if (oppPoints + count >= 0) {
 					oppPoints = oppPoints + count;
@@ -1153,9 +1141,9 @@ public class ScoresFragment extends Fragment {
 							.addtShotPointsPlayOpp(count);
 				}
 			} else if (stats1.equals("wide")) {
-				//increment puckout total
-				((Startup) getActivity()).getFragmentReview()
-				.addPuckTotHome(count);
+				// increment puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotHome(
+						count);
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotWidesOpp(
 						count);
@@ -1180,13 +1168,13 @@ public class ScoresFragment extends Fragment {
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanOpp(count);
 			}
-			if (stats2.equals("from 45/65")){
-				((Startup) getActivity()).getFragmentReview()
-				.addtShot45Opp(count);
+			if (stats2.equals("from 45/65")) {
+				((Startup) getActivity()).getFragmentReview().addtShot45Opp(
+						count);
 			}
 			break;
 		}
-		// add to database
+		// add to stats database
 		if (!(stats1.equals("") && stats2.equals("") && player.equals(""))) {
 			ContentValues values = new ContentValues();
 			if (starttime > 10) {
@@ -1200,11 +1188,119 @@ public class ScoresFragment extends Fragment {
 			getActivity().getContentResolver().insert(
 					TeamContentProvider.CONTENT_URI_2, values);
 		}
-		// update display
-		updateStats();
+		// add to scorers database
+		updateScorers(stats1, stats2, player, team);
+
+		// update display list
+		updateStatsList();
 	}
 
-	public void updateStats() {
+	private void updateScorers(String stats1, String stats2, String player,
+			String team) {
+		if ((stats1.equals("goal")) || (stats1.equals("point"))
+				|| (stats1.equals("wide")) || (stats1.equals("saved/short"))
+				|| (stats1.equals("off posts"))) {
+			player = (player == "") ? "other" : player;
+			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0,id;
+			// deal with goal
+			if (stats1.equals("goal")) {
+				goal++;
+				if ((stats2.equals("from free"))
+						|| (stats2.equals("from penalty"))
+						|| (stats2.equals("from sideline"))
+						|| (stats2.equals("from 45/65"))) {
+					goalF++;
+				}
+			}
+			// deal with goal
+			else if (stats1.equals("point")) {
+				point++;
+				if ((stats2.equals("from free"))
+						|| (stats2.equals("from penalty"))
+						|| (stats2.equals("from sideline"))
+						|| (stats2.equals("from 45/65"))) {
+					pointF++;
+				}
+			} else if ((stats1.equals("wide")) || (stats1.equals("off posts"))
+					|| (stats1.equals("saved/short"))) {
+				miss++;
+			}
+			// check if entry in database for player name and team
+			Uri allTitles = TeamContentProvider.CONTENT_URI_3;
+			String[] args = { player, team };
+			Cursor c1 = getActivity().getContentResolver().query(allTitles,
+					null, "name=? AND team=?", args, null);
+				if (c1.getCount() <= 0) {
+				// add new entry to database
+				ContentValues values = new ContentValues();
+				values.put(TeamContentProvider.SCORESNAME, player);
+				values.put(TeamContentProvider.SCORESTEAM, team);
+				values.put(TeamContentProvider.SCORESGOALS, goal);
+				values.put(TeamContentProvider.SCORESPOINTS, point);
+				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
+				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
+				values.put(TeamContentProvider.SCORESMISS, miss);
+				getActivity().getContentResolver().insert(
+						TeamContentProvider.CONTENT_URI_3, values);
+				((Startup) getActivity()).getFragmentScorers().fillData();
+			} else if (c1.getCount() == 1) {
+				// add new entry to database
+				c1.moveToFirst();
+				goal = goal
+						+ c1.getInt(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALS));
+				point = point
+						+ c1.getInt(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTS));
+				goalF = goalF
+						+ c1.getInt(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALSFREE));
+				pointF = pointF
+						+ c1.getInt(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTSFREE));
+				miss = miss
+						+ c1.getInt(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS));
+				id = c1.getInt(c1
+						.getColumnIndexOrThrow(TeamContentProvider.SCORESID));
+				ContentValues values = new ContentValues();
+				values.put(TeamContentProvider.SCORESNAME, player);
+				values.put(TeamContentProvider.SCORESTEAM, team);
+				values.put(TeamContentProvider.SCORESGOALS, goal);
+				values.put(TeamContentProvider.SCORESPOINTS, point);
+				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
+				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
+				values.put(TeamContentProvider.SCORESMISS, miss);
+				Uri uri = Uri
+						.parse(TeamContentProvider.CONTENT_URI_3 + "/" + id);
+				getActivity().getContentResolver().update(uri, values, null, null);
+				
+				((Startup) getActivity()).getFragmentScorers().fillData();
+			} else {
+				Toast.makeText(getActivity(),
+						"error accessing scorers database", Toast.LENGTH_LONG)
+						.show();
+			}
+		}
+
+		// player = (player == "") ? "unknown" : player;
+		// ContentValues values = new ContentValues();
+		// if (stats1.equals("goal")) {
+		// values.put(TeamContentProvider.SCORESNAME, player);
+		// values.put(TeamContentProvider.SCORESTEAM, team);
+		// values.put(TeamContentProvider.SCORESGOALS, 1);
+		// values.put(TeamContentProvider.SCORESPOINTS, 0);
+		// values.put(TeamContentProvider.SCORESGOALSFREE, 0);
+		// values.put(TeamContentProvider.SCORESPOINTSFREE, 0);
+		// values.put(TeamContentProvider.SCORESMISS, 0);
+		// getActivity().getContentResolver().insert(
+		// TeamContentProvider.CONTENT_URI_3, values);
+		// ((Startup) getActivity()).getFragmentScorers().fillData();
+		// }
+		//
+	}
+
+	public void updateStatsList() {
 		// load panel from database and assign to arraylist
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
@@ -1328,7 +1424,7 @@ public class ScoresFragment extends Fragment {
 										int id) {
 									// light up the save button
 
-									updateStats(statsButton, 1);
+									updateStatsDatabase(statsButton, 1);
 
 									dialog.dismiss();
 								}
@@ -1627,9 +1723,9 @@ public class ScoresFragment extends Fragment {
 				if (strTemp.indexOf("goal") >= 0) {
 					// check which team
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						//decrement puckout total
+						// decrement puckout total
 						((Startup) getActivity()).getFragmentReview()
-						.addPuckTotOpp(-1);
+								.addPuckTotOpp(-1);
 						if (homeGoals - 1 >= 0) {
 							homeGoals = homeGoals - 1;
 							bHomeGoals.setText(String.valueOf(homeGoals));
@@ -1656,9 +1752,9 @@ public class ScoresFragment extends Fragment {
 							}
 						}
 					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						//decrement puckout total
+						// decrement puckout total
 						((Startup) getActivity()).getFragmentReview()
-						.addPuckTotHome(-1);
+								.addPuckTotHome(-1);
 						if (oppGoals - 1 >= 0) {
 							oppGoals = oppGoals - 1;
 							bOppGoals.setText(String.valueOf(oppGoals));
@@ -1690,9 +1786,9 @@ public class ScoresFragment extends Fragment {
 				else if (strTemp.indexOf("point") >= 0) {
 					// check which team
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						//decrement puckout total
+						// decrement puckout total
 						((Startup) getActivity()).getFragmentReview()
-						.addPuckTotOpp(-1);
+								.addPuckTotOpp(-1);
 						if (homePoints - 1 >= 0) {
 							homePoints = homePoints - 1;
 							bHomePoints.setText(String.valueOf(homePoints));
@@ -1719,9 +1815,9 @@ public class ScoresFragment extends Fragment {
 							}
 						}
 					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						//decrement puckout total
+						// decrement puckout total
 						((Startup) getActivity()).getFragmentReview()
-						.addPuckTotHome(-1);
+								.addPuckTotHome(-1);
 						if (oppPoints - 1 >= 0) {
 							oppPoints = oppPoints - 1;
 							bOppPoints.setText(String.valueOf(oppPoints));
@@ -1755,15 +1851,15 @@ public class ScoresFragment extends Fragment {
 					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 						((Startup) getActivity()).getFragmentReview()
 								.addtShotWidesHome(-1);
-						//decrement puckout total
+						// decrement puckout total
 						((Startup) getActivity()).getFragmentReview()
-						.addPuckTotOpp(-1);
+								.addPuckTotOpp(-1);
 					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 						((Startup) getActivity()).getFragmentReview()
 								.addtShotWidesOpp(-1);
-						//decrement puckout total
+						// decrement puckout total
 						((Startup) getActivity()).getFragmentReview()
-						.addPuckTotHome(-1);
+								.addPuckTotHome(-1);
 					}
 				}
 				// check for off posts
@@ -1825,15 +1921,14 @@ public class ScoresFragment extends Fragment {
 						((Startup) getActivity()).getFragmentReview()
 								.addtShot45Opp(-1);
 					}
-				}				
-
+				}
 
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 								+ rowId), null, null);
 			}
 
-			updateStats();
+			updateStatsList();
 			c1.close();
 		}
 	};
@@ -1858,7 +1953,7 @@ public class ScoresFragment extends Fragment {
 			ihelp = new Intent(getActivity(), HelpActivity.class);
 			ihelp.putExtra("HELP_ID", R.string.scoresHelp);
 			startActivity(ihelp);
-			return true;			
+			return true;
 		case R.id.resetTimer:
 			resetTime();
 			return true;
@@ -1941,15 +2036,13 @@ public class ScoresFragment extends Fragment {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public String getLocText(){
-		return tLoc.getText().toString();		
-	}
-	
-	public String getPhone(){
-		return phone;		
+
+	public String getLocText() {
+		return tLoc.getText().toString();
 	}
 
-
+	public String getPhone() {
+		return phone;
+	}
 
 }

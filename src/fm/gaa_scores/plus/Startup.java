@@ -28,8 +28,10 @@ public class Startup extends FragmentActivity {
 
 	private TabsAdapterfm mTabsAdapter;
 	private ViewPager mViewPager;
-	private String tabFragmentScore, tabFragmentReview, tabFragmentTeamOne,tabFragmentTeamTwo;
+	private String tabFragmentScore, tabFragmentReview, tabFragmentTeamOne;
+	private String tabFragmentTeamTwo, tabFragmentScorers;
 	private ScoresFragment fragmentScore;
+	private ScorersFragment fragmentScorers;
 	private ReviewFragment fragmentReview;
 	private TeamOneFragment fragmentTeamOne;
 	private TeamTwoFragment fragmentTeamTwo;
@@ -54,14 +56,16 @@ public class Startup extends FragmentActivity {
 		// http://developer.android.com/reference/android/support/v4/view/ViewPager.html
 		mTabsAdapter = new TabsAdapterfm(super.getSupportFragmentManager(),
 				this, mViewPager);
-		mTabsAdapter.addTab(actionBar.newTab().setText("team 2"),
+		mTabsAdapter.addTab(actionBar.newTab().setText("team2"),
 				TeamTwoFragment.class, null);
-		mTabsAdapter.addTab(actionBar.newTab().setText("team 1"),
+		mTabsAdapter.addTab(actionBar.newTab().setText("team1"),
 				TeamOneFragment.class, null);
-		mTabsAdapter.addTab(actionBar.newTab().setText("scores"),
+		mTabsAdapter.addTab(actionBar.newTab().setText("match"),
 				ScoresFragment.class, null);
 		mTabsAdapter.addTab(actionBar.newTab().setText("stats"),
 				ReviewFragment.class, null);
+		mTabsAdapter.addTab(actionBar.newTab().setText("scorers"),
+				ScorersFragment.class, null);
 		// if restarting program, return to the last active tab/fragment
 		if (savedInstanceState != null) {
 			actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
@@ -91,7 +95,7 @@ public class Startup extends FragmentActivity {
 	public String getTagFragmentScore() {
 		return tabFragmentScore;
 	}
-
+	
 	// method called by SETUP and REVIEW fragments to get a reference to the
 	// RECORD
 	// fragment so that they can make method calls/access variables
@@ -102,6 +106,35 @@ public class Startup extends FragmentActivity {
 							tabFragmentScore);
 		return fragmentScore;
 	}
+	
+	// this method is called by the SCORERS fragment (ScoresrFragment) which
+	// passes its tag name into here once it starts up. This parent Activity
+	// can use that tag name to create a reference to the fragment
+	public void setTagFragmentScorers(String t) {
+		tabFragmentScorers = t;
+		fragmentScorers = (ScorersFragment) this.getSupportFragmentManager()
+				.findFragmentByTag(tabFragmentScorers);
+	}
+
+	// method returns the tag name of the active RECORD fragment
+	public String getTagFragmentScorers() {
+		return tabFragmentScorers;
+	}
+	
+	// method called by SETUP and REVIEW fragments to get a reference to the
+	// RECORD
+	// fragment so that they can make method calls/access variables
+	public ScorersFragment getFragmentScorers() {
+		if (fragmentScorers == null)
+			fragmentScorers = (ScorersFragment) this
+					.getSupportFragmentManager().findFragmentByTag(
+							tabFragmentScorers);
+		return fragmentScorers;
+	}
+	
+
+	
+
 
 	// this method is called by the REVIEW fragment (MatchReviewFragment) which
 	// passes its tag name into here once it starts up. This parent Activity
@@ -178,40 +211,4 @@ public class Startup extends FragmentActivity {
 		return fragmentTeamTwo;
 	}
 
-	// set up help menu in action bar
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater menuAction = getMenuInflater();
-//		menuAction.inflate(R.menu.activity_main, menu);
-//		return true;
-//	}
-
-/*	// show help based on which screen is active
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		Intent ihelp;
-		switch (getActionBar().getSelectedNavigationIndex()) {
-		case 0:
-			ihelp = new Intent(this, HelpActivity.class);
-			ihelp.putExtra("HELP_ID", R.string.setupHelp);
-			startActivity(ihelp);
-			return true;
-		case 1:
-			ihelp = new Intent(this, HelpActivity.class);
-			ihelp.putExtra("HELP_ID", R.string.recordHelp);
-			startActivity(ihelp);
-			return true;
-		case 2:
-			ihelp = new Intent(this, HelpActivity.class);
-			ihelp.putExtra("HELP_ID", R.string.reviewHelp);
-			startActivity(ihelp);
-			return true;
-		default:
-			ihelp = new Intent(this, HelpActivity.class);
-			ihelp.putExtra("HELP_ID", R.string.startHelp);
-			startActivity(ihelp);
-			return super.onMenuItemSelected(featureId, item);
-		}
-	}
-*/
 }

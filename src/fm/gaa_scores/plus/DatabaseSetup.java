@@ -60,6 +60,7 @@ public abstract class DatabaseSetup extends ContentProvider {
 			Log.e("qqq","wer");
 			db.execSQL(CREATE_TABLE_PANEL);
 			db.execSQL(CREATE_TABLE_STATS); 
+			db.execSQL(CREATE_TABLE_SCORES);
 	}
 
 		@Override
@@ -67,7 +68,7 @@ public abstract class DatabaseSetup extends ContentProvider {
 			// code to upgrade your db here (all of your tables, indexes,
 			// triggers...)
 			// upgrade to add panelname to DB
-			if ( newVersion >1) {
+			if ( (oldVersion==1) && (newVersion==2)) {
 				db.execSQL(CREATE_TABLE_SCORES);
 			}
 		}
