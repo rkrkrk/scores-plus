@@ -17,7 +17,7 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="name"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/text3"
@@ -29,7 +29,7 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="0"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/text4"
@@ -42,7 +42,7 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="0"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/text5"
@@ -55,7 +55,7 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="0"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/text6"
@@ -68,7 +68,7 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="0"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/text7"
@@ -81,6 +81,6 @@
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
         android:text="0"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
 </LinearLayout>

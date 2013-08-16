@@ -1021,7 +1021,7 @@ public class TeamOneFragment extends Fragment {
 											+ "'", null);
 							Toast.makeText(
 									getActivity(),
-									team + " and " + count + " players deleted",
+									team + " and " + (count-1) + " players deleted",
 									Toast.LENGTH_LONG).show();
 
 							dialog.dismiss();
