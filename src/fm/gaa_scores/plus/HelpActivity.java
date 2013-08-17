@@ -11,11 +11,10 @@
  */
 package fm.gaa_scores.plus;
 
-import fm.gaa_scores.plus.R;
-import android.content.Intent;
-import android.text.Html;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 public class HelpActivity extends Activity {

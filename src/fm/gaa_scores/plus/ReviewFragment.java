@@ -14,27 +14,42 @@
  */
 package fm.gaa_scores.plus;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
-import fm.gaa_scores.plus.R;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ReviewFragment extends Fragment {
 	private int homeGoals, homePoints, homeTotal, oppGoals, oppPoints,
@@ -44,7 +59,7 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotGoalsHome;
 	private TextView tShotWidesHome;
 	private TextView tShotPointsHome;
-	private TextView tShotSavedHome; 
+	private TextView tShotSavedHome;
 	private TextView tShotPostsHome;
 	private TextView tShot45Home;
 	private TextView tTotPuckHome;
@@ -58,18 +73,16 @@ public class ReviewFragment extends Fragment {
 	private TextView tPuckWonCleanOpp;
 	private TextView tPuckLostCleanOpp;
 	private TextView tOwnTeam, tOppTeam;
-	private Button  bSendAll;
+	private Button bSendAll, bTweetAll;
 
-
-	private int  shotGoalsHome = 0, shotPointsHome = 0;
+	private int shotGoalsHome = 0, shotPointsHome = 0;
 	private int shotGoalsPlayHome = 0, shotPointsPlayHome = 0;
 	private int shotGoalsPlayOpp = 0, shotPointsPlayOpp = 0;
-	private int shotWidesHome = 0,  shotSavedHome = 0,
-			 shotPostsHome = 0;
+	private int shotWidesHome = 0, shotSavedHome = 0, shotPostsHome = 0;
 	private int freeConcededHome = 0;
 	private int freeConcededOpp = 0;
-	private int shot45Home = 0, shot45Opp=0;
-	private int totPHome = 0, totPOpp=0;
+	private int shot45Home = 0, shot45Opp = 0;
+	private int totPHome = 0, totPOpp = 0;
 	int puckWonCleanHome = 0, puckWonCleanHomePerCent = 0;
 	int puckLostCleanHome = 0, puckLostCleanHomePerCent = 0;
 	int puckWonBreakHome = 0, puckWonBreakHomePerCent = 0;
@@ -91,10 +104,9 @@ public class ReviewFragment extends Fragment {
 	private TextView tShot45Opp;
 	private TextView tTotPuckOpp;
 	private int shotGoalsOpp = 0, shotPointsOpp = 0;
-	private int shotWidesOpp = 0, shotSavedOpp = 0,
-			 shotPostsOpp = 0;
+	private int shotWidesOpp = 0, shotSavedOpp = 0, shotPostsOpp = 0;
 	private ListView listViewStats;
-	
+
 	@Override
 	// start main method to display screen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -142,11 +154,11 @@ public class ReviewFragment extends Fragment {
 		tShotSavedOpp = (TextView) v.findViewById(R.id.tVwShotsSavedOppNo);
 		tShotPostsOpp = (TextView) v.findViewById(R.id.tVwShotsPostsOppNo);
 
-	    tShot45Home= (TextView) v.findViewById(R.id.tVwHome45);
-		tTotPuckHome= (TextView) v.findViewById(R.id.tVwHomeTotPuck);
-	    tShot45Opp= (TextView) v.findViewById(R.id.tVwOpp45);
-		tTotPuckOpp= (TextView) v.findViewById(R.id.tVwOppTotPuck);
-		
+		tShot45Home = (TextView) v.findViewById(R.id.tVwHome45);
+		tTotPuckHome = (TextView) v.findViewById(R.id.tVwHomeTotPuck);
+		tShot45Opp = (TextView) v.findViewById(R.id.tVwOpp45);
+		tTotPuckOpp = (TextView) v.findViewById(R.id.tVwOppTotPuck);
+
 		// Set up output for frees
 		tFreeConcededHome = (TextView) v.findViewById(R.id.tVwFreeWonHome);
 		tFreeConcededOpp = (TextView) v.findViewById(R.id.tVwFreeWonOpp);
@@ -181,14 +193,14 @@ public class ReviewFragment extends Fragment {
 		shotGoalsPlayHome = sharedPref.getInt("SHOTGOALSPLAYHOME", 0);
 		shotPointsPlayHome = sharedPref.getInt("SHOTPOINTSPLAYHOME", 0);
 		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
-		addtShotGoalsHome(0); 
+		addtShotGoalsHome(0);
 		addtShotGoalsPlayHome(0);
-		addtShotPointsHome(0); 
-		addtShotPointsPlayHome(0); 
-		addtShotWidesHome(0) ;
-		addtShotSavedHome(0) ;
-		addtShotPostsHome(0) ;
-		addtShot45Home(0) ;
+		addtShotPointsHome(0);
+		addtShotPointsPlayHome(0);
+		addtShotWidesHome(0);
+		addtShotSavedHome(0);
+		addtShotPostsHome(0);
+		addtShot45Home(0);
 
 		shotGoalsOpp = sharedPref.getInt("SHOTGOALSOPP", 0);
 		shotPointsOpp = sharedPref.getInt("SHOTPOINTSOPP", 0);
@@ -198,20 +210,19 @@ public class ReviewFragment extends Fragment {
 		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
 		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
 		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
-		addtShotGoalsOpp(0); 
+		addtShotGoalsOpp(0);
 		addtShotGoalsPlayOpp(0);
-		addtShotPointsOpp(0); 
-		addtShotPointsPlayOpp(0); 
-		addtShotWidesOpp(0) ;
-		addtShotSavedOpp(0) ;
-		addtShotPostsOpp(0) ;
-		addtShot45Opp(0) ;
-
+		addtShotPointsOpp(0);
+		addtShotPointsPlayOpp(0);
+		addtShotWidesOpp(0);
+		addtShotSavedOpp(0);
+		addtShotPostsOpp(0);
+		addtShot45Opp(0);
 
 		freeConcededHome = sharedPref.getInt("FREEWONHOME", 0);
 		freeConcededOpp = sharedPref.getInt("FREEWONOPP", 0);
 		addFreeConcededHome(0);
-		addFreeConcededOpp(0); 
+		addFreeConcededOpp(0);
 
 		totPHome = sharedPref.getInt("TOTPHOME", 0);
 		puckWonCleanHome = sharedPref.getInt("PUCKWONCLEANHOME", 0);
@@ -220,22 +231,23 @@ public class ReviewFragment extends Fragment {
 		totPOpp = sharedPref.getInt("TOTPOPP", 0);
 		puckWonCleanOpp = sharedPref.getInt("PUCKWONCLEANOPP", 0);
 		puckLostCleanOpp = sharedPref.getInt("PUCKLOSTCLEANOPP", 0);
-		addPuckTotHome(0); 
-		addPuckWonCleanHome(0); 
-		addPuckLostCleanHome(0) ;
-		addPuckTotOpp(0) ;
-		addPuckWonCleanOpp(0) ;
-		addPuckLostCleanOpp(0); 
-		
+		addPuckTotHome(0);
+		addPuckWonCleanHome(0);
+		addPuckLostCleanHome(0);
+		addPuckTotOpp(0);
+		addPuckWonCleanOpp(0);
+		addPuckLostCleanOpp(0);
+
 		bSendAll = (Button) v.findViewById(R.id.bSendAll);
 		bSendAll.setOnClickListener(sendAllListener);
+		bTweetAll = (Button) v.findViewById(R.id.bTweetAll);
+		bTweetAll.setOnClickListener(tweetAllListener);
 
-		
-		//fill in list view with datavbase
+		// fill in list view with datavbase
 		listViewStats = (ListView) v.findViewById(R.id.listView1);
-		
+
 		updateListView();
-	
+
 		return v;
 
 	}
@@ -276,12 +288,11 @@ public class ReviewFragment extends Fragment {
 		shotPostsHome = shotPostsHome + i;
 		tShotPostsHome.setText(String.valueOf(shotPostsHome));
 	}
-	
+
 	public void addtShot45Home(int i) {
 		shot45Home = shot45Home + i;
 		tShot45Home.setText(String.valueOf(shot45Home));
 	}
-
 
 	// *******************Opp Shots********************///
 	// increment counters for opposition team shots
@@ -319,13 +330,11 @@ public class ReviewFragment extends Fragment {
 		shotPostsOpp = shotPostsOpp + i;
 		tShotPostsOpp.setText(String.valueOf(shotPostsOpp));
 	}
-	
+
 	public void addtShot45Opp(int i) {
 		shot45Opp = shot45Opp + i;
 		tShot45Opp.setText(String.valueOf(shot45Opp));
 	}
-
-
 
 	// ////////////////Update Free Section////////////////////////////
 	// increment counters for frees
@@ -355,12 +364,11 @@ public class ReviewFragment extends Fragment {
 		puckLostCleanHome = puckLostCleanHome + i;
 		tPuckLostCleanHome.setText(String.valueOf(puckLostCleanHome));
 	}
-	
+
 	public void addPuckTotOpp(int i) {// ///
 		totPOpp = totPOpp + i;
 		tTotPuckOpp.setText(String.valueOf(totPOpp));
 	}
-
 
 	public void addPuckWonCleanOpp(int i) {
 		puckWonCleanOpp = puckWonCleanOpp + i;
@@ -439,7 +447,6 @@ public class ReviewFragment extends Fragment {
 		shot45Opp = 0;
 		tShot45Opp.setText("0");
 
-
 		freeConcededHome = 0;
 		tFreeConcededHome.setText("0");
 		freeConcededOpp = 0;
@@ -500,12 +507,11 @@ public class ReviewFragment extends Fragment {
 		editor.putInt("PUCKLOSTCLEANHOME", puckLostCleanHome);
 		editor.putInt("PUCKWONCLEANOPP", puckWonCleanOpp);
 		editor.putInt("PUCKLOSTCLEANOPP", puckLostCleanOpp);
-		
+
 		editor.putInt("SHOT45HOME", shot45Home);
 		editor.putInt("SHOT45OPP", shot45Opp);
 		editor.putInt("TOTPHOME", totPHome);
-		editor.putInt("TOTPOPP",totPOpp);
-
+		editor.putInt("TOTPOPP", totPOpp);
 
 		editor.commit();
 	}
@@ -520,7 +526,7 @@ public class ReviewFragment extends Fragment {
 		int[] to = new int[] { R.id.listrtxt };
 
 		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
-				projection, null, null, TeamContentProvider.STATSID+ " desc");
+				projection, null, null, TeamContentProvider.STATSID + " desc");
 		Cursor c1 = cL.loadInBackground();
 
 		SimpleCursorAdapter reminders = new SimpleCursorAdapter(getActivity(),
@@ -528,7 +534,7 @@ public class ReviewFragment extends Fragment {
 
 		listViewStats.setAdapter(reminders);
 	}
-	
+
 	// this method is called from the SETUP fragment to update the names of the
 	// home and away teams and to receive team line and teams from setup screen
 	public void setTeamNames(String homeTeam, String oppTeam) {
@@ -537,9 +543,9 @@ public class ReviewFragment extends Fragment {
 		if (!oppTeam.equals(""))
 			tOppTeam.setText(oppTeam);
 	}
-	
+
 	// for reset buttons diplay message to long click, won't work with ordinary
-		// click
+	// click
 	OnClickListener sendAllListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -547,10 +553,13 @@ public class ReviewFragment extends Fragment {
 			String[] projection1 = { TeamContentProvider.PANELID,
 					TeamContentProvider.NAME, TeamContentProvider.POSN };
 			CursorLoader cL;
+			
+			sb.append(((Startup) getActivity()).getFragmentScore().getLocText()+"\n\n");
+			
 			Uri allTitles = TeamContentProvider.CONTENT_URI;
-			
-			sb.append("Team 1: "+tOwnTeam.getText()+"\n");
-			
+
+			sb.append("Team 1: " + tOwnTeam.getText() + "\n");
+
 			// reset line up and read from database
 			cL = new CursorLoader(getActivity(), allTitles, projection1,
 					TeamContentProvider.TEAM + " = '" + tOwnTeam.getText()
@@ -578,9 +587,8 @@ public class ReviewFragment extends Fragment {
 			}
 			c1.close();
 
-			sb.append("\nTeam 2: "+tOppTeam.getText()+"\n");
+			sb.append("\nTeam 2: " + tOppTeam.getText() + "\n");
 
-			
 			cL = new CursorLoader(getActivity(), allTitles, projection1,
 					TeamContentProvider.TEAM + " = '" + tOppTeam.getText()
 							+ "'", null, TeamContentProvider.POSN);
@@ -607,8 +615,8 @@ public class ReviewFragment extends Fragment {
 			}
 			c1.close();
 
+			sb.append("\n\nMATCH EVENTS\n");
 			
-			sb.append("\n");
 
 			allTitles = TeamContentProvider.CONTENT_URI_2;
 			String[] projection = { TeamContentProvider.STATSLINE };
@@ -626,31 +634,124 @@ public class ReviewFragment extends Fragment {
 			}
 			c1.close();
 			
-			sb.append("\nTeam 1: "+tOwnTeam.getText()+"\n");
-			sb.append(shotGoalsHome +" Goals,  "+shotPointsHome+" Points.  Total:"+tHomeTotal.getText()+"\n");
-			sb.append(shotGoalsPlayHome+" goals from play  "+shotPointsPlayHome+" points from play \n");
-			sb.append("wides: "+shotWidesHome+"\n");
-			sb.append("out for 45/65: "+shot45Home+"\n");
-			sb.append("saved/short: "+shotSavedHome+"\n");
-			sb.append("off posts: "+shotPostsHome+"\n");
-			sb.append("frees conceded: "+freeConcededHome+"\n");
-			sb.append("Total puckouts: "+totPHome+"\n");
-			sb.append("own puckouts won: "+puckWonCleanHome+"\n");
-			sb.append("own puckouts lost: "+puckLostCleanHome+"\n");
-			
-			sb.append("\nTeam 2: "+tOppTeam.getText()+"\n");
-			sb.append(shotGoalsOpp +" Goals,  "+shotPointsOpp+" Points.  Total:"+tOppTotal.getText()+"\n");
-			sb.append(shotGoalsPlayOpp+" goals from play  "+shotPointsPlayOpp+" points from play \n");
-			sb.append("wides: "+shotWidesOpp+"\n");
-			sb.append("out for 45/65: "+shot45Opp+"\n");
-			sb.append("saved/short: "+shotSavedOpp+"\n");
-			sb.append("off posts: "+shotPostsOpp+"\n");
-			sb.append("frees conceded: "+freeConcededOpp+"\n");
-			sb.append("Total puckouts: "+totPOpp+"\n");
-			sb.append("own puckouts won: "+puckWonCleanOpp+"\n");
-			sb.append("own puckouts lost: "+puckLostCleanOpp+"\n");
-			
+			sb.append("\n\nMATCH STATS SUMMARY");
 
+			sb.append("\nTeam 1: " + tOwnTeam.getText() + "\n");
+			sb.append(shotGoalsHome + " Goals,  " + shotPointsHome
+					+ " Points.  Total:" + tHomeTotal.getText() + "\n");
+			sb.append(shotGoalsPlayHome + " goals from play  "
+					+ shotPointsPlayHome + " points from play \n");
+			sb.append("wides: " + shotWidesHome + "\n");
+			sb.append("out for 45/65: " + shot45Home + "\n");
+			sb.append("saved/short: " + shotSavedHome + "\n");
+			sb.append("off posts: " + shotPostsHome + "\n");
+			sb.append("frees conceded: " + freeConcededHome + "\n");
+			sb.append("Total puckouts: " + totPHome + "\n");
+			sb.append("own puckouts won: " + puckWonCleanHome + "\n");
+			sb.append("own puckouts lost: " + puckLostCleanHome + "\n");
+
+			sb.append("\nTeam 2: " + tOppTeam.getText() + "\n");
+			sb.append(shotGoalsOpp + " Goals,  " + shotPointsOpp
+					+ " Points.  Total:" + tOppTotal.getText() + "\n");
+			sb.append(shotGoalsPlayOpp + " goals from play  "
+					+ shotPointsPlayOpp + " points from play \n");
+			sb.append("wides: " + shotWidesOpp + "\n");
+			sb.append("out for 45/65: " + shot45Opp + "\n");
+			sb.append("saved/short: " + shotSavedOpp + "\n");
+			sb.append("off posts: " + shotPostsOpp + "\n");
+			sb.append("frees conceded: " + freeConcededOpp + "\n");
+			sb.append("Total puckouts: " + totPOpp + "\n");
+			sb.append("own puckouts won: " + puckWonCleanOpp + "\n");
+			sb.append("own puckouts lost: " + puckLostCleanOpp + "\n\n\n");
+			
+			sb.append("LIST OF SCORERS \n");
+
+						
+			allTitles = TeamContentProvider.CONTENT_URI_3;
+			String[] from = new String[] {
+					TeamContentProvider.SCORESNAME,
+					// TeamContentProvider.SCORESTEAM,
+					TeamContentProvider.SCORESGOALS,
+					TeamContentProvider.SCORESPOINTS,
+					TeamContentProvider.SCORESGOALSFREE,
+					TeamContentProvider.SCORESPOINTSFREE,
+					TeamContentProvider.SCORESMISS };
+
+			// create array to map these fields to
+			int[] to = new int[] { R.id.text1, R.id.text3, R.id.text4,
+					R.id.text5, R.id.text6, R.id.text7 };
+
+			// load database info from PanelContentProvider into a cursor and
+			// use an
+			// adapter to display on screen
+			String[] args = { tOwnTeam.getText().toString() };
+			c1 = getActivity().getContentResolver().query(allTitles,
+					null, "team=?", args,
+					TeamContentProvider.SCORESTOTAL + " DESC");
+
+			String[] args1 = { tOppTeam.getText().toString()};
+			Cursor c2 = getActivity().getContentResolver().query(allTitles,
+					null, "team=?", args1,
+					TeamContentProvider.SCORESTOTAL + " DESC");
+
+			sb.append("player  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
+			sb.append(tOwnTeam.getText().toString() + " SCORERS \n\n");
+
+			if (c1.getCount() > 0) {
+				c1.moveToFirst();
+				do {
+					// read in player nicknames
+					sb.append(c1.getString(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESNAME))
+							+ "  **   "
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALS))
+							+ "-"
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTS))
+							+ "  **  "
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALSFREE))
+							+ "-"
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTSFREE))
+							+ "  **  "
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS))
+							+ "\n\n");
+					// insert players into positions
+
+				} while (c1.moveToNext());
+			}
+
+			sb.append("\n" + tOppTeam.getText().toString() + " SCORERS\n\n");
+			if (c2.getCount() > 0) {
+				c2.moveToFirst();
+				do {
+					// read in player nicknames
+					sb.append(c2.getString(c2
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESNAME))
+							+ "  **   "
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALS))
+							+ "-"
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTS))
+							+ "  **  "
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESGOALSFREE))
+							+ "-"
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESPOINTSFREE))
+							+ "  **  "
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS))
+							+ "\n\n");
+					// insert players into positions
+
+				} while (c2.moveToNext());
+
+			}
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent
 					.putExtra(Intent.EXTRA_SUBJECT, "match report "
@@ -661,27 +762,217 @@ public class ReviewFragment extends Fragment {
 			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 		}
 	};
-	
+
+	OnClickListener tweetAllListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+
+			// Create Bitmap to display team selection
+			Bitmap bitmap = Bitmap.createBitmap(700, 400,
+					Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(bitmap);
+			canvas.drawColor(Color.rgb(204, 255, 204));
+			Paint paint = new Paint();
+			paint.setColor(Color.rgb(255, 255, 219));
+			canvas.drawRect(350, 0, 700, 400, paint);
+			paint.setColor(Color.BLACK);
+			canvas.drawLine(350, 0, 350, 350, paint);
+			paint.setAntiAlias(true);
+			paint.setTextAlign(Align.CENTER);
+			paint.setTextSize(22);
+			// Write teams
+			// sb.append("player  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
+
+			canvas.drawText(tOwnTeam.getText().toString(), 175, 25, paint);
+			canvas.drawText(homeGoals + "-" + homePoints + " (" + homeTotal
+					+ ")", 175, 50, paint);
+			paint.setTextAlign(Align.LEFT);
+			paint.setColor(Color.RED);
+			canvas.drawText("No.", 200, 75, paint);
+			paint.setTextSize(18);
+			canvas.drawText("from play", 260, 75, paint);
+			paint.setTextSize(22);
+			paint.setColor(Color.BLACK);
+			canvas.drawText("Goals", 5, 100, paint);
+			canvas.drawText(homeGoals + " ", 210, 100, paint);
+			canvas.drawText(shotGoalsPlayHome + " ", 285, 100, paint);
+
+			canvas.drawText("Points", 5, 125, paint);
+			canvas.drawText(homePoints + " ", 210, 125, paint);
+			canvas.drawText(shotPointsPlayHome + " ", 285, 125, paint);
+
+			canvas.drawText("Wides", 5, 150, paint);
+			canvas.drawText(shotWidesHome + " ", 210, 150, paint);
+
+			canvas.drawText("Out for 45/65", 5, 175, paint);
+			canvas.drawText(shot45Home + " ", 210, 175, paint);
+
+			canvas.drawText("Saved/Short", 5, 200, paint);
+			canvas.drawText(shotSavedHome + " ", 210, 200, paint);
+
+			canvas.drawText("Off Posts", 5, 225, paint);
+			canvas.drawText(shotPostsHome + " ", 210, 225, paint);
+
+			canvas.drawText("Frees Conceded", 5, 250, paint);
+			canvas.drawText(freeConcededHome + " ", 210, 250, paint);
+
+			canvas.drawText("Total Puckouts", 5, 275, paint);
+			canvas.drawText(totPHome + " ", 210, 275, paint);
+
+			canvas.drawText("Own Puckout Won", 5, 300, paint);
+			canvas.drawText(puckWonCleanHome + " ", 210, 300, paint);
+
+			canvas.drawText("Own Puckout Lost", 5, 325, paint);
+			canvas.drawText(puckLostCleanHome + " ", 210, 325, paint);
+
+			canvas.drawText(tOppTeam.getText().toString(), 525, 25, paint);
+			canvas.drawText(oppGoals + "-" + oppPoints + " (" + oppTotal + ")",
+					525, 50, paint);
+			paint.setTextAlign(Align.LEFT);
+			paint.setColor(Color.RED);
+			canvas.drawText("No.", 550, 75, paint);
+			paint.setTextSize(18);
+			canvas.drawText("from play", 620, 75, paint);
+			paint.setTextSize(22);
+			paint.setColor(Color.BLACK);
+			canvas.drawText("Goals", 355, 100, paint);
+			canvas.drawText(oppGoals + " ", 560, 100, paint);
+			canvas.drawText(shotGoalsPlayOpp + " ", 645, 100, paint);
+
+			canvas.drawText("Points", 355, 125, paint);
+			canvas.drawText(oppPoints + " ", 560, 125, paint);
+			canvas.drawText(shotPointsPlayOpp + " ", 645, 125, paint);
+
+			canvas.drawText("Wides", 355, 150, paint);
+			canvas.drawText(shotWidesOpp + " ", 560, 150, paint);
+
+			canvas.drawText("O" + "ut for 45/65", 355, 175, paint);
+			canvas.drawText(shot45Opp + " ", 560, 175, paint);
+
+			canvas.drawText("Saved/Short", 355, 200, paint);
+			canvas.drawText(shotSavedOpp + " ", 560, 200, paint);
+
+			canvas.drawText("Off Posts", 355, 225, paint);
+			canvas.drawText(shotPostsOpp + " ", 560, 225, paint);
+
+			canvas.drawText("Frees Conceded", 355, 250, paint);
+			canvas.drawText(freeConcededOpp + " ", 560, 250, paint);
+
+			canvas.drawText("Total Puckouts", 355, 275, paint);
+			canvas.drawText(totPOpp + " ", 560, 275, paint);
+
+			canvas.drawText("Own Puckout Won", 355, 300, paint);
+			canvas.drawText(puckWonCleanOpp + " ", 560, 300, paint);
+
+			canvas.drawText("Own Puckout Lost", 355, 325, paint);
+			canvas.drawText(puckLostCleanOpp + " ", 560, 325, paint);
+
+			paint.setColor(Color.GRAY);
+			paint.setTextSize(16);
+			paint.setTextAlign(Align.CENTER);
+			canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 370,
+					paint);
+			canvas.drawText("Available free from Google Play Store", 350, 390,
+					paint);
+
+			File mPath = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+			OutputStream fout = null;
+			File imageFile = new File(mPath, "statsTweet.jpg");
+			Uri uri = Uri.fromFile(imageFile);
+
+			try {
+				mPath.mkdirs();
+				fout = new FileOutputStream(imageFile);
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+				fout.flush();
+				fout.close();
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try {
+				final Intent shareIntent = findTwitterClient();
+				shareIntent.putExtra(Intent.EXTRA_TEXT, tOwnTeam.getText()
+						.toString()
+						+ " v. "
+						+ tOppTeam.getText().toString()
+						+ " Stats \n"
+						+ ((Startup) getActivity()).getFragmentScore()
+								.getLocText());
+				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+				// introduce delay to give time to read in bitmap before sending
+				// tweet
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						startActivity(Intent
+								.createChooser(shareIntent, "Share"));
+					}
+				}, 400);
+			} catch (Exception ex) {
+				Toast.makeText(
+						getActivity(),
+						"Can't find twitter client\n"
+								+ "Please install Twitter App\nand login to Twitter",
+						Toast.LENGTH_LONG).show();
+			}
+		}
+	};
+
+	public Intent findTwitterClient() {
+		final String[] twitterApps = {
+				// package // name - nb installs (thousands)
+				"com.twitter.android", // official - 10 000
+				"com.twidroid", // twidroid - 5 000
+				"com.handmark.tweetcaster", // Tweecaster - 5 000
+				"com.thedeck.android" }; // TweetDeck - 5 000 };
+		Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+		tweetIntent.setType("text/plain");
+		final PackageManager packageManager = getActivity().getPackageManager();
+		List<ResolveInfo> list = packageManager.queryIntentActivities(
+				tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+		for (int i = 0; i < twitterApps.length; i++) {
+			for (ResolveInfo resolveInfo : list) {
+				String p = resolveInfo.activityInfo.packageName;
+				if (p != null && p.startsWith(twitterApps[i])) {
+					tweetIntent.setPackage(p);
+					return tweetIntent;
+				}
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        inflater.inflate(R.menu.review_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+		inflater.inflate(R.menu.review_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
 	// set up help menu in action bar
-	//@Override
-	
+	// @Override
+
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)	{
+	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent ihelp;
 		switch (item.getItemId()) {
 		case 0:
-			//menu pointer do nothing
+			// menu pointer do nothing
 		case R.id.helpTeam:
 			ihelp = new Intent(getActivity(), HelpActivity.class);
 			ihelp.putExtra("HELP_ID", R.string.reviewHelp);
 			startActivity(ihelp);
-			return true;		}	
-	    return super.onOptionsItemSelected(item);	
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
-		
+
 }

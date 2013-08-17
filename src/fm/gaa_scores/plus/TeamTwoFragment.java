@@ -28,8 +28,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import fm.gaa_scores.plus.R;
-
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -49,12 +47,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-
 import android.support.v4.app.Fragment;
+import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.text.Layout.Alignment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,8 +58,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -249,7 +245,7 @@ public class TeamTwoFragment extends Fragment {
 			Bitmap bitmap = Bitmap.createBitmap(600, 550,
 					Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
-			canvas.drawColor(Color.LTGRAY);
+			canvas.drawColor(Color.rgb(255, 255, 219));
 			Paint paint = new Paint();
 			paint.setColor(Color.BLACK);
 			paint.setAntiAlias(true);
@@ -387,9 +383,11 @@ public class TeamTwoFragment extends Fragment {
 			canvas.drawText(str, 300, 425 + (commentLines * 20)+xxx, paint);
 
 			paint.setTextSize(15);
-			paint.setColor(Color.RED);
+			paint.setColor(Color.GRAY);
 			canvas.drawText("GAA Scores Stats Plus - Android App", 300,
 					470 + (commentLines * 20)+xxx , paint);
+			canvas.drawText("Available free from Google Play Store", 300, 470
+					+ (commentLines * 20) + xxx+20, paint);
 
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -415,7 +413,7 @@ public class TeamTwoFragment extends Fragment {
 			try {
 				final Intent shareIntent = findTwitterClient();
 				shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
-						+ " Team Selection");
+						+ " Team Selection \n"+((Startup) getActivity()).getFragmentScore().getLocText());
 				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 				// introduce delay to give time to read in bitmap before sending
 				// tweet

@@ -226,9 +226,11 @@ from the stats screen for the opposite team. <br/><br/>
 List of match/stats events recorded is displayed at the bottom of the screen. Swipe up/down
 to scroll.
 </p>
+<p><b>tweet match stats</b><br/>
+What it says!</p>
 <p>
-Touch <b>send all match data</b> to email all recorded match data including: team selections, score, stats summary, 
-list of match/stats events recorded.
+Touch <b>share match data</b> to email all recorded match data including: team selections, score, stats summary, 
+list of match/stats events recorded, list of scorers.
 </p>
 
 
@@ -243,12 +245,19 @@ list of match/stats events recorded.
 Summary of scorers recorded using the 
 <b><i>ENTER STATS</i></b> on the MATCH 
 screen is shown for both teams.<br/><br/>
-First Column is total scored.<br/><br/>
+First Column is total scored per person. If no name was recorded for a score, the scores
+are lumped together under unknown<br/><br/>
 Second Column is scores from frees, penalties, 45/65s and sidelines.<br/><br/>
 Third Column - <b><i>misses**</i></b> - is sum of wides, off posts and saved/short. 
 </p>
 
+<p>Swipe list to see all scorers if necessary</p>
 
+<p><b>tweet scores</b><br/>
+What it says!</p>
+
+<p><b>share scores</b><br/>
+Email the Scorers List</p>
 
 ]]>
     </string>    

@@ -25,8 +25,6 @@ import java.util.Timer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fm.gaa_scores.plus.R;
-
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
