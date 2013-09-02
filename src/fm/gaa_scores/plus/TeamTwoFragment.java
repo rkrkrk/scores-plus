@@ -559,29 +559,28 @@ public class TeamTwoFragment extends Fragment {
 			// Get whois coming off swap with going on and write change to
 			// databse
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("select who is coming off");
-			builder.setSingleChoiceItems(strTemp, 0,
+			builder.setTitle("select who is going on");
+			builder.setSingleChoiceItems(strTemp2, 0,
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							indexOff = which + 1;
-							playerOff = teamLineUpCurrent[indexOff];
+							indexOn = which + 2;// text in first 2
+							playerOn = panelList.get(which + 2);
 							// dialog to see who is goping on
 
 							// Get whois coming off swap with going on and write
 							// change to databse
 							AlertDialog.Builder builder1 = new AlertDialog.Builder(
 									getActivity());
-							builder1.setTitle("select who is going on");
-							builder1.setSingleChoiceItems(strTemp2, 0,
+							builder1.setTitle("select who is coming off");
+							builder1.setSingleChoiceItems(strTemp, 0,
 									new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											indexOn = which + 2;// text in first
-																// 2
-											playerOn = panelList.get(which + 2);
+											indexOff = which + 1;
+											playerOff = teamLineUpCurrent[indexOff];
 											makeSub(bloodSub);
 
 											dialog.dismiss();

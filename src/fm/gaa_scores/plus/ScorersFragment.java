@@ -275,7 +275,7 @@ public class ScorersFragment extends ListFragment {
 			canvas.drawColor(Color.rgb(255, 255, 219));
 			Paint paint = new Paint();
 			paint.setColor(Color.rgb(204, 255, 204));
-			canvas.drawRect(0, 0, 600, length/2+115, paint);
+			canvas.drawRect(0, 0, 600, (c1.getCount()*25)+100, paint);
 			paint.setColor(Color.BLACK);
 			paint.setAntiAlias(true);
 			paint.setTextAlign(Align.CENTER);
