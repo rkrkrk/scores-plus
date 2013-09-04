@@ -1373,27 +1373,33 @@ public class TeamOneFragment extends Fragment {
 			if (!root.exists()) {
 				root.mkdirs();
 			}
-			File outfile = new File(root, panelName+".txt");
+			File outfile = new File(root, panelName + ".txt");
 			FileWriter writer = new FileWriter(outfile);
-			String nl=System.getProperty( "line.separator" );
-			writer.append("teamstart,"+nl);
-			for (int i=1;i<=15;i++){
-				writer.append(teamLineUpCurrent[i]+nl);
+			String nl = System.getProperty("line.separator");
+			writer.append("teamstart," + nl);
+			for (int i = 1; i <= 15; i++) {
+				writer.append(teamLineUpCurrent[i] + "," + nl);
 			}
-			for (int i=2;i<panelList.size();i++){
-				writer.append(panelList.get(i)+nl);
-			} 
-			
-			writer.append("teamname:" + panelName + ","+nl);
+			for (int i = 2; i < panelList.size(); i++) {
+				writer.append(panelList.get(i) + "," + nl);
+			}
+
+			writer.append("teamname:" + panelName + "," + nl);
 			writer.append("teamend");
 			writer.flush();
 			writer.close();
+			Toast.makeText(
+					getActivity(),
+					"team exported to storage in GAA_APP_export directory with filename "
+							+ panelName + ".txt", Toast.LENGTH_LONG).show();
 
 		} catch (IOException e) {
 			Log.e("file write failed", e.getMessage(), e);
-			Toast.makeText(getActivity(), "Error: unable to write to file\n+" +
-					"make sure team name has only letters and numbers\n"+
-					"other characters will not work",
+			Toast.makeText(
+					getActivity(),
+					"Error: unable to write to file\n"
+							+ "make sure team name has only letters and numbers "
+							+ "other characters like / will not work",
 					Toast.LENGTH_LONG).show();
 		}
 	}
@@ -1421,7 +1427,6 @@ public class TeamOneFragment extends Fragment {
 			// create team name
 
 			// check if format is correct
-			Log.e("buf", " " + buf.toString());
 			if ((buf.toString().toLowerCase().startsWith("teamstart,"))
 					&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
 				// good to go
@@ -1435,7 +1440,6 @@ public class TeamOneFragment extends Fragment {
 						.startsWith("teamname:"))
 						&& (strTemp[strTemp.length - 1].split(":").length == 2)) {
 					panelName = strTemp[strTemp.length - 1].split(":")[1];
-					Log.e("panelName ", panelName);
 					inputNum = inputNum - 1;
 				} else {
 					SimpleDateFormat sdf = new SimpleDateFormat("HHmmddMMyyyy");
@@ -1445,7 +1449,6 @@ public class TeamOneFragment extends Fragment {
 
 				for (int i = 1; i < 10; i++) {
 					// check if name exists and append __i if it does
-					Log.e("iiii ", i + " " + panelName);
 					String[] args = { panelName };
 					Cursor c1 = getActivity().getContentResolver().query(
 							TeamContentProvider.CONTENT_URI, null, "team=?",
@@ -1489,10 +1492,8 @@ public class TeamOneFragment extends Fragment {
 						panelName, "");
 				((Startup) getActivity()).getFragmentReview().setTeamNames(
 						panelName, "");
-				Log.e("here?", "  ");
 				((Startup) getActivity()).getFragmentScorers().setTeamNames(
 						panelName, "");
-				Log.e("no?", "  ");
 				((Startup) getActivity()).getFragmentTeamTwo().setTeam(
 						panelName);
 
@@ -1500,7 +1501,6 @@ public class TeamOneFragment extends Fragment {
 				for (int i = 0; i < inputNum; i++) {
 					s[i] = strTemp[i];
 				}
-				Log.e("string s", " " + s);
 				// if more than 15 read in
 				if (s.length > 15) {
 					for (int i = 0; i < 15; i++) {
@@ -1560,7 +1560,6 @@ public class TeamOneFragment extends Fragment {
 			// filter only ones starting with appGAASCORESSTATS
 			// then get most recent one
 			File[] files = root.listFiles();
-			Log.e("filein", " - " + files.toString());
 			for (File f : files) {
 				if (f.getName().length() >= 18) {
 					if (f.getName().substring(0, 17)
@@ -1570,7 +1569,6 @@ public class TeamOneFragment extends Fragment {
 				}
 			}
 			if (fileList.size() > 0) {
-				Log.e("filesize", " - " + fileList.toString());
 				String fName = fileList.get(0).getPath();
 				long datemod = fileList.get(0).lastModified();
 				for (int i = 1; i < fileList.size(); i++) {
@@ -1585,7 +1583,6 @@ public class TeamOneFragment extends Fragment {
 				handler.postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						Log.v("start file delete", "OK");
 						deleteDownloads();
 					}
 				}, 5000);
@@ -1620,9 +1617,7 @@ public class TeamOneFragment extends Fragment {
 				if (f.getName().length() >= 18) {
 					if (f.getName().substring(0, 17)
 							.equals("appGAASCORESSTATS")) {
-						Log.v("deleting", f.getName());
 						f.delete();
-						Log.v("file deleted", "OK");
 					}
 				}
 			}

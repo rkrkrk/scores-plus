@@ -757,11 +757,7 @@ public class TeamTwoFragment extends Fragment {
 									Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString("OPPTEAM", panelName);
-					editor.commit();
-					Log.e("reviewtag"," "+((Startup) getActivity()).getTagFragmentReview());
-					Log.e("scorerstag"," "+((Startup) getActivity()).getTagFragmentScorers());
-					Log.e("scoretag"," "+((Startup) getActivity()).getTagFragmentScore());
-									
+					editor.commit();									
 					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
 							"", panelName);
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
@@ -1372,27 +1368,33 @@ public class TeamTwoFragment extends Fragment {
 			if (!root.exists()) {
 				root.mkdirs();
 			}
-			File outfile = new File(root, panelName+".txt");
+			File outfile = new File(root, panelName + ".txt");
 			FileWriter writer = new FileWriter(outfile);
-			String nl=System.getProperty( "line.separator" );
-			writer.append("teamstart,"+nl);
-			for (int i=1;i<=15;i++){
-				writer.append(teamLineUpCurrent[i]+nl);
+			String nl = System.getProperty("line.separator");
+			writer.append("teamstart," + nl);
+			for (int i = 1; i <= 15; i++) {
+				writer.append(teamLineUpCurrent[i] + "," + nl);
 			}
-			for (int i=2;i<panelList.size();i++){
-				writer.append(panelList.get(i)+nl);
-			} 
-			
-			writer.append("teamname:" + panelName + ","+nl);
+			for (int i = 2; i < panelList.size(); i++) {
+				writer.append(panelList.get(i) + "," + nl);
+			}
+
+			writer.append("teamname:" + panelName + "," + nl);
 			writer.append("teamend");
 			writer.flush();
 			writer.close();
+			Toast.makeText(
+					getActivity(),
+					"team exported to storage in GAA_APP_export directory with filename "
+							+ panelName + ".txt", Toast.LENGTH_LONG).show();
 
 		} catch (IOException e) {
 			Log.e("file write failed", e.getMessage(), e);
-			Toast.makeText(getActivity(), "Error: unable to write to file\n+" +
-					"make sure team name has only letters and numbers\n"+
-					"other characters will not work",
+			Toast.makeText(
+					getActivity(),
+					"Error: unable to write to file\n"
+							+ "make sure team name has only letters and numbers "
+							+ "other characters like / will not work",
 					Toast.LENGTH_LONG).show();
 		}
 	}
@@ -1442,7 +1444,6 @@ public class TeamTwoFragment extends Fragment {
 				
 				for (int i =1;i<10;i++){
 					// check if name exists and append __i if it does
-					Log.e("iiii ",i +" "+panelName);
 					String[] args = { panelName };
 					Cursor c1 = getActivity().getContentResolver().query(
 							TeamContentProvider.CONTENT_URI, null, "team=?",
@@ -1577,7 +1578,6 @@ public class TeamTwoFragment extends Fragment {
 				handler.postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						Log.v("start file delete", "OK");
 						deleteDownloads();
 					}
 				}, 5000);
@@ -1611,9 +1611,7 @@ public class TeamTwoFragment extends Fragment {
 				if (f.getName().length() >= 18) {
 					if (f.getName().substring(0, 17)
 							.equals("appGAASCORESSTATS")) {
-						Log.v("deleting", f.getName());
 						f.delete();
-						Log.v("file deleted", "OK");
 					}
 				}
 			}
