@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -712,6 +713,20 @@ public class TeamTwoFragment extends Fragment {
 			public void onClick(DialogInterface indialog, int which) {
 				String inName = input.getText().toString();
 				if (inName.length() > 2) {
+					// check if name exists and quit if it does
+					String[] args = { inName };
+					Cursor c1 = getActivity().getContentResolver().query(
+							TeamContentProvider.CONTENT_URI, null, "team=?",
+							args, null);
+					if (c1.getCount() > 0) {
+						Toast.makeText(
+								getActivity(),
+								"Team name already exists\n"
+										+ "please enter a different name",
+								Toast.LENGTH_LONG).show();
+						c1.close();
+						return;
+					}
 					// Update name in database
 					ContentValues values = new ContentValues();
 					int count;
@@ -743,6 +758,10 @@ public class TeamTwoFragment extends Fragment {
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString("OPPTEAM", panelName);
 					editor.commit();
+					Log.e("reviewtag"," "+((Startup) getActivity()).getTagFragmentReview());
+					Log.e("scorerstag"," "+((Startup) getActivity()).getTagFragmentScorers());
+					Log.e("scoretag"," "+((Startup) getActivity()).getTagFragmentScore());
+									
 					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
 							"", panelName);
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
@@ -788,6 +807,21 @@ public class TeamTwoFragment extends Fragment {
 			public void onClick(DialogInterface indialog, int which) {
 				String inName = input.getText().toString();
 				if (inName.length() > 2) {
+					// check if name exists and quit if it does
+					String[] args = { inName };
+					Cursor c1 = getActivity().getContentResolver().query(
+							TeamContentProvider.CONTENT_URI, null, "team=?",
+							args, null);
+					if (c1.getCount() > 0) {
+						Toast.makeText(
+								getActivity(),
+								"Team name already exists\n"
+										+ "please enter a different name",
+								Toast.LENGTH_LONG).show();
+						c1.close();
+						return;
+					}
+	
 					// Update name in database
 					// Reset team lineup to default position numbers
 					// and assign numbers ot buttons on screen
@@ -1330,6 +1364,38 @@ public class TeamTwoFragment extends Fragment {
 		intent.setType("file/plain");
 		startActivityForResult(intent, 1);
 	}
+	
+	public void exportTeam() {
+		try {
+			File root = new File(Environment.getExternalStorageDirectory(),
+					"GAA_APP_Export");
+			if (!root.exists()) {
+				root.mkdirs();
+			}
+			File outfile = new File(root, panelName+".txt");
+			FileWriter writer = new FileWriter(outfile);
+			String nl=System.getProperty( "line.separator" );
+			writer.append("teamstart,"+nl);
+			for (int i=1;i<=15;i++){
+				writer.append(teamLineUpCurrent[i]+nl);
+			}
+			for (int i=2;i<panelList.size();i++){
+				writer.append(panelList.get(i)+nl);
+			} 
+			
+			writer.append("teamname:" + panelName + ","+nl);
+			writer.append("teamend");
+			writer.flush();
+			writer.close();
+
+		} catch (IOException e) {
+			Log.e("file write failed", e.getMessage(), e);
+			Toast.makeText(getActivity(), "Error: unable to write to file\n+" +
+					"make sure team name has only letters and numbers\n"+
+					"other characters will not work",
+					Toast.LENGTH_LONG).show();
+		}
+	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1373,6 +1439,26 @@ public class TeamTwoFragment extends Fragment {
 					Date date = new Date(System.currentTimeMillis());
 					panelName = "team." + sdf.format(date);
 				}
+				
+				for (int i =1;i<10;i++){
+					// check if name exists and append __i if it does
+					Log.e("iiii ",i +" "+panelName);
+					String[] args = { panelName };
+					Cursor c1 = getActivity().getContentResolver().query(
+							TeamContentProvider.CONTENT_URI, null, "team=?",
+							args, null);
+					if (c1.getCount() > 0) {
+						//team exists
+						if (panelName.substring(panelName.length()-3,panelName.length()-1).equals("__")){
+							panelName=panelName.substring(0,panelName.length()-1)+i;
+						}else{
+							panelName=panelName+"__"+ i;
+						}					
+					} else {
+						c1.close();
+						break;
+					}			
+				} 
 
 				tTeamHome.setText(panelName);
 				panelList.clear();
@@ -1583,6 +1669,9 @@ public class TeamTwoFragment extends Fragment {
 			return true;
 		case R.id.importTeam:
 			importTeam();
+			return true;
+		case R.id.exportTeam:
+			exportTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

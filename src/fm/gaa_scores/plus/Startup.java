@@ -19,9 +19,14 @@
 package fm.gaa_scores.plus;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 public class Startup extends FragmentActivity {
 
@@ -40,16 +45,15 @@ public class Startup extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// set up 3 fragment screens
 		// initialise view and view pager
-		setContentView(R.layout.tabs_layout); 
+		setContentView(R.layout.tabs_layout);
 		mViewPager = (ViewPager) findViewById(R.id.viewpager);
 		// set up tabs display in action bar
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(false);
-		
+
 		// start up the 3 fragments
 		// uses code from Android Reference
 		// http://developer.android.com/reference/android/support/v4/view/ViewPager.html
@@ -69,8 +73,35 @@ public class Startup extends FragmentActivity {
 		if (savedInstanceState != null) {
 			actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
 					"tab", 0));
-		}
-		else actionBar.setSelectedNavigationItem(2); 
+		} else
+			actionBar.setSelectedNavigationItem(2);
+	}
+	
+	public void onPause() {
+		// Save/persist data to be used on reopen
+		super.onPause(); // Always call the superclass method first
+		SharedPreferences sharedPref = getSharedPreferences(
+				"team_stats_record_data", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt("TAB", getActionBar().getSelectedNavigationIndex());
+		editor.commit();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume(); // Always call the superclass method first
+		//start up middle fragment for 100 so that all fragments instantiatded
+		actionBar.setSelectedNavigationItem(2);
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				SharedPreferences sharedPref = getSharedPreferences(
+						"team_stats_record_data", Context.MODE_PRIVATE);
+
+				actionBar.setSelectedNavigationItem(sharedPref.getInt("TAB",2));
+				}
+		}, 100);	
 	}
 
 	@Override
@@ -94,18 +125,17 @@ public class Startup extends FragmentActivity {
 	public String getTagFragmentScore() {
 		return tabFragmentScore;
 	}
-	
+
 	// method called by SETUP and REVIEW fragments to get a reference to the
 	// RECORD
 	// fragment so that they can make method calls/access variables
 	public ScoresFragment getFragmentScore() {
 		if (fragmentScore == null)
-			fragmentScore = (ScoresFragment) this
-					.getSupportFragmentManager().findFragmentByTag(
-							tabFragmentScore);
+			fragmentScore = (ScoresFragment) this.getSupportFragmentManager()
+					.findFragmentByTag(tabFragmentScore);
 		return fragmentScore;
 	}
-	
+
 	// this method is called by the SCORERS fragment (ScoresrFragment) which
 	// passes its tag name into here once it starts up. This parent Activity
 	// can use that tag name to create a reference to the fragment
@@ -119,7 +149,7 @@ public class Startup extends FragmentActivity {
 	public String getTagFragmentScorers() {
 		return tabFragmentScorers;
 	}
-	
+
 	// method called by SETUP and REVIEW fragments to get a reference to the
 	// RECORD
 	// fragment so that they can make method calls/access variables
@@ -130,10 +160,6 @@ public class Startup extends FragmentActivity {
 							tabFragmentScorers);
 		return fragmentScorers;
 	}
-	
-
-	
-
 
 	// this method is called by the REVIEW fragment (MatchReviewFragment) which
 	// passes its tag name into here once it starts up. This parent Activity
@@ -154,12 +180,11 @@ public class Startup extends FragmentActivity {
 	// fragment so that they can make method calls/access variables
 	public ReviewFragment getFragmentReview() {
 		if (fragmentReview == null)
-			fragmentReview = (ReviewFragment) this
-					.getSupportFragmentManager().findFragmentByTag(
-							tabFragmentReview);
+			fragmentReview = (ReviewFragment) this.getSupportFragmentManager()
+					.findFragmentByTag(tabFragmentReview);
 		return fragmentReview;
 	}
-	
+
 	// this method is called by the REVIEW fragment (MatchReviewFragment) which
 	// passes its tag name into here once it starts up. This parent Activity
 	// can use that tag name to create a reference to the fragment
@@ -184,7 +209,7 @@ public class Startup extends FragmentActivity {
 							tabFragmentTeamOne);
 		return fragmentTeamOne;
 	}
-	
+
 	// this method is called by the REVIEW fragment (MatchReviewFragment) which
 	// passes its tag name into here once it starts up. This parent Activity
 	// can use that tag name to create a reference to the fragment

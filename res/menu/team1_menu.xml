@@ -7,10 +7,6 @@
         android:title="help">
     </item>
     <item
-        android:id="@+id/menuPointer"
-        android:showAsAction="always|withText"
-        android:title="MENU-->"/>
-    <item
         android:id="@+id/deletePlayer"
         android:showAsAction="ifRoom"
         android:title="delete a player"/>
@@ -34,9 +30,13 @@
         android:id="@+id/downloadTeam"
         android:showAsAction="ifRoom"
         android:title="import downloaded team"/>
-  <item
+    <item
         android:id="@+id/importTeam"
         android:showAsAction="ifRoom"
         android:title="import team from text file"/>
-    
+    <item
+        android:id="@+id/exportTeam"
+        android:showAsAction="ifRoom"
+        android:title="export team to text file"/>
+
 </menu>

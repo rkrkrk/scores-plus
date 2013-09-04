@@ -267,13 +267,13 @@ public class ScoresFragment extends Fragment {
 
 				} else {
 					if (bPeriod.getText().equals("1st half")) {
-						sPeriod = "half time score: ";
+						sPeriod = "Half time score: ";
 					} else if (bPeriod.getText().equals("2nd half")) {
-						sPeriod = "full time score: ";
+						sPeriod = "Full time score: ";
 					} else if (bPeriod.getText().equals("ET 1st")) {
-						sPeriod = "score after 1st half extra time: ";
+						sPeriod = "Score after 1st half extra time: ";
 					} else {
-						sPeriod = "score after 2nd half extra time: ";
+						sPeriod = "Score after 2nd half extra time: ";
 					}
 
 					values.put(
@@ -479,14 +479,14 @@ public class ScoresFragment extends Fragment {
 			if (str2.contains("Start T")) {
 				str = "";
 			} else if ((str2.contains("1st Half")) && (!str2.contains("Extra"))) {
-				str = "half time-";
+				str = "Half time-";
 			} else if ((str2.contains("2nd Half")) && (!str2.contains("Extra"))) {
-				str = "full time-";
+				str = "Full time-";
 
 			} else if (str2.contains("Time-1")) {
-				str = "extra time, half time-";
+				str = "Extra time, half time-";
 			} else if (str2.contains("Time-2")) {
-				str = "extra fime, full time-";
+				str = "Extra fime, full time-";
 			}
 
 		} else {

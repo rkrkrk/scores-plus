@@ -14,13 +14,16 @@
 package fm.gaa_scores.plus;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -385,8 +388,7 @@ public class TeamOneFragment extends Fragment {
 			canvas.drawText("GAA Scores Stats Plus - Android App", 300, 470
 					+ (commentLines * 20) + xxx, paint);
 			canvas.drawText("Available free from Google Play Store", 300, 470
-					+ (commentLines * 20) + xxx+20, paint);
-
+					+ (commentLines * 20) + xxx + 20, paint);
 
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -412,7 +414,9 @@ public class TeamOneFragment extends Fragment {
 			try {
 				final Intent shareIntent = findTwitterClient();
 				shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
-						+ " Team Selection \n"+((Startup) getActivity()).getFragmentScore().getLocText());
+						+ " Team Selection \n"
+						+ ((Startup) getActivity()).getFragmentScore()
+								.getLocText());
 				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 				// introduce delay to give time to read in bitmap before sending
 				// tweet
@@ -565,9 +569,8 @@ public class TeamOneFragment extends Fragment {
 						public void onClick(DialogInterface dialog, int which) {
 							indexOn = which + 2;// text in first 2
 							playerOn = panelList.get(which + 2);
-							
-							
-							// dialog to see who is goping on
+
+							// dialog to see who is going on
 
 							// Get whois coming off swap with going on and write
 							// change to databse
@@ -581,7 +584,7 @@ public class TeamOneFragment extends Fragment {
 												DialogInterface dialog,
 												int which) {
 											indexOff = which + 1;
-											playerOff = teamLineUpCurrent[indexOff];						
+											playerOff = teamLineUpCurrent[indexOff];
 											makeSub(bloodSub);
 
 											dialog.dismiss();
@@ -713,6 +716,20 @@ public class TeamOneFragment extends Fragment {
 			public void onClick(DialogInterface indialog, int which) {
 				String inName = input.getText().toString();
 				if (inName.length() > 2) {
+					// check if name exists and quit if it does
+					String[] args = { inName };
+					Cursor c1 = getActivity().getContentResolver().query(
+							TeamContentProvider.CONTENT_URI, null, "team=?",
+							args, null);
+					if (c1.getCount() > 0) {
+						Toast.makeText(
+								getActivity(),
+								"Team name already exists\n"
+										+ "please enter a different name",
+								Toast.LENGTH_LONG).show();
+						c1.close();
+						return;
+					}
 					// Update name in database
 					ContentValues values = new ContentValues();
 					int count;
@@ -790,6 +807,21 @@ public class TeamOneFragment extends Fragment {
 			public void onClick(DialogInterface indialog, int which) {
 				String inName = input.getText().toString();
 				if (inName.length() > 2) {
+					// check if name exists and quit if it does
+					String[] args = { inName };
+					Cursor c1 = getActivity().getContentResolver().query(
+							TeamContentProvider.CONTENT_URI, null, "team=?",
+							args, null);
+					if (c1.getCount() > 0) {
+						Toast.makeText(
+								getActivity(),
+								"Team name already exists\n"
+										+ "please enter a different name",
+								Toast.LENGTH_LONG).show();
+						c1.close();
+						return;
+					}
+
 					// Update name in database
 					// Reset team lineup to default position numbers
 					// and assign numbers ot buttons on screen
@@ -1021,7 +1053,8 @@ public class TeamOneFragment extends Fragment {
 											+ "'", null);
 							Toast.makeText(
 									getActivity(),
-									team + " and " + (count-1) + " players deleted",
+									team + " and " + (count - 1)
+											+ " players deleted",
 									Toast.LENGTH_LONG).show();
 
 							dialog.dismiss();
@@ -1333,10 +1366,41 @@ public class TeamOneFragment extends Fragment {
 		startActivityForResult(intent, 1);
 	}
 
+	public void exportTeam() {
+		try {
+			File root = new File(Environment.getExternalStorageDirectory(),
+					"GAA_APP_Export");
+			if (!root.exists()) {
+				root.mkdirs();
+			}
+			File outfile = new File(root, panelName+".txt");
+			FileWriter writer = new FileWriter(outfile);
+			String nl=System.getProperty( "line.separator" );
+			writer.append("teamstart,"+nl);
+			for (int i=1;i<=15;i++){
+				writer.append(teamLineUpCurrent[i]+nl);
+			}
+			for (int i=2;i<panelList.size();i++){
+				writer.append(panelList.get(i)+nl);
+			} 
+			
+			writer.append("teamname:" + panelName + ","+nl);
+			writer.append("teamend");
+			writer.flush();
+			writer.close();
+
+		} catch (IOException e) {
+			Log.e("file write failed", e.getMessage(), e);
+			Toast.makeText(getActivity(), "Error: unable to write to file\n+" +
+					"make sure team name has only letters and numbers\n"+
+					"other characters will not work",
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != 0) {
-			Log.e("impotteam", "+" + data.getData().getPath());
 			readTeam(data.getData().getPath());
 		}
 	}
@@ -1357,6 +1421,7 @@ public class TeamOneFragment extends Fragment {
 			// create team name
 
 			// check if format is correct
+			Log.e("buf", " " + buf.toString());
 			if ((buf.toString().toLowerCase().startsWith("teamstart,"))
 					&& (buf.toString().toLowerCase().endsWith(",teamend"))) {
 				// good to go
@@ -1370,11 +1435,35 @@ public class TeamOneFragment extends Fragment {
 						.startsWith("teamname:"))
 						&& (strTemp[strTemp.length - 1].split(":").length == 2)) {
 					panelName = strTemp[strTemp.length - 1].split(":")[1];
+					Log.e("panelName ", panelName);
 					inputNum = inputNum - 1;
 				} else {
 					SimpleDateFormat sdf = new SimpleDateFormat("HHmmddMMyyyy");
 					Date date = new Date(System.currentTimeMillis());
 					panelName = "team." + sdf.format(date);
+				}
+
+				for (int i = 1; i < 10; i++) {
+					// check if name exists and append __i if it does
+					Log.e("iiii ", i + " " + panelName);
+					String[] args = { panelName };
+					Cursor c1 = getActivity().getContentResolver().query(
+							TeamContentProvider.CONTENT_URI, null, "team=?",
+							args, null);
+					if (c1.getCount() > 0) {
+						// team exists
+						if (panelName.substring(panelName.length() - 3,
+								panelName.length() - 1).equals("__")) {
+							panelName = panelName.substring(0,
+									panelName.length() - 1)
+									+ i;
+						} else {
+							panelName = panelName + "__" + i;
+						}
+					} else {
+						c1.close();
+						break;
+					}
 				}
 
 				tTeamHome.setText(panelName);
@@ -1400,8 +1489,10 @@ public class TeamOneFragment extends Fragment {
 						panelName, "");
 				((Startup) getActivity()).getFragmentReview().setTeamNames(
 						panelName, "");
+				Log.e("here?", "  ");
 				((Startup) getActivity()).getFragmentScorers().setTeamNames(
 						panelName, "");
+				Log.e("no?", "  ");
 				((Startup) getActivity()).getFragmentTeamTwo().setTeam(
 						panelName);
 
@@ -1409,7 +1500,7 @@ public class TeamOneFragment extends Fragment {
 				for (int i = 0; i < inputNum; i++) {
 					s[i] = strTemp[i];
 				}
-
+				Log.e("string s", " " + s);
 				// if more than 15 read in
 				if (s.length > 15) {
 					for (int i = 0; i < 15; i++) {
@@ -1469,6 +1560,7 @@ public class TeamOneFragment extends Fragment {
 			// filter only ones starting with appGAASCORESSTATS
 			// then get most recent one
 			File[] files = root.listFiles();
+			Log.e("filein", " - " + files.toString());
 			for (File f : files) {
 				if (f.getName().length() >= 18) {
 					if (f.getName().substring(0, 17)
@@ -1478,7 +1570,7 @@ public class TeamOneFragment extends Fragment {
 				}
 			}
 			if (fileList.size() > 0) {
-
+				Log.e("filesize", " - " + fileList.toString());
 				String fName = fileList.get(0).getPath();
 				long datemod = fileList.get(0).lastModified();
 				for (int i = 1; i < fileList.size(); i++) {
@@ -1507,6 +1599,7 @@ public class TeamOneFragment extends Fragment {
 		}
 
 		catch (Exception ex) {
+			Log.e("catch", " " + ex);
 			Toast.makeText(
 					getActivity(),
 					"Can't find downloaded file.\nHave a look in ? HELP screen"
@@ -1585,6 +1678,9 @@ public class TeamOneFragment extends Fragment {
 			return true;
 		case R.id.importTeam:
 			importTeam();
+			return true;
+		case R.id.exportTeam:
+			exportTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
