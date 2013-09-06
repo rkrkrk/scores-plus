@@ -23,10 +23,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 public class Startup extends FragmentActivity {
 
@@ -77,6 +75,7 @@ public class Startup extends FragmentActivity {
 			actionBar.setSelectedNavigationItem(2);
 	}
 	
+	@Override
 	public void onPause() {
 		// Save/persist data to be used on reopen
 		super.onPause(); // Always call the superclass method first

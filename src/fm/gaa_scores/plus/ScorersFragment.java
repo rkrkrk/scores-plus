@@ -23,7 +23,6 @@ import java.util.List;
 
 import fm.gaa_scores.plus.R;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -39,10 +38,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
-import android.text.StaticLayout;
-import android.text.TextPaint;
-import android.text.Layout.Alignment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;

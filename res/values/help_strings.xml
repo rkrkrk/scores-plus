@@ -26,8 +26,8 @@ button and choosing the <b>enter new player name</b> option. Repeat on the same 
 all players on the panel are entered. Then touch on the position button again and swap back in
 the original player selected.<br/><br/>
 Touch <b>make substitution</b> or
- <b>make blood sub</b> to record a substituion in the list of match/stats events.
- You will be asked to select which player is coming off and then select player going on.
+ <b>make blood sub</b> to record a substitution in the list of match/stats events.
+ You will be asked to select which player is going on and then select player coming off.
  (Note that the name of the player going on must exist on the team already i.e. their
  name must have been entered previously (see paragraph above).) <br/><br/></p>
 <p>Touch <b>reset team selection</b> to reset all positions back to a number.  Note that player 
@@ -67,6 +67,12 @@ currently active teams can not be deleted.<br/>
 names already entered are saved for reuse.<br/>
 <b>import downloaded team</b> - see below.<br/>
 <b>import team from text file</b> - see below.<br/>
+<b>export team to text file</b> - saves the current team selection/panel to a text file
+on the device storage. The text file is stored in a directory called GAA_App_Export.  The text 
+file can be shared by email or uploaded to DropBox (or equivalent).  The text file is correctly
+formated so that it can be imported by this App on other devices. (Youll probably need a 
+File Explorer/Manager App installed which allows 
+you to navigate your devices file system e.g. ES File Explorer.)<br/>
 </p>
 
 <p>

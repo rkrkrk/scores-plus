@@ -203,7 +203,6 @@ public class TeamContentProvider extends DatabaseSetup {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
-		Log.v("uri"," -"+uri);
 		switch (uriMatcher.match(uri)) {
 		case PLAYERS:
 			sqlBuilder.setTables(DATABASE_TABLE_PANEL);

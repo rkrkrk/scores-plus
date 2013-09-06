@@ -314,15 +314,16 @@
             android:textSize="8sp" />
 
         <TextView
-            android:id="@+id/TextView07"
+            android:id="@+id/TextView15"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_height="match_parent"
             android:layout_marginLeft="4dp"
             android:layout_weight="1.5"
-            android:gravity="center_horizontal"
+            android:background="#ccc"
+            android:gravity="bottom|center_horizontal"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
+            android:text="wides"
             android:textSize="9sp" />
     </LinearLayout>
 
