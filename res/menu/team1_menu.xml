@@ -38,5 +38,9 @@
         android:id="@+id/exportTeam"
         android:showAsAction="ifRoom"
         android:title="export team to text file"/>
+    <item
+        android:id="@+id/emailTeam"
+        android:showAsAction="ifRoom"
+        android:title="email team text file"/>
 
 </menu>

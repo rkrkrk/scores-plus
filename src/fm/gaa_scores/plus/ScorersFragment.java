@@ -78,7 +78,7 @@ public class ScorersFragment extends ListFragment {
 		// set up text buttons edittexts etc.
 		tOwnTeam = (TextView) v.findViewById(R.id.score1);
 		tOppTeam = (TextView) v.findViewById(R.id.score2);
-		ownTeam = sharedPref.getString("OURTEAM", "OWN TEAM");
+		ownTeam = sharedPref.getString("OWNTEAM", "OWN TEAM");
 		oppTeam = sharedPref.getString("OPPTEAM", "OPPOSITION");
 		tOwnTeam.setText("SCORERS " + ownTeam);
 		tOppTeam.setText("SCORERS " + oppTeam);
@@ -281,7 +281,7 @@ public class ScorersFragment extends ListFragment {
 			paint.setColor(Color.RED);
 			paint.setTextSize(20);
 			canvas.drawText("from frees", 430, 50, paint);
-			canvas.drawText("wides", 525, 50, paint);
+			canvas.drawText("wides/", 525, 50, paint);
 			canvas.drawText("player", 155, 75, paint);
 			canvas.drawText("totals", 310, 75, paint);
 			canvas.drawText("45/65 etc", 430, 75, paint);
@@ -332,7 +332,7 @@ public class ScorersFragment extends ListFragment {
 			paint.setColor(Color.RED);
 			paint.setTextSize(20);
 			canvas.drawText("from frees", 430, 50 + spacer, paint);
-			canvas.drawText("wides", 525, 50 + spacer, paint);
+			canvas.drawText("wides/", 525, 50 + spacer, paint);
 			canvas.drawText("player", 155, 75 + spacer, paint);
 			canvas.drawText("totals", 310, 75 + spacer, paint);
 			canvas.drawText("45/65 etc", 430, 75 + spacer, paint);

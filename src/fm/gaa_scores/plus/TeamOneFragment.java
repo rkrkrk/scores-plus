@@ -88,9 +88,10 @@ public class TeamOneFragment extends Fragment {
 	private Date currentDate;
 	private SimpleDateFormat sdfdate;
 	private EditText input;
-	private int index, indexOff, indexOn;
+	private int index, indexOff, indexOn, sub = 0, subLines = 0;
 	private TextView tCards, tSubs;
 	private boolean bloodSub = false;
+	private StringBuilder strBuilderSub = new StringBuilder();
 
 	// setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
@@ -115,6 +116,8 @@ public class TeamOneFragment extends Fragment {
 
 		// set up text view and buttons
 		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
+
+		
 		Button bButtonReset = (Button) v.findViewById(R.id.button_setup_reset);
 		bButtonReset.setOnClickListener(resetTeamListener);
 		Button bSub = (Button) v.findViewById(R.id.bSub);
@@ -128,7 +131,7 @@ public class TeamOneFragment extends Fragment {
 				"home_team_data", Context.MODE_PRIVATE);
 
 		// setup input edittext boxes
-		panelName = sharedPref.getString("PANELNAME", "OUR TEAM");
+		panelName = sharedPref.getString("PANELNAME", "OWN TEAM");
 		sharedPref = getActivity().getSharedPreferences("opp_team_data",
 				Context.MODE_PRIVATE);
 		oppTeamName = sharedPref.getString("PANELNAME", "OPPOSITION");
@@ -177,6 +180,7 @@ public class TeamOneFragment extends Fragment {
 	}
 
 	// share team selection
+
 	OnClickListener selShareListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -192,6 +196,14 @@ public class TeamOneFragment extends Fragment {
 						+ ". " + String.valueOf(teamLineUpCurrent[i]) + "\n "
 						: String.valueOf(i) + ".\n ");
 			}
+			if (strBuilderSub.length() > 1) {
+				sb.append("\nSUBS USED\n");
+				
+				String[] subArray = strBuilderSub.toString().split("\n");
+				for (int i = 0; i < subArray.length; i++) {
+					sb.append(subArray[i]+"\n");
+				}
+			}
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent.putExtra(Intent.EXTRA_SUBJECT, panelName + " v. "
 					+ oppTeamName + ". " + "Team Selection");
@@ -202,6 +214,7 @@ public class TeamOneFragment extends Fragment {
 	};
 
 	// text team selection
+
 	OnClickListener selTextListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -239,7 +252,7 @@ public class TeamOneFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			// Create Bitmap to display team selection
-			Bitmap bitmap = Bitmap.createBitmap(600, 550,
+			Bitmap bitmap = Bitmap.createBitmap(600, 550 + (subLines * 25),
 					Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawColor(Color.rgb(204, 255, 204));
@@ -381,12 +394,26 @@ public class TeamOneFragment extends Fragment {
 					.valueOf(teamLineUpCurrent[1]) : String.valueOf(1) + ".";
 			canvas.drawText(str, 300, 425 + (commentLines * 20) + xxx, paint);
 
+			paint.setTextAlign(Align.LEFT);
 			paint.setTextSize(15);
+			if (strBuilderSub.length() > 1) {
+				canvas.drawText("SUBS USED", 5,
+						450 + (commentLines * 20) + xxx, paint);
+				paint.setTextSize(14);
+				String[] subArray = strBuilderSub.toString().split("\n");
+				for (int i = 0; i < subArray.length; i++) {
+					canvas.drawText(subArray[i], 5, 470 + (commentLines * 20)
+							+ xxx + (i * 20), paint);
+				}
+			}
+
+			paint.setTextSize(15);
+			paint.setTextAlign(Align.CENTER);
 			paint.setColor(Color.GRAY);
-			canvas.drawText("GAA Scores Stats Plus - Android App", 300, 470
-					+ (commentLines * 20) + xxx, paint);
-			canvas.drawText("Available free from Google Play Store", 300, 470
-					+ (commentLines * 20) + xxx + 20, paint);
+			canvas.drawText("GAA Scores Stats Plus - Android App", 300, 490
+					+ (subLines * 25) + (commentLines * 20) + xxx, paint);
+			canvas.drawText("Available free from Google Play Store", 300, 490
+					+ (subLines * 25) + (commentLines * 20) + xxx + 20, paint);
 
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -567,7 +594,6 @@ public class TeamOneFragment extends Fragment {
 						public void onClick(DialogInterface dialog, int which) {
 							indexOn = which + 2;// text in first 2
 							playerOn = panelList.get(which + 2);
-
 							// dialog to see who is going on
 
 							// Get whois coming off swap with going on and write
@@ -658,6 +684,12 @@ public class TeamOneFragment extends Fragment {
 				+ "  on: " + playerOn);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
+
+		// increment subsused counter
+		if (!bloodSub) {
+			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+		}
+
 		updateSubsList();
 		((Startup) getActivity()).getFragmentScore().updateStatsList();
 		((Startup) getActivity()).getFragmentReview().updateListView();
@@ -757,7 +789,7 @@ public class TeamOneFragment extends Fragment {
 							.getSharedPreferences("team_stats_review_data",
 									Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
-					editor.putString("OURTEAM", panelName);
+					editor.putString("OWNTEAM", panelName);
 					editor.commit();
 					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
 							panelName, "");
@@ -846,7 +878,7 @@ public class TeamOneFragment extends Fragment {
 							.getSharedPreferences("team_stats_review_data",
 									Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
-					editor.putString("OURTEAM", panelName);
+					editor.putString("OWNTEAM", panelName);
 					editor.commit();
 					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
 							panelName, "");
@@ -922,7 +954,7 @@ public class TeamOneFragment extends Fragment {
 											"team_stats_review_data",
 											Context.MODE_PRIVATE);
 							SharedPreferences.Editor editor = sharedPref.edit();
-							editor.putString("OURTEAM", panelName);
+							editor.putString("OWNTEAM", panelName);
 							editor.commit();
 
 							((Startup) getActivity()).getFragmentScore()
@@ -1298,8 +1330,8 @@ public class TeamOneFragment extends Fragment {
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
 				TeamContentProvider.STATSLINE };
-		CursorLoader cL;
 		StringBuilder strBuilder = new StringBuilder();
+		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
 				TeamContentProvider.STATSID);
 		Cursor c1 = cL.loadInBackground();
@@ -1319,6 +1351,7 @@ public class TeamOneFragment extends Fragment {
 				}
 				i++;
 			} while (c1.moveToNext());
+			c1.close();
 			// ermove leading line feed
 			strBuilder.delete(0, 1);
 			tCards.setText(strBuilder.toString());
@@ -1326,11 +1359,14 @@ public class TeamOneFragment extends Fragment {
 	}
 
 	public void updateSubsList() {
+		tSubs.setText("");
+		strBuilderSub.setLength(0);
+		subLines = 0;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
 				TeamContentProvider.STATSLINE };
-		CursorLoader cL;
 		StringBuilder strBuilder = new StringBuilder();
+		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
 				TeamContentProvider.STATSID);
 		Cursor c1 = cL.loadInBackground();
@@ -1345,11 +1381,16 @@ public class TeamOneFragment extends Fragment {
 				if ((str[i].indexOf("--> off:") >= 0)
 						&& (str[i].indexOf(panelName) >= 0)) {
 					strBuilder.append("\n" + str[i]);
+					strBuilderSub.append("\n"
+							+ str[i].replace("substitution", ""));
+					subLines++;
 				}
 				i++;
 			} while (c1.moveToNext());
+			c1.close();
 			// ermove leading line feed
 			strBuilder.delete(0, 1);
+			strBuilderSub.delete(0, 1);
 			tSubs.setText(strBuilder.toString());
 		}
 	}
@@ -1400,6 +1441,31 @@ public class TeamOneFragment extends Fragment {
 							+ "other characters like / will not work",
 					Toast.LENGTH_LONG).show();
 		}
+	}
+
+	public void emailTeam() {
+		exportTeam();
+		// set up for emailing database and CSV files from storage
+		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
+				"team file for GAAScoresStats Android App");
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "match data attached");
+		emailIntent.setType("text/plain");
+		String[] emailAttachments = new String[] { Environment
+				.getExternalStorageDirectory()
+				+ "/GAA_APP_Export/"
+				+ panelName
+				+ ".txt" };
+		// put email attachments into an ArrayList
+		ArrayList<Uri> uris = new ArrayList<Uri>();
+		for (String file : emailAttachments) {
+			File uriFiles = new File(file);
+			Uri u = Uri.fromFile(uriFiles);
+			uris.add(u);
+		}
+		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+		startActivity(Intent.createChooser(emailIntent, "Email:"));
+
 	}
 
 	@Override
@@ -1483,7 +1549,7 @@ public class TeamOneFragment extends Fragment {
 						.getSharedPreferences("team_stats_review_data",
 								Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = sharedPref.edit();
-				editor.putString("OURTEAM", panelName);
+				editor.putString("OWNTEAM", panelName);
 				editor.commit();
 
 				((Startup) getActivity()).getFragmentScore().setTeamLineUp(
@@ -1674,6 +1740,9 @@ public class TeamOneFragment extends Fragment {
 			return true;
 		case R.id.exportTeam:
 			exportTeam();
+			return true;
+		case R.id.emailTeam:
+			emailTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

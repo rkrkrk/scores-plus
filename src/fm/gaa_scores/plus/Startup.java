@@ -100,7 +100,7 @@ public class Startup extends FragmentActivity {
 
 				actionBar.setSelectedNavigationItem(sharedPref.getInt("TAB",2));
 				}
-		}, 100);	
+		}, 10);	
 	}
 
 	@Override

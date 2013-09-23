@@ -95,6 +95,7 @@ public class ScoresFragment extends Fragment {
 	private long rowId;
 	private Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 	private Context context;
+	private int yellow=0, red=0;
 
 	@Override
 	// start main method to display screen
@@ -463,7 +464,7 @@ public class ScoresFragment extends Fragment {
 		editor.putString("LOCATION", tLoc.getText().toString());
 		editor.putString("TIMELEFT", tTimeLeft.getText().toString());
 		editor.putString("TIMERBUTTON", bStartStop.getText().toString());
-		editor.putString("OURTEAM", tOurTeam.getText().toString());
+		editor.putString("OWNTEAM", tOurTeam.getText().toString());
 		editor.putString("OPPTEAM", tOppTeam.getText().toString());
 		editor.putString("STARTTEXT", tStartTime.getText().toString());
 		editor.putString("PHONE", phone);
@@ -1048,6 +1049,10 @@ public class ScoresFragment extends Fragment {
 						.addtShotWidesHome(count);
 				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(
 						count);
+			} else if (stats1.equals("out for 45/65")) {
+				// increment counter in review page
+				((Startup) getActivity()).getFragmentReview().addtShot45Home(
+						count);
 			} else if (stats1.equals("saved/short")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
@@ -1068,11 +1073,7 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanHome(count);
-			}
-			if (stats2.equals("from 45/65")) {
-				((Startup) getActivity()).getFragmentReview().addtShot45Home(
-						count);
-			}
+			} 
 			break;
 
 		case R.id.buttonShotOpp:
@@ -1146,6 +1147,10 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotWidesOpp(
 						count);
+			} else if (stats1.equals("out for 45/65")) {
+				// increment counter in review page
+				((Startup) getActivity()).getFragmentReview().addtShot45Opp(
+						count);
 			} else if (stats1.equals("saved/short")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotSavedOpp(
@@ -1166,11 +1171,7 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanOpp(count);
-			}
-			if (stats2.equals("from 45/65")) {
-				((Startup) getActivity()).getFragmentReview().addtShot45Opp(
-						count);
-			}
+			} 
 			break;
 		}
 		// add to stats database
@@ -1187,6 +1188,9 @@ public class ScoresFragment extends Fragment {
 			getActivity().getContentResolver().insert(
 					TeamContentProvider.CONTENT_URI_2, values);
 		}
+		if ((stats2.equals("red card"))||(stats2.equals("yellow card"))) {
+			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+		}
 		// add to scorers database
 		if (!team.equals("")) {
 			updateScorers(stats1, stats2, player, team);
@@ -1198,9 +1202,11 @@ public class ScoresFragment extends Fragment {
 
 	private void updateScorers(String stats1, String stats2, String player,
 			String team) {
+		// update scores and misses
 		if ((stats1.equals("goal")) || (stats1.equals("point"))
 				|| (stats1.equals("wide")) || (stats1.equals("saved/short"))
-				|| (stats1.equals("off posts"))) {
+				|| (stats1.equals("off posts"))
+				|| (stats1.equals("out for 45/65"))) {
 			player = (player == "") ? "unknown" : player;
 			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, id;
 			// deal with goal
@@ -1213,7 +1219,7 @@ public class ScoresFragment extends Fragment {
 					goalF++;
 				}
 			}
-			// deal with goal
+			// deal with point
 			else if (stats1.equals("point")) {
 				point++;
 				if ((stats2.equals("from free"))
@@ -1223,7 +1229,8 @@ public class ScoresFragment extends Fragment {
 					pointF++;
 				}
 			} else if ((stats1.equals("wide")) || (stats1.equals("off posts"))
-					|| (stats1.equals("saved/short"))) {
+					|| (stats1.equals("saved/short"))
+					|| (stats1.equals("out for 45/65"))) {
 				miss++;
 			}
 			// check if entry in database for player name and team
@@ -1238,7 +1245,7 @@ public class ScoresFragment extends Fragment {
 				values.put(TeamContentProvider.SCORESTEAM, team);
 				values.put(TeamContentProvider.SCORESGOALS, goal);
 				values.put(TeamContentProvider.SCORESPOINTS, point);
-				values.put(TeamContentProvider.SCORESTOTAL, (goal*3)+point);
+				values.put(TeamContentProvider.SCORESTOTAL, (goal * 3) + point);
 				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 				values.put(TeamContentProvider.SCORESMISS, miss);
@@ -1270,7 +1277,7 @@ public class ScoresFragment extends Fragment {
 				values.put(TeamContentProvider.SCORESTEAM, team);
 				values.put(TeamContentProvider.SCORESGOALS, goal);
 				values.put(TeamContentProvider.SCORESPOINTS, point);
-				values.put(TeamContentProvider.SCORESTOTAL, (goal*3)+point);
+				values.put(TeamContentProvider.SCORESTOTAL, (goal * 3) + point);
 				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 				values.put(TeamContentProvider.SCORESMISS, miss);
@@ -1285,6 +1292,7 @@ public class ScoresFragment extends Fragment {
 						"error accessing scorers database", Toast.LENGTH_LONG)
 						.show();
 			}
+			c1.close();
 		}
 	}
 
@@ -1332,6 +1340,7 @@ public class ScoresFragment extends Fragment {
 		// call update in review
 		c1.close();
 		((Startup) getActivity()).getFragmentReview().updateListView();
+		((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		((Startup) getActivity()).getFragmentTeamOne().updateCards();
 		((Startup) getActivity()).getFragmentTeamOne().updateSubsList();
 		((Startup) getActivity()).getFragmentTeamTwo().updateCards();
@@ -1369,6 +1378,7 @@ public class ScoresFragment extends Fragment {
 
 			} while (c1.moveToNext());
 		}
+		c1.close();
 	}
 
 	// **********************************************************************//
@@ -1394,7 +1404,7 @@ public class ScoresFragment extends Fragment {
 				break;
 			}
 
-			// use SHOT_FREE_PUCK_OUT to store which button was pressed
+			// use statsButton to store which button was pressed
 			statsButton = ((Button) w).getId();
 
 			// throw up stats input screen layout
@@ -1418,9 +1428,9 @@ public class ScoresFragment extends Fragment {
 								}
 							});
 
-			// 7 choices for shots
-			RadioButton[] rbrshot = new RadioButton[8];
-			for (int i = 0; i < 8; i++) {
+			// 9 choices for shots
+			RadioButton[] rbrshot = new RadioButton[9];
+			for (int i = 0; i < 9; i++) {
 				rbrshot[i] = (RadioButton) vv.findViewById(getResources()
 						.getIdentifier(
 								"radio_shot_r" + String.format("%02d", i),
@@ -1428,7 +1438,7 @@ public class ScoresFragment extends Fragment {
 				rbrshot[i].setOnClickListener(getStats1ClickListener);
 			}
 
-			// 4 options for shot type
+			// 8 options for shot type
 			RadioButton[] rbtShot = new RadioButton[8];
 			for (int i = 0; i < 8; i++) {
 				rbtShot[i] = (RadioButton) vv.findViewById(getResources()
@@ -1706,7 +1716,11 @@ public class ScoresFragment extends Fragment {
 						.getColumnIndexOrThrow(TeamContentProvider.STATSID)));
 				strTemp = (c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE)));
-
+				
+				if( (strTemp.indexOf("card") >= 0)||(strTemp.indexOf("card")) >= 0) {
+					((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+				}
+				
 				// check for goal
 				if (strTemp.indexOf("goal") >= 0) {
 					// check which team
@@ -1861,6 +1875,17 @@ public class ScoresFragment extends Fragment {
 								.addtShotPostsOpp(-1);
 					}
 				}
+				// check for out for 45
+				else if (strTemp.indexOf("out for 45/65") >= 0) {
+					// check which team
+					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShot45Home(-1);
+					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShot45Opp(-1);
+					}
+				}
 				// check for saved
 				else if (strTemp.indexOf("saved/short") >= 0) {
 					// check which team
@@ -1899,25 +1924,14 @@ public class ScoresFragment extends Fragment {
 								.addFreeConcededOpp(-1);
 					}
 				}
-				// check for out for 45/65
-				if (strTemp.indexOf("from 45/65") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShot45Home(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShot45Opp(-1);
-					}
-				}
 
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 								+ rowId), null, null);
-
+				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 				undoScorers(strTemp);
 			}
-
+			
 			updateStatsList();
 
 			c1.close();
@@ -1929,6 +1943,7 @@ public class ScoresFragment extends Fragment {
 		if ((str.indexOf("goal") >= 0) || (str.indexOf("point") >= 0)
 				|| (str.indexOf("wide") >= 0)
 				|| (str.indexOf("off posts") >= 0)
+				|| (str.indexOf("out for 45/65") >= 0)
 				|| (str.indexOf("saved/short") >= 0)) {
 
 			String playerTmp = "", teamTmp = "";
@@ -1991,6 +2006,7 @@ public class ScoresFragment extends Fragment {
 						Toast.LENGTH_LONG).show();
 				return;
 			}
+			c1.close();
 
 			// OK, have database ID, move on
 			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, id;
@@ -2004,7 +2020,7 @@ public class ScoresFragment extends Fragment {
 					goalF--;
 				}
 			}
-			// deal with goal
+			// deal with point
 			else if (str.indexOf("point") >= 0) {
 				point--;
 				if ((str.indexOf("from free") >= 0)
@@ -2015,6 +2031,7 @@ public class ScoresFragment extends Fragment {
 				}
 			} else if ((str.indexOf("wide") >= 0)
 					|| (str.indexOf("off posts") >= 0)
+					|| (str.indexOf("out for 45/65") >= 0)
 					|| (str.indexOf("saved/short") >= 0)) {
 				miss--;
 			}
@@ -2046,7 +2063,7 @@ public class ScoresFragment extends Fragment {
 			values.put(TeamContentProvider.SCORESTEAM, teamTmp);
 			values.put(TeamContentProvider.SCORESGOALS, goal);
 			values.put(TeamContentProvider.SCORESPOINTS, point);
-			values.put(TeamContentProvider.SCORESTOTAL,(goal*3)+ point);
+			values.put(TeamContentProvider.SCORESTOTAL, (goal * 3) + point);
 			values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 			values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 			values.put(TeamContentProvider.SCORESMISS, miss);

@@ -38,6 +38,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -73,7 +74,9 @@ public class ReviewFragment extends Fragment {
 	private TextView tPuckWonCleanOpp;
 	private TextView tPuckLostCleanOpp;
 	private TextView tOwnTeam, tOppTeam;
+	private TextView tCardHome, tCardOpp;
 	private Button bSendAll, bTweetAll;
+	private int red = 0, yellow = 0, sub = 0;
 
 	private int shotGoalsHome = 0, shotPointsHome = 0;
 	private int shotGoalsPlayHome = 0, shotPointsPlayHome = 0;
@@ -106,6 +109,8 @@ public class ReviewFragment extends Fragment {
 	private int shotGoalsOpp = 0, shotPointsOpp = 0;
 	private int shotWidesOpp = 0, shotSavedOpp = 0, shotPostsOpp = 0;
 	private ListView listViewStats;
+	private String cardHome = "", subHome = "";
+	private String cardOpp = "", subOpp = "";
 
 	@Override
 	// start main method to display screen
@@ -127,7 +132,7 @@ public class ReviewFragment extends Fragment {
 		tOwnTeam = (TextView) v.findViewById(R.id.textViewRevHome);
 		tOppTeam = (TextView) v.findViewById(R.id.textViewRevOpp);
 
-		tOwnTeam.setText(sharedPref.getString("OURTEAM", "OWN TEAM"));
+		tOwnTeam.setText(sharedPref.getString("OWNTEAM", "OWN TEAM"));
 		tOppTeam.setText(sharedPref.getString("OPPTEAM", "OPPOSITION"));
 
 		tHomeGoals = (TextView) v.findViewById(R.id.tVHomeGoals);
@@ -158,6 +163,9 @@ public class ReviewFragment extends Fragment {
 		tTotPuckHome = (TextView) v.findViewById(R.id.tVwHomeTotPuck);
 		tShot45Opp = (TextView) v.findViewById(R.id.tVwOpp45);
 		tTotPuckOpp = (TextView) v.findViewById(R.id.tVwOppTotPuck);
+
+		tCardHome = (TextView) v.findViewById(R.id.cardsHome);
+		tCardOpp = (TextView) v.findViewById(R.id.cardsOpp);
 
 		// Set up output for frees
 		tFreeConcededHome = (TextView) v.findViewById(R.id.tVwFreeWonHome);
@@ -247,6 +255,7 @@ public class ReviewFragment extends Fragment {
 		listViewStats = (ListView) v.findViewById(R.id.listView1);
 
 		updateListView();
+		updateCardsSubs();
 
 		return v;
 
@@ -464,10 +473,14 @@ public class ReviewFragment extends Fragment {
 		tTotPuckHome.setText("0");
 		totPOpp = 0;
 		tTotPuckOpp.setText("0");
+		tCardHome.setText("");
+		tCardOpp.setText("");
+		updateCardsSubs();
 
 	}
 
 	// ///////////////////////////END OF ONCREATE///////////////////////////
+
 	@Override
 	public void onPause() {
 		// persist data out to shared preferences file to be available for start
@@ -477,7 +490,7 @@ public class ReviewFragment extends Fragment {
 				"team_stats_review_data", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
 
-		editor.putString("OURTEAM", tOwnTeam.getText().toString());
+		editor.putString("OWNTEAM", tOwnTeam.getText().toString());
 		editor.putString("OPPTEAM", tOppTeam.getText().toString());
 
 		editor.putInt("HOMEGOALS", homeGoals);
@@ -516,6 +529,12 @@ public class ReviewFragment extends Fragment {
 		editor.commit();
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateCardsSubs();
+	}
+
 	public void updateListView() {
 
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
@@ -544,6 +563,72 @@ public class ReviewFragment extends Fragment {
 			tOppTeam.setText(oppTeam);
 	}
 
+	public void updateCardsSubs() {
+		int redHome = 0, redOpp = 0, yellowHome = 0, yellowOpp = 0, subH = 0, subO = 0;
+		cardHome = "";
+		subHome = "";
+		cardOpp = "";
+		subOpp = "";
+		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
+		String[] args = { tOwnTeam.getText().toString() };
+		Cursor c1 = getActivity().getContentResolver().query(allTitles, null,
+				null, null, TeamContentProvider.STATSID);
+		if (c1.getCount() > 0) {
+			String str;
+			c1.moveToFirst();
+			do {
+				// insert players into positions
+				str = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				if (str.indexOf("red card") >= 0) {
+					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+						redHome++;
+					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+						redOpp++;
+					}
+				}
+				if (str.indexOf("yellow card") >= 0) {
+					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+						yellowHome++;
+					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+						yellowOpp++;
+					}
+				}
+				if (str.indexOf("substitution") >= 0) {
+					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+						subH++;
+					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+						subO++;
+					}
+				}
+			} while (c1.moveToNext());
+		}
+		c1.close();
+
+		if (redHome > 0 || yellowHome > 0) {
+			cardHome = "Cards: " + yellowHome + "Y  " + redHome + "R    ";
+		} else {
+			cardHome = "";
+		}
+		if (redOpp > 0 || yellowOpp > 0) {
+			cardOpp = "Cards: " + yellowOpp + "Y  " + redOpp + "R    ";
+		} else {
+			cardOpp = "";
+		}
+		if (subH > 0) {
+			subHome = "Subs used: " + subH;
+		} else {
+			subHome = "";
+		}
+		if (subO > 0) {
+			subOpp = "Subs used: " + subO;
+		} else {
+			subOpp = "";
+		}
+		tCardHome.setText(cardHome + subHome);
+		tCardOpp.setText(cardOpp + subOpp);
+	}
+
 	// for reset buttons diplay message to long click, won't work with ordinary
 	// click
 	OnClickListener sendAllListener = new OnClickListener() {
@@ -553,9 +638,10 @@ public class ReviewFragment extends Fragment {
 			String[] projection1 = { TeamContentProvider.PANELID,
 					TeamContentProvider.NAME, TeamContentProvider.POSN };
 			CursorLoader cL;
-			
-			sb.append(((Startup) getActivity()).getFragmentScore().getLocText()+"\n\n");
-			
+
+			sb.append(((Startup) getActivity()).getFragmentScore().getLocText()
+					+ "\n\n");
+
 			Uri allTitles = TeamContentProvider.CONTENT_URI;
 
 			sb.append("Team 1: " + tOwnTeam.getText() + "\n");
@@ -615,12 +701,93 @@ public class ReviewFragment extends Fragment {
 			}
 			c1.close();
 
+			//printout cards and subs
+			allTitles = TeamContentProvider.CONTENT_URI_2;
+			String[] projection = { TeamContentProvider.STATSID,
+					TeamContentProvider.STATSLINE };
+			cL = new CursorLoader(getActivity(), allTitles, projection, null,
+					null, TeamContentProvider.STATSID);
+			c1 = cL.loadInBackground();
+			if (c1.getCount() > 0) {
+				String str;
+				int i = 0,cards=0,subs=0;
+				c1.moveToFirst();
+				do {				
+					str = c1
+							.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+					if ((str.indexOf("--> off:") >= 0)
+							&& (str.indexOf(tOwnTeam.getText().toString()) >= 0)) {
+						if(subs==0){
+							sb.append("\nSUBS:");
+							subs=1;
+						}
+						sb.append("\n" + str);
+					}
+					i++;
+				} while (c1.moveToNext());
+				c1.moveToFirst();
+				do {				
+					str = c1
+							.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+					if ((str.indexOf("--> off:") >= 0)
+							&& (str.indexOf(tOppTeam.getText().toString()) >= 0)) {
+						if(subs==0){
+							sb.append("\nSUBS:");
+							subs=1;
+						}
+						sb.append("\n" + str);
+					}
+					i++;
+				} while (c1.moveToNext());
+				if(subs==1){
+					sb.append("\n");
+				}
+				//subs done, get cards
+				c1.moveToFirst();
+				do {				
+					str = c1
+							.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+					if (((str.indexOf("red card") >= 0)
+							|| (str.indexOf("black card") >= 0) || (str
+							.indexOf("yellow card") >= 0))
+							&& (str.indexOf(tOwnTeam.getText().toString()) >= 0)) {
+						if(cards==0){
+							sb.append("\nCARDS:");
+							cards=1;
+						}
+						sb.append("\n" + str);
+					}
+					i++;
+				} while (c1.moveToNext());
+				c1.moveToFirst();
+				do {				
+					str = c1
+							.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+					if (((str.indexOf("red card") >= 0)
+							|| (str.indexOf("black card") >= 0) || (str
+							.indexOf("yellow card") >= 0))
+							&& (str.indexOf(tOppTeam.getText().toString()) >= 0)) {
+						if(cards==0){
+							sb.append("\nCARDS:");
+							cards=1;
+						}
+						sb.append("\n" + str);
+					}
+					i++;
+				} while (c1.moveToNext());
+				
+				c1.close();
+			}
+
 			sb.append("\n\nMATCH EVENTS\n");
-			
 
 			allTitles = TeamContentProvider.CONTENT_URI_2;
-			String[] projection = { TeamContentProvider.STATSLINE };
-			cL = new CursorLoader(getActivity(), allTitles, projection, null,
+			String[] projection2 = { TeamContentProvider.STATSLINE };
+			cL = new CursorLoader(getActivity(), allTitles, projection2, null,
 					null, TeamContentProvider.STATSID);
 			c1 = cL.loadInBackground();
 			if (c1.getCount() > 0) {
@@ -633,7 +800,7 @@ public class ReviewFragment extends Fragment {
 				} while (c1.moveToNext());
 			}
 			c1.close();
-			
+
 			sb.append("\n\nMATCH STATS SUMMARY");
 
 			sb.append("\nTeam 1: " + tOwnTeam.getText() + "\n");
@@ -649,6 +816,7 @@ public class ReviewFragment extends Fragment {
 			sb.append("Total puckouts: " + totPHome + "\n");
 			sb.append("own puckouts won: " + puckWonCleanHome + "\n");
 			sb.append("own puckouts lost: " + puckLostCleanHome + "\n");
+			sb.append(cardHome + subHome + "\n");
 
 			sb.append("\nTeam 2: " + tOppTeam.getText() + "\n");
 			sb.append(shotGoalsOpp + " Goals,  " + shotPointsOpp
@@ -662,11 +830,11 @@ public class ReviewFragment extends Fragment {
 			sb.append("frees conceded: " + freeConcededOpp + "\n");
 			sb.append("Total puckouts: " + totPOpp + "\n");
 			sb.append("own puckouts won: " + puckWonCleanOpp + "\n");
-			sb.append("own puckouts lost: " + puckLostCleanOpp + "\n\n\n");
-			
+			sb.append("own puckouts lost: " + puckLostCleanOpp + "\n");
+			sb.append(cardOpp + subOpp + "\n\n\n");
+
 			sb.append("LIST OF SCORERS \n");
 
-						
 			allTitles = TeamContentProvider.CONTENT_URI_3;
 			String[] from = new String[] {
 					TeamContentProvider.SCORESNAME,
@@ -685,11 +853,10 @@ public class ReviewFragment extends Fragment {
 			// use an
 			// adapter to display on screen
 			String[] args = { tOwnTeam.getText().toString() };
-			c1 = getActivity().getContentResolver().query(allTitles,
-					null, "team=?", args,
-					TeamContentProvider.SCORESTOTAL + " DESC");
+			c1 = getActivity().getContentResolver().query(allTitles, null,
+					"team=?", args, TeamContentProvider.SCORESTOTAL + " DESC");
 
-			String[] args1 = { tOppTeam.getText().toString()};
+			String[] args1 = { tOppTeam.getText().toString() };
 			Cursor c2 = getActivity().getContentResolver().query(allTitles,
 					null, "team=?", args1,
 					TeamContentProvider.SCORESTOTAL + " DESC");
@@ -723,7 +890,7 @@ public class ReviewFragment extends Fragment {
 
 				} while (c1.moveToNext());
 			}
-
+			c1.close();
 			sb.append("\n" + tOppTeam.getText().toString() + " SCORERS\n\n");
 			if (c2.getCount() > 0) {
 				c2.moveToFirst();
@@ -750,8 +917,8 @@ public class ReviewFragment extends Fragment {
 					// insert players into positions
 
 				} while (c2.moveToNext());
-
 			}
+			c2.close();
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent
 					.putExtra(Intent.EXTRA_SUBJECT, "match report "
@@ -768,15 +935,15 @@ public class ReviewFragment extends Fragment {
 		public void onClick(View v) {
 
 			// Create Bitmap to display team selection
-			Bitmap bitmap = Bitmap.createBitmap(700, 400,
+			Bitmap bitmap = Bitmap.createBitmap(700, 440,
 					Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawColor(Color.rgb(204, 255, 204));
 			Paint paint = new Paint();
 			paint.setColor(Color.rgb(255, 255, 219));
-			canvas.drawRect(350, 0, 700, 400, paint);
+			canvas.drawRect(350, 0, 700, 440, paint);
 			paint.setColor(Color.BLACK);
-			canvas.drawLine(350, 0, 350, 350, paint);
+			canvas.drawLine(350, 0, 350, 380, paint);
 			paint.setAntiAlias(true);
 			paint.setTextAlign(Align.CENTER);
 			paint.setTextSize(22);
@@ -825,6 +992,8 @@ public class ReviewFragment extends Fragment {
 			canvas.drawText("Own Puckout Lost", 5, 325, paint);
 			canvas.drawText(puckLostCleanHome + " ", 210, 325, paint);
 
+			canvas.drawText(cardHome + subHome, 5, 350, paint);
+
 			canvas.drawText(tOppTeam.getText().toString(), 525, 25, paint);
 			canvas.drawText(oppGoals + "-" + oppPoints + " (" + oppTotal + ")",
 					525, 50, paint);
@@ -867,12 +1036,14 @@ public class ReviewFragment extends Fragment {
 			canvas.drawText("Own Puckout Lost", 355, 325, paint);
 			canvas.drawText(puckLostCleanOpp + " ", 560, 325, paint);
 
+			canvas.drawText(cardOpp + subOpp, 355, 350, paint);
+
 			paint.setColor(Color.GRAY);
 			paint.setTextSize(16);
 			paint.setTextAlign(Align.CENTER);
-			canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 370,
+			canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 3395,
 					paint);
-			canvas.drawText("Available free from Google Play Store", 350, 390,
+			canvas.drawText("Available free from Google Play Store", 350, 415,
 					paint);
 
 			File mPath = Environment

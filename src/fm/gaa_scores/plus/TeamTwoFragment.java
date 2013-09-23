@@ -88,9 +88,10 @@ public class TeamTwoFragment extends Fragment {
 	private Date currentDate;
 	private SimpleDateFormat sdfdate;
 	private EditText input;
-	private int index, indexOff, indexOn;
+	private int index, indexOff, indexOn, sub = 0, subLines = 0;
 	private TextView tCards, tSubs;
 	private boolean bloodSub = false;
+	private StringBuilder strBuilderSub = new StringBuilder();
 
 	// setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
@@ -195,6 +196,14 @@ public class TeamTwoFragment extends Fragment {
 						+ ". " + String.valueOf(teamLineUpCurrent[i]) + "\n "
 						: String.valueOf(i) + ".\n ");
 			}
+			if (strBuilderSub.length() > 1) {
+				sb.append("\nSUBS USED\n");
+				
+				String[] subArray = strBuilderSub.toString().split("\n");
+				for (int i = 0; i < subArray.length; i++) {
+					sb.append(subArray[i]+"\n");
+				}
+			}
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent.putExtra(Intent.EXTRA_SUBJECT, panelName + " v. "
 					+ oppTeamName + ". " + "Team Selection");
@@ -243,7 +252,7 @@ public class TeamTwoFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			// Create Bitmap to display team selection
-			Bitmap bitmap = Bitmap.createBitmap(600, 550,
+			Bitmap bitmap = Bitmap.createBitmap(600, 550 + (subLines * 25),
 					Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawColor(Color.rgb(255, 255, 219));
@@ -274,121 +283,137 @@ public class TeamTwoFragment extends Fragment {
 					80 + (commentLines * 20), paint);
 
 			String str;
-			int xxx=5;
+			int xxx = 5;
 			// Full Forwards
 			paint.setTextSize(15);
 			paint.setColor(Color.RED);
-			canvas.drawText("left corner forward", 100,
-					130 + (commentLines * 20)+xxx, paint);
-			canvas.drawText("full forward", 300, 130 + (commentLines * 20)+xxx,
-					paint);
-			canvas.drawText("right corner forward", 500,
-					130 + (commentLines * 20)+xxx, paint);
+			canvas.drawText("left corner forward", 100, 130
+					+ (commentLines * 20) + xxx, paint);
+			canvas.drawText("full forward", 300, 130 + (commentLines * 20)
+					+ xxx, paint);
+			canvas.drawText("right corner forward", 500, 130
+					+ (commentLines * 20) + xxx, paint);
 			paint.setTextSize(18);
 			paint.setColor(Color.BLACK);
 			str = teamLineUpCurrent[15].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[15]) : String.valueOf(15) + ".";
-			canvas.drawText(str, 100, 150 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 100, 150 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[14].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[14]) : String.valueOf(14) + ".";
-			canvas.drawText(str, 300, 150 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 300, 150 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[13].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[13]) : String.valueOf(13) + ".";
-			canvas.drawText(str, 500, 150 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 500, 150 + (commentLines * 20) + xxx, paint);
 
 			// HALF forwards
 			paint.setTextSize(15);
 			paint.setColor(Color.RED);
-			canvas.drawText("left half forward", 100,
-					185 + (commentLines * 20)+xxx, paint);
-			canvas.drawText("center forward", 300, 185 + (commentLines * 20)+xxx,
-					paint);
-			canvas.drawText("right half forward", 500,
-					185 + (commentLines * 20)+xxx, paint);
+			canvas.drawText("left half forward", 100, 185 + (commentLines * 20)
+					+ xxx, paint);
+			canvas.drawText("center forward", 300, 185 + (commentLines * 20)
+					+ xxx, paint);
+			canvas.drawText("right half forward", 500, 185
+					+ (commentLines * 20) + xxx, paint);
 			paint.setTextSize(18);
 			paint.setColor(Color.BLACK);
 			str = teamLineUpCurrent[12].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[12]) : String.valueOf(12) + ".";
-			canvas.drawText(str, 100, 205 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 100, 205 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[11].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[11]) : String.valueOf(11) + ".";
-			canvas.drawText(str, 300, 205 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 300, 205 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[10].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[10]) : String.valueOf(10) + ".";
-			canvas.drawText(str, 500, 205 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 500, 205 + (commentLines * 20) + xxx, paint);
 
 			// MidField
 			paint.setTextSize(15);
 			paint.setColor(Color.RED);
-			canvas.drawText("mid field", 150, 240 + (commentLines * 20)+xxx, paint);
-			canvas.drawText("mid field", 450, 240 + (commentLines * 20)+xxx, paint);
+			canvas.drawText("mid field", 150, 240 + (commentLines * 20) + xxx,
+					paint);
+			canvas.drawText("mid field", 450, 240 + (commentLines * 20) + xxx,
+					paint);
 			paint.setTextSize(18);
 			paint.setColor(Color.BLACK);
 			str = teamLineUpCurrent[8].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[9]) : String.valueOf(9) + ".";
-			canvas.drawText(str, 150, 260 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 150, 260 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[8].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[8]) : String.valueOf(8) + ".";
-			canvas.drawText(str, 450, 260 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 450, 260 + (commentLines * 20) + xxx, paint);
 
 			// HALF backs
 			paint.setTextSize(15);
 			paint.setColor(Color.RED);
-			canvas.drawText("left half back", 100,
-					295 + (commentLines * 20)+xxx, paint);
-			canvas.drawText("center back", 300, 295 + (commentLines * 20)+xxx,
-					paint);
-			canvas.drawText("right half back", 500,
-					295 + (commentLines * 20)+xxx, paint);
+			canvas.drawText("left half back", 100, 295 + (commentLines * 20)
+					+ xxx, paint);
+			canvas.drawText("center back", 300,
+					295 + (commentLines * 20) + xxx, paint);
+			canvas.drawText("right half back", 500, 295 + (commentLines * 20)
+					+ xxx, paint);
 			paint.setTextSize(18);
 			paint.setColor(Color.BLACK);
 			str = teamLineUpCurrent[7].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[7]) : String.valueOf(7) + ".";
-			canvas.drawText(str, 100, 315 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 100, 315 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[6].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[6]) : String.valueOf(6) + ".";
-			canvas.drawText(str, 300, 315 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 300, 315 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[5].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[5]) : String.valueOf(5) + ".";
-			canvas.drawText(str, 500, 315 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 500, 315 + (commentLines * 20) + xxx, paint);
 
 			// FULL backs
 			paint.setTextSize(15);
 			paint.setColor(Color.RED);
-			canvas.drawText("left corner back", 100,
-					350 + (commentLines * 20)+xxx, paint);
-			canvas.drawText("full back", 300, 350 + (commentLines * 20)+xxx,
+			canvas.drawText("left corner back", 100, 350 + (commentLines * 20)
+					+ xxx, paint);
+			canvas.drawText("full back", 300, 350 + (commentLines * 20) + xxx,
 					paint);
-			canvas.drawText("right corner back", 500,
-					350 + (commentLines * 20)+xxx, paint);
+			canvas.drawText("right corner back", 500, 350 + (commentLines * 20)
+					+ xxx, paint);
 			paint.setTextSize(18);
 			paint.setColor(Color.BLACK);
 			str = teamLineUpCurrent[4].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[4]) : String.valueOf(4) + ".";
-			canvas.drawText(str, 100, 370 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 100, 370 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[3].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[3]) : String.valueOf(3) + ".";
-			canvas.drawText(str, 300, 370 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 300, 370 + (commentLines * 20) + xxx, paint);
 			str = teamLineUpCurrent[2].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[2]) : String.valueOf(2) + ".";
-			canvas.drawText(str, 500, 370 + (commentLines * 20)+xxx, paint);
-			
+			canvas.drawText(str, 500, 370 + (commentLines * 20) + xxx, paint);
+
 			// Goal
 			paint.setTextSize(15);
 			paint.setColor(Color.RED);
-			canvas.drawText("goal", 300, 405 + (commentLines * 20)+xxx, paint);
+			canvas.drawText("goal", 300, 405 + (commentLines * 20) + xxx, paint);
 			paint.setTextSize(18);
 			paint.setColor(Color.BLACK);
 			str = teamLineUpCurrent[1].length() > 2 ? String
 					.valueOf(teamLineUpCurrent[1]) : String.valueOf(1) + ".";
-			canvas.drawText(str, 300, 425 + (commentLines * 20)+xxx, paint);
+			canvas.drawText(str, 300, 425 + (commentLines * 20) + xxx, paint);
+
+			paint.setTextAlign(Align.LEFT);
+			paint.setTextSize(15);
+			if (strBuilderSub.length() > 1) {
+				canvas.drawText("SUBS USED", 5,
+						450 + (commentLines * 20) + xxx, paint);
+				paint.setTextSize(14);
+				String[] subArray = strBuilderSub.toString().split("\n");
+				for (int i = 0; i < subArray.length; i++) {
+					canvas.drawText(subArray[i], 5, 470 + (commentLines * 20)
+							+ xxx + (i * 20), paint);
+				}
+			}
 
 			paint.setTextSize(15);
+			paint.setTextAlign(Align.CENTER);
 			paint.setColor(Color.GRAY);
-			canvas.drawText("GAA Scores Stats Plus - Android App", 300,
-					470 + (commentLines * 20)+xxx , paint);
-			canvas.drawText("Available free from Google Play Store", 300, 470
-					+ (commentLines * 20) + xxx+20, paint);
+			canvas.drawText("GAA Scores Stats Plus - Android App", 300, 490
+					+ (subLines * 25) + (commentLines * 20) + xxx, paint);
+			canvas.drawText("Available free from Google Play Store", 300, 490
+					+ (subLines * 25) + (commentLines * 20) + xxx + 20, paint);
 
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -414,7 +439,9 @@ public class TeamTwoFragment extends Fragment {
 			try {
 				final Intent shareIntent = findTwitterClient();
 				shareIntent.putExtra(Intent.EXTRA_TEXT, panelName
-						+ " Team Selection \n"+((Startup) getActivity()).getFragmentScore().getLocText());
+						+ " Team Selection \n"
+						+ ((Startup) getActivity()).getFragmentScore()
+								.getLocText());
 				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 				// introduce delay to give time to read in bitmap before sending
 				// tweet
@@ -657,6 +684,12 @@ public class TeamTwoFragment extends Fragment {
 				+ "  on: " + playerOn);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
+
+		// increment subsused counter
+		if (!bloodSub) {
+			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+		}
+
 		updateSubsList();
 		((Startup) getActivity()).getFragmentScore().updateStatsList();
 		((Startup) getActivity()).getFragmentReview().updateListView();
@@ -757,16 +790,17 @@ public class TeamTwoFragment extends Fragment {
 									Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString("OPPTEAM", panelName);
-					editor.commit();									
+					editor.commit();
 					((Startup) getActivity()).getFragmentScore().setTeamLineUp(
 							"", panelName);
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
 							"", panelName);
-					((Startup) getActivity()).getFragmentScorers().setTeamNames(
-							"", panelName);
+					((Startup) getActivity()).getFragmentScorers()
+							.setTeamNames("", panelName);
 					((Startup) getActivity()).getFragmentReview()
 							.updateListView();
-					((Startup) getActivity()).getFragmentScore().updateStatsList();
+					((Startup) getActivity()).getFragmentScore()
+							.updateStatsList();
 					((Startup) getActivity()).getFragmentTeamOne().setTeam(
 							panelName);
 
@@ -817,7 +851,7 @@ public class TeamTwoFragment extends Fragment {
 						c1.close();
 						return;
 					}
-	
+
 					// Update name in database
 					// Reset team lineup to default position numbers
 					// and assign numbers ot buttons on screen
@@ -850,8 +884,8 @@ public class TeamTwoFragment extends Fragment {
 							"", panelName);
 					((Startup) getActivity()).getFragmentReview().setTeamNames(
 							"", panelName);
-					((Startup) getActivity()).getFragmentScorers().setTeamNames(
-							"", panelName);
+					((Startup) getActivity()).getFragmentScorers()
+							.setTeamNames("", panelName);
 					((Startup) getActivity()).getFragmentTeamOne().setTeam(
 							panelName);
 
@@ -925,10 +959,10 @@ public class TeamTwoFragment extends Fragment {
 							((Startup) getActivity()).getFragmentScore()
 									.setTeamLineUp("", panelName);
 							((Startup) getActivity()).getFragmentReview()
-							.setTeamNames("", panelName);
+									.setTeamNames("", panelName);
 							((Startup) getActivity()).getFragmentScorers()
-							.setTeamNames("", panelName);
-						((Startup) getActivity()).getFragmentTeamOne()
+									.setTeamNames("", panelName);
+							((Startup) getActivity()).getFragmentTeamOne()
 									.setTeam(panelName);
 
 							dialog.dismiss();
@@ -1049,7 +1083,8 @@ public class TeamTwoFragment extends Fragment {
 											+ "'", null);
 							Toast.makeText(
 									getActivity(),
-									team + " and " + (count-1) + " players deleted",
+									team + " and " + (count - 1)
+											+ " players deleted",
 									Toast.LENGTH_LONG).show();
 
 							dialog.dismiss();
@@ -1316,6 +1351,7 @@ public class TeamTwoFragment extends Fragment {
 				}
 				i++;
 			} while (c1.moveToNext());
+			c1.close();
 			// ermove leading line feed
 			strBuilder.delete(0, 1);
 			tCards.setText(strBuilder.toString());
@@ -1323,6 +1359,9 @@ public class TeamTwoFragment extends Fragment {
 	}
 
 	public void updateSubsList() {
+		tSubs.setText("");
+		strBuilderSub.setLength(0);
+		subLines = 0;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
 				TeamContentProvider.STATSLINE };
@@ -1342,11 +1381,16 @@ public class TeamTwoFragment extends Fragment {
 				if ((str[i].indexOf("--> off:") >= 0)
 						&& (str[i].indexOf(panelName) >= 0)) {
 					strBuilder.append("\n" + str[i]);
+					strBuilderSub.append("\n"
+							+ str[i].replace("substitution", ""));
+					subLines++;
 				}
 				i++;
 			} while (c1.moveToNext());
+			c1.close();
 			// ermove leading line feed
 			strBuilder.delete(0, 1);
+			strBuilderSub.delete(0, 1);
 			tSubs.setText(strBuilder.toString());
 		}
 	}
@@ -1360,7 +1404,7 @@ public class TeamTwoFragment extends Fragment {
 		intent.setType("file/plain");
 		startActivityForResult(intent, 1);
 	}
-	
+
 	public void exportTeam() {
 		try {
 			File root = new File(Environment.getExternalStorageDirectory(),
@@ -1397,6 +1441,31 @@ public class TeamTwoFragment extends Fragment {
 							+ "other characters like / will not work",
 					Toast.LENGTH_LONG).show();
 		}
+	}
+
+	public void emailTeam() {
+		exportTeam();
+		// set up for emailing database and CSV files from storage
+		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
+				"team file for GAAScoresStats Android App");
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "match data attached");
+		emailIntent.setType("text/plain");
+		String[] emailAttachments = new String[] { Environment
+				.getExternalStorageDirectory()
+				+ "/GAA_APP_Export/"
+				+ panelName
+				+ ".txt" };
+		// put email attachments into an ArrayList
+		ArrayList<Uri> uris = new ArrayList<Uri>();
+		for (String file : emailAttachments) {
+			File uriFiles = new File(file);
+			Uri u = Uri.fromFile(uriFiles);
+			uris.add(u);
+		}
+		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+		startActivity(Intent.createChooser(emailIntent, "Email:"));
+
 	}
 
 	@Override
@@ -1441,25 +1510,28 @@ public class TeamTwoFragment extends Fragment {
 					Date date = new Date(System.currentTimeMillis());
 					panelName = "team." + sdf.format(date);
 				}
-				
-				for (int i =1;i<10;i++){
+
+				for (int i = 1; i < 10; i++) {
 					// check if name exists and append __i if it does
 					String[] args = { panelName };
 					Cursor c1 = getActivity().getContentResolver().query(
 							TeamContentProvider.CONTENT_URI, null, "team=?",
 							args, null);
 					if (c1.getCount() > 0) {
-						//team exists
-						if (panelName.substring(panelName.length()-3,panelName.length()-1).equals("__")){
-							panelName=panelName.substring(0,panelName.length()-1)+i;
-						}else{
-							panelName=panelName+"__"+ i;
-						}					
+						// team exists
+						if (panelName.substring(panelName.length() - 3,
+								panelName.length() - 1).equals("__")) {
+							panelName = panelName.substring(0,
+									panelName.length() - 1)
+									+ i;
+						} else {
+							panelName = panelName + "__" + i;
+						}
 					} else {
 						c1.close();
 						break;
-					}			
-				} 
+					}
+				}
 
 				tTeamHome.setText(panelName);
 				panelList.clear();
@@ -1467,7 +1539,6 @@ public class TeamTwoFragment extends Fragment {
 				panelList.add(0, "ENTER NEW PLAYER NAME");
 				playerIDLookUp.clear();
 				// add to database
-
 				ContentValues values = new ContentValues();
 				values.put("name", "...");
 				values.put("posn", 0);
@@ -1494,7 +1565,6 @@ public class TeamTwoFragment extends Fragment {
 				for (int i = 0; i < inputNum; i++) {
 					s[i] = strTemp[i];
 				}
-
 				// if more than 15 read in
 				if (s.length > 15) {
 					for (int i = 0; i < 15; i++) {
@@ -1512,7 +1582,7 @@ public class TeamTwoFragment extends Fragment {
 							values = new ContentValues();
 							values.put("name", s[i]);
 							values.put("posn", -1);
-							values.put("team", panelName); 
+							values.put("team", panelName);
 							getActivity().getContentResolver().insert(
 									TeamContentProvider.CONTENT_URI, values);
 						}
@@ -1670,6 +1740,9 @@ public class TeamTwoFragment extends Fragment {
 			return true;
 		case R.id.exportTeam:
 			exportTeam();
+			return true;
+		case R.id.emailTeam:
+			emailTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
