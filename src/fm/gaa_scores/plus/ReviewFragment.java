@@ -39,11 +39,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -51,6 +53,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class ReviewFragment extends Fragment {
 	private int homeGoals, homePoints, homeTotal, oppGoals, oppPoints,
@@ -256,10 +259,56 @@ public class ReviewFragment extends Fragment {
 
 		updateListView();
 		updateCardsSubs();
+		
+		registerForContextMenu(listViewStats);
 
 		return v;
 
 	}
+	
+	// set up long press menu to delete entry from stats db
+		@Override
+		public void onCreateContextMenu(ContextMenu menu, View v,
+				ContextMenuInfo menuInfo) {
+			Log.e("hello","dere mmm ");
+			super.onCreateContextMenu(menu, v, menuInfo);
+			MenuInflater mi = getActivity().getMenuInflater();
+			mi.inflate(R.menu.list_menu_longpress, menu);
+		}
+
+		@Override
+		// deal with selection from long press menu
+		public boolean onContextItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+			case R.id.menu_delete1:
+//				// Delete a row / player
+				String strTemp="";
+				Uri uri = TeamContentProvider.CONTENT_URI_2;
+				AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+						.getMenuInfo();
+				Log.e("hello","dere "+info.id);
+				String[] args = { Long.toString(info.id) };
+				Cursor c1 = getActivity().getContentResolver().query(uri,
+						null, "_id=?", args, null);
+				if (c1.getCount() > 0) {
+					c1.moveToFirst();
+					strTemp = c1
+							.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				}
+				uri = Uri
+						.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
+				getActivity().getContentResolver().delete(uri, null, null);
+				Toast.makeText(getActivity(), "stats entry deleted",
+						Toast.LENGTH_LONG).show();
+				Log.e("hello","string "+strTemp);
+				updateListView();
+				((Startup) getActivity()).getFragmentScore().undo(strTemp);
+				return true;
+			}
+			return super.onContextItemSelected(item);
+		}
+
 
 	// *******************Home Shots********************///
 	// increment counters for home team shots

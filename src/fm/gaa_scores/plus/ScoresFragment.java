@@ -95,7 +95,7 @@ public class ScoresFragment extends Fragment {
 	private long rowId;
 	private Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 	private Context context;
-	private int yellow=0, red=0;
+	private int yellow = 0, red = 0;
 
 	@Override
 	// start main method to display screen
@@ -1073,7 +1073,7 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanHome(count);
-			} 
+			}
 			break;
 
 		case R.id.buttonShotOpp:
@@ -1171,7 +1171,7 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanOpp(count);
-			} 
+			}
 			break;
 		}
 		// add to stats database
@@ -1188,7 +1188,7 @@ public class ScoresFragment extends Fragment {
 			getActivity().getContentResolver().insert(
 					TeamContentProvider.CONTENT_URI_2, values);
 		}
-		if ((stats2.equals("red card"))||(stats2.equals("yellow card"))) {
+		if ((stats2.equals("red card")) || (stats2.equals("yellow card"))) {
 			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		}
 		// add to scorers database
@@ -1716,227 +1716,225 @@ public class ScoresFragment extends Fragment {
 						.getColumnIndexOrThrow(TeamContentProvider.STATSID)));
 				strTemp = (c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE)));
-				
-				if( (strTemp.indexOf("card") >= 0)||(strTemp.indexOf("card")) >= 0) {
-					((Startup) getActivity()).getFragmentReview().updateCardsSubs();
-				}
-				
-				// check for goal
-				if (strTemp.indexOf("goal") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						// decrement puckout total
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckTotOpp(-1);
-						if (homeGoals - 1 >= 0) {
-							homeGoals = homeGoals - 1;
-							bHomeGoals.setText(String.valueOf(homeGoals));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settHomeGoals(homeGoals);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-							// update goal counter display in review page
-							((Startup) getActivity()).getFragmentReview()
-									.addtShotGoalsHome(-1);
-							// increment goal from play counter in review page
-							// unless score was from free/45/65/penalty
-							if ((strTemp.indexOf("from free") < 0)
-									&& (strTemp.indexOf("from penalty") < 0)
-									&& (strTemp.indexOf("from 45/65") < 0)
-									&& (strTemp.indexOf("from sideline") < 0)) {
-								((Startup) getActivity()).getFragmentReview()
-										.addtShotGoalsPlayHome(-1);
-							}
-						}
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						// decrement puckout total
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckTotHome(-1);
-						if (oppGoals - 1 >= 0) {
-							oppGoals = oppGoals - 1;
-							bOppGoals.setText(String.valueOf(oppGoals));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settOppGoals(oppGoals);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-							// update goal counter display in review page
-							((Startup) getActivity()).getFragmentReview()
-									.addtShotGoalsOpp(-1);
-							// increment goal from play counter in review page
-							// unless score was from free/45/65/penalty
-							if ((strTemp.indexOf("from free") < 0)
-									&& (strTemp.indexOf("from penalty") < 0)
-									&& (strTemp.indexOf("from 45/65") < 0)
-									&& (strTemp.indexOf("from sideline") < 0)) {
-								((Startup) getActivity()).getFragmentReview()
-										.addtShotGoalsPlayOpp(-1);
-							}
-						}
-					}
-				}
-				// check for point
-				else if (strTemp.indexOf("point") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						// decrement puckout total
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckTotOpp(-1);
-						if (homePoints - 1 >= 0) {
-							homePoints = homePoints - 1;
-							bHomePoints.setText(String.valueOf(homePoints));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settHomePoints(homePoints);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-							// update goal counter display in review page
-							((Startup) getActivity()).getFragmentReview()
-									.addtShotPointsHome(-1);
-							// increment goal from play counter in review page
-							// unless score was from free/45/65/penalty
-							if ((strTemp.indexOf("from free") < 0)
-									&& (strTemp.indexOf("from penalty") < 0)
-									&& (strTemp.indexOf("from 45/65") < 0)
-									&& (strTemp.indexOf("from sideline") < 0)) {
-								((Startup) getActivity()).getFragmentReview()
-										.addtShotPointsPlayHome(-1);
-							}
-						}
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						// decrement puckout total
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckTotHome(-1);
-						if (oppPoints - 1 >= 0) {
-							oppPoints = oppPoints - 1;
-							bOppPoints.setText(String.valueOf(oppPoints));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settOppPoints(oppPoints);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-							// update goal counter display in review page
-							((Startup) getActivity()).getFragmentReview()
-									.addtShotPointsOpp(-1);
-							// increment goal from play counter in review page
-							// unless score was from free/45/65/penalty
-							if ((strTemp.indexOf("from free") < 0)
-									&& (strTemp.indexOf("from penalty") < 0)
-									&& (strTemp.indexOf("from 45/65") < 0)
-									&& (strTemp.indexOf("from sideline") < 0)) {
-								((Startup) getActivity()).getFragmentReview()
-										.addtShotPointsPlayOpp(-1);
-							}
-						}
-					}
-				}
-				// check for wides
-				else if (strTemp.indexOf("wide") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShotWidesHome(-1);
-						// decrement puckout total
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckTotOpp(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShotWidesOpp(-1);
-						// decrement puckout total
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckTotHome(-1);
-					}
-				}
-				// check for off posts
-				else if (strTemp.indexOf("off posts") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShotPostsHome(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShotPostsOpp(-1);
-					}
-				}
-				// check for out for 45
-				else if (strTemp.indexOf("out for 45/65") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShot45Home(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShot45Opp(-1);
-					}
-				}
-				// check for saved
-				else if (strTemp.indexOf("saved/short") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShotSavedHome(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addtShotSavedOpp(-1);
-					}
-				} else if (strTemp.indexOf("puckout won") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckWonCleanHome(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckWonCleanOpp(-1);
-					}
-				} else if (strTemp.indexOf("puckout lost") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckLostCleanHome(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addPuckLostCleanOpp(-1);
-					}
-				} else if (strTemp.indexOf("free/pen") >= 0) {
-					// check which team
-					if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addFreeConcededHome(-1);
-					} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-						((Startup) getActivity()).getFragmentReview()
-								.addFreeConcededOpp(-1);
-					}
-				}
 
+				c1.close();
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 								+ rowId), null, null);
-				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
-				undoScorers(strTemp);
+				undo(strTemp);
 			}
-			
-			updateStatsList();
-
-			c1.close();
 		}
 	};
+
+	public void undo(String strTemp) {
+
+		// check for goal
+		if (strTemp.indexOf("goal") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				// decrement puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(-1);
+				if (homeGoals - 1 >= 0) {
+					homeGoals = homeGoals - 1;
+					bHomeGoals.setText(String.valueOf(homeGoals));
+					// update totals
+					setTotals();
+					// increment score in REVIEW fragment
+					((Startup) getActivity()).getFragmentReview()
+							.settHomeGoals(homeGoals);
+					// remind user score is updated in case they try and
+					// do it manually
+					Toast.makeText(getActivity(), "Score Updated",
+							Toast.LENGTH_SHORT).show();
+					// update goal counter display in review page
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotGoalsHome(-1);
+					// increment goal from play counter in review page
+					// unless score was from free/45/65/penalty
+					if ((strTemp.indexOf("from free") < 0)
+							&& (strTemp.indexOf("from penalty") < 0)
+							&& (strTemp.indexOf("from 45/65") < 0)
+							&& (strTemp.indexOf("from sideline") < 0)) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShotGoalsPlayHome(-1);
+					}
+				}
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				// decrement puckout total
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckTotHome(-1);
+				if (oppGoals - 1 >= 0) {
+					oppGoals = oppGoals - 1;
+					bOppGoals.setText(String.valueOf(oppGoals));
+					// update totals
+					setTotals();
+					// increment score in REVIEW fragment
+					((Startup) getActivity()).getFragmentReview().settOppGoals(
+							oppGoals);
+					// remind user score is updated in case they try and
+					// do it manually
+					Toast.makeText(getActivity(), "Score Updated",
+							Toast.LENGTH_SHORT).show();
+					// update goal counter display in review page
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotGoalsOpp(-1);
+					// increment goal from play counter in review page
+					// unless score was from free/45/65/penalty
+					if ((strTemp.indexOf("from free") < 0)
+							&& (strTemp.indexOf("from penalty") < 0)
+							&& (strTemp.indexOf("from 45/65") < 0)
+							&& (strTemp.indexOf("from sideline") < 0)) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShotGoalsPlayOpp(-1);
+					}
+				}
+			}
+		}
+		// check for point
+		else if (strTemp.indexOf("point") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				// decrement puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(-1);
+				if (homePoints - 1 >= 0) {
+					homePoints = homePoints - 1;
+					bHomePoints.setText(String.valueOf(homePoints));
+					// update totals
+					setTotals();
+					// increment score in REVIEW fragment
+					((Startup) getActivity()).getFragmentReview()
+							.settHomePoints(homePoints);
+					// remind user score is updated in case they try and
+					// do it manually
+					Toast.makeText(getActivity(), "Score Updated",
+							Toast.LENGTH_SHORT).show();
+					// update goal counter display in review page
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotPointsHome(-1);
+					// increment goal from play counter in review page
+					// unless score was from free/45/65/penalty
+					if ((strTemp.indexOf("from free") < 0)
+							&& (strTemp.indexOf("from penalty") < 0)
+							&& (strTemp.indexOf("from 45/65") < 0)
+							&& (strTemp.indexOf("from sideline") < 0)) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShotPointsPlayHome(-1);
+					}
+				}
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				// decrement puckout total
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckTotHome(-1);
+				if (oppPoints - 1 >= 0) {
+					oppPoints = oppPoints - 1;
+					bOppPoints.setText(String.valueOf(oppPoints));
+					// update totals
+					setTotals();
+					// increment score in REVIEW fragment
+					((Startup) getActivity()).getFragmentReview()
+							.settOppPoints(oppPoints);
+					// remind user score is updated in case they try and
+					// do it manually
+					Toast.makeText(getActivity(), "Score Updated",
+							Toast.LENGTH_SHORT).show();
+					// update goal counter display in review page
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotPointsOpp(-1);
+					// increment goal from play counter in review page
+					// unless score was from free/45/65/penalty
+					if ((strTemp.indexOf("from free") < 0)
+							&& (strTemp.indexOf("from penalty") < 0)
+							&& (strTemp.indexOf("from 45/65") < 0)
+							&& (strTemp.indexOf("from sideline") < 0)) {
+						((Startup) getActivity()).getFragmentReview()
+								.addtShotPointsPlayOpp(-1);
+					}
+				}
+			}
+		}
+		// check for wides
+		else if (strTemp.indexOf("wide") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addtShotWidesHome(-1);
+				// decrement puckout total
+				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview().addtShotWidesOpp(
+						-1);
+				// decrement puckout total
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckTotHome(-1);
+			}
+		}
+		// check for off posts
+		else if (strTemp.indexOf("off posts") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addtShotPostsHome(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview().addtShotPostsOpp(
+						-1);
+			}
+		}
+		// check for out for 45
+		else if (strTemp.indexOf("out for 45/65") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addtShot45Home(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview().addtShot45Opp(-1);
+			}
+		}
+		// check for saved
+		else if (strTemp.indexOf("saved/short") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addtShotSavedHome(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview().addtShotSavedOpp(
+						-1);
+			}
+		} else if (strTemp.indexOf("puckout won") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckWonCleanHome(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckWonCleanOpp(-1);
+			}
+		} else if (strTemp.indexOf("puckout lost") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckLostCleanHome(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addPuckLostCleanOpp(-1);
+			}
+		} else if (strTemp.indexOf("free/pen") >= 0) {
+			// check which team
+			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addFreeConcededHome(-1);
+			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+				((Startup) getActivity()).getFragmentReview()
+						.addFreeConcededOpp(-1);
+			}
+		}
+		if ((strTemp.indexOf("card") >= 0)
+				|| (strTemp.indexOf("substitution")) >= 0) {
+			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+		}
+		undoScorers(strTemp);
+
+		updateStatsList();
+	}
 
 	private void undoScorers(String str) {
 		// check if its a shot
@@ -2058,6 +2056,7 @@ public class ScoresFragment extends Fragment {
 							.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS));
 			id = c1.getInt(c1
 					.getColumnIndexOrThrow(TeamContentProvider.SCORESID));
+			c1.close();
 			ContentValues values = new ContentValues();
 			values.put(TeamContentProvider.SCORESNAME, playerTmp);
 			values.put(TeamContentProvider.SCORESTEAM, teamTmp);
