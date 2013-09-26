@@ -270,7 +270,6 @@ public class ReviewFragment extends Fragment {
 		@Override
 		public void onCreateContextMenu(ContextMenu menu, View v,
 				ContextMenuInfo menuInfo) {
-			Log.e("hello","dere mmm ");
 			super.onCreateContextMenu(menu, v, menuInfo);
 			MenuInflater mi = getActivity().getMenuInflater();
 			mi.inflate(R.menu.list_menu_longpress, menu);
@@ -286,7 +285,6 @@ public class ReviewFragment extends Fragment {
 				Uri uri = TeamContentProvider.CONTENT_URI_2;
 				AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 						.getMenuInfo();
-				Log.e("hello","dere "+info.id);
 				String[] args = { Long.toString(info.id) };
 				Cursor c1 = getActivity().getContentResolver().query(uri,
 						null, "_id=?", args, null);
@@ -301,8 +299,7 @@ public class ReviewFragment extends Fragment {
 				getActivity().getContentResolver().delete(uri, null, null);
 				Toast.makeText(getActivity(), "stats entry deleted",
 						Toast.LENGTH_LONG).show();
-				Log.e("hello","string "+strTemp);
-				updateListView();
+					updateListView();
 				((Startup) getActivity()).getFragmentScore().undo(strTemp);
 				return true;
 			}
@@ -1090,9 +1087,9 @@ public class ReviewFragment extends Fragment {
 			paint.setColor(Color.GRAY);
 			paint.setTextSize(16);
 			paint.setTextAlign(Align.CENTER);
-			canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 3395,
+			canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 405,
 					paint);
-			canvas.drawText("Available free from Google Play Store", 350, 415,
+			canvas.drawText("Available free from Google Play Store", 350, 425,
 					paint);
 
 			File mPath = Environment

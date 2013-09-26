@@ -164,9 +164,10 @@ Team names can be changed by swiping to the <b>TEAM 1</b> or <b>TEAM 2</b> pages
 Touch <b>goals or points</b> buttons to increase score.<br/>
 Touch <b>-</b> buttons to decrease score.
 <br/>
-Touch <b>enter stats</b> button to get to stats recording screen.
-Touch <b>undo last stats entry</b> to delete last stats entry.<br/>
-
+Touch <b>enter stats</b> button to get to stats recording screen.<br/>
+Touch <b>undo last stats entry</b> to delete the most recent stats entry.
+ (Note you can delete any previously entered stats entry from the <b>Review</b>
+ screen.)<br/>
 </p>
 <p>
 <b>ENTER STATS</b><br/>
@@ -222,21 +223,21 @@ separate the phone numbers.<br/>
 <h1>HELP - REVIEW SCREEN</h1>
 <p>
 Summary of match stats is shown at top of screen.<br/><br/>
-<b>** Out for 45/65</b> - this stat is incremented each time you record <b><i>from 45/65</i></b>
-from the stats screen. So, make sure you record some outcome, be it goal/
-point/wide/off posts/saved/short, for each 45/65 taken.<br/><br/>
+
 <b>*** Total Puckouts</b> - this stat is incremented every time you record 
 a <b><i>goal</i></b> or <b><i>point</i></b> or <b><i>wide</i></b>
 from the stats screen for the opposite team. <br/><br/>
 <br/><br/>
 List of match/stats events recorded is displayed at the bottom of the screen. Swipe up/down
-to scroll.
+to scroll.<br/><br/>
+You can long press on any of the rows to delete that particular stats entry / match event.
+Displayed scores and stats will be adjusted automatically where relevant.
 </p>
 <p><b>tweet match stats</b><br/>
 What it says!</p>
 <p>
 Touch <b>share match data</b> to email all recorded match data including: team selections, score, stats summary, 
-list of match/stats events recorded, list of scorers.
+cards, substitutions list of match/stats events recorded, list of scorers.
 </p>
 
 
