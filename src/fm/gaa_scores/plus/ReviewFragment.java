@@ -38,7 +38,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -610,7 +609,7 @@ public class ReviewFragment extends Fragment {
 	}
 
 	public void updateCardsSubs() {
-		int redHome = 0, redOpp = 0, yellowHome = 0, yellowOpp = 0, subH = 0, subO = 0;
+		int redHome = 0, redOpp = 0, yellowHome = 0, yellowOpp = 0, blackHome=0, blackOpp=0, subH = 0, subO = 0;
 		cardHome = "";
 		subHome = "";
 		cardOpp = "";
@@ -640,6 +639,13 @@ public class ReviewFragment extends Fragment {
 						yellowOpp++;
 					}
 				}
+				if (str.indexOf("black card") >= 0) {
+					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+						blackHome++;
+					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+						blackOpp++;
+					}
+				}
 				if (str.indexOf("substitution") >= 0) {
 					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
 						subH++;
@@ -651,13 +657,13 @@ public class ReviewFragment extends Fragment {
 		}
 		c1.close();
 
-		if (redHome > 0 || yellowHome > 0) {
-			cardHome = "Cards: " + yellowHome + "Y  " + redHome + "R    ";
+		if (redHome > 0 || yellowHome > 0 || blackHome > 0) {
+			cardHome = "Cards: " + blackHome + "B  " + yellowHome + "Y  " + redHome + "R    ";
 		} else {
 			cardHome = "";
 		}
-		if (redOpp > 0 || yellowOpp > 0) {
-			cardOpp = "Cards: " + yellowOpp + "Y  " + redOpp + "R    ";
+		if (redOpp > 0 || yellowOpp > 0 || blackOpp > 0) {
+			cardOpp = "Cards: " + blackOpp + "B  "+ yellowOpp + "Y  " + redOpp + "R    ";
 		} else {
 			cardOpp = "";
 		}

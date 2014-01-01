@@ -25,8 +25,8 @@ public final class R {
         public static final int btn_yellow=0x7f020006;
         public static final int button_custom=0x7f020007;
         public static final int buttond_custom=0x7f020008;
+        public static final int gaalaunch=0x7f020009;
         public static final int greenBG=0x7f02000a;
-        public static final int ic_launcher=0x7f020009;
     }
     public static final class id {
         public static final int ButtonP01=0x7f0800dd;

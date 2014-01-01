@@ -1188,7 +1188,7 @@ public class ScoresFragment extends Fragment {
 			getActivity().getContentResolver().insert(
 					TeamContentProvider.CONTENT_URI_2, values);
 		}
-		if ((stats2.equals("red card")) || (stats2.equals("yellow card"))) {
+		if ((stats2.equals("red card")) || (stats2.equals("yellow card")) || (stats2.equals("black card")) ) {
 			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		}
 		// add to scorers database
