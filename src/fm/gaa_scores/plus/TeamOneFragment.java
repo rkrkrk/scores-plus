@@ -72,6 +72,7 @@ public class TeamOneFragment extends Fragment {
 	private ArrayList<String> panelList = new ArrayList<String>();
 	private ArrayList<String> subsList = new ArrayList<String>();
 	private ArrayList<Integer> posnList = new ArrayList<Integer>();
+	
 
 	// HashMap to Store Player Name and ID for lookup on saving.
 	private HashMap<String, Integer> playerIDLookUp = new HashMap<String, Integer>();
@@ -1404,7 +1405,6 @@ public class TeamOneFragment extends Fragment {
 			// rermove leading line feed
 //			strBuilder.delete(0, 1);
 			strBuilderSub.delete(0, 1);
-			
 			strBuilder.insert(0,"Summary:  "+numSubs+ " substitutions made" );
 			tSubs.setText(strBuilder.toString());
 		}
