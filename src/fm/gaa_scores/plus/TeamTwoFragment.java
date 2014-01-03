@@ -88,10 +88,11 @@ public class TeamTwoFragment extends Fragment {
 	private Date currentDate;
 	private SimpleDateFormat sdfdate;
 	private EditText input;
-	private int index, indexOff, indexOn, sub = 0, subLines = 0;
+	private int index, indexOff, indexOn, sub = 0, subLines = 0, cardLines = 0;
 	private TextView tCards, tSubs;
 	private boolean bloodSub = false;
 	private StringBuilder strBuilderSub = new StringBuilder();
+	private StringBuilder strBuilderCards = new StringBuilder();
 
 	// setup uri to read panel from database using content provider
 	Uri allTitles = TeamContentProvider.CONTENT_URI;
@@ -158,6 +159,8 @@ public class TeamTwoFragment extends Fragment {
 
 		Button bSelTweet = (Button) v.findViewById(R.id.sel_tweet);
 		bSelTweet.setOnClickListener(selTweetListener);
+		Button bSelCard = (Button) v.findViewById(R.id.sel_cards);
+		bSelCard.setOnClickListener(selTweetListener);
 		Button bSelText = (Button) v.findViewById(R.id.sel_text);
 		bSelText.setOnClickListener(selTextListener);
 		Button bSelShare = (Button) v.findViewById(R.id.sel_share);
@@ -200,6 +203,14 @@ public class TeamTwoFragment extends Fragment {
 				sb.append("\nSUBS USED\n");
 				
 				String[] subArray = strBuilderSub.toString().split("\n");
+				for (int i = 0; i < subArray.length; i++) {
+					sb.append(subArray[i]+"\n");
+				}
+			}
+			if (strBuilderCards.length() > 1) {
+				sb.append("\nCARDS USED\n");
+				
+				String[] subArray = strBuilderCards.toString().split("\n");
 				for (int i = 0; i < subArray.length; i++) {
 					sb.append(subArray[i]+"\n");
 				}
@@ -251,8 +262,13 @@ public class TeamTwoFragment extends Fragment {
 	OnClickListener selTweetListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			int txtButton = ((Button) v).getId(),subLinesThis=0,cardLinesThis=0;
+			if (txtButton == R.id.sel_cards) {
+				subLinesThis = subLines   ;
+				cardLinesThis = cardLines ;
+			}
 			// Create Bitmap to display team selection
-			Bitmap bitmap = Bitmap.createBitmap(600, 550 + (subLines * 25),
+			Bitmap bitmap = Bitmap.createBitmap(600, 560 + (subLinesThis * 20)+ (cardLinesThis *20),
 					Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawColor(Color.rgb(255, 255, 219));
@@ -279,10 +295,11 @@ public class TeamTwoFragment extends Fragment {
 
 			paint.setTextAlign(Align.CENTER);
 			paint.setTextSize(22);
+			String str;
+			str = txtButton == R.id.sel_cards ? " current team selection " :" team selection ";
 			canvas.drawText(panelName + " team selection ", 300,
 					80 + (commentLines * 20), paint);
 
-			String str;
 			int xxx = 5;
 			// Full Forwards
 			paint.setTextSize(15);
@@ -394,26 +411,41 @@ public class TeamTwoFragment extends Fragment {
 					.valueOf(teamLineUpCurrent[1]) : String.valueOf(1) + ".";
 			canvas.drawText(str, 300, 425 + (commentLines * 20) + xxx, paint);
 
-			paint.setTextAlign(Align.LEFT);
-			paint.setTextSize(15);
-			if (strBuilderSub.length() > 1) {
-				canvas.drawText("SUBS USED", 5,
-						450 + (commentLines * 20) + xxx, paint);
-				paint.setTextSize(14);
-				String[] subArray = strBuilderSub.toString().split("\n");
-				for (int i = 0; i < subArray.length; i++) {
-					canvas.drawText(subArray[i], 5, 470 + (commentLines * 20)
-							+ xxx + (i * 20), paint);
+			int subsCount = 0;
+			if (txtButton == R.id.sel_cards) {
+				subsCount=1;
+				paint.setTextAlign(Align.LEFT);
+				paint.setTextSize(16);
+				if (strBuilderSub.length() > 1) {
+					canvas.drawText("SUBS USED", 5,
+							450 + (commentLines * 20) + xxx, paint);
+					paint.setTextSize(14);
+					String[] subArray = strBuilderSub.toString().split("\n");
+					for (int i = 0; i < subArray.length; i++) {
+						canvas.drawText(subArray[i], 5, 470 + (commentLines * 20)
+								+ xxx + (i * 20), paint);
+						subsCount++;
+					}
 				}
+				if (strBuilderCards.length() > 1) {
+					canvas.drawText("CARDS", 5,
+							470 + (commentLines * 20) + xxx + (subsCount*20), paint);
+					paint.setTextSize(14);
+					String[] subArray = strBuilderCards.toString().split("\n");
+					for (int i = 0; i < subArray.length; i++) {
+						canvas.drawText(subArray[i], 5, 490 + (commentLines * 20)
+								+ xxx + (i * 20) + (subsCount*20), paint);
+					}
+				}		
 			}
 
 			paint.setTextSize(15);
 			paint.setTextAlign(Align.CENTER);
 			paint.setColor(Color.GRAY);
 			canvas.drawText("GAA Scores Stats Plus - Android App", 300, 490
-					+ (subLines * 25) + (commentLines * 20) + xxx, paint);
+					+ (subLinesThis * 20) + (cardLinesThis * 20) + (commentLines * 20) + xxx, paint);
 			canvas.drawText("Available free from Google Play Store", 300, 490
-					+ (subLines * 25) + (commentLines * 20) + xxx + 20, paint);
+					+ (subLinesThis * 20) + (cardLinesThis * 20) + (commentLines * 20) + xxx + 20, paint);
 
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -1329,11 +1361,12 @@ public class TeamTwoFragment extends Fragment {
 	public void updateCards() {
 		int cardY=0, cardB=0,cardR=0;
 		tCards.setText("");
+		cardLines = 1;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
 				TeamContentProvider.STATSLINE };
+		strBuilderCards.setLength(0);
 		CursorLoader cL;
-		StringBuilder strBuilder = new StringBuilder();
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
 				TeamContentProvider.STATSID);
 		Cursor c1 = cL.loadInBackground();
@@ -1348,29 +1381,31 @@ public class TeamTwoFragment extends Fragment {
 				if (str[i].indexOf(tTeamHome.getText().toString()) >= 0){
 					if(str[i].indexOf("red card") >= 0){
 						cardR++;
-						strBuilder.append("\n" + str[i]);
+						strBuilderCards.append("\n" + str[i]);
 					} else if (str[i].indexOf("yellow card") >= 0){
 						cardY++;
-						strBuilder.append("\n" + str[i]);
+						strBuilderCards.append("\n" + str[i]);
 					} else if (str[i].indexOf("black card") >= 0) {
 						cardB++;
-						strBuilder.append("\n" + str[i]);
-					}			
+						strBuilderCards.append("\n" + str[i]);
+					}	
+					cardLines++;
 				}
 				i++;
 			} while (c1.moveToNext());
 			c1.close();
-			strBuilder.insert(0,"Summary:  "+cardY+" yellow  "+cardB+" black  "+cardR+" red");
-			// ermove leading line feed
-//			strBuilder.delete(0, 1);
-			tCards.setText(strBuilder.toString());
+			// remove leading line feed
+			if (strBuilderCards.length()>0){
+				strBuilderCards.insert(0,"Summary:  "+cardY+" yellow  "+cardB+" black  "+cardR+" red");	
+			}
+			tCards.setText(strBuilderCards.toString());
 		}
 	}
 
 	public void updateSubsList() {
 		tSubs.setText("");
 		strBuilderSub.setLength(0);
-		subLines = 0;
+		subLines = 1;
 		int numSubs=0;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
@@ -1401,11 +1436,13 @@ public class TeamTwoFragment extends Fragment {
 				i++;
 			} while (c1.moveToNext());
 			c1.close();
-			// ermove leading line feed
-//			strBuilder.delete(0, 1);
-			strBuilder.insert(0,"Summary:  "+numSubs+ " substitutions made" );
-			strBuilderSub.delete(0, 1);
+			// rermove leading line feed
+			if (strBuilder.length()>0){
+				strBuilder.insert(0,"Summary:  "+numSubs+ " substitutions made" );
+				strBuilderSub.insert(0,"Summary:  "+numSubs+ " substitutions made" );
+			}
 			tSubs.setText(strBuilder.toString());
+
 		}
 	}
 
