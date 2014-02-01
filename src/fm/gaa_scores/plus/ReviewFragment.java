@@ -17,8 +17,10 @@ package fm.gaa_scores.plus;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -38,6 +40,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -258,53 +261,50 @@ public class ReviewFragment extends Fragment {
 
 		updateListView();
 		updateCardsSubs();
-		
+
 		registerForContextMenu(listViewStats);
 
 		return v;
 
 	}
-	
+
 	// set up long press menu to delete entry from stats db
-		@Override
-		public void onCreateContextMenu(ContextMenu menu, View v,
-				ContextMenuInfo menuInfo) {
-			super.onCreateContextMenu(menu, v, menuInfo);
-			MenuInflater mi = getActivity().getMenuInflater();
-			mi.inflate(R.menu.list_menu_longpress, menu);
-		}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater mi = getActivity().getMenuInflater();
+		mi.inflate(R.menu.list_menu_longpress, menu);
+	}
 
-		@Override
-		// deal with selection from long press menu
-		public boolean onContextItemSelected(MenuItem item) {
-			switch (item.getItemId()) {
-			case R.id.menu_delete1:
-//				// Delete a row / player
-				String strTemp="";
-				Uri uri = TeamContentProvider.CONTENT_URI_2;
-				AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-						.getMenuInfo();
-				String[] args = { Long.toString(info.id) };
-				Cursor c1 = getActivity().getContentResolver().query(uri,
-						null, "_id=?", args, null);
-				if (c1.getCount() > 0) {
-					c1.moveToFirst();
-					strTemp = c1
-							.getString(c1
-									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				}
-				uri = Uri
-						.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
-				getActivity().getContentResolver().delete(uri, null, null);
-				Toast.makeText(getActivity(), "stats entry deleted",
-						Toast.LENGTH_LONG).show();
-					updateListView();
-				((Startup) getActivity()).getFragmentScore().undo(strTemp);
-				return true;
+	@Override
+	// deal with selection from long press menu
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_delete1:
+			// // Delete a row / player
+			String strTemp = "";
+			Uri uri = TeamContentProvider.CONTENT_URI_2;
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+					.getMenuInfo();
+			String[] args = { Long.toString(info.id) };
+			Cursor c1 = getActivity().getContentResolver().query(uri, null,
+					"_id=?", args, null);
+			if (c1.getCount() > 0) {
+				c1.moveToFirst();
+				strTemp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
 			}
-			return super.onContextItemSelected(item);
+			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
+			getActivity().getContentResolver().delete(uri, null, null);
+			Toast.makeText(getActivity(), "stats entry deleted",
+					Toast.LENGTH_LONG).show();
+			updateListView();
+			((Startup) getActivity()).getFragmentScore().undo(strTemp);
+			return true;
 		}
-
+		return super.onContextItemSelected(item);
+	}
 
 	// *******************Home Shots********************///
 	// increment counters for home team shots
@@ -609,7 +609,7 @@ public class ReviewFragment extends Fragment {
 	}
 
 	public void updateCardsSubs() {
-		int redHome = 0, redOpp = 0, yellowHome = 0, yellowOpp = 0, blackHome=0, blackOpp=0, subH = 0, subO = 0;
+		int redHome = 0, redOpp = 0, yellowHome = 0, yellowOpp = 0, blackHome = 0, blackOpp = 0, subH = 0, subO = 0;
 		cardHome = "";
 		subHome = "";
 		cardOpp = "";
@@ -658,12 +658,14 @@ public class ReviewFragment extends Fragment {
 		c1.close();
 
 		if (redHome > 0 || yellowHome > 0 || blackHome > 0) {
-			cardHome = "Cards: " + blackHome + "B  " + yellowHome + "Y  " + redHome + "R    ";
+			cardHome = "Cards: " + blackHome + "B  " + yellowHome + "Y  "
+					+ redHome + "R    ";
 		} else {
 			cardHome = "";
 		}
 		if (redOpp > 0 || yellowOpp > 0 || blackOpp > 0) {
-			cardOpp = "Cards: " + blackOpp + "B  "+ yellowOpp + "Y  " + redOpp + "R    ";
+			cardOpp = "Cards: " + blackOpp + "B  " + yellowOpp + "Y  " + redOpp
+					+ "R    ";
 		} else {
 			cardOpp = "";
 		}
@@ -684,6 +686,8 @@ public class ReviewFragment extends Fragment {
 	// for reset buttons diplay message to long click, won't work with ordinary
 	// click
 	OnClickListener sendAllListener = new OnClickListener() {
+		File root, outfile;
+
 		@Override
 		public void onClick(View v) {
 			StringBuilder sb = new StringBuilder("");
@@ -753,7 +757,7 @@ public class ReviewFragment extends Fragment {
 			}
 			c1.close();
 
-			//printout cards and subs
+			// printout cards and subs
 			allTitles = TeamContentProvider.CONTENT_URI_2;
 			String[] projection = { TeamContentProvider.STATSID,
 					TeamContentProvider.STATSLINE };
@@ -762,76 +766,72 @@ public class ReviewFragment extends Fragment {
 			c1 = cL.loadInBackground();
 			if (c1.getCount() > 0) {
 				String str;
-				int i = 0,cards=0,subs=0;
+				int i = 0, cards = 0, subs = 0;
 				c1.moveToFirst();
-				do {				
-					str = c1
-							.getString(c1
-									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				do {
+					str = c1.getString(c1
+							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
 					if ((str.indexOf("--> off:") >= 0)
 							&& (str.indexOf(tOwnTeam.getText().toString()) >= 0)) {
-						if(subs==0){
+						if (subs == 0) {
 							sb.append("\nSUBS:");
-							subs=1;
+							subs = 1;
 						}
 						sb.append("\n" + str);
 					}
 					i++;
 				} while (c1.moveToNext());
 				c1.moveToFirst();
-				do {				
-					str = c1
-							.getString(c1
-									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				do {
+					str = c1.getString(c1
+							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
 					if ((str.indexOf("--> off:") >= 0)
 							&& (str.indexOf(tOppTeam.getText().toString()) >= 0)) {
-						if(subs==0){
+						if (subs == 0) {
 							sb.append("\nSUBS:");
-							subs=1;
+							subs = 1;
 						}
 						sb.append("\n" + str);
 					}
 					i++;
 				} while (c1.moveToNext());
-				if(subs==1){
+				if (subs == 1) {
 					sb.append("\n");
 				}
-				//subs done, get cards
+				// subs done, get cards
 				c1.moveToFirst();
-				do {				
-					str = c1
-							.getString(c1
-									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				do {
+					str = c1.getString(c1
+							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
 					if (((str.indexOf("red card") >= 0)
 							|| (str.indexOf("black card") >= 0) || (str
 							.indexOf("yellow card") >= 0))
 							&& (str.indexOf(tOwnTeam.getText().toString()) >= 0)) {
-						if(cards==0){
+						if (cards == 0) {
 							sb.append("\nCARDS:");
-							cards=1;
+							cards = 1;
 						}
 						sb.append("\n" + str);
 					}
 					i++;
 				} while (c1.moveToNext());
 				c1.moveToFirst();
-				do {				
-					str = c1
-							.getString(c1
-									.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				do {
+					str = c1.getString(c1
+							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
 					if (((str.indexOf("red card") >= 0)
 							|| (str.indexOf("black card") >= 0) || (str
 							.indexOf("yellow card") >= 0))
 							&& (str.indexOf(tOppTeam.getText().toString()) >= 0)) {
-						if(cards==0){
+						if (cards == 0) {
 							sb.append("\nCARDS:");
-							cards=1;
+							cards = 1;
 						}
 						sb.append("\n" + str);
 					}
 					i++;
 				} while (c1.moveToNext());
-				
+
 				c1.close();
 			}
 
@@ -971,6 +971,51 @@ public class ReviewFragment extends Fragment {
 				} while (c2.moveToNext());
 			}
 			c2.close();
+
+			try {
+				root = new File(Environment.getExternalStorageDirectory(),
+						"GAA_APP_Export");
+				if (!root.exists()) {
+					root.mkdirs();
+				}
+				outfile = new File(root, "GAAScoresStatsMatchReview.txt");
+				FileWriter writer = new FileWriter(outfile);
+				String nl = System.getProperty("line.separator");
+				writer.append("GAA Scores Stats App Match Data," + nl);
+				writer.append(sb.toString());
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				Log.e("share file write failed", e.getMessage(), e);
+				Toast.makeText(getActivity(),
+						"Error: unable to write to share file\n",
+						Toast.LENGTH_LONG).show();
+			}
+			
+			Bitmap bitmap = createBitmap();
+
+			File mPath = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+			OutputStream fout = null;
+			File imageFile = new File(mPath, "GAAScoresStatsTweet.jpg");
+			Uri uri = Uri.fromFile(imageFile);
+
+			try {
+				mPath.mkdirs();
+				fout = new FileOutputStream(imageFile);
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+				fout.flush();
+				fout.close();
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent
 					.putExtra(Intent.EXTRA_SUBJECT, "match report "
@@ -978,130 +1023,146 @@ public class ReviewFragment extends Fragment {
 									.getLocText());
 			emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 			emailIntent.setType("text/plain");
+			String[] emailAttachments = new String[] { Environment
+					.getExternalStorageDirectory()
+					+ "/GAA_APP_Export/"
+					+ "GAAScoresStatsMatchReview.txt" };
+			// put email attachments into an ArrayList
+			ArrayList<Uri> uris = new ArrayList<Uri>();
+			for (String file : emailAttachments) {
+				File uriFiles = new File(file);
+				Uri u = Uri.fromFile(uriFiles);
+				uris.add(u);
+			}
+			uris.add(uri);
+			emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 		}
 	};
 
+	public Bitmap createBitmap() {
+		// Create Bitmap to display team selection
+		Bitmap bitmap = Bitmap.createBitmap(700, 440, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		canvas.drawColor(Color.rgb(204, 255, 204));
+		Paint paint = new Paint();
+		paint.setColor(Color.rgb(255, 255, 219));
+		canvas.drawRect(350, 0, 700, 440, paint);
+		paint.setColor(Color.BLACK);
+		canvas.drawLine(350, 0, 350, 380, paint);
+		paint.setAntiAlias(true);
+		paint.setTextAlign(Align.CENTER);
+		paint.setTextSize(22);
+		// Write teams
+		// sb.append("player  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
+
+		canvas.drawText(tOwnTeam.getText().toString(), 175, 25, paint);
+		canvas.drawText(homeGoals + "-" + homePoints + " (" + homeTotal + ")",
+				175, 50, paint);
+		paint.setTextAlign(Align.LEFT);
+		paint.setColor(Color.RED);
+		canvas.drawText("No.", 200, 75, paint);
+		paint.setTextSize(18);
+		canvas.drawText("from play", 260, 75, paint);
+		paint.setTextSize(22);
+		paint.setColor(Color.BLACK);
+		canvas.drawText("Goals", 5, 100, paint);
+		canvas.drawText(homeGoals + " ", 210, 100, paint);
+		canvas.drawText(shotGoalsPlayHome + " ", 285, 100, paint);
+
+		canvas.drawText("Points", 5, 125, paint);
+		canvas.drawText(homePoints + " ", 210, 125, paint);
+		canvas.drawText(shotPointsPlayHome + " ", 285, 125, paint);
+
+		canvas.drawText("Wides", 5, 150, paint);
+		canvas.drawText(shotWidesHome + " ", 210, 150, paint);
+
+		canvas.drawText("Out for 45/65", 5, 175, paint);
+		canvas.drawText(shot45Home + " ", 210, 175, paint);
+
+		canvas.drawText("Saved/Short", 5, 200, paint);
+		canvas.drawText(shotSavedHome + " ", 210, 200, paint);
+
+		canvas.drawText("Off Posts", 5, 225, paint);
+		canvas.drawText(shotPostsHome + " ", 210, 225, paint);
+
+		canvas.drawText("Frees Conceded", 5, 250, paint);
+		canvas.drawText(freeConcededHome + " ", 210, 250, paint);
+
+		canvas.drawText("Total Puckouts", 5, 275, paint);
+		canvas.drawText(totPHome + " ", 210, 275, paint);
+
+		canvas.drawText("Own Puckout Won", 5, 300, paint);
+		canvas.drawText(puckWonCleanHome + " ", 210, 300, paint);
+
+		canvas.drawText("Own Puckout Lost", 5, 325, paint);
+		canvas.drawText(puckLostCleanHome + " ", 210, 325, paint);
+
+		canvas.drawText(cardHome + subHome, 5, 350, paint);
+
+		canvas.drawText(tOppTeam.getText().toString(), 525, 25, paint);
+		canvas.drawText(oppGoals + "-" + oppPoints + " (" + oppTotal + ")",
+				525, 50, paint);
+		paint.setTextAlign(Align.LEFT);
+		paint.setColor(Color.RED);
+		canvas.drawText("No.", 550, 75, paint);
+		paint.setTextSize(18);
+		canvas.drawText("from play", 620, 75, paint);
+		paint.setTextSize(22);
+		paint.setColor(Color.BLACK);
+		canvas.drawText("Goals", 355, 100, paint);
+		canvas.drawText(oppGoals + " ", 560, 100, paint);
+		canvas.drawText(shotGoalsPlayOpp + " ", 645, 100, paint);
+
+		canvas.drawText("Points", 355, 125, paint);
+		canvas.drawText(oppPoints + " ", 560, 125, paint);
+		canvas.drawText(shotPointsPlayOpp + " ", 645, 125, paint);
+
+		canvas.drawText("Wides", 355, 150, paint);
+		canvas.drawText(shotWidesOpp + " ", 560, 150, paint);
+
+		canvas.drawText("O" + "ut for 45/65", 355, 175, paint);
+		canvas.drawText(shot45Opp + " ", 560, 175, paint);
+
+		canvas.drawText("Saved/Short", 355, 200, paint);
+		canvas.drawText(shotSavedOpp + " ", 560, 200, paint);
+
+		canvas.drawText("Off Posts", 355, 225, paint);
+		canvas.drawText(shotPostsOpp + " ", 560, 225, paint);
+
+		canvas.drawText("Frees Conceded", 355, 250, paint);
+		canvas.drawText(freeConcededOpp + " ", 560, 250, paint);
+
+		canvas.drawText("Total Puckouts", 355, 275, paint);
+		canvas.drawText(totPOpp + " ", 560, 275, paint);
+
+		canvas.drawText("Own Puckout Won", 355, 300, paint);
+		canvas.drawText(puckWonCleanOpp + " ", 560, 300, paint);
+
+		canvas.drawText("Own Puckout Lost", 355, 325, paint);
+		canvas.drawText(puckLostCleanOpp + " ", 560, 325, paint);
+
+		canvas.drawText(cardOpp + subOpp, 355, 350, paint);
+
+		paint.setColor(Color.GRAY);
+		paint.setTextSize(16);
+		paint.setTextAlign(Align.CENTER);
+		canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 405, paint);
+		canvas.drawText("Available free from Google Play Store", 350, 425,
+				paint);
+		return bitmap;
+	}
+
 	OnClickListener tweetAllListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-
-			// Create Bitmap to display team selection
-			Bitmap bitmap = Bitmap.createBitmap(700, 440,
-					Bitmap.Config.ARGB_8888);
-			Canvas canvas = new Canvas(bitmap);
-			canvas.drawColor(Color.rgb(204, 255, 204));
-			Paint paint = new Paint();
-			paint.setColor(Color.rgb(255, 255, 219));
-			canvas.drawRect(350, 0, 700, 440, paint);
-			paint.setColor(Color.BLACK);
-			canvas.drawLine(350, 0, 350, 380, paint);
-			paint.setAntiAlias(true);
-			paint.setTextAlign(Align.CENTER);
-			paint.setTextSize(22);
-			// Write teams
-			// sb.append("player  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
-
-			canvas.drawText(tOwnTeam.getText().toString(), 175, 25, paint);
-			canvas.drawText(homeGoals + "-" + homePoints + " (" + homeTotal
-					+ ")", 175, 50, paint);
-			paint.setTextAlign(Align.LEFT);
-			paint.setColor(Color.RED);
-			canvas.drawText("No.", 200, 75, paint);
-			paint.setTextSize(18);
-			canvas.drawText("from play", 260, 75, paint);
-			paint.setTextSize(22);
-			paint.setColor(Color.BLACK);
-			canvas.drawText("Goals", 5, 100, paint);
-			canvas.drawText(homeGoals + " ", 210, 100, paint);
-			canvas.drawText(shotGoalsPlayHome + " ", 285, 100, paint);
-
-			canvas.drawText("Points", 5, 125, paint);
-			canvas.drawText(homePoints + " ", 210, 125, paint);
-			canvas.drawText(shotPointsPlayHome + " ", 285, 125, paint);
-
-			canvas.drawText("Wides", 5, 150, paint);
-			canvas.drawText(shotWidesHome + " ", 210, 150, paint);
-
-			canvas.drawText("Out for 45/65", 5, 175, paint);
-			canvas.drawText(shot45Home + " ", 210, 175, paint);
-
-			canvas.drawText("Saved/Short", 5, 200, paint);
-			canvas.drawText(shotSavedHome + " ", 210, 200, paint);
-
-			canvas.drawText("Off Posts", 5, 225, paint);
-			canvas.drawText(shotPostsHome + " ", 210, 225, paint);
-
-			canvas.drawText("Frees Conceded", 5, 250, paint);
-			canvas.drawText(freeConcededHome + " ", 210, 250, paint);
-
-			canvas.drawText("Total Puckouts", 5, 275, paint);
-			canvas.drawText(totPHome + " ", 210, 275, paint);
-
-			canvas.drawText("Own Puckout Won", 5, 300, paint);
-			canvas.drawText(puckWonCleanHome + " ", 210, 300, paint);
-
-			canvas.drawText("Own Puckout Lost", 5, 325, paint);
-			canvas.drawText(puckLostCleanHome + " ", 210, 325, paint);
-
-			canvas.drawText(cardHome + subHome, 5, 350, paint);
-
-			canvas.drawText(tOppTeam.getText().toString(), 525, 25, paint);
-			canvas.drawText(oppGoals + "-" + oppPoints + " (" + oppTotal + ")",
-					525, 50, paint);
-			paint.setTextAlign(Align.LEFT);
-			paint.setColor(Color.RED);
-			canvas.drawText("No.", 550, 75, paint);
-			paint.setTextSize(18);
-			canvas.drawText("from play", 620, 75, paint);
-			paint.setTextSize(22);
-			paint.setColor(Color.BLACK);
-			canvas.drawText("Goals", 355, 100, paint);
-			canvas.drawText(oppGoals + " ", 560, 100, paint);
-			canvas.drawText(shotGoalsPlayOpp + " ", 645, 100, paint);
-
-			canvas.drawText("Points", 355, 125, paint);
-			canvas.drawText(oppPoints + " ", 560, 125, paint);
-			canvas.drawText(shotPointsPlayOpp + " ", 645, 125, paint);
-
-			canvas.drawText("Wides", 355, 150, paint);
-			canvas.drawText(shotWidesOpp + " ", 560, 150, paint);
-
-			canvas.drawText("O" + "ut for 45/65", 355, 175, paint);
-			canvas.drawText(shot45Opp + " ", 560, 175, paint);
-
-			canvas.drawText("Saved/Short", 355, 200, paint);
-			canvas.drawText(shotSavedOpp + " ", 560, 200, paint);
-
-			canvas.drawText("Off Posts", 355, 225, paint);
-			canvas.drawText(shotPostsOpp + " ", 560, 225, paint);
-
-			canvas.drawText("Frees Conceded", 355, 250, paint);
-			canvas.drawText(freeConcededOpp + " ", 560, 250, paint);
-
-			canvas.drawText("Total Puckouts", 355, 275, paint);
-			canvas.drawText(totPOpp + " ", 560, 275, paint);
-
-			canvas.drawText("Own Puckout Won", 355, 300, paint);
-			canvas.drawText(puckWonCleanOpp + " ", 560, 300, paint);
-
-			canvas.drawText("Own Puckout Lost", 355, 325, paint);
-			canvas.drawText(puckLostCleanOpp + " ", 560, 325, paint);
-
-			canvas.drawText(cardOpp + subOpp, 355, 350, paint);
-
-			paint.setColor(Color.GRAY);
-			paint.setTextSize(16);
-			paint.setTextAlign(Align.CENTER);
-			canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 405,
-					paint);
-			canvas.drawText("Available free from Google Play Store", 350, 425,
-					paint);
+			
+			Bitmap bitmap = createBitmap();
 
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			OutputStream fout = null;
-			File imageFile = new File(mPath, "statsTweet.jpg");
+			File imageFile = new File(mPath, "GAAScoresStatsTweet.jpg");
 			Uri uri = Uri.fromFile(imageFile);
 
 			try {
