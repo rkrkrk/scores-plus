@@ -80,18 +80,26 @@ public class ReviewFragment extends Fragment {
 	private TextView tPuckLostCleanOpp;
 	private TextView tOwnTeam, tOppTeam;
 	private TextView tCardHome, tCardOpp;
+	private TextView tShotPointsPlayWidesHome, tShotPointsPlayWidesOpp;
+	private TextView tShotPointsPlay45Home, tShotPointsPlay45Opp;
+	private TextView tShotPointsPlaySavedHome, tShotPointsPlaySavedOpp;
+	private TextView tShotPointsPlayPostsHome, tShotPointsPlayPostsOpp;
 	private Button bSendAll, bTweetAll;
 	private int red = 0, yellow = 0, sub = 0;
 
 	private int shotGoalsHome = 0, shotPointsHome = 0;
 	private int shotGoalsPlayHome = 0, shotPointsPlayHome = 0;
 	private int shotGoalsPlayOpp = 0, shotPointsPlayOpp = 0;
+	private int shotWidesPlayHome = 0, shotWidesPlayOpp = 0;
+	private int shot45PlayHome = 0, shot45PlayOpp = 0;
+	private int shotSavedPlayHome = 0, shotSavedPlayOpp = 0;
+	private int shotPostsPlayHome = 0, shotPostsPlayOpp = 0;
 	private int shotWidesHome = 0, shotSavedHome = 0, shotPostsHome = 0;
 	private int freeConcededHome = 0;
 	private int freeConcededOpp = 0;
 	private int shot45Home = 0, shot45Opp = 0;
 	private int totPHome = 0, totPOpp = 0;
-	int puckWonCleanHome = 0, puckWonCleanHomePerCent = 0;
+	private int puckWonCleanHome = 0, puckWonCleanHomePerCent = 0;
 	int puckLostCleanHome = 0, puckLostCleanHomePerCent = 0;
 	int puckWonBreakHome = 0, puckWonBreakHomePerCent = 0;
 	int puckLostBreakHome = 0, puckLostBreakHomePerCent = 0;
@@ -147,26 +155,35 @@ public class ReviewFragment extends Fragment {
 		tOppPoints = (TextView) v.findViewById(R.id.tVOppPoints);
 		tOppTotal = (TextView) v.findViewById(R.id.tVOppTotal);
 
-		tShotGoalsHome = (TextView) v.findViewById(R.id.tVwShotsGoalsNo);
-		tShotPointsHome = (TextView) v.findViewById(R.id.tVwShotsPointsNo);
-		tShotWidesHome = (TextView) v.findViewById(R.id.tVwShotsWidesNo);
+		tShotGoalsHome = (TextView) v.findViewById(R.id.tVwShotsGoalNo);
+		tShotPointsHome = (TextView) v.findViewById(R.id.tVwShotsPointNo);
+		tShotWidesHome = (TextView) v.findViewById(R.id.tVwShotsWideNo);
+		tShot45Home = (TextView) v.findViewById(R.id.tVwHome45);
 		tShotSavedHome = (TextView) v.findViewById(R.id.tVwShotsSavedNo);
 		tShotPostsHome = (TextView) v.findViewById(R.id.tVwShotsPostsNo);
 
-		tShotGoalsPlayHome = (TextView) v.findViewById(R.id.tVGoalsPlay);
-		tShotPointsPlayHome = (TextView) v.findViewById(R.id.tVPointsPlay);
+		tShotGoalsPlayHome = (TextView) v.findViewById(R.id.tVGoalsHomePlay);
+		tShotPointsPlayHome = (TextView) v.findViewById(R.id.tVPointsHomePlay);
+		tShotPointsPlayWidesHome = (TextView) v.findViewById(R.id.tVWidesHomePlay);
+		tShotPointsPlay45Home = (TextView) v.findViewById(R.id.tV45HomePlay);
+		tShotPointsPlaySavedHome = (TextView) v.findViewById(R.id.tVSavedHomePlay);
+		tShotPointsPlayPostsHome = (TextView) v.findViewById(R.id.tVPostsHomePlay);
+
 		tShotGoalsPlayOpp = (TextView) v.findViewById(R.id.tVGoalsOppPlay);
 		tShotPointsPlayOpp = (TextView) v.findViewById(R.id.tVPointsOppPlay);
+		tShotPointsPlayWidesOpp = (TextView) v.findViewById(R.id.tVWidesOppPlay);
+		tShotPointsPlay45Opp = (TextView) v.findViewById(R.id.tV45OppPlay);
+		tShotPointsPlaySavedOpp = (TextView) v.findViewById(R.id.tVSavedOppPlay);
+		tShotPointsPlayPostsOpp = (TextView) v.findViewById(R.id.tVPostsOppPlay);
 
 		tShotGoalsOpp = (TextView) v.findViewById(R.id.tVwShotsGoalsOppNo);
 		tShotPointsOpp = (TextView) v.findViewById(R.id.tVwShotsPointsOppNo);
 		tShotWidesOpp = (TextView) v.findViewById(R.id.tVwShotsWidesOppNo);
+		tShot45Opp = (TextView) v.findViewById(R.id.tVwOpp45);
 		tShotSavedOpp = (TextView) v.findViewById(R.id.tVwShotsSavedOppNo);
 		tShotPostsOpp = (TextView) v.findViewById(R.id.tVwShotsPostsOppNo);
 
-		tShot45Home = (TextView) v.findViewById(R.id.tVwHome45);
 		tTotPuckHome = (TextView) v.findViewById(R.id.tVwHomeTotPuck);
-		tShot45Opp = (TextView) v.findViewById(R.id.tVwOpp45);
 		tTotPuckOpp = (TextView) v.findViewById(R.id.tVwOppTotPuck);
 
 		tCardHome = (TextView) v.findViewById(R.id.cardsHome);
@@ -201,36 +218,54 @@ public class ReviewFragment extends Fragment {
 		shotGoalsHome = sharedPref.getInt("SHOTGOALSHOME", 0);
 		shotPointsHome = sharedPref.getInt("SHOTPOINTSHOME", 0);
 		shotWidesHome = sharedPref.getInt("SHOTWIDESHOME", 0);
+		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
 		shotSavedHome = sharedPref.getInt("SHOTSAVEDHOME", 0);
 		shotPostsHome = sharedPref.getInt("SHOTPOSTSHOME", 0);
 		shotGoalsPlayHome = sharedPref.getInt("SHOTGOALSPLAYHOME", 0);
 		shotPointsPlayHome = sharedPref.getInt("SHOTPOINTSPLAYHOME", 0);
-		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
+		shotWidesPlayHome = sharedPref.getInt("SHOTPOINTSWIDESHOME", 0);
+		shot45PlayHome = sharedPref.getInt("SHOTPOINTS45HOME", 0);
+		shotSavedPlayHome = sharedPref.getInt("SHOTPOINTSSAVEDHOME", 0);
+		shotPostsPlayHome = sharedPref.getInt("SHOTPOINTSPOSTSHOME", 0);
 		addtShotGoalsHome(0);
-		addtShotGoalsPlayHome(0);
 		addtShotPointsHome(0);
 		addtShotPointsPlayHome(0);
 		addtShotWidesHome(0);
 		addtShotSavedHome(0);
 		addtShotPostsHome(0);
 		addtShot45Home(0);
+		addtShotGoalsPlayHome(0);
+		addtShotPointsPlayHome(0);
+		addtShotWidesPlayHome(0);
+		addtShot45PlayHome(0);
+		addtShotSavedPlayHome(0);
+		addtShotPostsPlayHome(0);
 
 		shotGoalsOpp = sharedPref.getInt("SHOTGOALSOPP", 0);
 		shotPointsOpp = sharedPref.getInt("SHOTPOINTSOPP", 0);
 		shotWidesOpp = sharedPref.getInt("SHOTWIDESOPP", 0);
 		shotSavedOpp = sharedPref.getInt("SHOTSAVEDOPP", 0);
 		shotPostsOpp = sharedPref.getInt("SHOTPOSTSOPP", 0);
+		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
 		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
 		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
-		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
+		shotWidesPlayOpp = sharedPref.getInt("SHOTPOINTSWIDESOPP", 0);
+		Log.e("shotWidesPlayOpp"," "+shotWidesPlayOpp);
+		shot45PlayOpp = sharedPref.getInt("SHOTPOINTS45OPP", 0);
+		shotSavedPlayOpp = sharedPref.getInt("SHOTPOINTSSAVEDOPP", 0);
+		shotPostsPlayOpp = sharedPref.getInt("SHOTPOINTSPOSTSOPP", 0);
 		addtShotGoalsOpp(0);
-		addtShotGoalsPlayOpp(0);
 		addtShotPointsOpp(0);
-		addtShotPointsPlayOpp(0);
 		addtShotWidesOpp(0);
 		addtShotSavedOpp(0);
 		addtShotPostsOpp(0);
 		addtShot45Opp(0);
+		addtShotGoalsPlayOpp(0);
+		addtShotPointsPlayOpp(0);
+		addtShotWidesPlayOpp(0);
+		addtShot45PlayOpp(0);
+		addtShotSavedPlayOpp(0);
+		addtShotPostsPlayOpp(0);
 
 		freeConcededHome = sharedPref.getInt("FREEWONHOME", 0);
 		freeConcededOpp = sharedPref.getInt("FREEWONOPP", 0);
@@ -313,19 +348,9 @@ public class ReviewFragment extends Fragment {
 		tShotGoalsHome.setText(String.valueOf(shotGoalsHome));
 	}
 
-	public void addtShotGoalsPlayHome(int i) {
-		shotGoalsPlayHome = shotGoalsPlayHome + i;
-		tShotGoalsPlayHome.setText(String.valueOf(shotGoalsPlayHome));
-	}
-
 	public void addtShotPointsHome(int i) {
 		shotPointsHome = shotPointsHome + i;
 		tShotPointsHome.setText(String.valueOf(shotPointsHome));
-	}
-
-	public void addtShotPointsPlayHome(int i) {
-		shotPointsPlayHome = shotPointsPlayHome + i;
-		tShotPointsPlayHome.setText(String.valueOf(shotPointsPlayHome));
 	}
 
 	public void addtShotWidesHome(int i) {
@@ -335,6 +360,8 @@ public class ReviewFragment extends Fragment {
 
 	public void addtShotSavedHome(int i) {
 		shotSavedHome = shotSavedHome + i;
+		Log.e("shotSavedHome"," "+shotSavedHome);
+
 		tShotSavedHome.setText(String.valueOf(shotSavedHome));
 	}
 
@@ -347,6 +374,34 @@ public class ReviewFragment extends Fragment {
 		shot45Home = shot45Home + i;
 		tShot45Home.setText(String.valueOf(shot45Home));
 	}
+	
+	public void addtShotGoalsPlayHome(int i) {
+		shotGoalsPlayHome = shotGoalsPlayHome + i;
+		tShotGoalsPlayHome.setText(String.valueOf(shotGoalsPlayHome));
+	}
+	
+	public void addtShotPointsPlayHome(int i) {
+		shotPointsPlayHome = shotPointsPlayHome + i;
+		tShotPointsPlayHome.setText(String.valueOf(shotPointsPlayHome));
+	}
+
+	public void addtShotWidesPlayHome(int i) {
+		shotWidesPlayHome = shotWidesPlayHome + i;
+		tShotPointsPlayWidesHome.setText(String.valueOf(shotWidesPlayHome));
+	}
+	public void addtShot45PlayHome(int i) {
+		shot45PlayHome = shot45PlayHome + i;
+		tShotPointsPlay45Home.setText(String.valueOf(shot45PlayHome));
+	}
+	public void addtShotSavedPlayHome(int i) {
+		shotSavedPlayHome = shotSavedPlayHome + i;
+		tShotPointsPlaySavedHome.setText(String.valueOf(shotSavedPlayHome));
+	}
+	public void addtShotPostsPlayHome(int i) {
+		shotPostsPlayHome = shotPostsPlayHome + i;
+		tShotPointsPlayPostsHome.setText(String.valueOf(shotPostsPlayHome));
+	}
+	
 
 	// *******************Opp Shots********************///
 	// increment counters for opposition team shots
@@ -389,6 +444,24 @@ public class ReviewFragment extends Fragment {
 		shot45Opp = shot45Opp + i;
 		tShot45Opp.setText(String.valueOf(shot45Opp));
 	}
+	
+	public void addtShotWidesPlayOpp(int i) {
+		shotWidesPlayOpp = shotWidesPlayOpp + i;
+		tShotPointsPlayWidesOpp.setText(String.valueOf(shotWidesPlayOpp));
+	}
+	public void addtShot45PlayOpp(int i) {
+		shot45PlayOpp = shot45PlayOpp + i;
+		tShotPointsPlay45Opp.setText(String.valueOf(shot45PlayOpp));
+	}
+	public void addtShotSavedPlayOpp(int i) {
+		shotSavedPlayOpp = shotSavedPlayOpp + i;
+		tShotPointsPlaySavedOpp.setText(String.valueOf(shotSavedPlayOpp));
+	}
+	public void addtShotPostsPlayOpp(int i) {
+		shotPostsPlayOpp = shotPostsPlayOpp + i;
+		tShotPointsPlayPostsOpp.setText(String.valueOf(shotPostsPlayOpp));
+	}
+
 
 	// ////////////////Update Free Section////////////////////////////
 	// increment counters for frees
@@ -477,13 +550,22 @@ public class ReviewFragment extends Fragment {
 		tShotSavedHome.setText("0");
 		shotPostsHome = 0;
 		tShotPostsHome.setText("0");
+		shot45Home = 0;
+		tShot45Home.setText("0");
 		shotGoalsPlayHome = 0;
 		tShotGoalsPlayHome.setText("0");
 		shotPointsPlayHome = 0;
 		tShotPointsPlayHome.setText("0");
-		shot45Home = 0;
-		tShot45Home.setText("0");
-
+		shotWidesPlayHome = 0;
+		tShotPointsPlayWidesHome.setText("0");
+		shot45PlayHome = 0;
+		tShotPointsPlay45Home.setText("0");
+		shotSavedPlayHome = 0;
+		tShotPointsPlaySavedHome.setText("0");
+		shotPostsPlayHome = 0;
+		tShotPointsPlayPostsHome.setText("0");
+		
+		
 		shotGoalsOpp = 0;
 		tShotGoalsOpp.setText("0");
 		shotPointsOpp = 0;
@@ -494,12 +576,21 @@ public class ReviewFragment extends Fragment {
 		tShotSavedOpp.setText("0");
 		shotPostsOpp = 0;
 		tShotPostsOpp.setText("0");
+		shot45Opp = 0;
+		tShot45Opp.setText("0");
 		shotGoalsPlayOpp = 0;
 		tShotGoalsPlayOpp.setText("0");
 		shotPointsPlayOpp = 0;
 		tShotPointsPlayOpp.setText("0");
-		shot45Opp = 0;
-		tShot45Opp.setText("0");
+		shotWidesPlayOpp = 0;
+		tShotPointsPlayWidesOpp.setText("0");
+		shot45PlayOpp = 0;
+		tShotPointsPlay45Opp.setText("0");
+		shotSavedPlayOpp = 0;
+		tShotPointsPlaySavedOpp.setText("0");
+		shotPostsPlayOpp = 0;
+		tShotPointsPlayPostsOpp.setText("0");
+
 
 		freeConcededHome = 0;
 		tFreeConcededHome.setText("0");
@@ -557,6 +648,15 @@ public class ReviewFragment extends Fragment {
 		editor.putInt("SHOTPOSTSOPP", shotPostsOpp);
 		editor.putInt("SHOTGOALSPLAYOPP", shotGoalsPlayOpp);
 		editor.putInt("SHOTPOINTSPLAYOPP", shotPointsPlayOpp);
+		
+		editor.putInt("SHOTPOINTSWIDESHOME", shotWidesPlayHome);
+		editor.putInt("SHOTPOINTS45HOME", shot45PlayHome);
+		editor.putInt("SHOTPOINTSSAVEDHOME", shotSavedPlayHome);
+		editor.putInt("SHOTPOINTSPOSTSHOME", shotPostsPlayHome);
+		editor.putInt("SHOTPOINTSWIDESOPP", shotWidesPlayOpp);
+		editor.putInt("SHOTPOINTS45OPP", shot45PlayOpp);
+		editor.putInt("SHOTPOINTSSAVEDOPP", shotSavedPlayOpp);
+		editor.putInt("SHOTPOINTSPOSTSOPP", shotPostsPlayOpp);
 
 		editor.putInt("FREEWONHOME", freeConcededHome);
 		editor.putInt("FREEWONOPP", freeConcededOpp);

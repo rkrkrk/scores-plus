@@ -974,6 +974,7 @@ public class ScoresFragment extends Fragment {
 	public void updateStatsDatabase(int button, int count) {
 		switch (button) {
 		case R.id.buttonShotHome:
+			Log.e("stats",stats1);
 			team = tOurTeam.getText().toString();
 			// for home team commit
 			// WRITE TO REVIEW PAGE///////////////////////////////////
@@ -1049,18 +1050,46 @@ public class ScoresFragment extends Fragment {
 						.addtShotWidesHome(count);
 				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(
 						count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from 45/65"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotWidesPlayHome(count);
+				}
 			} else if (stats1.equals("out for 45/65")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShot45Home(
 						count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from 45/65"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShot45PlayHome(count);
+				}
 			} else if (stats1.equals("saved/short")) {
-				// increment counter in review page
+				// increment counter in review page  
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotSavedHome(count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from 45/65"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotSavedPlayHome(count);
+				}
 			} else if (stats1.equals("off posts")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotPostsHome(count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from 45/65"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotPostsPlayHome(count);
+				}
 			} else if (stats1.equals("free/pen conceded")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
@@ -1147,18 +1176,46 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotWidesOpp(
 						count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))
+						&& (!stats2.equals("from 45/65"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotWidesPlayOpp(count);
+				}
 			} else if (stats1.equals("out for 45/65")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShot45Opp(
 						count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))
+						&& (!stats2.equals("from 45/65"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShot45PlayOpp(count);
+				}
 			} else if (stats1.equals("saved/short")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotSavedOpp(
 						count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))
+						&& (!stats2.equals("from 45/65"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotSavedPlayOpp(count);
+				}
 			} else if (stats1.equals("off posts")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview().addtShotPostsOpp(
 						count);
+				if ((!stats2.equals("from free"))
+						&& (!stats2.equals("from penalty"))
+						&& (!stats2.equals("from sideline"))
+						&& (!stats2.equals("from 45/65"))) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotPostsPlayOpp(count);
+				}
 			} else if (stats1.equals("free/pen conceded")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
@@ -1860,12 +1917,26 @@ public class ScoresFragment extends Fragment {
 						.addtShotWidesHome(-1);
 				// decrement puckout total
 				((Startup) getActivity()).getFragmentReview().addPuckTotOpp(-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotWidesPlayHome(-1);
+				}
 			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview().addtShotWidesOpp(
 						-1);
 				// decrement puckout total
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckTotHome(-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotWidesPlayOpp(-1);
+				}
 			}
 		}
 		// check for off posts
@@ -1874,9 +1945,23 @@ public class ScoresFragment extends Fragment {
 			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotPostsHome(-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotPostsPlayHome(-1);
+				}				
 			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview().addtShotPostsOpp(
 						-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotPostsPlayOpp(-1);
+				}
 			}
 		}
 		// check for out for 45
@@ -1885,8 +1970,22 @@ public class ScoresFragment extends Fragment {
 			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview()
 						.addtShot45Home(-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShot45PlayHome(-1);
+				}
 			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview().addtShot45Opp(-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShot45PlayOpp(-1);
+				}
 			}
 		}
 		// check for saved
@@ -1895,9 +1994,23 @@ public class ScoresFragment extends Fragment {
 			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotSavedHome(-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotSavedPlayHome(-1);
+				}
 			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview().addtShotSavedOpp(
 						-1);
+				if ((strTemp.indexOf("from free") < 0)
+						&& (strTemp.indexOf("from penalty") < 0)
+						&& (strTemp.indexOf("from 45/65") < 0)
+						&& (strTemp.indexOf("from sideline") < 0)) {
+					((Startup) getActivity()).getFragmentReview()
+							.addtShotSavedPlayOpp(-1);
+				}
 			}
 		} else if (strTemp.indexOf("puckout won") >= 0) {
 			// check which team

@@ -137,7 +137,7 @@
                         android:textSize="10sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsGoalsNo"
+                        android:id="@+id/tVwShotsGoalNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -146,7 +146,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tVGoalsPlay"
+                        android:id="@+id/tVGoalsHomePlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -170,7 +170,7 @@
                         android:textSize="10sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsPointsNo"
+                        android:id="@+id/tVwShotsPointNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -179,7 +179,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tVPointsPlay"
+                        android:id="@+id/tVPointsHomePlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -203,7 +203,7 @@
                         android:textSize="10sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsWidesNo"
+                        android:id="@+id/tVwShotsWideNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -212,7 +212,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsWidesP"
+                        android:id="@+id/tVWidesHomePlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -244,39 +244,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/TextView08"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:textSize="12sp" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/TableRow01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#bbdddd" >
-
-                    <TextView
-                        android:id="@+id/TextView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="Saved/Short"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/tVwShotsSavedNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tVwShotsSavedP"
+                        android:id="@+id/tV45HomePlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -288,7 +256,7 @@
                     android:id="@+id/TableRow55"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc" >
+                    android:background="#bbdddd" >
 
                     <TextView
                         android:id="@+id/TextView77"
@@ -308,7 +276,39 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsPostsP"
+                        android:id="@+id/tVPostsHomePlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TableRow01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc" >
+
+                    <TextView
+                        android:id="@+id/TextView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Saved/Short"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsSavedNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tVSavedHomePlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -509,7 +509,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@+id/textViewRevMid"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="OPPOSITION"
                 android:textColor="#FF0000"
@@ -707,12 +706,11 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsWidesOppP"
+                        android:id="@+id/tVWidesOppPlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical|center_horizontal"
-                        android:textColor="#bbdddd"
                         android:textSize="12sp" />
                 </TableRow>
 
@@ -740,45 +738,11 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/TextView16"
+                        android:id="@+id/tV45OppPlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical|center_horizontal"
-                        android:textColor="#cccccc"
-                        android:textSize="12sp" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/TableRow19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#bbdddd" >
-
-                    <TextView
-                        android:id="@+id/TextView57"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="Saved/Short"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/tVwShotsSavedOppNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tVwShotsSavedOppP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:textColor="#cccccc"
                         android:textSize="12sp" />
                 </TableRow>
 
@@ -786,7 +750,7 @@
                     android:id="@+id/TableRow48"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc" >
+                    android:background="#bbdddd" >
 
                     <TextView
                         android:id="@+id/tVwShotsPostsP3"
@@ -806,12 +770,43 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsPostsOppP"
+                        android:id="@+id/tVPostsOppPlay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical|center_horizontal"
-                        android:textColor="#bbdddd"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TableRow19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc" >
+
+                    <TextView
+                        android:id="@+id/TextView57"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Saved/Short"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsSavedOppNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tVSavedOppPlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
                         android:textSize="12sp" />
                 </TableRow>
 
