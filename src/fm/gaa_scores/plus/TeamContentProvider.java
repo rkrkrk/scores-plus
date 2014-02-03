@@ -84,6 +84,7 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String SCORESGOALSFREE = "goalsfree";
 	public static final String SCORESPOINTSFREE = "pointsfree";
 	public static final String SCORESMISS = "miss";
+	public static final String SCORESMISSFREE = "missfree";
 
 
 	@Override

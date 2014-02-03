@@ -22,7 +22,7 @@ public abstract class DatabaseSetup extends ContentProvider {
 	DatabaseHelper dbHelper;
 
 	public static final String DATABASE_NAME = "teams";
-	public static final int DATABASE_VERSION = 2;
+	public static final int DATABASE_VERSION = 3;
 
 	// setup table to store panel player details 
 	private static final String CREATE_TABLE_PANEL = "create table "
@@ -47,7 +47,8 @@ public abstract class DatabaseSetup extends ContentProvider {
 			+ TeamContentProvider.SCORESTOTAL + " integer, " 
 			+ TeamContentProvider.SCORESGOALSFREE + " integer, " 
 			+ TeamContentProvider.SCORESPOINTSFREE + " integer, " 
-			+ TeamContentProvider.SCORESMISS + " text);";
+			+ TeamContentProvider.SCORESMISS + " integer, " 
+			+ TeamContentProvider.SCORESMISSFREE + " integer);";
 
 	// inner class to create database
 	static class DatabaseHelper extends SQLiteOpenHelper {
@@ -71,6 +72,10 @@ public abstract class DatabaseSetup extends ContentProvider {
 			// upgrade to add panelname to DB
 			if ( (oldVersion==1) && (newVersion==2)) {
 				db.execSQL(CREATE_TABLE_SCORES);
+			}
+			if (oldVersion <= 2 && newVersion == 3) {
+				db.execSQL("ALTER TABLE " + TeamContentProvider.DATABASE_TABLE_SCORES
+						+ " ADD COLUMN " + TeamContentProvider.SCORESMISSFREE);
 			}
 		}
 	}

@@ -974,7 +974,6 @@ public class ScoresFragment extends Fragment {
 	public void updateStatsDatabase(int button, int count) {
 		switch (button) {
 		case R.id.buttonShotHome:
-			Log.e("stats",stats1);
 			team = tOurTeam.getText().toString();
 			// for home team commit
 			// WRITE TO REVIEW PAGE///////////////////////////////////
@@ -1069,7 +1068,7 @@ public class ScoresFragment extends Fragment {
 							.addtShot45PlayHome(count);
 				}
 			} else if (stats1.equals("saved/short")) {
-				// increment counter in review page  
+				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addtShotSavedHome(count);
 				if ((!stats2.equals("from free"))
@@ -1245,7 +1244,8 @@ public class ScoresFragment extends Fragment {
 			getActivity().getContentResolver().insert(
 					TeamContentProvider.CONTENT_URI_2, values);
 		}
-		if ((stats2.equals("red card")) || (stats2.equals("yellow card")) || (stats2.equals("black card")) ) {
+		if ((stats2.equals("red card")) || (stats2.equals("yellow card"))
+				|| (stats2.equals("black card"))) {
 			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		}
 		// add to scorers database
@@ -1265,7 +1265,7 @@ public class ScoresFragment extends Fragment {
 				|| (stats1.equals("off posts"))
 				|| (stats1.equals("out for 45/65"))) {
 			player = (player == "") ? "unknown" : player;
-			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, id;
+			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, missF = 0, id;
 			// deal with goal
 			if (stats1.equals("goal")) {
 				goal++;
@@ -1289,6 +1289,12 @@ public class ScoresFragment extends Fragment {
 					|| (stats1.equals("saved/short"))
 					|| (stats1.equals("out for 45/65"))) {
 				miss++;
+				if ((stats2.equals("from free"))
+						|| (stats2.equals("from penalty"))
+						|| (stats2.equals("from sideline"))
+						|| (stats2.equals("from 45/65"))) {
+					missF++;
+				}
 			}
 			// check if entry in database for player name and team
 			Uri allTitles = TeamContentProvider.CONTENT_URI_3;
@@ -1306,11 +1312,12 @@ public class ScoresFragment extends Fragment {
 				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 				values.put(TeamContentProvider.SCORESMISS, miss);
+				values.put(TeamContentProvider.SCORESMISSFREE, missF);
 				getActivity().getContentResolver().insert(
 						TeamContentProvider.CONTENT_URI_3, values);
 				((Startup) getActivity()).getFragmentScorers().fillData();
 			} else if (c1.getCount() == 1) {
-				// add new entry to database
+				// update entry to database
 				c1.moveToFirst();
 				goal = goal
 						+ c1.getInt(c1
@@ -1327,6 +1334,9 @@ public class ScoresFragment extends Fragment {
 				miss = miss
 						+ c1.getInt(c1
 								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS));
+				missF = missF
+						+ c1.getInt(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE));
 				id = c1.getInt(c1
 						.getColumnIndexOrThrow(TeamContentProvider.SCORESID));
 				ContentValues values = new ContentValues();
@@ -1338,6 +1348,7 @@ public class ScoresFragment extends Fragment {
 				values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 				values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 				values.put(TeamContentProvider.SCORESMISS, miss);
+				values.put(TeamContentProvider.SCORESMISSFREE, missF);
 				Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_3 + "/"
 						+ id);
 				getActivity().getContentResolver().update(uri, values, null,
@@ -1951,7 +1962,7 @@ public class ScoresFragment extends Fragment {
 						&& (strTemp.indexOf("from sideline") < 0)) {
 					((Startup) getActivity()).getFragmentReview()
 							.addtShotPostsPlayHome(-1);
-				}				
+				}
 			} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview().addtShotPostsOpp(
 						-1);
@@ -2120,7 +2131,7 @@ public class ScoresFragment extends Fragment {
 			c1.close();
 
 			// OK, have database ID, move on
-			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, id;
+			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, missF = 0, id;
 			// deal with goal
 			if (str.indexOf("goal") >= 0) {
 				goal--;
@@ -2145,6 +2156,12 @@ public class ScoresFragment extends Fragment {
 					|| (str.indexOf("out for 45/65") >= 0)
 					|| (str.indexOf("saved/short") >= 0)) {
 				miss--;
+				if ((str.indexOf("from free") >= 0)
+						|| (str.indexOf("from penalty") >= 0)
+						|| (str.indexOf("from sideline") >= 0)
+						|| (str.indexOf("from 45/65") >= 0)) {
+					missF--;
+				}
 			}
 
 			allTitles = TeamContentProvider.CONTENT_URI_3;
@@ -2167,6 +2184,9 @@ public class ScoresFragment extends Fragment {
 			miss = miss
 					+ c1.getInt(c1
 							.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS));
+			missF = missF
+					+ c1.getInt(c1
+							.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE));
 			id = c1.getInt(c1
 					.getColumnIndexOrThrow(TeamContentProvider.SCORESID));
 			c1.close();
@@ -2179,8 +2199,9 @@ public class ScoresFragment extends Fragment {
 			values.put(TeamContentProvider.SCORESGOALSFREE, goalF);
 			values.put(TeamContentProvider.SCORESPOINTSFREE, pointF);
 			values.put(TeamContentProvider.SCORESMISS, miss);
+			values.put(TeamContentProvider.SCORESMISSFREE, missF);
 			// if everything zero delete otherwise update
-			if (goal + point + goalF + pointF + miss == 0) {
+			if (goal + point + goalF + pointF + miss + missF == 0) {
 				Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_3 + "/"
 						+ id);
 				getActivity().getContentResolver().delete(uri, null, null);

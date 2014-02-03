@@ -53,10 +53,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:background="#aaa"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Total"
             android:textSize="11sp" />
 
@@ -65,15 +65,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:background="#bbdddd"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:paddingBottom="0dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:paddingTop="0dp"
-            android:text="frees/65s etc."
+            android:text="placed balls"
             android:textSize="8sp" />
 
         <TextView
@@ -81,14 +81,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1.5"
+            android:layout_weight="2"
             android:background="#ccc"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:text="wides/"
-            android:textSize="9sp" />
+            android:text="wides/misses"
+            android:textSize="8sp" />
 
     </LinearLayout>
 
@@ -136,7 +135,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="#aaa"
             android:gravity="top|center_horizontal"
@@ -149,7 +148,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="#bbdddd"
             android:gravity="center_horizontal"
@@ -164,7 +162,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="#bbdddd"
             android:gravity="center_horizontal"
@@ -177,15 +175,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1.5"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
             android:background="#ccc"
             android:gravity="top|center_horizontal"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:paddingTop="0dp"
-            android:text="misses*"
+            android:text="total"
             android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/head8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
+            android:background="#ccc"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="placed"
+            android:textSize="8sp" />
 
     </LinearLayout>
 
@@ -290,10 +302,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:background="#aaa"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Total"
             android:textSize="11sp" />
 
@@ -302,29 +314,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:background="#bbdddd"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:paddingBottom="0dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:paddingTop="0dp"
-            android:text="frees/65s etc."
+            android:text="placed balls"
             android:textSize="8sp" />
 
         <TextView
             android:id="@+id/TextView15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1.5"
+            android:layout_weight="2"
             android:background="#ccc"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:text="wides/"
-            android:textSize="9sp" />
+            android:text="wides/misses"
+            android:textSize="8sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -370,7 +381,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="#aaa"
             android:gravity="top|center_horizontal"
@@ -383,7 +394,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="#bbdddd"
             android:gravity="center_horizontal"
@@ -398,7 +408,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="#bbdddd"
             android:gravity="center_horizontal"
@@ -411,15 +421,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:background="#ccc"
             android:gravity="top|center_horizontal"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:paddingTop="0dp"
-            android:text="misses*"
+            android:text="total"
             android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/TextView12"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ccc"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="0dp"
+            android:text="placed"
+            android:textSize="8sp" />
+
     </LinearLayout>
 
     <LinearLayout

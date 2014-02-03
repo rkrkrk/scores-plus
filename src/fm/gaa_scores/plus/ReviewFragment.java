@@ -164,17 +164,23 @@ public class ReviewFragment extends Fragment {
 
 		tShotGoalsPlayHome = (TextView) v.findViewById(R.id.tVGoalsHomePlay);
 		tShotPointsPlayHome = (TextView) v.findViewById(R.id.tVPointsHomePlay);
-		tShotPointsPlayWidesHome = (TextView) v.findViewById(R.id.tVWidesHomePlay);
+		tShotPointsPlayWidesHome = (TextView) v
+				.findViewById(R.id.tVWidesHomePlay);
 		tShotPointsPlay45Home = (TextView) v.findViewById(R.id.tV45HomePlay);
-		tShotPointsPlaySavedHome = (TextView) v.findViewById(R.id.tVSavedHomePlay);
-		tShotPointsPlayPostsHome = (TextView) v.findViewById(R.id.tVPostsHomePlay);
+		tShotPointsPlaySavedHome = (TextView) v
+				.findViewById(R.id.tVSavedHomePlay);
+		tShotPointsPlayPostsHome = (TextView) v
+				.findViewById(R.id.tVPostsHomePlay);
 
 		tShotGoalsPlayOpp = (TextView) v.findViewById(R.id.tVGoalsOppPlay);
 		tShotPointsPlayOpp = (TextView) v.findViewById(R.id.tVPointsOppPlay);
-		tShotPointsPlayWidesOpp = (TextView) v.findViewById(R.id.tVWidesOppPlay);
+		tShotPointsPlayWidesOpp = (TextView) v
+				.findViewById(R.id.tVWidesOppPlay);
 		tShotPointsPlay45Opp = (TextView) v.findViewById(R.id.tV45OppPlay);
-		tShotPointsPlaySavedOpp = (TextView) v.findViewById(R.id.tVSavedOppPlay);
-		tShotPointsPlayPostsOpp = (TextView) v.findViewById(R.id.tVPostsOppPlay);
+		tShotPointsPlaySavedOpp = (TextView) v
+				.findViewById(R.id.tVSavedOppPlay);
+		tShotPointsPlayPostsOpp = (TextView) v
+				.findViewById(R.id.tVPostsOppPlay);
 
 		tShotGoalsOpp = (TextView) v.findViewById(R.id.tVwShotsGoalsOppNo);
 		tShotPointsOpp = (TextView) v.findViewById(R.id.tVwShotsPointsOppNo);
@@ -250,7 +256,7 @@ public class ReviewFragment extends Fragment {
 		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
 		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
 		shotWidesPlayOpp = sharedPref.getInt("SHOTPOINTSWIDESOPP", 0);
-		Log.e("shotWidesPlayOpp"," "+shotWidesPlayOpp);
+		Log.e("shotWidesPlayOpp", " " + shotWidesPlayOpp);
 		shot45PlayOpp = sharedPref.getInt("SHOTPOINTS45OPP", 0);
 		shotSavedPlayOpp = sharedPref.getInt("SHOTPOINTSSAVEDOPP", 0);
 		shotPostsPlayOpp = sharedPref.getInt("SHOTPOINTSPOSTSOPP", 0);
@@ -360,7 +366,7 @@ public class ReviewFragment extends Fragment {
 
 	public void addtShotSavedHome(int i) {
 		shotSavedHome = shotSavedHome + i;
-		Log.e("shotSavedHome"," "+shotSavedHome);
+		Log.e("shotSavedHome", " " + shotSavedHome);
 
 		tShotSavedHome.setText(String.valueOf(shotSavedHome));
 	}
@@ -374,12 +380,12 @@ public class ReviewFragment extends Fragment {
 		shot45Home = shot45Home + i;
 		tShot45Home.setText(String.valueOf(shot45Home));
 	}
-	
+
 	public void addtShotGoalsPlayHome(int i) {
 		shotGoalsPlayHome = shotGoalsPlayHome + i;
 		tShotGoalsPlayHome.setText(String.valueOf(shotGoalsPlayHome));
 	}
-	
+
 	public void addtShotPointsPlayHome(int i) {
 		shotPointsPlayHome = shotPointsPlayHome + i;
 		tShotPointsPlayHome.setText(String.valueOf(shotPointsPlayHome));
@@ -389,19 +395,21 @@ public class ReviewFragment extends Fragment {
 		shotWidesPlayHome = shotWidesPlayHome + i;
 		tShotPointsPlayWidesHome.setText(String.valueOf(shotWidesPlayHome));
 	}
+
 	public void addtShot45PlayHome(int i) {
 		shot45PlayHome = shot45PlayHome + i;
 		tShotPointsPlay45Home.setText(String.valueOf(shot45PlayHome));
 	}
+
 	public void addtShotSavedPlayHome(int i) {
 		shotSavedPlayHome = shotSavedPlayHome + i;
 		tShotPointsPlaySavedHome.setText(String.valueOf(shotSavedPlayHome));
 	}
+
 	public void addtShotPostsPlayHome(int i) {
 		shotPostsPlayHome = shotPostsPlayHome + i;
 		tShotPointsPlayPostsHome.setText(String.valueOf(shotPostsPlayHome));
 	}
-	
 
 	// *******************Opp Shots********************///
 	// increment counters for opposition team shots
@@ -444,24 +452,26 @@ public class ReviewFragment extends Fragment {
 		shot45Opp = shot45Opp + i;
 		tShot45Opp.setText(String.valueOf(shot45Opp));
 	}
-	
+
 	public void addtShotWidesPlayOpp(int i) {
 		shotWidesPlayOpp = shotWidesPlayOpp + i;
 		tShotPointsPlayWidesOpp.setText(String.valueOf(shotWidesPlayOpp));
 	}
+
 	public void addtShot45PlayOpp(int i) {
 		shot45PlayOpp = shot45PlayOpp + i;
 		tShotPointsPlay45Opp.setText(String.valueOf(shot45PlayOpp));
 	}
+
 	public void addtShotSavedPlayOpp(int i) {
 		shotSavedPlayOpp = shotSavedPlayOpp + i;
 		tShotPointsPlaySavedOpp.setText(String.valueOf(shotSavedPlayOpp));
 	}
+
 	public void addtShotPostsPlayOpp(int i) {
 		shotPostsPlayOpp = shotPostsPlayOpp + i;
 		tShotPointsPlayPostsOpp.setText(String.valueOf(shotPostsPlayOpp));
 	}
-
 
 	// ////////////////Update Free Section////////////////////////////
 	// increment counters for frees
@@ -564,8 +574,7 @@ public class ReviewFragment extends Fragment {
 		tShotPointsPlaySavedHome.setText("0");
 		shotPostsPlayHome = 0;
 		tShotPointsPlayPostsHome.setText("0");
-		
-		
+
 		shotGoalsOpp = 0;
 		tShotGoalsOpp.setText("0");
 		shotPointsOpp = 0;
@@ -590,7 +599,6 @@ public class ReviewFragment extends Fragment {
 		tShotPointsPlaySavedOpp.setText("0");
 		shotPostsPlayOpp = 0;
 		tShotPointsPlayPostsOpp.setText("0");
-
 
 		freeConcededHome = 0;
 		tFreeConcededHome.setText("0");
@@ -648,7 +656,7 @@ public class ReviewFragment extends Fragment {
 		editor.putInt("SHOTPOSTSOPP", shotPostsOpp);
 		editor.putInt("SHOTGOALSPLAYOPP", shotGoalsPlayOpp);
 		editor.putInt("SHOTPOINTSPLAYOPP", shotPointsPlayOpp);
-		
+
 		editor.putInt("SHOTPOINTSWIDESHOME", shotWidesPlayHome);
 		editor.putInt("SHOTPOINTS45HOME", shot45PlayHome);
 		editor.putInt("SHOTPOINTSSAVEDHOME", shotSavedPlayHome);
@@ -960,10 +968,11 @@ public class ReviewFragment extends Fragment {
 					+ " Points.  Total:" + tHomeTotal.getText() + "\n");
 			sb.append(shotGoalsPlayHome + " goals from play  "
 					+ shotPointsPlayHome + " points from play \n");
-			sb.append("wides: " + shotWidesHome + "\n");
-			sb.append("out for 45/65: " + shot45Home + "\n");
-			sb.append("saved/short: " + shotSavedHome + "\n");
-			sb.append("off posts: " + shotPostsHome + "\n");
+			sb.append(shotWidesHome + " total wides. " + shotWidesPlayHome
+					+ " wides from play\n");
+			sb.append( shot45Home+" total out for 45/65. " +shot45PlayHome + " out for 45/65 from play\n");
+			sb.append(shotSavedHome +" total saved/short. " + shotSavedPlayHome+ " saved/short from play \n");
+			sb.append(shotPostsHome+" total off posts. " +shotPostsPlayHome  + " off posts from play\n");
 			sb.append("frees conceded: " + freeConcededHome + "\n");
 			sb.append("Total puckouts: " + totPHome + "\n");
 			sb.append("own puckouts won: " + puckWonCleanHome + "\n");
@@ -975,10 +984,11 @@ public class ReviewFragment extends Fragment {
 					+ " Points.  Total:" + tOppTotal.getText() + "\n");
 			sb.append(shotGoalsPlayOpp + " goals from play  "
 					+ shotPointsPlayOpp + " points from play \n");
-			sb.append("wides: " + shotWidesOpp + "\n");
-			sb.append("out for 45/65: " + shot45Opp + "\n");
-			sb.append("saved/short: " + shotSavedOpp + "\n");
-			sb.append("off posts: " + shotPostsOpp + "\n");
+			sb.append(shotWidesHome + " total wides. " + shotWidesPlayOpp
+					+ " wides from play\n");
+			sb.append( shot45Home+" total out for 45/65. " +shot45PlayOpp + " out for 45/65 from play\n");
+			sb.append(shotSavedHome +" total saved/short. " + shotSavedPlayOpp+ " saved/short from play \n");
+			sb.append(shotPostsHome+" total off posts. " +shotPostsPlayOpp  + " off posts from play\n");
 			sb.append("frees conceded: " + freeConcededOpp + "\n");
 			sb.append("Total puckouts: " + totPOpp + "\n");
 			sb.append("own puckouts won: " + puckWonCleanOpp + "\n");
@@ -995,11 +1005,12 @@ public class ReviewFragment extends Fragment {
 					TeamContentProvider.SCORESPOINTS,
 					TeamContentProvider.SCORESGOALSFREE,
 					TeamContentProvider.SCORESPOINTSFREE,
-					TeamContentProvider.SCORESMISS };
+					TeamContentProvider.SCORESMISS,
+					TeamContentProvider.SCORESMISSFREE };
 
 			// create array to map these fields to
 			int[] to = new int[] { R.id.text1, R.id.text3, R.id.text4,
-					R.id.text5, R.id.text6, R.id.text7 };
+					R.id.text5, R.id.text6, R.id.text7, R.id.text8 };
 
 			// load database info from PanelContentProvider into a cursor and
 			// use an
@@ -1013,7 +1024,8 @@ public class ReviewFragment extends Fragment {
 					null, "team=?", args1,
 					TeamContentProvider.SCORESTOTAL + " DESC");
 
-			sb.append("player  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
+			sb.append("player  **  Total Goals / Points  **  Goals/Points from placed balls  **"
+					+ "  total wides  **  wides from placed ball\n\n");
 			sb.append(tOwnTeam.getText().toString() + " SCORERS \n\n");
 
 			if (c1.getCount() > 0) {
@@ -1037,6 +1049,9 @@ public class ReviewFragment extends Fragment {
 							+ "  **  "
 							+ c1.getString(c1
 									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS))
+							+ "  **  "
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE))
 							+ "\n\n");
 					// insert players into positions
 
@@ -1065,6 +1080,9 @@ public class ReviewFragment extends Fragment {
 							+ "  **  "
 							+ c2.getString(c2
 									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS))
+							+ "  **  "
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE))
 							+ "\n\n");
 					// insert players into positions
 
@@ -1091,7 +1109,7 @@ public class ReviewFragment extends Fragment {
 						"Error: unable to write to share file\n",
 						Toast.LENGTH_LONG).show();
 			}
-			
+
 			Bitmap bitmap = createBitmap();
 
 			File mPath = Environment
@@ -1114,8 +1132,7 @@ public class ReviewFragment extends Fragment {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent
 					.putExtra(Intent.EXTRA_SUBJECT, "match report "
@@ -1176,15 +1193,19 @@ public class ReviewFragment extends Fragment {
 
 		canvas.drawText("Wides", 5, 150, paint);
 		canvas.drawText(shotWidesHome + " ", 210, 150, paint);
+		canvas.drawText(shotWidesPlayHome + " ", 285, 150, paint);
 
 		canvas.drawText("Out for 45/65", 5, 175, paint);
 		canvas.drawText(shot45Home + " ", 210, 175, paint);
+		canvas.drawText(shot45PlayHome + " ", 285, 175, paint);
 
 		canvas.drawText("Saved/Short", 5, 200, paint);
 		canvas.drawText(shotSavedHome + " ", 210, 200, paint);
+		canvas.drawText(shotSavedPlayHome + " ", 285, 200, paint);
 
 		canvas.drawText("Off Posts", 5, 225, paint);
 		canvas.drawText(shotPostsHome + " ", 210, 225, paint);
+		canvas.drawText(shotPostsPlayHome + " ", 285, 225, paint);
 
 		canvas.drawText("Frees Conceded", 5, 250, paint);
 		canvas.drawText(freeConcededHome + " ", 210, 250, paint);
@@ -1220,15 +1241,19 @@ public class ReviewFragment extends Fragment {
 
 		canvas.drawText("Wides", 355, 150, paint);
 		canvas.drawText(shotWidesOpp + " ", 560, 150, paint);
+		canvas.drawText(shotWidesPlayOpp + " ", 645, 150, paint);
 
 		canvas.drawText("O" + "ut for 45/65", 355, 175, paint);
 		canvas.drawText(shot45Opp + " ", 560, 175, paint);
+		canvas.drawText(shot45PlayOpp + " ", 645, 175, paint);
 
 		canvas.drawText("Saved/Short", 355, 200, paint);
 		canvas.drawText(shotSavedOpp + " ", 560, 200, paint);
+		canvas.drawText(shotSavedPlayOpp + " ", 645, 200, paint);
 
 		canvas.drawText("Off Posts", 355, 225, paint);
 		canvas.drawText(shotPostsOpp + " ", 560, 225, paint);
+		canvas.drawText(shotPostsPlayOpp + " ", 645, 225, paint);
 
 		canvas.drawText("Frees Conceded", 355, 250, paint);
 		canvas.drawText(freeConcededOpp + " ", 560, 250, paint);
@@ -1256,7 +1281,7 @@ public class ReviewFragment extends Fragment {
 	OnClickListener tweetAllListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
+
 			Bitmap bitmap = createBitmap();
 
 			File mPath = Environment

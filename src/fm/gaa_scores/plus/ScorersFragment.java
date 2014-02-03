@@ -104,11 +104,12 @@ public class ScorersFragment extends ListFragment {
 				TeamContentProvider.SCORESPOINTS,
 				TeamContentProvider.SCORESGOALSFREE,
 				TeamContentProvider.SCORESPOINTSFREE,
-				TeamContentProvider.SCORESMISS };
+				TeamContentProvider.SCORESMISS,
+				TeamContentProvider.SCORESMISSFREE };
 
 		// create array to map these fields to
 		int[] to = new int[] { R.id.text1, R.id.text3, R.id.text4, R.id.text5,
-				R.id.text6, R.id.text7 };
+				R.id.text6, R.id.text7, R.id.text8 };
 
 		// load database info from PanelContentProvider into a cursor and use an
 		// adapter to display on screen
@@ -132,6 +133,7 @@ public class ScorersFragment extends ListFragment {
 	// click
 	OnClickListener sendAllListener = new OnClickListener() {
 		File root, outfile;
+
 		@Override
 		public void onClick(View v) {
 			StringBuilder sb = new StringBuilder("");
@@ -143,11 +145,12 @@ public class ScorersFragment extends ListFragment {
 					TeamContentProvider.SCORESPOINTS,
 					TeamContentProvider.SCORESGOALSFREE,
 					TeamContentProvider.SCORESPOINTSFREE,
-					TeamContentProvider.SCORESMISS };
+					TeamContentProvider.SCORESMISS,
+					TeamContentProvider.SCORESMISSFREE };
 
 			// create array to map these fields to
 			int[] to = new int[] { R.id.text1, R.id.text3, R.id.text4,
-					R.id.text5, R.id.text6, R.id.text7 };
+					R.id.text5, R.id.text6, R.id.text7, R.id.text8 };
 
 			// load database info from PanelContentProvider into a cursor and
 			// use an
@@ -163,7 +166,8 @@ public class ScorersFragment extends ListFragment {
 					TeamContentProvider.SCORESTOTAL + " DESC");
 			sb.append(((Startup) getActivity()).getFragmentScore().getLocText());
 
-			sb.append("\n\nplayer  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
+			sb.append("\n\nplayer  **  Total Goals / Points  **  Goals/Points from placed balls"
+					+ "  **  Total wides  **  wides from place balls \n\n");
 			sb.append(ownTeam + " SCORERS \n\n");
 
 			if (c1.getCount() > 0) {
@@ -187,6 +191,9 @@ public class ScorersFragment extends ListFragment {
 							+ "  **  "
 							+ c1.getString(c1
 									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS))
+							+ "  **  "
+							+ c1.getString(c1
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE))
 							+ "\n\n");
 					// insert players into positions
 
@@ -216,6 +223,9 @@ public class ScorersFragment extends ListFragment {
 							+ "  **  "
 							+ c2.getString(c2
 									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS))
+							+ "  **  "
+							+ c2.getString(c2
+									.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE))
 							+ "\n\n");
 					// insert players into positions
 
@@ -237,14 +247,13 @@ public class ScorersFragment extends ListFragment {
 				writer.close();
 			} catch (IOException e) {
 				Log.e("share file write failed", e.getMessage(), e);
-				Toast.makeText(
-						getActivity(),
+				Toast.makeText(getActivity(),
 						"Error: unable to write to share file\n",
 						Toast.LENGTH_LONG).show();
 			}
-			
+
 			Bitmap bitmap = createBitmap();
-			
+
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			OutputStream fout = null;
@@ -265,8 +274,7 @@ public class ScorersFragment extends ListFragment {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
 			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 			emailIntent
 					.putExtra(Intent.EXTRA_SUBJECT, "match report "
@@ -292,7 +300,7 @@ public class ScorersFragment extends ListFragment {
 			c2.close();
 		}
 	};
-	
+
 	public Bitmap createBitmap() {
 		StringBuilder sb = new StringBuilder("");
 		Uri allTitles = TeamContentProvider.CONTENT_URI_3;
@@ -303,49 +311,50 @@ public class ScorersFragment extends ListFragment {
 				TeamContentProvider.SCORESPOINTS,
 				TeamContentProvider.SCORESGOALSFREE,
 				TeamContentProvider.SCORESPOINTSFREE,
-				TeamContentProvider.SCORESMISS };
+				TeamContentProvider.SCORESMISS,
+				TeamContentProvider.SCORESMISSFREE };
 
 		// create array to map these fields to
-		int[] to = new int[] { R.id.text1, R.id.text3, R.id.text4,
-				R.id.text5, R.id.text6, R.id.text7 };
+		int[] to = new int[] { R.id.text1, R.id.text3, R.id.text4, R.id.text5,
+				R.id.text6, R.id.text7, R.id.text8 };
 
 		// load database info from PanelContentProvider into a cursor and
 		// use an
 		// adapter to display on screen
 		String[] args = { ownTeam };
-		Cursor c1 = getActivity().getContentResolver().query(allTitles,
-				null, "team=?", args,
-				TeamContentProvider.SCORESTOTAL + " DESC");
+		Cursor c1 = getActivity().getContentResolver().query(allTitles, null,
+				"team=?", args, TeamContentProvider.SCORESTOTAL + " DESC");
 
 		String[] args1 = { oppTeam };
-		Cursor c2 = getActivity().getContentResolver().query(allTitles,
-				null, "team=?", args1,
-				TeamContentProvider.SCORESTOTAL + " DESC");
+		Cursor c2 = getActivity().getContentResolver().query(allTitles, null,
+				"team=?", args1, TeamContentProvider.SCORESTOTAL + " DESC");
 
 		// Create Bitmap to display team selection
-		int length=((c1.getCount() + c2.getCount()) * 25);
-		Bitmap bitmap = Bitmap.createBitmap(600,length + 255,
+		int length = ((c1.getCount() + c2.getCount()) * 25);
+		Bitmap bitmap = Bitmap.createBitmap(640, length + 255,
 				Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(bitmap);
 		canvas.drawColor(Color.rgb(255, 255, 219));
 		Paint paint = new Paint();
 		paint.setColor(Color.rgb(204, 255, 204));
-		canvas.drawRect(0, 0, 600, (c1.getCount()*25)+100, paint);
+		canvas.drawRect(0, 0, 640, (c1.getCount() * 25) + 100, paint);
 		paint.setColor(Color.BLACK);
 		paint.setAntiAlias(true);
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(22);
 		// Write teams
 		// sb.append("player  **  Total Goals / Points  **  Goals/Points from frees/65s/45s/penalties/sidelines  **  wides/short/saved\n\n");
-		canvas.drawText(ownTeam + " SCORERS", 300, 25, paint);
+		canvas.drawText(ownTeam + " SCORERS", 320, 25, paint);
 		paint.setColor(Color.RED);
 		paint.setTextSize(20);
-		canvas.drawText("from frees", 430, 50, paint);
-		canvas.drawText("wides/", 525, 50, paint);
-		canvas.drawText("player", 155, 75, paint);
+		canvas.drawText("from placed", 425, 50, paint);
+		canvas.drawText("misses", 525, 50, paint);
+		canvas.drawText("misses", 600, 50, paint);
+		canvas.drawText("player", 140, 75, paint);
 		canvas.drawText("totals", 310, 75, paint);
-		canvas.drawText("45/65 etc", 430, 75, paint);
-		canvas.drawText("misses", 530, 75, paint);
+		canvas.drawText("balls", 423, 75, paint);
+		canvas.drawText("total", 525, 75, paint);
+		canvas.drawText("placed", 600, 75, paint);
 		paint.setTextSize(22);
 		paint.setColor(Color.BLACK);
 		int i = 0;
@@ -380,7 +389,11 @@ public class ScorersFragment extends ListFragment {
 				canvas.drawText(
 						c1.getString(c1
 								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS)),
-						530, 100 + (i * 25), paint);
+						520, 100 + (i * 25), paint);
+				canvas.drawText(
+						c1.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE)),
+						600, 100 + (i * 25), paint);
 				i++;
 
 			} while (c1.moveToNext());
@@ -388,15 +401,17 @@ public class ScorersFragment extends ListFragment {
 		i = 0;
 		int spacer = 125 + (c1.getCount() * 25);
 		paint.setTextAlign(Align.CENTER);
-		canvas.drawText(oppTeam + " SCORERS", 300, 25 + spacer, paint);
+		canvas.drawText(oppTeam + " SCORERS", 320, 25 + spacer, paint);
 		paint.setColor(Color.RED);
 		paint.setTextSize(20);
-		canvas.drawText("from frees", 430, 50 + spacer, paint);
-		canvas.drawText("wides/", 525, 50 + spacer, paint);
-		canvas.drawText("player", 155, 75 + spacer, paint);
+		canvas.drawText("from placed", 425, 50 + spacer, paint);
+		canvas.drawText("misses", 525, 50 + spacer, paint);
+		canvas.drawText("misses", 600, 50 + spacer, paint);
+		canvas.drawText("player", 140, 75 + spacer, paint);
 		canvas.drawText("totals", 310, 75 + spacer, paint);
-		canvas.drawText("45/65 etc", 430, 75 + spacer, paint);
-		canvas.drawText("misses", 530, 75 + spacer, paint);
+		canvas.drawText("balls", 423, 75 + spacer, paint);
+		canvas.drawText("total", 525, 75 + spacer, paint);
+		canvas.drawText("placed", 600, 75 + spacer, paint);
 		paint.setTextSize(22);
 		paint.setColor(Color.BLACK);
 		if (c2.getCount() > 0) {
@@ -430,22 +445,26 @@ public class ScorersFragment extends ListFragment {
 				canvas.drawText(
 						c2.getString(c2
 								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISS)),
-						530, 100 + spacer + (i * 25), paint);
+						520, 100 + spacer + (i * 25), paint);
+				canvas.drawText(
+						c2.getString(c2
+								.getColumnIndexOrThrow(TeamContentProvider.SCORESMISSFREE)),
+						600, 100 + spacer + (i * 25), paint);
 				i++;
 
 			} while (c2.moveToNext());
 		}
-		
+
 		paint.setColor(Color.GRAY);
 		paint.setTextSize(16);
 		paint.setTextAlign(Align.CENTER);
-		canvas.drawText("GAA Scores Stats Plus - Android App.", 300, length+230,
-				paint);
-		canvas.drawText("Available free from Google Play Store", 300, length+245,
-				paint);
+		canvas.drawText("GAA Scores Stats Plus - Android App.", 320,
+				length + 230, paint);
+		canvas.drawText("Available free from Google Play Store", 320,
+				length + 245, paint);
 		c1.close();
 		c2.close();
-		
+
 		return bitmap;
 
 	}
@@ -454,7 +473,7 @@ public class ScorersFragment extends ListFragment {
 		@Override
 		public void onClick(View v) {
 			Bitmap bitmap = createBitmap();
-			
+
 			File mPath = Environment
 					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			OutputStream fout = null;
@@ -475,12 +494,15 @@ public class ScorersFragment extends ListFragment {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 
 			try {
 				final Intent shareIntent = findTwitterClient();
-				shareIntent.putExtra(Intent.EXTRA_TEXT, ownTeam + " v. "
-						+ oppTeam + " scorers\n"+((Startup) getActivity()).getFragmentScore().getLocText());
+				shareIntent.putExtra(Intent.EXTRA_TEXT, ownTeam
+						+ " v. "
+						+ oppTeam
+						+ " scorers\n"
+						+ ((Startup) getActivity()).getFragmentScore()
+								.getLocText());
 				shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 				// introduce delay to give time to read in bitmap before sending
 				// tweet
