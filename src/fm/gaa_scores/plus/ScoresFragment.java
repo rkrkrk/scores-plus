@@ -495,7 +495,7 @@ public class ScoresFragment extends Fragment {
 		}
 
 		String comment = tLoc.getText().length() <= 1 ? "" : (tLoc.getText()
-				.toString() + ". ");
+				.toString() + "\n");
 		return comment
 				+ str
 				+ tOurTeam.getText()
@@ -1093,11 +1093,11 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addFreeConcededHome(count);
-			} else if (stats1.equals("own puckout won")) {
+			} else if (stats1.equals("own puck/kick out won")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckWonCleanHome(count);
-			} else if (stats1.equals("own puckout lost")) {
+			} else if (stats1.equals("own puck/kick out lost")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanHome(count);
@@ -1219,11 +1219,11 @@ public class ScoresFragment extends Fragment {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addFreeConcededOpp(count);
-			} else if (stats1.equals("own puckout won")) {
+			} else if (stats1.equals("own puck/kick out won")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckWonCleanOpp(count);
-			} else if (stats1.equals("own puckout lost")) {
+			} else if (stats1.equals("own puck/kick out lost")) {
 				// increment counter in review page
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckLostCleanOpp(count);
@@ -2023,7 +2023,7 @@ public class ScoresFragment extends Fragment {
 							.addtShotSavedPlayOpp(-1);
 				}
 			}
-		} else if (strTemp.indexOf("puckout won") >= 0) {
+		} else if (strTemp.indexOf("puck/kick out won") >= 0) {
 			// check which team
 			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview()
@@ -2032,7 +2032,7 @@ public class ScoresFragment extends Fragment {
 				((Startup) getActivity()).getFragmentReview()
 						.addPuckWonCleanOpp(-1);
 			}
-		} else if (strTemp.indexOf("puckout lost") >= 0) {
+		} else if (strTemp.indexOf("puck/kick out lost") >= 0) {
 			// check which team
 			if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
 				((Startup) getActivity()).getFragmentReview()

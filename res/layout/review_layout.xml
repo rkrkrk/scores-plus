@@ -87,8 +87,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="34dp"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp" >
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp" >
 
                 <TableRow
                     android:id="@+id/tableRow01"
@@ -317,6 +317,42 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/TableRow06"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd" >
+
+                    <TextView
+                        android:id="@+id/tTotalShotsHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:minHeight="14dp"
+                        android:text="Total Shots:"
+                        android:textSize="10sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TableRow07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc" >
+
+                    <TextView
+                        android:id="@+id/tShotsPlayHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:minHeight="14dp"
+                        android:text="Shot from play:"
+                        android:textSize="10sp" />
+
+                </TableRow>
+
+                <TableRow
                     android:id="@+id/TableRow08"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -359,7 +395,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Total Puckouts***"
+                        android:text="Total Puck/Kick Outs***"
                         android:textSize="10sp" />
 
                     <TextView
@@ -391,7 +427,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Own PuckOut Won"
+                        android:text="Own Puck/Kick Out Won"
                         android:textSize="10sp" />
 
                     <TextView
@@ -423,7 +459,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Own PuckOut Lost"
+                        android:text="Own Puck/Kick Out Lost"
                         android:textSize="10sp" />
 
                     <TextView
@@ -461,8 +497,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rvTableShotsHome"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="2"
                 android:background="#bbdddd"
                 android:textSize="10sp" />
@@ -556,8 +592,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/TableLayout02"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight="2"
                 android:background="#bbdddd"
                 android:textSize="10sp" />
@@ -581,8 +617,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="34dp"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp" >
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp" >
 
                 <TableRow
                     android:id="@+id/TableRow16"
@@ -809,6 +845,43 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="12sp" />
                 </TableRow>
+                
+                        <TableRow
+                    android:id="@+id/TableRow06"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd" >
+
+                    <TextView
+                        android:id="@+id/tTotalShotsOpp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:minHeight="14dp"
+                        android:text="Total Shots: "
+                        android:textSize="10sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TableRow07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc" >
+
+                    <TextView
+                        android:id="@+id/tShotsPlayOpp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:minHeight="14dp"
+                        android:text="Shot from play:"
+                        android:textSize="10sp" />
+
+                </TableRow>
+                
 
                 <TableRow
                     android:id="@+id/TableRow24"
@@ -854,7 +927,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Total Puckouts***"
+                        android:text="Total Puck/Kick outs***"
                         android:textSize="10sp" />
 
                     <TextView
@@ -887,7 +960,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Own PuckOut Won"
+                        android:text="Own Puck/Kick Out Won"
                         android:textSize="10sp" />
 
                     <TextView
@@ -920,7 +993,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Own PuckOut Lost"
+                        android:text="Own Puck/Kick Out Lost"
                         android:textSize="10sp" />
 
                     <TextView

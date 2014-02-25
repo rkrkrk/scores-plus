@@ -59,7 +59,6 @@ public abstract class DatabaseSetup extends ContentProvider {
 		@Override
 		// method to create database tables defined above
 		public void onCreate(SQLiteDatabase db) {
-			Log.e("qqq","wer");
 			db.execSQL(CREATE_TABLE_PANEL);
 			db.execSQL(CREATE_TABLE_STATS); 
 			db.execSQL(CREATE_TABLE_SCORES);

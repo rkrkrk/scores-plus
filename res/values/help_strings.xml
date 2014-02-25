@@ -3,6 +3,10 @@
 
     <string name="teamHelp">
 <![CDATA[
+<h1>CONTACT DETAILS</h1>
+<b>email:</b> gaaapps@gmail.com<br/>
+follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
+
  <h1>HELP - TEAM SCREEN</h1>
 <p><b>NB: Dont change team name or load a new team or import a team during a match i.e.
 when the match timer is running. Doing so may break stuff!</b></p> 
@@ -148,6 +152,11 @@ Use the <b> change team name</b> button to give your team a meaningful name and 
     
     <string name="scoresHelp">
 <![CDATA[
+<h1>CONTACT DETAILS</h1>
+<b>email:</b> gaaapps@gmail.com<br/>
+follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
+
+
 <h1>HELP - MATCH SCREEN</h1>
 <p>
 <b>TIMER SECTION</b><br/>
@@ -220,6 +229,10 @@ separate the phone numbers.<br/>
     
     <string name="reviewHelp">
 <![CDATA[
+<h1>CONTACT DETAILS</h1>
+<b>email:</b> gaaapps@gmail.com<br/>
+follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
+
 <h1>HELP - REVIEW SCREEN</h1>
 <p>
 Summary of match stats is shown at top of screen.<br/><br/>
@@ -227,6 +240,9 @@ Summary of match stats is shown at top of screen.<br/><br/>
 <b>*** Total Puckouts</b> - this stat is incremented every time you record 
 a <b><i>goal</i></b> or <b><i>point</i></b> or <b><i>wide</i></b>
 from the stats screen for the opposite team. <br/><br/>
+<b>Total Shots</b> is the sum of <b><i>goals</i></b>, <b><i>points</i></b>, <b><i>wides</i></b>, 
+<b><i>out for 45/65</i></b>, <b><i>off posts</i></b> and <b><i>saved/short</i></b><br>
+<b>Scored</b> is the sum of <b><i>goals</i></b> and <b><i>points</i></b> 
 <br/><br/>
 List of match/stats events recorded is displayed at the bottom of the screen. Swipe up/down
 to scroll.<br/><br/>
@@ -247,6 +263,10 @@ cards, substitutions list of match/stats events recorded, list of scorers.
     
     <string name="scorersHelp">
 <![CDATA[
+<h1>CONTACT DETAILS</h1>
+<b>email:</b> gaaapps@gmail.com<br/>
+follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
+
 <h1>HELP - SCORERS SCREEN</h1>
 <p>
 Summary of scorers recorded using the 
