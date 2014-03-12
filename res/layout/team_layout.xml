@@ -424,6 +424,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="tweet selection"
                 android:textSize="11sp" />
 
@@ -439,6 +441,8 @@
                 android:minHeight="0dp"
                 android:minWidth="0dp"
                 android:text="tweet subs/cards"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:textSize="11sp" />
 
             <Button
@@ -452,6 +456,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="text selection"
                 android:textSize="11sp" />
 
@@ -466,6 +472,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="share selection"
                 android:textSize="11sp" />
 
@@ -480,6 +488,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="save selection to summary"
                 android:textSize="11sp" />
 

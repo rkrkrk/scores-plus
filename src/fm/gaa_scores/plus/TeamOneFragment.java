@@ -118,6 +118,7 @@ public class TeamOneFragment extends Fragment {
 		// set up text view and buttons
 		tTeamHome = (TextView) v.findViewById(R.id.homeTeamName);
 
+		//
 		Button bButtonReset = (Button) v.findViewById(R.id.button_setup_reset);
 		bButtonReset.setOnClickListener(resetTeamListener);
 		Button bSub = (Button) v.findViewById(R.id.bSub);
