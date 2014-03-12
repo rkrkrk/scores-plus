@@ -263,7 +263,6 @@ public class ReviewFragment extends Fragment {
 		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
 		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
 		shotWidesPlayOpp = sharedPref.getInt("SHOTPOINTSWIDESOPP", 0);
-		Log.e("shotWidesPlayOpp", " " + shotWidesPlayOpp);
 		shot45PlayOpp = sharedPref.getInt("SHOTPOINTS45OPP", 0);
 		shotSavedPlayOpp = sharedPref.getInt("SHOTPOINTSSAVEDOPP", 0);
 		shotPostsPlayOpp = sharedPref.getInt("SHOTPOINTSPOSTSOPP", 0);
@@ -1056,8 +1055,8 @@ public class ReviewFragment extends Fragment {
 					+ shotSavedPlayHome + " saved/short from play \n");
 			sb.append(shotPostsHome + " total off posts. " + shotPostsPlayHome
 					+ " off posts from play\n");
-			sb.append(tShotsTotalHome.getText().toString()+"\n");
-			sb.append(tShotsPlayHome.getText().toString()+"\n");
+			sb.append(tShotsTotalHome.getText().toString() + "\n");
+			sb.append(tShotsPlayHome.getText().toString() + "\n");
 			sb.append("frees conceded: " + freeConcededHome + "\n");
 			sb.append("Total puck/kick outs: " + totPHome + "\n");
 			sb.append("own puck/kick outs won: " + puckWonCleanHome + "\n");
@@ -1077,8 +1076,8 @@ public class ReviewFragment extends Fragment {
 					+ " saved/short from play \n");
 			sb.append(shotPostsOpp + " total off posts. " + shotPostsPlayOpp
 					+ " off posts from play\n");
-			sb.append(tShotsTotalOpp.getText().toString()+"\n");
-			sb.append(tShotsPlayOpp.getText().toString()+"\n");
+			sb.append(tShotsTotalOpp.getText().toString() + "\n");
+			sb.append(tShotsPlayOpp.getText().toString() + "\n");
 			sb.append("frees conceded: " + freeConcededOpp + "\n");
 			sb.append("Total puck/kick outs: " + totPOpp + "\n");
 			sb.append("own puck/kick outs won: " + puckWonCleanOpp + "\n");
@@ -1263,6 +1262,23 @@ public class ReviewFragment extends Fragment {
 			}
 			uris.add(uri1);
 			uris.add(uri2);
+			File dir = new File(Environment.getExternalStorageDirectory(),
+					"GAA_APP_Teams");
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			File files[] = dir.listFiles();
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getName().contains("GAAScoresStatsTeamSelection_")) {
+					uris.add(Uri.fromFile(files[i]));
+				}
+			}
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getName().contains("GAAScoresStatsTeam_")) {
+					uris.add(Uri.fromFile(files[i]));
+				}
+			}
+
 			emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 		}
@@ -1321,7 +1337,7 @@ public class ReviewFragment extends Fragment {
 		paint.setTextSize(20);
 		canvas.drawText(tShotsTotalHome.getText().toString(), 5, 250, paint);
 		canvas.drawText(tShotsPlayHome.getText().toString(), 5, 275, paint);
-		
+
 		paint.setTextSize(22);
 		canvas.drawText("Frees Conceded", 5, 300, paint);
 		canvas.drawText(freeConcededHome + " ", 235, 300, paint);
@@ -1371,12 +1387,12 @@ public class ReviewFragment extends Fragment {
 		canvas.drawText("Off Posts", 355, 225, paint);
 		canvas.drawText(shotPostsOpp + " ", 580, 225, paint);
 		canvas.drawText(shotPostsPlayOpp + " ", 655, 225, paint);
-		
+
 		paint.setTextSize(20);
 		canvas.drawText(tShotsTotalOpp.getText().toString(), 355, 250, paint);
 		canvas.drawText(tShotsPlayOpp.getText().toString(), 355, 275, paint);
 		paint.setTextSize(22);
-	
+
 		canvas.drawText("Frees Conceded", 355, 300, paint);
 		canvas.drawText(freeConcededOpp + " ", 580, 300, paint);
 		paint.setTextSize(20);

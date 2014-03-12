@@ -480,8 +480,8 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:text="save current to match summary"
-                android:textSize="10sp" />
+                android:text="save selection to summary"
+                android:textSize="11sp" />
 
         </LinearLayout>
 

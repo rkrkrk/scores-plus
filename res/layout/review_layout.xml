@@ -1180,7 +1180,7 @@
             android:layout_weight="1"
             android:background="@drawable/buttond_custom"
             android:padding="0dp"
-            android:text="share all match data"
+            android:text="share match summary"
             android:textSize="12sp" />
     </LinearLayout>
 

@@ -198,60 +198,56 @@ public class TeamOneFragment extends Fragment {
 			StringBuilder sb = new StringBuilder("");
 			sb.append(panelName + " v. " + oppTeamName + ". \n");
 			sb.append(((Startup) getActivity()).getFragmentScore().getLocText()
-					+ "\n\n ");
-			String str1 = (((Startup) getActivity()).getFragmentScore().getTime() == "") ? ""
-					: ((Startup) getActivity()).getFragmentScore().getTime()
-							+ "mins "
-							+ ((Startup) getActivity()).getFragmentScore().bPeriod
-									.getText() + ". ";
-			sb.append(str1 + panelName + " team selection:\n ");
-			// for (int i = 1; i <= 15; i++) {
+					+ "\n ");
+			String str1 = ((Startup) getActivity()).getFragmentScore()
+					.getScore(true);
+			sb.append(str1 + panelName + " team selection:\n\n ");
+
 			sb.append("GK: "
 					+ (teamLineUpCurrent[1].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[1]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[1]) + "\n " : " 01\n "));
 			sb.append("RFB: "
 					+ (teamLineUpCurrent[2].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[2]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[2]) + "\n " : " 02\n "));
 			sb.append("FB: "
 					+ (teamLineUpCurrent[3].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[3]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[3]) + "\n " : " 03\n "));
 			sb.append("LFB: "
 					+ (teamLineUpCurrent[4].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[4]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[4]) + "\n " : " 04\n "));
 			sb.append("RHB: "
 					+ (teamLineUpCurrent[5].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[5]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[5]) + "\n " : " 05\n "));
 			sb.append("CB: "
 					+ (teamLineUpCurrent[6].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[6]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[6]) + "\n " : " 06\n "));
 			sb.append("LHB: "
 					+ (teamLineUpCurrent[7].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[7]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[7]) + "\n " : " 07\n "));
 			sb.append("MF: "
 					+ (teamLineUpCurrent[8].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[8]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[8]) + "\n " : " 08\n "));
 			sb.append("MF: "
 					+ (teamLineUpCurrent[9].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[9]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[9]) + "\n " : " 09\n "));
 			sb.append("RHF: "
 					+ (teamLineUpCurrent[10].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[10]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[10]) + "\n " : " 10\n "));
 			sb.append("CF: "
 					+ (teamLineUpCurrent[11].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[11]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[11]) + "\n " : " 11\n "));
 			sb.append("LHF: "
 					+ (teamLineUpCurrent[12].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[12]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[12]) + "\n " : " 12\n "));
 			sb.append("RFF: "
 					+ (teamLineUpCurrent[13].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[13]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[13]) + "\n " : " 13\n "));
 			sb.append("FF: "
 					+ (teamLineUpCurrent[14].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[14]) + "\n " : "\n "));
+							.valueOf(teamLineUpCurrent[14]) + "\n " : " 14\n "));
 			sb.append("LFF: "
 					+ (teamLineUpCurrent[15].length() > 2 ? String
-							.valueOf(teamLineUpCurrent[15]) + "\n " : "\n "));
-			// }
+							.valueOf(teamLineUpCurrent[15]) + "\n " : " 15\n "));
 
 			if (strBuilderSub.length() > 1) {
 				sb.append("\nSUBS USED\n");
@@ -269,69 +265,136 @@ public class TeamOneFragment extends Fragment {
 					sb.append(subArray[i] + "\n");
 				}
 			}
-			try {
-				root = new File(Environment.getExternalStorageDirectory(),
-						"GAA_APP_Export");
-				if (!root.exists()) {
-					root.mkdirs();
+
+			if (txtButton == R.id.sel_share) {
+				try {
+					root = new File(Environment.getExternalStorageDirectory(),
+							"GAA_APP_Teams");
+					if (!root.exists()) {
+						root.mkdirs();
+					}
+					outfile = new File(root, "GAAScoresStatsTeam1.txt");
+					FileWriter writer = new FileWriter(outfile);
+					String nl = System.getProperty("line.separator");
+					writer.append("GAA Scores Stats App Match Data," + nl);
+					writer.append(sb.toString());
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					Log.e("share file write failed", e.getMessage(), e);
+					Toast.makeText(getActivity(),
+							"Error: unable to write to share file\n",
+							Toast.LENGTH_LONG).show();
 				}
-				outfile = new File(root, "GAAScoresStatsTeam1.txt");
-				FileWriter writer = new FileWriter(outfile);
-				String nl = System.getProperty("line.separator");
-				writer.append("GAA Scores Stats App Match Data," + nl);
-				writer.append(sb.toString());
-				writer.flush();
-				writer.close();
-			} catch (IOException e) {
-				Log.e("share file write failed", e.getMessage(), e);
-				Toast.makeText(getActivity(),
-						"Error: unable to write to share file\n",
-						Toast.LENGTH_LONG).show();
+
+				Bitmap bitmap = createBitmap(subLines, cardLines,
+						R.id.sel_cards);
+
+				OutputStream fout = null;
+				File imageFile = new File(root,
+						"GAAScoresStatsTeamSelection.jpg");
+				Uri uri = Uri.fromFile(imageFile);
+				try {
+					root.mkdirs();
+					fout = new FileOutputStream(imageFile);
+					bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+					fout.flush();
+					fout.close();
+
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+				emailIntent.putExtra(Intent.EXTRA_SUBJECT, "match report "
+						+ ((Startup) getActivity()).getFragmentScore()
+								.getLocText());
+				emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+				emailIntent.setType("text/plain");
+				String[] emailAttachments = new String[] { Environment
+						.getExternalStorageDirectory()
+						+ "/GAA_APP_Teams/"
+						+ "GAAScoresStatsTeam1.txt" };
+				// put email attachments into an ArrayList
+				ArrayList<Uri> uris = new ArrayList<Uri>();
+				for (String file : emailAttachments) {
+					File uriFiles = new File(file);
+					Uri u = Uri.fromFile(uriFiles);
+					uris.add(u);
+				}
+				uris.add(uri);
+				emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM,
+						uris);
+				startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 			}
 
-			Bitmap bitmap = createBitmap(subLines, cardLines, R.id.sel_cards);
-			File mPath = Environment
-					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-			OutputStream fout = null;
-			File imageFile = new File(mPath, "GAAScoresStatsTeamSelection.jpg");
-			Uri uri = Uri.fromFile(imageFile);
+			else if (txtButton == R.id.bSaveSelection) {
+				File dir = new File(Environment.getExternalStorageDirectory(),
+						"GAA_APP_Teams");
+				if (!dir.exists()) {
+					dir.mkdirs();
+				}
+				File files[] = dir.listFiles();
+				Log.e("Ffffiles", "Size: " + files.length);
+				int fileNum = 0;
+				for (int i = 0; i < files.length; i++) {
+					if (files[i].getName().contains("GAAScoresStatsTeam_")
+							|| files[i].getName().contains(
+									"GAAScoresStatsTeamSelection_")) {
+						String str = files[i].getName().substring(
+								files[i].getName().length() - 6,
+								files[i].getName().length() - 4);
+						if (Integer.parseInt(str) > fileNum) {
+							fileNum = Integer.parseInt(str);
+						}
+					}
+				}
+				try {
+					dir = new File(Environment.getExternalStorageDirectory(),
+							"GAA_APP_Teams");
+					if (!dir.exists()) {
+						dir.mkdirs();
+					}
+					outfile = new File(dir, "GAAScoresStatsTeam_"
+							+ String.format("%02d", fileNum + 1) + ".txt");
+					FileWriter writer = new FileWriter(outfile);
+					String nl = System.getProperty("line.separator");
+					writer.append("GAA Scores Stats App Match Data," + nl);
+					writer.append(sb.toString());
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					Log.e("share file write failed", e.getMessage(), e);
+					Toast.makeText(getActivity(),
+							"Error: unable to write to share file\n",
+							Toast.LENGTH_LONG).show();
+				}
 
-			try {
-				mPath.mkdirs();
-				fout = new FileOutputStream(imageFile);
-				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
-				fout.flush();
-				fout.close();
+				Log.e("filenum", " " + fileNum);
+				Bitmap bitmap = createBitmap(subLines, cardLines,
+						R.id.sel_cards);
+				OutputStream fout = null;
+				File imageFile = new File(dir, "GAAScoresStatsTeamSelection_"
+						+ String.format("%02d", fileNum + 1) + ".jpg");
+				Uri uri = Uri.fromFile(imageFile);
+				try {
+					fout = new FileOutputStream(imageFile);
+					bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+					fout.flush();
+					fout.close();
 
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-
-			Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-			emailIntent
-					.putExtra(Intent.EXTRA_SUBJECT, "match report "
-							+ ((Startup) getActivity()).getFragmentScore()
-									.getLocText());
-			emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-			emailIntent.setType("text/plain");
-			String[] emailAttachments = new String[] { Environment
-					.getExternalStorageDirectory()
-					+ "/GAA_APP_Export/"
-					+ "GAAScoresStatsTeam1.txt" };
-			// put email attachments into an ArrayList
-			ArrayList<Uri> uris = new ArrayList<Uri>();
-			for (String file : emailAttachments) {
-				File uriFiles = new File(file);
-				Uri u = Uri.fromFile(uriFiles);
-				uris.add(u);
-			}
-			uris.add(uri);
-			emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-			startActivity(Intent.createChooser(emailIntent, "Share Using:"));
 		}
 	};
 
@@ -398,15 +461,10 @@ public class TeamOneFragment extends Fragment {
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(22);
 		String str;
-		String str1 = (((Startup) getActivity()).getFragmentScore().getTime() == "") ? ""
-				: ((Startup) getActivity()).getFragmentScore().getTime()
-						+ "mins "
-						+ ((Startup) getActivity()).getFragmentScore().bPeriod
-								.getText() + ". ";
-		str = txtButton == R.id.sel_cards ? " current team selection "
-				: " team selection ";
-		canvas.drawText(str1 + panelName + str, 300, 80 + (commentLines * 20),
-				paint);
+		String str1 = ((Startup) getActivity()).getFragmentScore().getScore(
+				true);
+		canvas.drawText(str1 + panelName + " team selection", 300,
+				80 + (commentLines * 20), paint);
 
 		int xxx = 5;
 		// Full Forwards

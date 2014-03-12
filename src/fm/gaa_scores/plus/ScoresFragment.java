@@ -16,6 +16,7 @@
  */
 package fm.gaa_scores.plus;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +38,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -471,7 +473,7 @@ public class ScoresFragment extends Fragment {
 		editor.commit();
 	}
 
-	private String getScore() {
+	public String getScore(boolean fromTeam) {
 		// String str = getTime().equals("") ? "" : getTime() + "mins ";
 		String str = "";
 		String str1 = bPeriod.getText().toString();
@@ -496,23 +498,28 @@ public class ScoresFragment extends Fragment {
 
 		String comment = tLoc.getText().length() <= 1 ? "" : (tLoc.getText()
 				.toString() + "\n");
-		return comment
-				+ str
-				+ tOurTeam.getText()
-				+ ":"
-				+ (bHomeGoals.getText().equals("+") ? "0" : bHomeGoals
-						.getText())
-				+ "-"
-				+ (bHomePoints.getText().equals("+") ? "0" : bHomePoints
-						.getText())
-				+ tHomeTotal.getText()
-				+ "  "
-				+ tOppTeam.getText()
-				+ ":"
-				+ (bOppGoals.getText().equals("+") ? "0" : bOppGoals.getText())
-				+ "-"
-				+ (bOppPoints.getText().equals("+") ? "0" : bOppPoints
-						.getText()) + tOppTotal.getText() + ". ";
+		if (fromTeam) {
+			return str;
+		} else {
+			return comment
+					+ str
+					+ tOurTeam.getText()
+					+ ":"
+					+ (bHomeGoals.getText().equals("+") ? "0" : bHomeGoals
+							.getText())
+					+ "-"
+					+ (bHomePoints.getText().equals("+") ? "0" : bHomePoints
+							.getText())
+					+ tHomeTotal.getText()
+					+ "  "
+					+ tOppTeam.getText()
+					+ ":"
+					+ (bOppGoals.getText().equals("+") ? "0" : bOppGoals
+							.getText())
+					+ "-"
+					+ (bOppPoints.getText().equals("+") ? "0" : bOppPoints
+							.getText()) + tOppTotal.getText() + ". ";
+		}
 	}
 
 	OnClickListener tweetRecentListener = new OnClickListener() {
@@ -541,7 +548,7 @@ public class ScoresFragment extends Fragment {
 			// add in score
 			int j = 1;
 			txtList.add(0,
-					getScore().replace((tLoc.getText().toString() + ". "), ""));
+					getScore(false).replace((tLoc.getText().toString() + ". "), ""));
 			// add in comment if it exists
 			if (tLoc.getText().length() > 1) {
 				txtList.add(0, tLoc.getText().toString());
@@ -689,7 +696,7 @@ public class ScoresFragment extends Fragment {
 			case R.id.bTweetLast:
 				try {
 					Intent shareIntent = findTwitterClient();
-					shareIntent.putExtra(Intent.EXTRA_TEXT, getScore() + str);
+					shareIntent.putExtra(Intent.EXTRA_TEXT, getScore(false) + str);
 					startActivity(Intent.createChooser(shareIntent, "Share"));
 				} catch (Exception ex) {
 					Log.e("Error in Tweet", ex.toString());
@@ -704,7 +711,7 @@ public class ScoresFragment extends Fragment {
 				try {
 					Intent intentText = new Intent(Intent.ACTION_VIEW);
 					intentText.setType("vnd.android-dir/mms-sms");
-					intentText.putExtra("sms_body", getScore() + str);
+					intentText.putExtra("sms_body", getScore(false) + str);
 					intentText.setData(Uri.parse("sms: " + phone));
 					startActivity(intentText);
 				} catch (Exception ex) {
@@ -727,7 +734,7 @@ public class ScoresFragment extends Fragment {
 			case R.id.bTweetScore:
 				try {
 					Intent shareIntent = findTwitterClient();
-					shareIntent.putExtra(Intent.EXTRA_TEXT, getScore());
+					shareIntent.putExtra(Intent.EXTRA_TEXT, getScore(false));
 					startActivity(Intent.createChooser(shareIntent, "Share"));
 				} catch (Exception ex) {
 					Log.e("Error in Tweet", ex.toString());
@@ -742,7 +749,7 @@ public class ScoresFragment extends Fragment {
 				try {
 					Intent intentText = new Intent(Intent.ACTION_VIEW);
 					intentText.setType("vnd.android-dir/mms-sms");
-					intentText.putExtra("sms_body", getScore());
+					intentText.putExtra("sms_body", getScore(false));
 					intentText.setData(Uri.parse("sms: " + phone));
 					startActivity(intentText);
 				} catch (Exception ex) {
@@ -848,6 +855,20 @@ public class ScoresFragment extends Fragment {
 		((Startup) getActivity()).getFragmentTeamTwo().resetCardsSubs();
 		updateStatsList();
 		tStats.setText("");
+		// delete image files in dir
+		File dir = new File(Environment.getExternalStorageDirectory(),
+				"GAA_APP_Teams");
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		File files[] = dir.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].getName().contains("GAAScoresStatsTeam_")
+					|| files[i].getName().contains(
+							"GAAScoresStatsTeamSelection_")) {
+				files[i].delete();
+			}
+		}
 	}
 
 	// Run Match timer section. Set text strings and timer based on 4
