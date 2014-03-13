@@ -12,7 +12,7 @@
         android:id="@+id/layoutRev"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".81"
+        android:layout_weight=".8"
         android:background="@drawable/bg_custom"
         android:orientation="horizontal" >
 
@@ -584,20 +584,8 @@
             android:text="|"
             android:textColor="#000000"
             android:textSize="12sp" />
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-   <LinearLayout
+        <LinearLayout
             android:id="@+id/LayoutRevLeft"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -1160,26 +1148,41 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/bTweetAll"
-            android:layout_width="0dp"
+            android:id="@+id/bViewEvents"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@drawable/buttond_custom"
-            android:padding="0dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="view match events"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/bTweetAll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttond_custom"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:text="tweet match stats"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/bSendAll"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@drawable/buttond_custom"
-            android:padding="0dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:text="share match summary"
             android:textSize="12sp" />
     </LinearLayout>
@@ -1187,37 +1190,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.73"
+        android:layout_marginTop="2dp"
+        android:layout_weight="1.78"
         android:minHeight="20dp"
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/TextView09"
-            android:layout_width="0dp"
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:gravity="bottom|left"
-            android:text="MATCH EVENTS"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="2"
             android:gravity="bottom|center_horizontal"
             android:text="long press on a row to delete match event"
             android:textColor="#f00"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.2"
+        android:layout_weight="1.3"
         android:orientation="vertical" >
 
         <ListView

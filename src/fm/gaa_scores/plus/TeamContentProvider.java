@@ -90,7 +90,6 @@ public class TeamContentProvider extends DatabaseSetup {
 	@Override
 	// open connection to team defined in BaseProvider Class
 	public boolean onCreate() {
-		Log.e("qqq","cp");
 		
 		Context context = getContext();
 		DatabaseHelper dbHelper = new DatabaseHelper(context);

@@ -26,8 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="4.2"
-                android:measureWithLargestChild="false"
+                android:layout_weight="4"
                 android:orientation="vertical" >
 
                 <RadioButton
@@ -118,7 +117,7 @@
                 android:id="@+id/radioGroup_shot_t"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="6dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="5"
                 android:measureWithLargestChild="false"

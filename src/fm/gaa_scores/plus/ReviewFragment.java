@@ -86,7 +86,7 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotPointsPlay45Home, tShotPointsPlay45Opp;
 	private TextView tShotPointsPlaySavedHome, tShotPointsPlaySavedOpp;
 	private TextView tShotPointsPlayPostsHome, tShotPointsPlayPostsOpp;
-	private Button bSendAll, bTweetAll;
+	private Button bSendAll, bTweetAll, bEvents;
 	private int red = 0, yellow = 0, sub = 0;
 
 	private int shotGoalsHome = 0, shotPointsHome = 0;
@@ -302,6 +302,8 @@ public class ReviewFragment extends Fragment {
 		bSendAll.setOnClickListener(sendAllListener);
 		bTweetAll = (Button) v.findViewById(R.id.bTweetAll);
 		bTweetAll.setOnClickListener(tweetAllListener);
+		bEvents = (Button) v.findViewById(R.id.bViewEvents);
+		bEvents.setOnClickListener(listEvents);
 
 		// fill in list view with datavbase
 		listViewStats = (ListView) v.findViewById(R.id.listView1);
@@ -348,7 +350,8 @@ public class ReviewFragment extends Fragment {
 			Toast.makeText(getActivity(), "stats entry deleted",
 					Toast.LENGTH_LONG).show();
 			updateListView();
-			((Startup) getActivity()).getFragmentScore().undo(strTemp);
+			String[] strArray = {strTemp};
+			((Startup) getActivity()).getFragmentScore().undo(strArray);
 			return true;
 		}
 		return super.onContextItemSelected(item);
@@ -868,6 +871,38 @@ public class ReviewFragment extends Fragment {
 		}
 		tCardHome.setText(cardHome + subHome);
 		tCardOpp.setText(cardOpp + subOpp);
+	}
+
+	OnClickListener listEvents = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent events = new Intent(getActivity(), EventsListActivity.class);
+			startActivityForResult(events, 1);
+
+		};
+	};
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		ArrayList<String> eventsUndoList = new ArrayList<String>();
+		String str;
+		if (requestCode == 1) {
+			// A contact was picked. Here we will just display it
+			// to the user.
+			Log.e("hello", " " + resultCode);
+			if (data.hasExtra("eventsUndoList")) {
+				eventsUndoList = data.getStringArrayListExtra("eventsUndoList");
+				Log.e("data size", " " + eventsUndoList.size());
+			}
+			if (eventsUndoList.size() > 0) {
+				String[] strArray = new String[eventsUndoList.size()];
+				for (int i = 0; i < eventsUndoList.size(); i++) {
+					strArray[i] = eventsUndoList.get(i);
+					Log.e("string", " " + strArray[i]);
+					
+				}
+				((Startup) getActivity()).getFragmentScore().undo(strArray);
+			}
+		}
 	}
 
 	// for reset buttons diplay message to long click, won't work with ordinary
