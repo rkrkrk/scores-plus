@@ -7,6 +7,5 @@
     android:gravity="center"
     android:paddingBottom="2dp"
     android:paddingTop="2dp"
-    android:textSize="14sp"
-    android:textStyle="bold" />
+    android:textSize="13sp" />
 

@@ -862,7 +862,7 @@ public class ScoresFragment extends Fragment {
 		tStats.setText("");
 		// delete image files in dir
 		File dir = new File(Environment.getExternalStorageDirectory(),
-				"GAA_APP_Teams");
+				"gaa_app_sysfiles");
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}

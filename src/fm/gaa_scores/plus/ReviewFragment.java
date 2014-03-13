@@ -888,17 +888,13 @@ public class ReviewFragment extends Fragment {
 		if (requestCode == 1) {
 			// A contact was picked. Here we will just display it
 			// to the user.
-			Log.e("hello", " " + resultCode);
 			if (data.hasExtra("eventsUndoList")) {
 				eventsUndoList = data.getStringArrayListExtra("eventsUndoList");
-				Log.e("data size", " " + eventsUndoList.size());
 			}
 			if (eventsUndoList.size() > 0) {
 				String[] strArray = new String[eventsUndoList.size()];
 				for (int i = 0; i < eventsUndoList.size(); i++) {
-					strArray[i] = eventsUndoList.get(i);
-					Log.e("string", " " + strArray[i]);
-					
+					strArray[i] = eventsUndoList.get(i);					
 				}
 				((Startup) getActivity()).getFragmentScore().undo(strArray);
 			}
@@ -1298,7 +1294,7 @@ public class ReviewFragment extends Fragment {
 			uris.add(uri1);
 			uris.add(uri2);
 			File dir = new File(Environment.getExternalStorageDirectory(),
-					"GAA_APP_Teams");
+					"gaa_app_sysfiles");
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}

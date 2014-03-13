@@ -270,7 +270,7 @@ public class TeamTwoFragment extends Fragment {
 			if (txtButton == R.id.sel_share) {
 				try {
 					root = new File(Environment.getExternalStorageDirectory(),
-							"GAA_APP_Teams");
+							"gaa_app_sysfiles");
 					if (!root.exists()) {
 						root.mkdirs();
 					}
@@ -318,7 +318,7 @@ public class TeamTwoFragment extends Fragment {
 				emailIntent.setType("text/plain");
 				String[] emailAttachments = new String[] { Environment
 						.getExternalStorageDirectory()
-						+ "/GAA_APP_Teams/"
+						+ "/gaa_app_sysfiles/"
 						+ "GAAScoresStatsTeam1.txt" };
 				// put email attachments into an ArrayList
 				ArrayList<Uri> uris = new ArrayList<Uri>();
@@ -335,12 +335,11 @@ public class TeamTwoFragment extends Fragment {
 
 			else if (txtButton == R.id.bSaveSelection) {
 				File dir = new File(Environment.getExternalStorageDirectory(),
-						"GAA_APP_Teams");
+						"gaa_app_sysfiles");
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
 				File files[] = dir.listFiles();
-				Log.e("Ffffiles", "Size: " + files.length);
 				int fileNum = 0;
 				for (int i = 0; i < files.length; i++) {
 					if (files[i].getName().contains("GAAScoresStatsTeam_")
@@ -355,11 +354,6 @@ public class TeamTwoFragment extends Fragment {
 					}
 				}
 				try {
-					dir = new File(Environment.getExternalStorageDirectory(),
-							"GAA_APP_Teams");
-					if (!dir.exists()) {
-						dir.mkdirs();
-					}
 					outfile = new File(dir, "GAAScoresStatsTeam_"
 							+ String.format("%02d", fileNum + 1) + ".txt");
 					FileWriter writer = new FileWriter(outfile);
@@ -375,7 +369,6 @@ public class TeamTwoFragment extends Fragment {
 							Toast.LENGTH_LONG).show();
 				}
 
-				Log.e("filenum", " " + fileNum);
 				Bitmap bitmap = createBitmap(subLines, cardLines,
 						R.id.sel_cards);
 				OutputStream fout = null;
@@ -1925,7 +1918,6 @@ public class TeamTwoFragment extends Fragment {
 
 	public void deleteDownloads() {
 		try {
-			List<File> fileList = new ArrayList<File>();
 			File root = new File(Environment.getExternalStoragePublicDirectory(
 					Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
 			// list files in directory

@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.03"
             android:orientation="horizontal"
             android:padding="0dp" >
 
@@ -36,7 +36,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".99"
+            android:layout_weight="1.02"
             android:orientation="horizontal" >
 
             <Button
@@ -339,7 +339,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="2dp"
-            android:layout_weight=".98"
+            android:layout_weight="1"
             android:orientation="horizontal" >
 
             <Button
@@ -348,7 +348,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="1dp"
-                android:layout_weight="1.1"
+                android:layout_weight="1"
                 android:background="@drawable/btn_yellow"
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
@@ -364,7 +364,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:background="@drawable/btn_yellow"
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
@@ -380,7 +380,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:background="@drawable/btn_yellow"
                 android:gravity="center_vertical|center_horizontal"
                 android:minHeight="0dp"
@@ -396,7 +396,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.1"
+                android:layout_weight="1"
                 android:background="@drawable/btn_red"
                 android:gravity="center_vertical|center_horizontal"
                 android:paddingLeft="4dp"
@@ -504,7 +504,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="2.3" >
+        android:layout_weight="3" >
 
         <LinearLayout
             android:layout_width="match_parent"
