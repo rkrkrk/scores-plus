@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -395,7 +396,7 @@ public class TeamOneFragment extends Fragment {
 	};
 
 	// text team selection
-
+	//
 	OnClickListener selTextListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -795,6 +796,7 @@ public class TeamOneFragment extends Fragment {
 		public void onClick(View v) {
 
 			int txtButton = ((Button) v).getId();
+			bloodSub = false;
 			if (txtButton == R.id.bBlood) {
 				bloodSub = true;
 			}
@@ -848,6 +850,55 @@ public class TeamOneFragment extends Fragment {
 			alert.show();
 		}
 	};
+
+	public void undoSub(String toComeOff, String toGoOn)  {
+		try {
+			int posnIndex = 0,panelListIndex=0;
+			for (int i = 1; i < teamLineUpCurrent.length; i++) {
+				if (teamLineUpCurrent[i].equals(toComeOff)) {
+					posnIndex = i;
+					break;
+				}
+			}
+			if (toGoOn.length()>=3){
+				panelListIndex = panelList.indexOf(toGoOn);
+			}
+			if (posnIndex > 0 && panelListIndex >= 0) {
+				panelList.add(toComeOff);
+				ContentValues values = new ContentValues();
+				values = new ContentValues();
+				values.put("posn", -1);
+				Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI + "/"
+						+ playerIDLookUp.get(toComeOff));
+				getActivity().getContentResolver().update(uri, values, null,
+						null);
+				if (toGoOn.length() < 3) {
+					teamLineUpCurrent[posnIndex] = String.valueOf(posnIndex);
+					bTeam[posnIndex].setText(teamLineUpCurrent[posnIndex]);
+				} else {
+					teamLineUpCurrent[posnIndex] = toGoOn;
+					bTeam[posnIndex].setText(toGoOn);
+					values.put("posn", posnIndex);
+					uri = Uri.parse(TeamContentProvider.CONTENT_URI + "/"
+							+ playerIDLookUp.get(toGoOn));
+					getActivity().getContentResolver().update(uri, values,
+							null, null);
+					panelList.remove(toGoOn);
+				}
+				panelList.remove("RESET POSITION TO NUMBER");
+				panelList.remove("ENTER NEW PLAYER NAME");
+				Collections.sort(panelList);
+				panelList.add(0, "RESET POSITION TO NUMBER");
+				panelList.add(0, "ENTER NEW PLAYER NAME");
+				// getTeam(panelName);
+			} else {
+				Toast.makeText(getActivity(), "error, unable to undo substition",
+						Toast.LENGTH_SHORT).show();
+			}
+		} catch (Exception e) {
+			Log.e("undoSubs Error",e.toString());
+		}
+	}
 
 	private void makeSub(boolean bloodSub) {
 		// update database

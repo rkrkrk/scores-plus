@@ -2106,11 +2106,20 @@ public class ScoresFragment extends Fragment {
 					((Startup) getActivity()).getFragmentReview()
 							.addFreeConcededOpp(-1);
 				}
-			}
-			if ((strTemp.indexOf("card") >= 0)
-					|| (strTemp.indexOf("substitution")) >= 0) {
+			} else if (strTemp.indexOf("card") >= 0) {
+				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+
+			} else 	if (strTemp.indexOf("substitution") >= 0) {
 				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 				//SORT OUT SUBS HERE
+				String toGoOn, toComeOff;
+				toGoOn=	strTemp.substring(strTemp.indexOf("off:")+5,strTemp.indexOf("on:")-2);
+				toComeOff = strTemp.substring(strTemp.indexOf("on:")+4,strTemp.length());
+				if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
+					((Startup) getActivity()).getFragmentTeamOne().undoSub(toComeOff, toGoOn);
+				} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
+					((Startup) getActivity()).getFragmentTeamTwo().undoSub(toComeOff, toGoOn);
+				}
 			}
 			undoScorers(strTemp);
 		}
