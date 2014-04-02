@@ -11,6 +11,10 @@
         android:showAsAction="ifRoom"
         android:title="delete a player"/>
     <item
+        android:id="@+id/renamePlayer"
+        android:showAsAction="ifRoom"
+        android:title="rename a player"/>
+    <item
         android:id="@+id/createNewTeam"
         android:showAsAction="ifRoom"
         android:title="create new team"/>

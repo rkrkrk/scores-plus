@@ -1253,14 +1253,6 @@ public class TeamTwoFragment extends Fragment {
 		}
 	}
 
-	// delete player
-	OnClickListener deletePlayerListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			deletePlayer();
-		}
-	};
-
 	private void deletePlayer() {
 		// get list of player names
 		ArrayList<String> panelList = new ArrayList<String>();
@@ -2020,6 +2012,9 @@ public class TeamTwoFragment extends Fragment {
 		case R.id.deletePlayer:
 			deletePlayer();
 			return true;
+//		case R.id.renamePlayer:
+//			renamePlayer();
+//			return true;
 		case R.id.createNewTeam:
 			createNewTeam();
 			return true;

@@ -851,16 +851,16 @@ public class TeamOneFragment extends Fragment {
 		}
 	};
 
-	public void undoSub(String toComeOff, String toGoOn)  {
+	public void undoSub(String toComeOff, String toGoOn) {
 		try {
-			int posnIndex = 0,panelListIndex=0;
+			int posnIndex = 0, panelListIndex = 0;
 			for (int i = 1; i < teamLineUpCurrent.length; i++) {
 				if (teamLineUpCurrent[i].equals(toComeOff)) {
 					posnIndex = i;
 					break;
 				}
 			}
-			if (toGoOn.length()>=3){
+			if (toGoOn.length() >= 3) {
 				panelListIndex = panelList.indexOf(toGoOn);
 			}
 			if (posnIndex > 0 && panelListIndex >= 0) {
@@ -892,11 +892,12 @@ public class TeamOneFragment extends Fragment {
 				panelList.add(0, "ENTER NEW PLAYER NAME");
 				// getTeam(panelName);
 			} else {
-				Toast.makeText(getActivity(), "error, unable to undo substition",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(),
+						"error, unable to undo substition", Toast.LENGTH_SHORT)
+						.show();
 			}
 		} catch (Exception e) {
-			Log.e("undoSubs Error",e.toString());
+			Log.e("undoSubs Error", e.toString());
 		}
 	}
 
@@ -1253,14 +1254,6 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
-	// delete player
-	OnClickListener deletePlayerListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			deletePlayer();
-		}
-	};
-
 	private void deletePlayer() {
 		// get list of player names
 		ArrayList<String> panelList = new ArrayList<String>();
@@ -1311,6 +1304,106 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
+	private void renamePlayer() {
+		// get list of player names
+		ArrayList<String> panelList = new ArrayList<String>();
+		String[] projection = { TeamContentProvider.NAME };
+		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
+				projection,
+				TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+				TeamContentProvider.NAME);
+		Cursor c1 = cL.loadInBackground();
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				panelList.add(c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.NAME)));
+			} while (c1.moveToNext());
+			panelList.remove("...");
+			panel = new String[panelList.size()];
+			for (int i = 0; i < panelList.size(); i++) {
+				panel[i] = panelList.get(i);
+			}
+			c1.close();
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("select player to rename");
+			builder.setSingleChoiceItems(panel, 0,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							player = panel[which];
+							dialog.dismiss();
+							AlertDialog.Builder alertB = new AlertDialog.Builder(
+									getActivity());
+							input = new EditText(getActivity());
+							input.setId(997);
+							input.setText(player);
+							alertB.setTitle("Rename Player");
+							alertB.setMessage("Name:");
+							alertB.setView(input);
+							alertB.setPositiveButton("OK",
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(
+												DialogInterface indialog,
+												int which) {
+											String inName = input.getText()
+													.toString();
+											if (inName.length() > 2) {
+												// Update name in database
+												ContentValues values = new ContentValues();
+												values.put("name", inName);
+												// add to panel database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI,
+																values,
+																TeamContentProvider.NAME
+																		+ " = '"
+																		+ player
+																		+ "'",
+																null);
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_3,
+																values,
+																TeamContentProvider.SCORESNAME
+																		+ " = '"
+																		+ player
+																		+ "'",
+																null);
+												getTeam(panelName);
+												((Startup) getActivity())
+														.getFragmentScorers()
+														.fillData();
+												renamePlayerInStats(player,
+														inName);
+												updateCards();
+												updateSubsList();
+											} else {
+												Toast.makeText(
+														getActivity(),
+														"Invalid Name, Try Again\n"
+																+ "Must be at least 3 characters long",
+														Toast.LENGTH_SHORT)
+														.show();
+											}
+										}
+									});
+							alertB.create();
+							alertB.show();
+						}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
+
+		} else {
+			// error no teams available
+			Toast.makeText(getActivity(), "There are no players to delete",
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	// delete team
 	OnClickListener deleteTeamListener = new OnClickListener() {
 		@Override
@@ -1319,6 +1412,34 @@ public class TeamOneFragment extends Fragment {
 			deleteTeam();
 		}
 	};
+
+	private void renamePlayerInStats(String oldName, String newName) {
+		CursorLoader cL = new CursorLoader(getActivity(),
+				TeamContentProvider.CONTENT_URI_2, null, null, null,
+				TeamContentProvider.STATSID);
+		Cursor c1 = cL.loadInBackground();
+		long id = -1;
+		String stat;
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				stat = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				if (stat.contains(oldName)) {
+					stat = stat.replace(oldName, newName);
+					id = c1.getLong(c1
+							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+					ContentValues values = new ContentValues();
+					values.put("line", stat);
+					getActivity().getContentResolver().update(
+							TeamContentProvider.CONTENT_URI_2, values,
+							TeamContentProvider.STATSID + " = '" + id + "'",
+							null);
+				}
+			} while (c1.moveToNext());
+			c1.close();
+		}
+	}
 
 	private void deleteTeam() {
 		ArrayList<String> panelList = new ArrayList<String>();
@@ -2017,6 +2138,9 @@ public class TeamOneFragment extends Fragment {
 			return true;
 		case R.id.deletePlayer:
 			deletePlayer();
+			return true;
+		case R.id.renamePlayer:
+			renamePlayer();
 			return true;
 		case R.id.createNewTeam:
 			createNewTeam();
