@@ -851,16 +851,16 @@ public class TeamOneFragment extends Fragment {
 		}
 	};
 
-	public void undoSub(String toComeOff, String toGoOn)  {
+	public void undoSub(String toComeOff, String toGoOn) {
 		try {
-			int posnIndex = 0,panelListIndex=0;
+			int posnIndex = 0, panelListIndex = 0;
 			for (int i = 1; i < teamLineUpCurrent.length; i++) {
 				if (teamLineUpCurrent[i].equals(toComeOff)) {
 					posnIndex = i;
 					break;
 				}
 			}
-			if (toGoOn.length()>=3){
+			if (toGoOn.length() >= 3) {
 				panelListIndex = panelList.indexOf(toGoOn);
 			}
 			if (posnIndex > 0 && panelListIndex >= 0) {
@@ -892,11 +892,12 @@ public class TeamOneFragment extends Fragment {
 				panelList.add(0, "ENTER NEW PLAYER NAME");
 				// getTeam(panelName);
 			} else {
-				Toast.makeText(getActivity(), "error, unable to undo substition",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(),
+						"error, unable to undo substition", Toast.LENGTH_SHORT)
+						.show();
 			}
 		} catch (Exception e) {
-			Log.e("undoSubs Error",e.toString());
+			Log.e("undoSubs Error", e.toString());
 		}
 	}
 
@@ -967,7 +968,7 @@ public class TeamOneFragment extends Fragment {
 		}
 
 		updateSubsList();
-		((Startup) getActivity()).getFragmentScore().updateStatsList();
+		((Startup) getActivity()).getFragmentScore().updateStatsList(false);
 		((Startup) getActivity()).getFragmentReview().updateListView();
 	}
 
@@ -1076,7 +1077,7 @@ public class TeamOneFragment extends Fragment {
 					((Startup) getActivity()).getFragmentReview()
 							.updateListView();
 					((Startup) getActivity()).getFragmentScore()
-							.updateStatsList();
+							.updateStatsList(false);
 					((Startup) getActivity()).getFragmentTeamTwo().setTeam(
 							panelName);
 
@@ -1178,15 +1179,6 @@ public class TeamOneFragment extends Fragment {
 		alert.show();
 	}
 
-	// Load existing team
-	OnClickListener loadTeamListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// get list of team names
-			loadTeam();
-		}
-	};
-
 	private void loadTeam() {
 		ArrayList<String> panelTeam = new ArrayList<String>();
 		String str;
@@ -1253,14 +1245,6 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
-	// delete player
-	OnClickListener deletePlayerListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			deletePlayer();
-		}
-	};
-
 	private void deletePlayer() {
 		// get list of player names
 		ArrayList<String> panelList = new ArrayList<String>();
@@ -1308,6 +1292,140 @@ public class TeamOneFragment extends Fragment {
 			// error no teams available
 			Toast.makeText(getActivity(), "There are no players to delete",
 					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void renamePlayer() {
+		// get list of player names
+		ArrayList<String> panelList = new ArrayList<String>();
+		String[] projection = { TeamContentProvider.NAME };
+		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
+				projection,
+				TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+				TeamContentProvider.NAME);
+		Cursor c1 = cL.loadInBackground();
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				panelList.add(c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.NAME)));
+			} while (c1.moveToNext());
+			panelList.remove("...");
+			panel = new String[panelList.size()];
+			for (int i = 0; i < panelList.size(); i++) {
+				panel[i] = panelList.get(i);
+			}
+			c1.close();
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("select player to rename");
+			builder.setSingleChoiceItems(panel, 0,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							player = panel[which];
+							dialog.dismiss();
+							AlertDialog.Builder alertB = new AlertDialog.Builder(
+									getActivity());
+							input = new EditText(getActivity());
+							input.setId(997);
+							input.setText(player);
+							alertB.setTitle("Rename Player");
+							alertB.setMessage("Name:");
+							alertB.setView(input);
+							alertB.setPositiveButton("OK",
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(
+												DialogInterface indialog,
+												int which) {
+											String inName = input.getText()
+													.toString();
+											if (inName.length() > 2) {
+												// Update name in database
+												ContentValues values = new ContentValues();
+												values.put("name", inName);
+												// add to panel database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI,
+																values,
+																TeamContentProvider.NAME
+																		+ " = '"
+																		+ player
+																		+ "'",
+																null);
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_3,
+																values,
+																TeamContentProvider.SCORESNAME
+																		+ " = '"
+																		+ player
+																		+ "'",
+																null);
+												getTeam(panelName);
+												((Startup) getActivity())
+														.getFragmentScorers()
+														.fillData();
+												renamePlayerInStats(player,
+														inName);
+												updateCards();
+												updateSubsList();
+												((Startup) getActivity())
+														.getFragmentReview()
+														.updateListView();
+												((Startup) getActivity())
+														.getFragmentScore()
+														.updateStatsList(false);
+											} else {
+												Toast.makeText(
+														getActivity(),
+														"Invalid Name, Try Again\n"
+																+ "Must be at least 3 characters long",
+														Toast.LENGTH_SHORT)
+														.show();
+											}
+										}
+									});
+							alertB.create();
+							alertB.show();
+						}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
+
+		} else {
+			// error no teams available
+			Toast.makeText(getActivity(), "There are no players to delete",
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void renamePlayerInStats(String oldName, String newName) {
+		CursorLoader cL = new CursorLoader(getActivity(),
+				TeamContentProvider.CONTENT_URI_2, null, null, null,
+				TeamContentProvider.STATSID);
+		Cursor c1 = cL.loadInBackground();
+		long id = -1;
+		String stat;
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				stat = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				if (stat.contains(oldName)) {
+					stat = stat.replace(oldName, newName);
+					id = c1.getLong(c1
+							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+					ContentValues values = new ContentValues();
+					values.put("line", stat);
+					Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
+							+ id);
+					getActivity().getContentResolver().update(uri, values,
+							null, null);
+				}
+			} while (c1.moveToNext());
+			c1.close();
 		}
 	}
 
@@ -1742,31 +1860,6 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
-	public void emailTeam() {
-		exportTeam();
-		// set up for emailing database and CSV files from storage
-		Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT,
-				"team file for GAAScoresStats Android App");
-		emailIntent.putExtra(Intent.EXTRA_TEXT, "match data attached");
-		emailIntent.setType("text/plain");
-		String[] emailAttachments = new String[] { Environment
-				.getExternalStorageDirectory()
-				+ "/GAA_APP_Export/"
-				+ panelName
-				+ ".txt" };
-		// put email attachments into an ArrayList
-		ArrayList<Uri> uris = new ArrayList<Uri>();
-		for (String file : emailAttachments) {
-			File uriFiles = new File(file);
-			Uri u = Uri.fromFile(uriFiles);
-			uris.add(u);
-		}
-		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-		startActivity(Intent.createChooser(emailIntent, "Email:"));
-
-	}
-
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != 0) {
@@ -2018,6 +2111,9 @@ public class TeamOneFragment extends Fragment {
 		case R.id.deletePlayer:
 			deletePlayer();
 			return true;
+		case R.id.renamePlayer:
+			renamePlayer();
+			return true;
 		case R.id.createNewTeam:
 			createNewTeam();
 			return true;
@@ -2038,9 +2134,6 @@ public class TeamOneFragment extends Fragment {
 			return true;
 		case R.id.exportTeam:
 			exportTeam();
-			return true;
-		case R.id.emailTeam:
-			emailTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

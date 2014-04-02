@@ -305,7 +305,7 @@ public class ScoresFragment extends Fragment {
 				}
 				getActivity().getContentResolver().insert(
 						TeamContentProvider.CONTENT_URI_2, values);
-				updateStatsList();
+				updateStatsList(true);
 				b.setText(str[0]);
 				bPeriod.setText(str[1]);
 			}
@@ -858,7 +858,7 @@ public class ScoresFragment extends Fragment {
 		((Startup) getActivity()).getFragmentReview().resetStats();
 		((Startup) getActivity()).getFragmentTeamOne().resetCardsSubs();
 		((Startup) getActivity()).getFragmentTeamTwo().resetCardsSubs();
-		updateStatsList();
+		updateStatsList(true);
 		tStats.setText("");
 		// delete image files in dir
 		File dir = new File(Environment.getExternalStorageDirectory(),
@@ -1280,7 +1280,7 @@ public class ScoresFragment extends Fragment {
 		}
 
 		// update display list
-		updateStatsList();
+		updateStatsList(true);
 	}
 
 	private void updateScorers(String stats1, String stats2, String player,
@@ -1390,7 +1390,7 @@ public class ScoresFragment extends Fragment {
 		}
 	}
 
-	public void updateStatsList() {
+	public void updateStatsList(boolean updateOthers) {
 		// load panel from database and assign to arraylist
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
@@ -1433,13 +1433,18 @@ public class ScoresFragment extends Fragment {
 		}
 		// call update in review
 		c1.close();
+		if (updateOthers) {
+			updateOtherFragments();
+		}
+	}
+
+	private void updateOtherFragments() {
 		((Startup) getActivity()).getFragmentReview().updateListView();
 		((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		((Startup) getActivity()).getFragmentTeamOne().updateCards();
 		((Startup) getActivity()).getFragmentTeamOne().updateSubsList();
 		((Startup) getActivity()).getFragmentTeamTwo().updateCards();
 		((Startup) getActivity()).getFragmentTeamTwo().updateSubsList();
-
 	}
 
 	private void getTeam(String teamName) {
@@ -1838,7 +1843,7 @@ public class ScoresFragment extends Fragment {
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 								+ rowId), null, null);
-				String[] strArray = {strTemp};
+				String[] strArray = { strTemp };
 				undo(strArray);
 			}
 		}
@@ -2109,21 +2114,25 @@ public class ScoresFragment extends Fragment {
 			} else if (strTemp.indexOf("card") >= 0) {
 				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 
-			} else 	if (strTemp.indexOf("substitution") >= 0) {
+			} else if (strTemp.indexOf("substitution") >= 0) {
 				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
-				//SORT OUT SUBS HERE
+				// SORT OUT SUBS HERE
 				String toGoOn, toComeOff;
-				toGoOn=	strTemp.substring(strTemp.indexOf("off:")+5,strTemp.indexOf("on:")-2);
-				toComeOff = strTemp.substring(strTemp.indexOf("on:")+4,strTemp.length());
+				toGoOn = strTemp.substring(strTemp.indexOf("off:") + 5,
+						strTemp.indexOf("on:") - 2);
+				toComeOff = strTemp.substring(strTemp.indexOf("on:") + 4,
+						strTemp.length());
 				if (strTemp.indexOf(tOurTeam.getText().toString()) >= 0) {
-					((Startup) getActivity()).getFragmentTeamOne().undoSub(toComeOff, toGoOn);
+					((Startup) getActivity()).getFragmentTeamOne().undoSub(
+							toComeOff, toGoOn);
 				} else if (strTemp.indexOf(tOppTeam.getText().toString()) >= 0) {
-					((Startup) getActivity()).getFragmentTeamTwo().undoSub(toComeOff, toGoOn);
+					((Startup) getActivity()).getFragmentTeamTwo().undoSub(
+							toComeOff, toGoOn);
 				}
 			}
 			undoScorers(strTemp);
 		}
-		updateStatsList();
+		updateStatsList(true);
 	}
 
 	private void undoScorers(String str) {

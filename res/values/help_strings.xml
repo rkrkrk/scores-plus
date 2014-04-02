@@ -74,6 +74,8 @@ phone number or numbers to send texts to in the
 <p>
 <b>ACTION BAR MENU</b><br/>
 <b>delete a player</b> - delete a player from the current team panel.<br/>
+<b>rename a player</b> - rename a player from the current team panel. Select player to rename
+and then type in new name.<br/>
 <b>create new team</b> - create a new team, you will be prompted for the team name.  Note that
 the current team, players and team lineup are automatically saved and can be retrieved later.<br/>
 <b>load a saved team</b> - retrieve a previously saved team, you can select the name from a list. Note that a team
