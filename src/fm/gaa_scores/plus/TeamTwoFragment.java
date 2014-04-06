@@ -2123,9 +2123,15 @@ public class TeamTwoFragment extends Fragment {
 		case R.id.deletePlayer:
 			deletePlayer();
 			return true;
+<<<<<<< HEAD
 		case R.id.renamePlayer:
 			renamePlayer();
 			return true;
+=======
+//		case R.id.renamePlayer:
+//			renamePlayer();
+//			return true;
+>>>>>>> 31044a14cdfdabeab0c40c385dd69547051370f5
 		case R.id.createNewTeam:
 			createNewTeam();
 			return true;

@@ -132,6 +132,10 @@ public final class R {
         public static final int deletePlayer=0x7f0800f8;
         public static final int deleteTeam=0x7f0800fc;
         public static final int downloadTeam=0x7f0800fe;
+<<<<<<< HEAD
+=======
+        public static final int emailTeam=0x7f080101;
+>>>>>>> 31044a14cdfdabeab0c40c385dd69547051370f5
         public static final int etLoc=0x7f0800af;
         public static final int exportTeam=0x7f080100;
         public static final int goals_label=0x7f08009c;
