@@ -131,13 +131,9 @@ public final class R {
         public static final int decrease_timer=0x7f080096;
         public static final int deletePlayer=0x7f0800f8;
         public static final int deleteTeam=0x7f0800fc;
-        public static final int downloadTeam=0x7f0800fe;
-<<<<<<< HEAD
-=======
-        public static final int emailTeam=0x7f080101;
->>>>>>> 31044a14cdfdabeab0c40c385dd69547051370f5
+        public static final int downloadTeam=0x7f080100;
         public static final int etLoc=0x7f0800af;
-        public static final int exportTeam=0x7f080100;
+        public static final int exportTeam=0x7f0800ff;
         public static final int goals_label=0x7f08009c;
         public static final int goals_label2=0x7f08009e;
         public static final int head1=0x7f080001;
@@ -155,7 +151,7 @@ public final class R {
         public static final int home_goals=0x7f0800a1;
         public static final int home_points=0x7f0800a2;
         public static final int home_total=0x7f0800a8;
-        public static final int importTeam=0x7f0800ff;
+        public static final int importTeam=0x7f0800fe;
         public static final int increase_timer=0x7f080098;
         public static final int layoutRecorddm=0x7f08008e;
         public static final int layoutRev=0x7f080008;

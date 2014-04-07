@@ -1179,15 +1179,6 @@ public class TeamTwoFragment extends Fragment {
 		alert.show();
 	}
 
-	// Load existing team
-	OnClickListener loadTeamListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// get list of team names
-			loadTeam();
-		}
-	};
-
 	private void loadTeam() {
 		ArrayList<String> panelList = new ArrayList<String>();
 		String str;
@@ -1376,17 +1367,8 @@ public class TeamTwoFragment extends Fragment {
 												((Startup) getActivity())
 														.getFragmentScorers()
 														.fillData();
-												renamePlayerInStats(player,
-														inName);
 												updateCards();
 												updateSubsList();
-												((Startup) getActivity())
-														.getFragmentReview()
-														.updateListView();
-												((Startup) getActivity())
-														.getFragmentScore()
-														.updateStatsList(false);
-
 											} else {
 												Toast.makeText(
 														getActivity(),
@@ -1408,34 +1390,6 @@ public class TeamTwoFragment extends Fragment {
 			// error no teams available
 			Toast.makeText(getActivity(), "There are no players to delete",
 					Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void renamePlayerInStats(String oldName, String newName) {
-		CursorLoader cL = new CursorLoader(getActivity(),
-				TeamContentProvider.CONTENT_URI_2, null, null, null,
-				TeamContentProvider.STATSID);
-		Cursor c1 = cL.loadInBackground();
-		long id = -1;
-		String stat;
-		if (c1.getCount() > 0) {
-			c1.moveToFirst();
-			do {
-				stat = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				if (stat.contains(oldName)) {
-					stat = stat.replace(oldName, newName);
-					id = c1.getLong(c1
-							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-					ContentValues values = new ContentValues();
-					values.put("line", stat);
-					Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
-							+ id);
-					getActivity().getContentResolver().update(uri, values,
-							null, null);
-				}
-			} while (c1.moveToNext());
-			c1.close();
 		}
 	}
 
@@ -2123,15 +2077,9 @@ public class TeamTwoFragment extends Fragment {
 		case R.id.deletePlayer:
 			deletePlayer();
 			return true;
-<<<<<<< HEAD
 		case R.id.renamePlayer:
 			renamePlayer();
 			return true;
-=======
-//		case R.id.renamePlayer:
-//			renamePlayer();
-//			return true;
->>>>>>> 31044a14cdfdabeab0c40c385dd69547051370f5
 		case R.id.createNewTeam:
 			createNewTeam();
 			return true;
@@ -2144,15 +2092,16 @@ public class TeamTwoFragment extends Fragment {
 		case R.id.resetTeam:
 			resetTeam();
 			return true;
-		case R.id.downloadTeam:
-			downloadTeam();
-			return true;
 		case R.id.importTeam:
 			importTeam();
 			return true;
 		case R.id.exportTeam:
 			exportTeam();
 			return true;
+		case R.id.downloadTeam:
+			downloadTeam();
+			return true;
+
 		}
 		return super.onOptionsItemSelected(item);
 	}

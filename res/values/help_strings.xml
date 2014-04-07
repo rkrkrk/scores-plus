@@ -84,7 +84,7 @@ loaded in the other team screen will not be available<br/>
 currently active teams can not be deleted.<br/>
 <b>reset current team selection</b> - reset all positions back to a number.  Note that player 
 names already entered are saved for reuse.<br/>
-<b>import downloaded team</b> - see below.<br/>
+
 <b>import team from text file</b> - see below.<br/>
 <b>export team to text file</b> - saves the current team selection/panel to a text file
 on the device storage. The text file is stored in a directory called GAA_App_Export.  The text 
@@ -92,10 +92,11 @@ file can be shared by email or uploaded to DropBox (or equivalent).  The text fi
 formated so that it can be imported by this App on other devices. (Youll probably need a 
 File Explorer/Manager App installed which allows 
 you to navigate your devices file system e.g. ES File Explorer.)<br/>
+<b>auto import downloaded team</b> - see below.<br/>
 </p>
 
 <p>
-<b>IMPORT DOWNLOADED TEAM</b><br/>
+<b>AUTO IMPORT DOWNLOADED TEAM</b><br/>
 This option enables you to automatically download team panels which are made
 available through the @gaaapps twitter account.  Go to the the @gaaapps
 twitter account and click on the download link in the relevant tweet for the team you want.

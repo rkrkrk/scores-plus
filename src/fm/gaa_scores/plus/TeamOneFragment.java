@@ -1367,19 +1367,8 @@ public class TeamOneFragment extends Fragment {
 												((Startup) getActivity())
 														.getFragmentScorers()
 														.fillData();
-												renamePlayerInStats(player,
-														inName);
 												updateCards();
 												updateSubsList();
-<<<<<<< HEAD
-												((Startup) getActivity())
-														.getFragmentReview()
-														.updateListView();
-												((Startup) getActivity())
-														.getFragmentScore()
-														.updateStatsList(false);
-=======
->>>>>>> 31044a14cdfdabeab0c40c385dd69547051370f5
 											} else {
 												Toast.makeText(
 														getActivity(),
@@ -1404,37 +1393,6 @@ public class TeamOneFragment extends Fragment {
 		}
 	}
 
-<<<<<<< HEAD
-	private void renamePlayerInStats(String oldName, String newName) {
-		CursorLoader cL = new CursorLoader(getActivity(),
-				TeamContentProvider.CONTENT_URI_2, null, null, null,
-				TeamContentProvider.STATSID);
-		Cursor c1 = cL.loadInBackground();
-		long id = -1;
-		String stat;
-		if (c1.getCount() > 0) {
-			c1.moveToFirst();
-			do {
-				stat = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				if (stat.contains(oldName)) {
-					stat = stat.replace(oldName, newName);
-					id = c1.getLong(c1
-							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-					ContentValues values = new ContentValues();
-					values.put("line", stat);
-					Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
-							+ id);
-					getActivity().getContentResolver().update(uri, values,
-							null, null);
-				}
-			} while (c1.moveToNext());
-			c1.close();
-		}
-	}
-
-=======
->>>>>>> 31044a14cdfdabeab0c40c385dd69547051370f5
 	// delete team
 	OnClickListener deleteTeamListener = new OnClickListener() {
 		@Override
@@ -1443,34 +1401,6 @@ public class TeamOneFragment extends Fragment {
 			deleteTeam();
 		}
 	};
-
-	private void renamePlayerInStats(String oldName, String newName) {
-		CursorLoader cL = new CursorLoader(getActivity(),
-				TeamContentProvider.CONTENT_URI_2, null, null, null,
-				TeamContentProvider.STATSID);
-		Cursor c1 = cL.loadInBackground();
-		long id = -1;
-		String stat;
-		if (c1.getCount() > 0) {
-			c1.moveToFirst();
-			do {
-				stat = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				if (stat.contains(oldName)) {
-					stat = stat.replace(oldName, newName);
-					id = c1.getLong(c1
-							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-					ContentValues values = new ContentValues();
-					values.put("line", stat);
-					getActivity().getContentResolver().update(
-							TeamContentProvider.CONTENT_URI_2, values,
-							TeamContentProvider.STATSID + " = '" + id + "'",
-							null);
-				}
-			} while (c1.moveToNext());
-			c1.close();
-		}
-	}
 
 	private void deleteTeam() {
 		ArrayList<String> panelList = new ArrayList<String>();
@@ -2160,14 +2090,14 @@ public class TeamOneFragment extends Fragment {
 		case R.id.resetTeam:
 			resetTeam();
 			return true;
-		case R.id.downloadTeam:
-			downloadTeam();
-			return true;
 		case R.id.importTeam:
 			importTeam();
 			return true;
 		case R.id.exportTeam:
 			exportTeam();
+			return true;
+		case R.id.downloadTeam:
+			downloadTeam();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
