@@ -1349,20 +1349,14 @@ public class TeamTwoFragment extends Fragment {
 														.getContentResolver()
 														.update(TeamContentProvider.CONTENT_URI,
 																values,
-																TeamContentProvider.NAME
-																		+ " = '"
-																		+ player
-																		+ "'",
-																null);
+																"name=?",
+																new String[] { player });
 												getActivity()
 														.getContentResolver()
 														.update(TeamContentProvider.CONTENT_URI_3,
 																values,
-																TeamContentProvider.SCORESNAME
-																		+ " = '"
-																		+ player
-																		+ "'",
-																null);
+																"name=?",
+																new String[] { player });
 												getTeam(panelName);
 												((Startup) getActivity())
 														.getFragmentScorers()
