@@ -259,8 +259,8 @@ public class ScoresFragment extends Fragment {
 				}
 				String[] str = new String[2];
 				// write start/time to database
-				str = settTimer((String) b.getText(),
-						(String) bPeriod.getText());
+				str = settTimer(b.getText().toString(), bPeriod.getText()
+						.toString());
 
 				sdf = new SimpleDateFormat("HH:mm   dd-MM-yy");
 				ContentValues values = new ContentValues();

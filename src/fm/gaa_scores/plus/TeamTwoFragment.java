@@ -1523,8 +1523,9 @@ public class TeamTwoFragment extends Fragment {
 																	.length() < 3) {
 																b.setText(inName);
 															} else {
-																String s = (String) b
-																		.getText();
+																String s = b
+																		.getText()
+																		.toString();
 																b.setText(inName);
 																panelList
 																		.add(s);
@@ -1579,7 +1580,7 @@ public class TeamTwoFragment extends Fragment {
 									else if (which == 1) {
 										// if its just the number do nothing
 										if (b.getText().length() > 2) {
-											String s = (String) b.getText();
+											String s =  b.getText().toString();
 											b.setText(String.valueOf(index));
 											teamLineUpCurrent[index] = String
 													.valueOf(index);
@@ -1634,7 +1635,7 @@ public class TeamTwoFragment extends Fragment {
 									// back into panelList and Sort
 									//
 									else {
-										String s = (String) b.getText();
+										String s = b.getText().toString();
 										b.setText(panelList.get(which));
 										teamLineUpCurrent[index] = panelList
 												.get(which);
