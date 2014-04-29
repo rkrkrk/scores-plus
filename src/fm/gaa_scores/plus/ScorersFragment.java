@@ -77,6 +77,7 @@ public class ScorersFragment extends ListFragment {
 
 		lv1 = (ListView) v.findViewById(android.R.id.list);
 		lv2 = (ListView) v.findViewById(R.id.list2);
+		
 
 		// set up text buttons edittexts etc.
 		tOwnTeam = (TextView) v.findViewById(R.id.score1);
