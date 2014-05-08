@@ -1777,7 +1777,9 @@ public class TeamOneFragment extends Fragment {
 
 	public void importTeam() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("file/plain");
+		Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
+				.getPath() + "/GAA_APP_Export/");
+		intent.setDataAndType(uri, "file/plain");
 		startActivityForResult(intent, 1);
 	}
 
