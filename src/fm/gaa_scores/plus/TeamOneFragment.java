@@ -709,9 +709,11 @@ public class TeamOneFragment extends Fragment {
 		for (int j = 1; j <= 15; j++) {
 			teamLineUpCurrent[j] = null;
 		}
-		cL = new CursorLoader(getActivity(), allTitles, projection,
-				TeamContentProvider.TEAM + " = '" + teamName + "'", null,
-				TeamContentProvider.NAME);
+		cL = new CursorLoader(getActivity(), allTitles, projection, "team=?",
+				new String[] { teamName }, TeamContentProvider.NAME);
+		// cL = new CursorLoader(getActivity(), allTitles, projection,
+		// TeamContentProvider.TEAM + " = '" + teamName + "'", null,
+		// TeamContentProvider.NAME);
 		Cursor c1 = cL.loadInBackground();
 		panelList.clear();
 		playerIDLookUp.clear();
@@ -997,9 +999,11 @@ public class TeamOneFragment extends Fragment {
 		values.put("posn", -1);
 		// add to panel database
 		count = getActivity().getContentResolver().update(
-				TeamContentProvider.CONTENT_URI, values,
-				TeamContentProvider.TEAM + " = '" + panelName + "'", null);
-
+				TeamContentProvider.CONTENT_URI, values, "team=?",
+				new String[] { panelName });
+		// count = getActivity().getContentResolver().update(
+		// TeamContentProvider.CONTENT_URI, values,
+		// TeamContentProvider.TEAM + " = '" + panelName + "'", null);
 		// which will set team names and team lineup
 	}
 
@@ -1043,11 +1047,14 @@ public class TeamOneFragment extends Fragment {
 					int count;
 					values.put("team", inName);
 					// add to panel database
-					count = getActivity().getContentResolver()
-							.update(TeamContentProvider.CONTENT_URI,
-									values,
-									TeamContentProvider.TEAM + " = '"
-											+ panelName + "'", null);
+					count = getActivity().getContentResolver().update(
+							TeamContentProvider.CONTENT_URI, values, "team=?",
+							new String[] { panelName });
+					// count = getActivity().getContentResolver()
+					// .update(TeamContentProvider.CONTENT_URI,
+					// values,
+					// TeamContentProvider.TEAM + " = '"
+					// + panelName + "'", null);
 					// if team doesnt exist, create it
 					if (count == 0) {
 						values = new ContentValues();
@@ -1251,9 +1258,12 @@ public class TeamOneFragment extends Fragment {
 		ArrayList<String> panelList = new ArrayList<String>();
 		String[] projection = { TeamContentProvider.NAME };
 		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
-				projection,
-				TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+				projection, "team=?", new String[] { panelName },
 				TeamContentProvider.NAME);
+		// CursorLoader cL = new CursorLoader(getActivity(), allTitles,
+		// projection,
+		// TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+		// TeamContentProvider.NAME);
 		Cursor c1 = cL.loadInBackground();
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
@@ -1301,9 +1311,12 @@ public class TeamOneFragment extends Fragment {
 		ArrayList<String> panelList = new ArrayList<String>();
 		String[] projection = { TeamContentProvider.NAME };
 		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
-				projection,
-				TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+				projection, "team=?", new String[] { panelName },
 				TeamContentProvider.NAME);
+		// CursorLoader cL = new CursorLoader(getActivity(), allTitles,
+		// projection,
+		// TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+		// TeamContentProvider.NAME);
 		Cursor c1 = cL.loadInBackground();
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
@@ -1431,9 +1444,13 @@ public class TeamOneFragment extends Fragment {
 							int count;
 							team = panel[which];
 							count = getActivity().getContentResolver().delete(
-									TeamContentProvider.CONTENT_URI,
-									TeamContentProvider.TEAM + " = '" + team
-											+ "'", null);
+									TeamContentProvider.CONTENT_URI, "team=?",
+									new String[] { team });
+							// count =
+							// getActivity().getContentResolver().delete(
+							// TeamContentProvider.CONTENT_URI,
+							// TeamContentProvider.TEAM + " = '" + team
+							// + "'", null);
 							Toast.makeText(
 									getActivity(),
 									team + " and " + (count - 1)
@@ -1778,8 +1795,8 @@ public class TeamOneFragment extends Fragment {
 
 	public void importTeam() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		Uri uri = Uri.parse(Environment.getExternalStorageDirectory()
-				.getPath() + "/GAA_APP_Export/");
+		Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
+				+ "/GAA_APP_Export/");
 		intent.setDataAndType(uri, "file/plain");
 		startActivityForResult(intent, 1);
 	}
