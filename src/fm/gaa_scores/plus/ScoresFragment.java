@@ -484,18 +484,18 @@ public class ScoresFragment extends Fragment {
 			if (str2.contains("Start T")) {
 				str = "";
 			} else if ((str2.contains("1st Half")) && (!str2.contains("Extra"))) {
-				str = "Half time-";
+				str = "Half time ";
 			} else if ((str2.contains("2nd Half")) && (!str2.contains("Extra"))) {
-				str = "Full time-";
+				str = "Full time ";
 
 			} else if (str2.contains("Time-1")) {
-				str = "Extra time, half time-";
+				str = "Extra time, half time ";
 			} else if (str2.contains("Time-2")) {
-				str = "Extra fime, full time-";
+				str = "Extra fime, full time ";
 			}
 
 		} else {
-			str = getTime() + "mins " + bPeriod.getText() + "-";
+			str = getTime() + "mins " + bPeriod.getText() + " ";
 		}
 
 		String comment = tLoc.getText().length() <= 1 ? "" : (tLoc.getText()
@@ -520,7 +520,7 @@ public class ScoresFragment extends Fragment {
 							.getText())
 					+ "-"
 					+ (bOppPoints.getText().equals("+") ? "0" : bOppPoints
-							.getText()) + tOppTotal.getText() + ". ";
+							.getText()) + tOppTotal.getText() + ".";
 		}
 	}
 
@@ -541,7 +541,7 @@ public class ScoresFragment extends Fragment {
 			if (c1.getCount() > 0) {
 				c1.moveToFirst();
 				do {
-					// read in player nicknames
+					// read in events
 					txtList.add(c1.getString(c1
 							.getColumnIndexOrThrow(TeamContentProvider.STATSLINE)));
 				} while (c1.moveToNext());
@@ -551,7 +551,7 @@ public class ScoresFragment extends Fragment {
 			int j = 1;
 			txtList.add(
 					0,
-					getScore(false).replace((tLoc.getText().toString() + ". "),
+					getScore(false).replace((tLoc.getText().toString() + "\n"),
 							""));
 			// add in comment if it exists
 			if (tLoc.getText().length() > 1) {
@@ -621,7 +621,7 @@ public class ScoresFragment extends Fragment {
 							StringBuilder str = new StringBuilder("");
 							for (int i = 0; i < txtListOut.size(); i++) {
 								str = str.append(tList[(Integer) txtListOut
-										.get(i)] + ". ");
+										.get(i)] + " ");
 							}
 							switch (txtButton) {
 							case R.id.bTweetRecent:

@@ -1015,6 +1015,7 @@ public class TeamTwoFragment extends Fragment {
 		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		input = new EditText(getActivity());
 		input.setId(997);
+		input.setText(panelName);
 		alert.setTitle("Enter New Team Name");
 		alert.setMessage("Name:");
 		alert.setView(input);
