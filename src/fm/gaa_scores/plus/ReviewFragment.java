@@ -700,6 +700,11 @@ public class ReviewFragment extends Fragment {
 		tTotPuckOpp.setText("0");
 		tCardHome.setText("");
 		tCardOpp.setText("");
+		
+		tShotsTotalHome.setText("Total shots:");
+		tShotsPlayHome.setText("Shot from play:");
+		tShotsTotalOpp.setText("Total shots:");
+		tShotsPlayOpp.setText("Shot from play:");
 		updateCardsSubs();
 
 	}

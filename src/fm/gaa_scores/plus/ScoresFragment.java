@@ -42,6 +42,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -52,6 +53,7 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -2330,10 +2332,14 @@ public class ScoresFragment extends Fragment {
 			AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 			input = new EditText(getActivity());
 			input.setId(991);
+			phone = phone.replace(",","-");
 			input.setText(phone);
+			input.setSingleLine(false);
+			input.setInputType(InputType.TYPE_CLASS_PHONE);
 			alert.setTitle("Enter Phone Number(s) for Texts");
-			alert.setMessage("Format 0001234567 (no spaces)\nUse comma to separate numbers\n"
-					+ "if there's more than one");
+			alert.setMessage("Format 0001234567 (no spaces)\n"
+					+ "Use - (dash) or , (comma) to separate numbers if there's more than one. For example:\n"
+					+"0871234567-0861234567,03538512345678\n");
 			alert.setView(input);
 			alert.setNegativeButton("Reset",
 					new DialogInterface.OnClickListener() {
@@ -2355,12 +2361,13 @@ public class ScoresFragment extends Fragment {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface indialog, int which) {
-							Pattern p = Pattern.compile("^[0-9]{10}$");
+							Pattern p = Pattern.compile("^[0-9]");
 							Matcher m;
 							int check = 0;
 							String inName = input.getText().toString()
 									.replace(" ", "");
-							String[] separated = inName.split(",");
+							inName.replace(",","-");
+							String[] separated = inName.split("-");
 							for (int i = 0; i < separated.length; i++) {
 								m = p.matcher(separated[i].replace(" ", ""));
 								if (m.find()) {
@@ -2370,6 +2377,7 @@ public class ScoresFragment extends Fragment {
 							if (check == separated.length) {
 								phone = input.getText().toString()
 										.replace(" ", "");
+								phone = phone.replace("-",",");
 
 								// update title and panelname
 								SharedPreferences sharedPref = getActivity()
