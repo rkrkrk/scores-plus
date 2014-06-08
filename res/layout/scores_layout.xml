@@ -215,330 +215,379 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
-            android:layout_weight="1.04"
+            android:layout_weight=".66"
             android:background="@drawable/bg_custom"
             android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/ourTeam"
-                style="@style/TextShadowB"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:padding="0dp"
-                android:text="OWN TEAM"
-                android:textColor="#f00"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:background="#cfc"
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/oppTeam"
-                style="@style/TextShadowB"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1.1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/ourTeam"
+                        style="@style/TextShadowB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:padding="0dp"
+                        android:text="OWN TEAM"
+                        android:textColor="#f00"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" >
+
+                    <TextView
+                        android:id="@+id/goals_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|right"
+                        android:paddingRight="10dp"
+                        android:text="goals"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/points_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|left"
+                        android:paddingLeft="10dp"
+                        android:text="points"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".7"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/dec_home_goals"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1.04"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/home_goals"
+                        style="@style/TextShadowB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight=".95"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="+"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/home_points"
+                        style="@style/TextShadowB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/home_goals"
+                        android:layout_alignBottom="@+id/home_goals"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_toRightOf="@+id/home_goals"
+                        android:layout_weight=".95"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="+"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/dec_home_points"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/dec_home_goals"
+                        android:layout_alignBottom="@+id/home_points"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/home_points"
+                        android:layout_weight="1.04"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:padding="0dp" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_marginLeft="2dp"
+                        android:layout_weight="1.1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="total:"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/home_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="(00)"
+                        android:textColor="#f00"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/up_down_draw_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="4dp"
+                        android:text="drawn game"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/home_difference"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:textColor="#f00"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:gravity="bottom|center_horizontal"
-                android:padding="0dp"
-                android:text="OPPOSITION"
-                android:textColor="#f00"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:background="#ffc"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1.1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/oppTeam"
+                        style="@style/TextShadowB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal"
+                        android:padding="0dp"
+                        android:text="OPPOSITION"
+                        android:textColor="#f00"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+l
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" >
+
+                    <TextView
+                        android:id="@+id/goals_label2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|right"
+                        android:paddingRight="10dp"
+                        android:text="goals"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/points_label2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|left"
+                        android:paddingLeft="10dp"
+                        android:text="points"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".7"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/dec_opp_goals"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/dec_home_points"
+                        android:layout_alignBottom="@+id/dec_home_points"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/opp_goals"
+                        android:layout_weight="1.04"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/opp_goals"
+                        style="@style/TextShadowB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/home_goals"
+                        android:layout_alignBottom="@+id/dec_opp_goals"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_toLeftOf="@+id/opp_points"
+                        android:layout_weight=".95"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="+"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/opp_points"
+                        style="@style/TextShadowB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/home_goals"
+                        android:layout_alignBottom="@+id/opp_goals"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_toLeftOf="@+id/dec_opp_points"
+                        android:layout_weight=".95"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="+"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/dec_opp_points"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/dec_home_goals"
+                        android:layout_alignBottom="@+id/opp_points"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1.04"
+                        android:background="@drawable/btn_green"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="total:"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/opp_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="(00)"
+                        android:textColor="#f00"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.06"
-            android:background="@drawable/bg_custom"
-            android:orientation="horizontal"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp" >
-
-            <TextView
-                android:id="@+id/goals_label"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="bottom|right"
-                android:paddingRight="10dp"
-                android:text="goals"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/points_label"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="bottom|left"
-                android:paddingLeft="10dp"
-                android:text="points"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/goals_label2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="bottom|right"
-                android:paddingRight="10dp"
-                android:text="goals"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/points_label2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="bottom|left"
-                android:paddingLeft="10dp"
-                android:text="points"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".92"
-            android:background="@drawable/bg_custom"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/dec_home_goals"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1.04"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="-"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/home_goals"
-                style="@style/TextShadowB"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_weight=".95"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="+"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/home_points"
-                style="@style/TextShadowB"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/home_goals"
-                android:layout_alignBottom="@+id/home_goals"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_toRightOf="@+id/home_goals"
-                android:layout_weight=".95"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="+"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/dec_home_points"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/dec_home_goals"
-                android:layout_alignBottom="@+id/home_points"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/home_points"
-                android:layout_weight="1.04"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="-"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/dec_opp_goals"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/dec_home_points"
-                android:layout_alignBottom="@+id/dec_home_points"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="10dp"
-                android:layout_toLeftOf="@+id/opp_goals"
-                android:layout_weight="1.04"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="-"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/opp_goals"
-                style="@style/TextShadowB"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/home_goals"
-                android:layout_alignBottom="@+id/dec_opp_goals"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_toLeftOf="@+id/opp_points"
-                android:layout_weight=".95"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="+"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/opp_points"
-                style="@style/TextShadowB"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/home_goals"
-                android:layout_alignBottom="@+id/opp_goals"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_toLeftOf="@+id/dec_opp_points"
-                android:layout_weight=".95"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="+"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/dec_opp_points"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBaseline="@+id/dec_home_goals"
-                android:layout_alignBottom="@+id/opp_points"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1.04"
-                android:background="@drawable/btn_green"
-                android:gravity="center_vertical|center_horizontal"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:text="-"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_custom"
-            android:orientation="horizontal"
-            android:paddingBottom="2dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="2dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="total:"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/home_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="4dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="(00)"
-                android:textColor="#f00"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/up_down_draw_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:gravity="center_vertical|center_horizontal"
-                android:paddingLeft="2dp"
-                android:paddingRight="4dp"
-                android:text="drawn game"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/home_difference"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_horizontal"
-                android:textColor="#f00"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text=" "
-                android:textSize="10sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="2dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="total:"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/opp_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="(00)"
-                android:textColor="#f00"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight=".98"
             android:background="@drawable/bg_custom"
             android:orientation="horizontal" >
 

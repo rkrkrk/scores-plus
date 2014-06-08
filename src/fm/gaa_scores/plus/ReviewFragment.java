@@ -228,75 +228,42 @@ public class ReviewFragment extends Fragment {
 		}
 
 		// setup shots/frees/puckouts values from persisted data
-		shotGoalsHome = sharedPref.getInt("SHOTGOALSHOME", 0);
-		shotPointsHome = sharedPref.getInt("SHOTPOINTSHOME", 0);
-		shotWidesHome = sharedPref.getInt("SHOTWIDESHOME", 0);
-		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
-		shotSavedHome = sharedPref.getInt("SHOTSAVEDHOME", 0);
-		shotPostsHome = sharedPref.getInt("SHOTPOSTSHOME", 0);
-		shotGoalsPlayHome = sharedPref.getInt("SHOTGOALSPLAYHOME", 0);
-		shotPointsPlayHome = sharedPref.getInt("SHOTPOINTSPLAYHOME", 0);
-		shotWidesPlayHome = sharedPref.getInt("SHOTPOINTSWIDESHOME", 0);
-		shot45PlayHome = sharedPref.getInt("SHOTPOINTS45HOME", 0);
-		shotSavedPlayHome = sharedPref.getInt("SHOTPOINTSSAVEDHOME", 0);
-		shotPostsPlayHome = sharedPref.getInt("SHOTPOINTSPOSTSHOME", 0);
-		addtShotGoalsHome(0);
-		addtShotPointsHome(0);
-		addtShotPointsPlayHome(0);
-		addtShotWidesHome(0);
-		addtShotSavedHome(0);
-		addtShotPostsHome(0);
-		addtShot45Home(0);
-		addtShotGoalsPlayHome(0);
-		addtShotPointsPlayHome(0);
-		addtShotWidesPlayHome(0);
-		addtShot45PlayHome(0);
-		addtShotSavedPlayHome(0);
-		addtShotPostsPlayHome(0);
-
-		shotGoalsOpp = sharedPref.getInt("SHOTGOALSOPP", 0);
-		shotPointsOpp = sharedPref.getInt("SHOTPOINTSOPP", 0);
-		shotWidesOpp = sharedPref.getInt("SHOTWIDESOPP", 0);
-		shotSavedOpp = sharedPref.getInt("SHOTSAVEDOPP", 0);
-		shotPostsOpp = sharedPref.getInt("SHOTPOSTSOPP", 0);
-		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
-		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
-		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
-		shotWidesPlayOpp = sharedPref.getInt("SHOTPOINTSWIDESOPP", 0);
-		shot45PlayOpp = sharedPref.getInt("SHOTPOINTS45OPP", 0);
-		shotSavedPlayOpp = sharedPref.getInt("SHOTPOINTSSAVEDOPP", 0);
-		shotPostsPlayOpp = sharedPref.getInt("SHOTPOINTSPOSTSOPP", 0);
-		addtShotGoalsOpp(0);
-		addtShotPointsOpp(0);
-		addtShotWidesOpp(0);
-		addtShotSavedOpp(0);
-		addtShotPostsOpp(0);
-		addtShot45Opp(0);
-		addtShotGoalsPlayOpp(0);
-		addtShotPointsPlayOpp(0);
-		addtShotWidesPlayOpp(0);
-		addtShot45PlayOpp(0);
-		addtShotSavedPlayOpp(0);
-		addtShotPostsPlayOpp(0);
-
-		freeConcededHome = sharedPref.getInt("FREEWONHOME", 0);
-		freeConcededOpp = sharedPref.getInt("FREEWONOPP", 0);
-		addFreeConcededHome(0);
-		addFreeConcededOpp(0);
-
-		totPHome = sharedPref.getInt("TOTPHOME", 0);
-		puckWonCleanHome = sharedPref.getInt("PUCKWONCLEANHOME", 0);
-		puckLostCleanHome = sharedPref.getInt("PUCKLOSTCLEANHOME", 0);
-
-		totPOpp = sharedPref.getInt("TOTPOPP", 0);
-		puckWonCleanOpp = sharedPref.getInt("PUCKWONCLEANOPP", 0);
-		puckLostCleanOpp = sharedPref.getInt("PUCKLOSTCLEANOPP", 0);
-		addPuckTotHome(0);
-		addPuckWonCleanHome(0);
-		addPuckLostCleanHome(0);
-		addPuckTotOpp(0);
-		addPuckWonCleanOpp(0);
-		addPuckLostCleanOpp(0);
+//		shotGoalsHome = sharedPref.getInt("SHOTGOALSHOME", 0);
+//		shotPointsHome = sharedPref.getInt("SHOTPOINTSHOME", 0);
+//		shotWidesHome = sharedPref.getInt("SHOTWIDESHOME", 0);
+//		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
+//		shotSavedHome = sharedPref.getInt("SHOTSAVEDHOME", 0);
+//		shotPostsHome = sharedPref.getInt("SHOTPOSTSHOME", 0);
+//		shotGoalsPlayHome = sharedPref.getInt("SHOTGOALSPLAYHOME", 0);
+//		shotPointsPlayHome = sharedPref.getInt("SHOTPOINTSPLAYHOME", 0);
+//		shotWidesPlayHome = sharedPref.getInt("SHOTPOINTSWIDESHOME", 0);
+//		shot45PlayHome = sharedPref.getInt("SHOTPOINTS45HOME", 0);
+//		shotSavedPlayHome = sharedPref.getInt("SHOTPOINTSSAVEDHOME", 0);
+//		shotPostsPlayHome = sharedPref.getInt("SHOTPOINTSPOSTSHOME", 0);
+//
+//		shotGoalsOpp = sharedPref.getInt("SHOTGOALSOPP", 0);
+//		shotPointsOpp = sharedPref.getInt("SHOTPOINTSOPP", 0);
+//		shotWidesOpp = sharedPref.getInt("SHOTWIDESOPP", 0);
+//		shotSavedOpp = sharedPref.getInt("SHOTSAVEDOPP", 0);
+//		shotPostsOpp = sharedPref.getInt("SHOTPOSTSOPP", 0);
+//		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
+//		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
+//		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
+//		shotWidesPlayOpp = sharedPref.getInt("SHOTPOINTSWIDESOPP", 0);
+//		shot45PlayOpp = sharedPref.getInt("SHOTPOINTS45OPP", 0);
+//		shotSavedPlayOpp = sharedPref.getInt("SHOTPOINTSSAVEDOPP", 0);
+//		shotPostsPlayOpp = sharedPref.getInt("SHOTPOINTSPOSTSOPP", 0);
+//
+//		freeConcededHome = sharedPref.getInt("FREEWONHOME", 0);
+//		freeConcededOpp = sharedPref.getInt("FREEWONOPP", 0);
+//
+//		totPHome = sharedPref.getInt("TOTPHOME", 0);
+//		puckWonCleanHome = sharedPref.getInt("PUCKWONCLEANHOME", 0);
+//		puckLostCleanHome = sharedPref.getInt("PUCKLOSTCLEANHOME", 0);
+//
+//		totPOpp = sharedPref.getInt("TOTPOPP", 0);
+//		puckWonCleanOpp = sharedPref.getInt("PUCKWONCLEANOPP", 0);
+//		puckLostCleanOpp = sharedPref.getInt("PUCKLOSTCLEANOPP", 0);
 
 		bSendAll = (Button) v.findViewById(R.id.bSendAll);
 		bSendAll.setOnClickListener(sendAllListener);
@@ -313,402 +280,11 @@ public class ReviewFragment extends Fragment {
 		updateShotsPerCent();
 
 		registerForContextMenu(listViewStats);
-
+		fillData();
 		return v;
 
 	}
-
-	// set up long press menu to delete entry from stats db
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater mi = getActivity().getMenuInflater();
-		mi.inflate(R.menu.list_menu_longpress, menu);
-	}
-
-	@Override
-	// deal with selection from long press menu
-	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_delete1:
-			// // Delete a row / player
-			String strTemp = "";
-			Uri uri = TeamContentProvider.CONTENT_URI_2;
-			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-					.getMenuInfo();
-			String[] args = { Long.toString(info.id) };
-			Cursor c1 = getActivity().getContentResolver().query(uri, null,
-					"_id=?", args, null);
-			if (c1.getCount() > 0) {
-				c1.moveToFirst();
-				strTemp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-			}
-			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
-			getActivity().getContentResolver().delete(uri, null, null);
-			Toast.makeText(getActivity(), "stats entry deleted",
-					Toast.LENGTH_LONG).show();
-			updateListView();
-			String[] strArray = {strTemp};
-			((Startup) getActivity()).getFragmentScore().undo(strArray);
-			return true;
-		}
-		return super.onContextItemSelected(item);
-	}
-
-	public void updateShotsPerCent() {
-		tShotsTotalHome.setText("Total shots:");
-		tShotsPlayHome.setText("Shot from play:");
-		tShotsTotalOpp.setText("Total shots:");
-		tShotsPlayOpp.setText("Shot from play:");
-
-		int totalShotsHome, totalShotsOpp, shotsPlayHome, shotsPlayOpp;
-		int shotsScoredHome, shotsScoredOpp, shotsScoredPlayHome, shotsScoredPlayOpp;
-		String perCent;
-		totalShotsHome = shotGoalsHome + shotPointsHome + shotWidesHome
-				+ shotSavedHome + shotPostsHome + shot45Home;
-		totalShotsOpp = shotGoalsOpp + shotPointsOpp + shotWidesOpp
-				+ shotSavedOpp + shotPostsOpp + shot45Opp;
-		shotsPlayHome = shotGoalsPlayHome + shotPointsPlayHome
-				+ shotWidesPlayHome + shot45PlayHome + shotSavedPlayHome
-				+ shotPostsPlayHome;
-		shotsPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp + shotWidesPlayOpp
-				+ shot45PlayOpp + shotSavedPlayOpp + shotPostsPlayOpp;
-		shotsScoredHome = shotGoalsHome + shotPointsHome;
-		shotsScoredOpp = shotGoalsOpp + shotPointsOpp;
-		shotsScoredPlayHome = shotGoalsPlayHome + shotPointsPlayHome;
-		shotsScoredPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp;
-
-		if (totalShotsHome > 0) {
-			perCent = Integer
-					.toString((shotsScoredHome * 100) / totalShotsHome);
-			tShotsTotalHome.setText("Total shots:" + totalShotsHome
-					+ "  Scored:" + shotsScoredHome + " (" + perCent + "%)");
-		}
-		if (totalShotsOpp > 0) {
-			perCent = Integer.toString((shotsScoredOpp * 100) / totalShotsOpp);
-			tShotsTotalOpp.setText("Total shots:" + totalShotsOpp + "  Scored:"
-					+ shotsScoredOpp + " (" + perCent + "%)");
-		}
-		if (shotsPlayHome > 0) {
-			perCent = Integer.toString((shotsScoredPlayHome * 100)
-					/ shotsPlayHome);
-			tShotsPlayHome
-					.setText("Shot from play:" + shotsPlayHome + "  Scored:"
-							+ shotsScoredPlayHome + " (" + perCent + "%)");
-		}
-		if (shotsPlayOpp > 0) {
-			perCent = Integer.toString((shotsScoredPlayOpp * 100)
-					/ shotsPlayOpp);
-			tShotsPlayOpp.setText("Shot from play:" + shotsPlayOpp
-					+ "  Scored:" + shotsScoredPlayOpp + " (" + perCent + "%)");
-		}
-	}
-
-	// *******************Home Shots********************///
-	// increment counters for home team shots
-	public void addtShotGoalsHome(int i) {
-		shotGoalsHome = shotGoalsHome + i;
-		tShotGoalsHome.setText(String.valueOf(shotGoalsHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPointsHome(int i) {
-		shotPointsHome = shotPointsHome + i;
-		tShotPointsHome.setText(String.valueOf(shotPointsHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotWidesHome(int i) {
-		shotWidesHome = shotWidesHome + i;
-		tShotWidesHome.setText(String.valueOf(shotWidesHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotSavedHome(int i) {
-		shotSavedHome = shotSavedHome + i;
-		tShotSavedHome.setText(String.valueOf(shotSavedHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPostsHome(int i) {
-		shotPostsHome = shotPostsHome + i;
-		tShotPostsHome.setText(String.valueOf(shotPostsHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShot45Home(int i) {
-		shot45Home = shot45Home + i;
-		tShot45Home.setText(String.valueOf(shot45Home));
-		updateShotsPerCent();
-	}
-
-	public void addtShotGoalsPlayHome(int i) {
-		shotGoalsPlayHome = shotGoalsPlayHome + i;
-		tShotGoalsPlayHome.setText(String.valueOf(shotGoalsPlayHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPointsPlayHome(int i) {
-		shotPointsPlayHome = shotPointsPlayHome + i;
-		tShotPointsPlayHome.setText(String.valueOf(shotPointsPlayHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotWidesPlayHome(int i) {
-		shotWidesPlayHome = shotWidesPlayHome + i;
-		tShotPointsPlayWidesHome.setText(String.valueOf(shotWidesPlayHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShot45PlayHome(int i) {
-		shot45PlayHome = shot45PlayHome + i;
-		tShotPointsPlay45Home.setText(String.valueOf(shot45PlayHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotSavedPlayHome(int i) {
-		shotSavedPlayHome = shotSavedPlayHome + i;
-		tShotPointsPlaySavedHome.setText(String.valueOf(shotSavedPlayHome));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPostsPlayHome(int i) {
-		shotPostsPlayHome = shotPostsPlayHome + i;
-		tShotPointsPlayPostsHome.setText(String.valueOf(shotPostsPlayHome));
-		updateShotsPerCent();
-	}
-
-	// *******************Opp Shots********************///
-	// increment counters for opposition team shots
-	public void addtShotGoalsOpp(int i) {
-		shotGoalsOpp = shotGoalsOpp + i;
-		tShotGoalsOpp.setText(String.valueOf(shotGoalsOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotGoalsPlayOpp(int i) {
-		shotGoalsPlayOpp = shotGoalsPlayOpp + i;
-		tShotGoalsPlayOpp.setText(String.valueOf(shotGoalsPlayOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPointsOpp(int i) {
-		shotPointsOpp = shotPointsOpp + i;
-		tShotPointsOpp.setText(String.valueOf(shotPointsOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPointsPlayOpp(int i) {
-		shotPointsPlayOpp = shotPointsPlayOpp + i;
-		tShotPointsPlayOpp.setText(String.valueOf(shotPointsPlayOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotWidesOpp(int i) {
-		shotWidesOpp = shotWidesOpp + i;
-		tShotWidesOpp.setText(String.valueOf(shotWidesOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotSavedOpp(int i) {
-		shotSavedOpp = shotSavedOpp + i;
-		tShotSavedOpp.setText(String.valueOf(shotSavedOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPostsOpp(int i) {
-		shotPostsOpp = shotPostsOpp + i;
-		tShotPostsOpp.setText(String.valueOf(shotPostsOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShot45Opp(int i) {
-		shot45Opp = shot45Opp + i;
-		tShot45Opp.setText(String.valueOf(shot45Opp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotWidesPlayOpp(int i) {
-		shotWidesPlayOpp = shotWidesPlayOpp + i;
-		tShotPointsPlayWidesOpp.setText(String.valueOf(shotWidesPlayOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShot45PlayOpp(int i) {
-		shot45PlayOpp = shot45PlayOpp + i;
-		tShotPointsPlay45Opp.setText(String.valueOf(shot45PlayOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotSavedPlayOpp(int i) {
-		shotSavedPlayOpp = shotSavedPlayOpp + i;
-		tShotPointsPlaySavedOpp.setText(String.valueOf(shotSavedPlayOpp));
-		updateShotsPerCent();
-	}
-
-	public void addtShotPostsPlayOpp(int i) {
-		shotPostsPlayOpp = shotPostsPlayOpp + i;
-		tShotPointsPlayPostsOpp.setText(String.valueOf(shotPostsPlayOpp));
-		updateShotsPerCent();
-	}
-
-	// ////////////////Update Free Section////////////////////////////
-	// increment counters for frees
-	public void addFreeConcededHome(int i) {
-		freeConcededHome = freeConcededHome + i;
-		tFreeConcededHome.setText(String.valueOf(freeConcededHome));
-	}
-
-	public void addFreeConcededOpp(int i) {
-		freeConcededOpp = freeConcededOpp + i;
-		tFreeConcededOpp.setText(String.valueOf(freeConcededOpp));
-	}
-
-	// ////////////////Update PuckOuts Section////////////////////////////
-	// increment counters for puck outs
-	public void addPuckTotHome(int i) {// ///
-		totPHome = totPHome + i;
-		tTotPuckHome.setText(String.valueOf(totPHome));
-	}
-
-	public void addPuckWonCleanHome(int i) {// ///
-		puckWonCleanHome = puckWonCleanHome + i;
-		tPuckWonCleanHome.setText(String.valueOf(puckWonCleanHome));
-	}
-
-	public void addPuckLostCleanHome(int i) {
-		puckLostCleanHome = puckLostCleanHome + i;
-		tPuckLostCleanHome.setText(String.valueOf(puckLostCleanHome));
-	}
-
-	public void addPuckTotOpp(int i) {// ///
-		totPOpp = totPOpp + i;
-		tTotPuckOpp.setText(String.valueOf(totPOpp));
-	}
-
-	public void addPuckWonCleanOpp(int i) {
-		puckWonCleanOpp = puckWonCleanOpp + i;
-		tPuckWonCleanOpp.setText(String.valueOf(puckWonCleanOpp));
-	}
-
-	public void addPuckLostCleanOpp(int i) {
-		puckLostCleanOpp = puckLostCleanOpp + i;
-		tPuckLostCleanOpp.setText(String.valueOf(puckLostCleanOpp));
-	}
-
-	// ///////////UPDATE SCORES////////////////////////////
-	// methods called from RECORD fragment to update score
-	// and totals
-	public void settHomeGoals(int i) {
-		homeGoals = i;
-		homeTotal = homeGoals * 3 + homePoints;
-		tHomeGoals.setText(String.valueOf(homeGoals));
-		tHomeTotal.setText(String.valueOf(homeTotal));
-	}
-
-	public void settHomePoints(int i) {
-		homePoints = i;
-		homeTotal = homeGoals * 3 + homePoints;
-		tHomePoints.setText(String.valueOf(homePoints));
-		tHomeTotal.setText(String.valueOf(homeTotal));
-	}
-
-	public void settOppGoals(int i) {
-		oppGoals = i;
-		oppTotal = oppGoals * 3 + oppPoints;
-		tOppGoals.setText(String.valueOf(oppGoals));
-		tOppTotal.setText(String.valueOf(oppTotal));
-	}
-
-	public void settOppPoints(int i) {
-		oppPoints = i;
-		oppTotal = oppGoals * 3 + oppPoints;
-		tOppPoints.setText(String.valueOf(oppPoints));
-		tOppTotal.setText(String.valueOf(oppTotal));
-	}
-
-	// method to reset all stats values to zero
-	public void resetStats() {
-		shotGoalsHome = 0;
-		tShotGoalsHome.setText("0");
-		shotPointsHome = 0;
-		tShotPointsHome.setText("0");
-		shotWidesHome = 0;
-		tShotWidesHome.setText("0");
-		shotSavedHome = 0;
-		tShotSavedHome.setText("0");
-		shotPostsHome = 0;
-		tShotPostsHome.setText("0");
-		shot45Home = 0;
-		tShot45Home.setText("0");
-		shotGoalsPlayHome = 0;
-		tShotGoalsPlayHome.setText("0");
-		shotPointsPlayHome = 0;
-		tShotPointsPlayHome.setText("0");
-		shotWidesPlayHome = 0;
-		tShotPointsPlayWidesHome.setText("0");
-		shot45PlayHome = 0;
-		tShotPointsPlay45Home.setText("0");
-		shotSavedPlayHome = 0;
-		tShotPointsPlaySavedHome.setText("0");
-		shotPostsPlayHome = 0;
-		tShotPointsPlayPostsHome.setText("0");
-
-		shotGoalsOpp = 0;
-		tShotGoalsOpp.setText("0");
-		shotPointsOpp = 0;
-		tShotPointsOpp.setText("0");
-		shotWidesOpp = 0;
-		tShotWidesOpp.setText("0");
-		shotSavedOpp = 0;
-		tShotSavedOpp.setText("0");
-		shotPostsOpp = 0;
-		tShotPostsOpp.setText("0");
-		shot45Opp = 0;
-		tShot45Opp.setText("0");
-		shotGoalsPlayOpp = 0;
-		tShotGoalsPlayOpp.setText("0");
-		shotPointsPlayOpp = 0;
-		tShotPointsPlayOpp.setText("0");
-		shotWidesPlayOpp = 0;
-		tShotPointsPlayWidesOpp.setText("0");
-		shot45PlayOpp = 0;
-		tShotPointsPlay45Opp.setText("0");
-		shotSavedPlayOpp = 0;
-		tShotPointsPlaySavedOpp.setText("0");
-		shotPostsPlayOpp = 0;
-		tShotPointsPlayPostsOpp.setText("0");
-
-		freeConcededHome = 0;
-		tFreeConcededHome.setText("0");
-		freeConcededOpp = 0;
-		tFreeConcededOpp.setText("0");
-
-		puckWonCleanHome = 0;
-		tPuckWonCleanHome.setText("0");
-		puckLostCleanHome = 0;
-		tPuckLostCleanHome.setText("0");
-		puckWonCleanOpp = 0;
-		tPuckWonCleanOpp.setText("0");
-		puckLostCleanOpp = 0;
-		tPuckLostCleanOpp.setText("0");
-		totPHome = 0;
-		tTotPuckHome.setText("0");
-		totPOpp = 0;
-		tTotPuckOpp.setText("0");
-		tCardHome.setText("");
-		tCardOpp.setText("");
-		
-		tShotsTotalHome.setText("Total shots:");
-		tShotsPlayHome.setText("Shot from play:");
-		tShotsTotalOpp.setText("Total shots:");
-		tShotsPlayOpp.setText("Shot from play:");
-		updateCardsSubs();
-
-	}
-
+	
 	// ///////////////////////////END OF ONCREATE///////////////////////////
 
 	@Override
@@ -768,12 +344,417 @@ public class ReviewFragment extends Fragment {
 		editor.commit();
 	}
 
+	
 	@Override
 	public void onResume() {
 		super.onResume();
+		fillData();
 		updateCardsSubs();
 		updateShotsPerCent();
 	}
+
+
+	public void fillData() {
+		String team, stats1, stats2;
+		totPOpp = 0;
+		shotGoalsHome = 0;
+		shotGoalsPlayHome = 0;
+		shotPointsHome = 0;
+		shotPointsPlayHome = 0;
+		shotWidesHome = 0;
+		shotWidesPlayHome = 0;
+		shot45Home = 0;
+		shot45PlayHome = 0;
+		shotSavedHome = 0;
+		shotSavedPlayHome = 0;
+		shotPostsHome = 0;
+		shotPostsPlayHome = 0;
+		freeConcededHome = 0;
+		puckWonCleanHome = 0;
+		puckLostCleanHome = 0;
+		totPHome = 0;
+		shotGoalsOpp = 0;
+		shotGoalsPlayOpp = 0;
+		shotPointsOpp = 0;
+		shotPointsPlayOpp = 0;
+		shotWidesOpp = 0;
+		shotWidesPlayOpp = 0;
+		shot45Opp = 0;
+		shot45PlayOpp = 0;
+		shotSavedOpp = 0;
+		shotSavedPlayOpp = 0;
+		shotPostsOpp = 0;
+		shotPostsPlayOpp = 0;
+		freeConcededOpp = 0;
+		puckWonCleanOpp = 0;
+		puckLostCleanOpp = 0;
+
+		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
+		// get home team first then opposition
+		team = tOwnTeam.getText().toString();
+		String[] args = { team, "t" };
+		Cursor c1 = getActivity().getContentResolver().query(allTitles, null,
+				"team=? AND type=?", args, null);
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				stats1 = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
+				stats2 = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+
+				if (stats1.equals("goal")) {
+					totPOpp++;
+					shotGoalsHome++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotGoalsPlayHome++;
+					}
+				} else if (stats1.equals("point")) {
+					totPOpp++;
+					shotPointsHome++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotPointsPlayHome++;
+					}
+				} else if (stats1.equals("wide")) {
+					// increment counter in review page
+					shotWidesHome++;
+					totPOpp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotWidesPlayHome++;
+					}
+				} else if (stats1.equals("out for 45/65")) {
+					// increment counter in review page
+					shot45Home++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shot45PlayHome++;
+					}
+				} else if (stats1.equals("saved/short")) {
+					// increment counter in review page
+					shotSavedHome++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotSavedPlayHome++;
+					}
+				} else if (stats1.equals("off posts")) {
+					// increment counter in review page
+					shotPostsHome++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotPostsPlayHome++;
+					}
+				} else if (stats1.equals("free/pen conceded")) {
+					// increment counter in review page
+					freeConcededHome++;
+				} else if (stats1.equals("own puck/kick out won")) {
+					// increment counter in review page
+					puckWonCleanHome++;
+				} else if (stats1.equals("own puck/kick out lost")) {
+					// increment counter in review page
+					puckLostCleanHome++;
+				}
+			} while (c1.moveToNext());
+			c1.close();
+		}
+		// OPPOSITON
+		team = tOppTeam.getText().toString();
+		String[] args2 = { team, "t" };
+		c1 = getActivity().getContentResolver().query(allTitles, null,
+				"team=? AND type=?", args2, null);
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				stats1 = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
+				stats2 = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+
+				if (stats1.equals("goal")) {
+					totPHome++;
+					shotGoalsOpp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotGoalsPlayOpp++;
+					}
+				} else if (stats1.equals("point")) {
+					totPHome++;
+					shotPointsOpp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotPointsPlayOpp++;
+					}
+				} else if (stats1.equals("wide")) {
+					// increment counter in review page
+					shotWidesOpp++;
+					totPHome++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotWidesPlayOpp++;
+					}
+				} else if (stats1.equals("out for 45/65")) {
+					// increment counter in review page
+					shot45Opp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shot45PlayOpp++;
+					}
+				} else if (stats1.equals("saved/short")) {
+					// increment counter in review page
+					shotSavedOpp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotSavedPlayOpp++;
+					}
+				} else if (stats1.equals("off posts")) {
+					// increment counter in review page
+					shotPostsOpp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotPostsPlayOpp++;
+					}
+				} else if (stats1.equals("free/pen conceded")) {
+					// increment counter in review page
+					freeConcededOpp++;
+				} else if (stats1.equals("own puck/kick out won")) {
+					// increment counter in review page
+					puckWonCleanOpp++;
+				} else if (stats1.equals("own puck/kick out lost")) {
+					// increment counter in review page
+					puckLostCleanOpp++;
+				}
+			} while (c1.moveToNext());
+			c1.close();
+		}
+		tShotGoalsHome.setText(String.valueOf(shotGoalsHome));
+		tShotPointsHome.setText(String.valueOf(shotPointsHome));
+		tShotWidesHome.setText(String.valueOf(shotWidesHome));
+		tShotSavedHome.setText(String.valueOf(shotSavedHome));
+		tShotPostsHome.setText(String.valueOf(shotPostsHome));
+		tShot45Home.setText(String.valueOf(shot45Home));
+		tShotGoalsPlayHome.setText(String.valueOf(shotGoalsPlayHome));
+		tShotPointsPlayHome.setText(String.valueOf(shotPointsPlayHome));
+		tShotPointsPlayWidesHome.setText(String.valueOf(shotWidesPlayHome));
+		tShotPointsPlay45Home.setText(String.valueOf(shot45PlayHome));
+		tShotPointsPlaySavedHome.setText(String.valueOf(shotSavedPlayHome));
+		tShotPointsPlayPostsHome.setText(String.valueOf(shotPostsPlayHome));
+		tShotGoalsOpp.setText(String.valueOf(shotGoalsOpp));
+		tShotPointsOpp.setText(String.valueOf(shotPointsOpp));
+		tShotWidesOpp.setText(String.valueOf(shotWidesOpp));
+		tShotSavedOpp.setText(String.valueOf(shotSavedOpp));
+		tShotPostsOpp.setText(String.valueOf(shotPostsOpp));
+		tShot45Opp.setText(String.valueOf(shot45Opp));
+		tShotGoalsPlayOpp.setText(String.valueOf(shotGoalsPlayOpp));
+		tShotPointsPlayOpp.setText(String.valueOf(shotPointsPlayOpp));
+		tShotPointsPlayWidesOpp.setText(String.valueOf(shotWidesPlayOpp));
+		tShotPointsPlay45Opp.setText(String.valueOf(shot45PlayOpp));
+		tShotPointsPlaySavedOpp.setText(String.valueOf(shotSavedPlayOpp));
+		tShotPointsPlayPostsOpp.setText(String.valueOf(shotPostsPlayOpp));
+
+		tFreeConcededHome.setText(String.valueOf(freeConcededHome));
+		tPuckWonCleanHome.setText(String.valueOf(puckWonCleanHome));
+		tPuckLostCleanHome.setText(String.valueOf(puckLostCleanHome));
+		tTotPuckOpp.setText(String.valueOf(totPOpp));
+		tFreeConcededOpp.setText(String.valueOf(freeConcededOpp));
+		tPuckWonCleanOpp.setText(String.valueOf(puckWonCleanOpp));
+		tPuckLostCleanOpp.setText(String.valueOf(puckLostCleanOpp));
+		tTotPuckHome.setText(String.valueOf(totPHome));
+
+		updateShotsPerCent();
+	}
+
+	// set up long press menu to delete entry from stats db
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater mi = getActivity().getMenuInflater();
+		mi.inflate(R.menu.list_menu_longpress, menu);
+	}
+
+	@Override
+	// deal with selection from long press menu
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_delete1:
+			// // Delete a row / player
+			String strTemp = "";
+			Uri uri = TeamContentProvider.CONTENT_URI_2;
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+					.getMenuInfo();
+			String[] args = { Long.toString(info.id) };
+			Cursor c1 = getActivity().getContentResolver().query(uri, null,
+					"_id=?", args, null);
+			if (c1.getCount() > 0) {
+				c1.moveToFirst();
+				strTemp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+			}
+			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
+			getActivity().getContentResolver().delete(uri, null, null);
+			Toast.makeText(getActivity(), "stats entry deleted",
+					Toast.LENGTH_LONG).show();
+			updateListView();
+			String[] strArray = { strTemp };
+//			((Startup) getActivity()).getFragmentScore().undo(strArray);
+			return true;
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	public void updateShotsPerCent() {
+		tShotsTotalHome.setText("Total shots:");
+		tShotsPlayHome.setText("Shot from play:");
+		tShotsTotalOpp.setText("Total shots:");
+		tShotsPlayOpp.setText("Shot from play:");
+
+		int totalShotsHome, totalShotsOpp, shotsPlayHome, shotsPlayOpp;
+		int shotsScoredHome, shotsScoredOpp, shotsScoredPlayHome, shotsScoredPlayOpp;
+		String perCent;
+		totalShotsHome = shotGoalsHome + shotPointsHome + shotWidesHome
+				+ shotSavedHome + shotPostsHome + shot45Home;
+		totalShotsOpp = shotGoalsOpp + shotPointsOpp + shotWidesOpp
+				+ shotSavedOpp + shotPostsOpp + shot45Opp;
+		shotsPlayHome = shotGoalsPlayHome + shotPointsPlayHome
+				+ shotWidesPlayHome + shot45PlayHome + shotSavedPlayHome
+				+ shotPostsPlayHome;
+		shotsPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp + shotWidesPlayOpp
+				+ shot45PlayOpp + shotSavedPlayOpp + shotPostsPlayOpp;
+		shotsScoredHome = shotGoalsHome + shotPointsHome;
+		shotsScoredOpp = shotGoalsOpp + shotPointsOpp;
+		shotsScoredPlayHome = shotGoalsPlayHome + shotPointsPlayHome;
+		shotsScoredPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp;
+
+		if (totalShotsHome > 0) {
+			perCent = Integer
+					.toString((shotsScoredHome * 100) / totalShotsHome);
+			tShotsTotalHome.setText("Total shots:" + totalShotsHome
+					+ "  Scored:" + shotsScoredHome + " (" + perCent + "%)");
+		}
+		if (totalShotsOpp > 0) {
+			perCent = Integer.toString((shotsScoredOpp * 100) / totalShotsOpp);
+			tShotsTotalOpp.setText("Total shots:" + totalShotsOpp + "  Scored:"
+					+ shotsScoredOpp + " (" + perCent + "%)");
+		}
+		if (shotsPlayHome > 0) {
+			perCent = Integer.toString((shotsScoredPlayHome * 100)
+					/ shotsPlayHome);
+			tShotsPlayHome
+					.setText("Shot from play:" + shotsPlayHome + "  Scored:"
+							+ shotsScoredPlayHome + " (" + perCent + "%)");
+		}
+		if (shotsPlayOpp > 0) {
+			perCent = Integer.toString((shotsScoredPlayOpp * 100)
+					/ shotsPlayOpp);
+			tShotsPlayOpp.setText("Shot from play:" + shotsPlayOpp
+					+ "  Scored:" + shotsScoredPlayOpp + " (" + perCent + "%)");
+		}
+	}
+
+	// ///////////UPDATE SCORES////////////////////////////
+	// methods called from RECORD fragment to update score
+	// and totals
+	public void settHomeGoals(int i) {
+		homeGoals = i;
+		homeTotal = homeGoals * 3 + homePoints;
+		tHomeGoals.setText(String.valueOf(homeGoals));
+		tHomeTotal.setText(String.valueOf(homeTotal));
+	}
+
+	public void settHomePoints(int i) {
+		homePoints = i;
+		homeTotal = homeGoals * 3 + homePoints;
+		tHomePoints.setText(String.valueOf(homePoints));
+		tHomeTotal.setText(String.valueOf(homeTotal));
+	}
+
+	public void settOppGoals(int i) {
+		oppGoals = i;
+		oppTotal = oppGoals * 3 + oppPoints;
+		tOppGoals.setText(String.valueOf(oppGoals));
+		tOppTotal.setText(String.valueOf(oppTotal));
+	}
+
+	public void settOppPoints(int i) {
+		oppPoints = i;
+		oppTotal = oppGoals * 3 + oppPoints;
+		tOppPoints.setText(String.valueOf(oppPoints));
+		tOppTotal.setText(String.valueOf(oppTotal));
+	}
+
+	// method to reset all stats values to zero
+	public void resetStats() {
+		tShotGoalsHome.setText("0");
+		tShotPointsHome.setText("0");
+		tShotWidesHome.setText("0");
+		tShotSavedHome.setText("0");
+		tShotPostsHome.setText("0");
+		tShot45Home.setText("0");
+		tShotGoalsPlayHome.setText("0");
+		tShotPointsPlayHome.setText("0");
+		tShotPointsPlayWidesHome.setText("0");
+		tShotPointsPlay45Home.setText("0");
+		tShotPointsPlaySavedHome.setText("0");
+		tShotPointsPlayPostsHome.setText("0");
+
+		tShotGoalsOpp.setText("0");
+		tShotPointsOpp.setText("0");
+		tShotWidesOpp.setText("0");
+		tShotSavedOpp.setText("0");
+		tShotPostsOpp.setText("0");
+		tShot45Opp.setText("0");
+		tShotGoalsPlayOpp.setText("0");
+		tShotPointsPlayOpp.setText("0");
+		tShotPointsPlayWidesOpp.setText("0");
+		tShotPointsPlay45Opp.setText("0");
+		tShotPointsPlaySavedOpp.setText("0");
+		tShotPointsPlayPostsOpp.setText("0");
+
+		tFreeConcededHome.setText("0");
+		tFreeConcededOpp.setText("0");
+
+		tPuckWonCleanHome.setText("0");
+		tPuckLostCleanHome.setText("0");
+		tPuckWonCleanOpp.setText("0");
+		tPuckLostCleanOpp.setText("0");
+		tTotPuckHome.setText("0");
+		tTotPuckOpp.setText("0");
+		tCardHome.setText("");
+		tCardOpp.setText("");
+
+		tShotsTotalHome.setText("Total shots:");
+		tShotsPlayHome.setText("Shot from play:");
+		tShotsTotalOpp.setText("Total shots:");
+		tShotsPlayOpp.setText("Shot from play:");
+		updateCardsSubs();
+	}
+
 
 	public void updateListView() {
 
@@ -809,48 +790,62 @@ public class ReviewFragment extends Fragment {
 		subHome = "";
 		cardOpp = "";
 		subOpp = "";
+
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
-		String[] args = { tOwnTeam.getText().toString() };
+		String strTeam = "", strCard = "";
+		// get home team first then opposition
+		String[] args = { "t", "%card%" };
 		Cursor c1 = getActivity().getContentResolver().query(allTitles, null,
-				null, null, TeamContentProvider.STATSID);
+				"type=? AND stats2 LIKE ? ", args, null);
 		if (c1.getCount() > 0) {
-			String str;
 			c1.moveToFirst();
 			do {
-				// insert players into positions
-				str = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				if (str.indexOf("red card") >= 0) {
-					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+				strTeam = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
+				strCard = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+
+				if (strCard.indexOf("red card") >= 0) {
+					if (strTeam.indexOf(tOwnTeam.getText().toString()) >= 0) {
 						redHome++;
-					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+					} else if (strTeam.indexOf(tOppTeam.getText().toString()) >= 0) {
 						redOpp++;
 					}
 				}
-				if (str.indexOf("yellow card") >= 0) {
-					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+				if (strCard.indexOf("yellow card") >= 0) {
+					if (strTeam.indexOf(tOwnTeam.getText().toString()) >= 0) {
 						yellowHome++;
-					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+					} else if (strTeam.indexOf(tOppTeam.getText().toString()) >= 0) {
 						yellowOpp++;
 					}
 				}
-				if (str.indexOf("black card") >= 0) {
-					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
+				if (strCard.indexOf("black card") >= 0) {
+					if (strTeam.indexOf(tOwnTeam.getText().toString()) >= 0) {
 						blackHome++;
-					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
+					} else if (strTeam.indexOf(tOppTeam.getText().toString()) >= 0) {
 						blackOpp++;
 					}
 				}
-				if (str.indexOf("substitution") >= 0) {
-					if (str.indexOf(tOwnTeam.getText().toString()) >= 0) {
-						subH++;
-					} else if (str.indexOf(tOppTeam.getText().toString()) >= 0) {
-						subO++;
-					}
+			} while (c1.moveToNext());
+			c1.close();
+		}
+
+		String[] args2 = { "u", " substitution " };
+		c1 = getActivity().getContentResolver().query(allTitles, null,
+				"type=? AND blood=?", args2, null);
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				strTeam = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
+				if (strTeam.indexOf(tOwnTeam.getText().toString()) >= 0) {
+					subH++;
+				} else if (strTeam.indexOf(tOppTeam.getText().toString()) >= 0) {
+					subO++;
 				}
 			} while (c1.moveToNext());
+			c1.close();
 		}
-		c1.close();
 
 		if (redHome > 0 || yellowHome > 0 || blackHome > 0) {
 			cardHome = "Cards: " + blackHome + "B  " + yellowHome + "Y  "
@@ -899,9 +894,9 @@ public class ReviewFragment extends Fragment {
 			if (eventsUndoList.size() > 0) {
 				String[] strArray = new String[eventsUndoList.size()];
 				for (int i = 0; i < eventsUndoList.size(); i++) {
-					strArray[i] = eventsUndoList.get(i);					
+					strArray[i] = eventsUndoList.get(i);
 				}
-				((Startup) getActivity()).getFragmentScore().undo(strArray);
+//				((Startup) getActivity()).getFragmentScore().undo(strArray);
 			}
 		}
 	}

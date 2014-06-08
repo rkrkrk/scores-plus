@@ -73,7 +73,18 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String DATABASE_TABLE_STATS = "stats";
 	public static final String STATSID = "_id";
 	public static final String STATSLINE = "line";
-
+	//version 5
+	public static final String STATSTIME = "time";
+	public static final String STATSPERIOD = "period";
+	public static final String STATSTEAM = "team";
+	public static final String STATS1 = "stats1";
+	public static final String STATS2 = "stats2";
+	//type: s=start/stop u=sub t=stats
+	public static final String STATSTYPE = "type";
+	public static final String STATSSUBON = "subon";
+	public static final String STATSSUBOFF = "suboff";
+	public static final String STATSBLOOD = "blood";
+	
 	public static final String DATABASE_TABLE_SCORES = "scores";
 	public static final String SCORESID = "_id";
 	public static final String SCORESNAME = "name";
@@ -85,7 +96,6 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String SCORESPOINTSFREE = "pointsfree";
 	public static final String SCORESMISS = "miss";
 	public static final String SCORESMISSFREE = "missfree";
-
 
 	@Override
 	// open connection to team defined in BaseProvider Class

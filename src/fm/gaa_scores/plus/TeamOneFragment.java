@@ -952,15 +952,23 @@ public class TeamOneFragment extends Fragment {
 		}
 		getTeam(panelName);
 		// write to stats
-		String temp = (((Startup) getActivity()).getFragmentScore().getTime() == "") ? ""
-				: ((Startup) getActivity()).getFragmentScore().getTime()
-						+ "mins "
-						+ ((Startup) getActivity()).getFragmentScore().bPeriod
-								.getText();
+		String temp1 = "", temp2 = "", temp3 = "";
+		if (((Startup) getActivity()).getFragmentScore().getTime() != "") {
+			temp1 = ((Startup) getActivity()).getFragmentScore().getTime();
+			temp2 = ((Startup) getActivity()).getFragmentScore().bPeriod
+					.getText().toString();
+		}
+		temp3 = (bloodSub) ? " blood sub " : " substitution ";
 		ContentValues values = new ContentValues();
-		String temp2 = (bloodSub) ? " blood sub " : " substitution ";
-		values.put("line", temp + temp2 + panelName + "--> off: " + playerOff
-				+ "  on: " + playerOn);
+		values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
+				+ "--> off: " + playerOff + "  on: " + playerOn);
+		values.put("type", "u");
+		values.put("time", temp1);
+		values.put("team", panelName);	
+		values.put("period", temp2);
+		values.put("blood", temp3);
+		values.put("subon", playerOn);
+		values.put("suboff", playerOff);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
 

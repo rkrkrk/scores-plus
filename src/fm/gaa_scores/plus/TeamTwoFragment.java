@@ -952,15 +952,23 @@ public class TeamTwoFragment extends Fragment {
 		}
 		getTeam(panelName);
 		// write to stats
-		String temp = (((Startup) getActivity()).getFragmentScore().getTime() == "") ? ""
-				: ((Startup) getActivity()).getFragmentScore().getTime()
-						+ "mins "
-						+ ((Startup) getActivity()).getFragmentScore().bPeriod
-								.getText();
+		String temp1 = "", temp2 = "", temp3 = "";
+		if (((Startup) getActivity()).getFragmentScore().getTime() != "") {
+			temp1 = ((Startup) getActivity()).getFragmentScore().getTime();
+			temp2 = ((Startup) getActivity()).getFragmentScore().bPeriod
+					.getText().toString();
+		}
+		temp3 = (bloodSub) ? " blood sub " : " substitution ";
 		ContentValues values = new ContentValues();
-		String temp2 = (bloodSub) ? "blood sub " : "substitution ";
-		values.put("line", temp + temp2 + panelName + "--> off: " + playerOff
-				+ "  on: " + playerOn);
+		values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
+				+ "--> off: " + playerOff + "  on: " + playerOn);
+		values.put("type", "u");
+		values.put("time", temp1);
+		values.put("team", panelName);
+		values.put("period", temp2);
+		values.put("blood", temp3);
+		values.put("subon", playerOn);
+		values.put("suboff", playerOff);
 		getActivity().getContentResolver().insert(
 				TeamContentProvider.CONTENT_URI_2, values);
 
@@ -1313,10 +1321,10 @@ public class TeamTwoFragment extends Fragment {
 		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
 				projection, "team=?", new String[] { panelName },
 				TeamContentProvider.NAME);
-//		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
-//				projection,
-//				TeamContentProvider.TEAM + " = '" + panelName + "'", null,
-//				TeamContentProvider.NAME);
+		// CursorLoader cL = new CursorLoader(getActivity(), allTitles,
+		// projection,
+		// TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+		// TeamContentProvider.NAME);
 		Cursor c1 = cL.loadInBackground();
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
@@ -1444,13 +1452,13 @@ public class TeamTwoFragment extends Fragment {
 							int count;
 							team = panel[which];
 							count = getActivity().getContentResolver().delete(
-									TeamContentProvider.CONTENT_URI,
-									"team=?",
+									TeamContentProvider.CONTENT_URI, "team=?",
 									new String[] { team });
-//							count = getActivity().getContentResolver().delete(
-//									TeamContentProvider.CONTENT_URI,
-//									TeamContentProvider.TEAM + " = '" + team
-//											+ "'", null);
+							// count =
+							// getActivity().getContentResolver().delete(
+							// TeamContentProvider.CONTENT_URI,
+							// TeamContentProvider.TEAM + " = '" + team
+							// + "'", null);
 							Toast.makeText(
 									getActivity(),
 									team + " and " + (count - 1)
