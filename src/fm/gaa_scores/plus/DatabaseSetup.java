@@ -38,6 +38,7 @@ public abstract class DatabaseSetup extends ContentProvider {
 			+ TeamContentProvider.STATSTIME + " text, "
 			+ TeamContentProvider.STATSPERIOD + " text, "
 			+ TeamContentProvider.STATSTEAM + " text, "
+			+ TeamContentProvider.STATSPLAYER + " text, "
 			+ TeamContentProvider.STATS1 + " text, "
 			+ TeamContentProvider.STATS2 + " text, "
 			+ TeamContentProvider.STATSTYPE + " text, "
@@ -100,6 +101,9 @@ public abstract class DatabaseSetup extends ContentProvider {
 				db.execSQL("ALTER TABLE "
 						+ TeamContentProvider.DATABASE_TABLE_STATS
 						+ " ADD COLUMN " + TeamContentProvider.STATSTEAM);
+				db.execSQL("ALTER TABLE "
+						+ TeamContentProvider.DATABASE_TABLE_STATS
+						+ " ADD COLUMN " + TeamContentProvider.STATSPLAYER);
 				db.execSQL("ALTER TABLE "
 						+ TeamContentProvider.DATABASE_TABLE_STATS
 						+ " ADD COLUMN " + TeamContentProvider.STATS1);

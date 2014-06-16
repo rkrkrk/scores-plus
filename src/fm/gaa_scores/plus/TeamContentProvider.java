@@ -77,6 +77,7 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String STATSTIME = "time";
 	public static final String STATSPERIOD = "period";
 	public static final String STATSTEAM = "team";
+	public static final String STATSPLAYER = "player";
 	public static final String STATS1 = "stats1";
 	public static final String STATS2 = "stats2";
 	//type: s=start/stop u=sub t=stats
