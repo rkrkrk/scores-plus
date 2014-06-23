@@ -35,15 +35,17 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
 public class EventsListActivity extends ListActivity {
-	private ArrayList<String> eventsUndoList = new ArrayList<String>();
+	private ArrayList<String> teamu = new ArrayList<String>();
+	private ArrayList<String> stats1u = new ArrayList<String>();
+	private ArrayList<String> stats2u = new ArrayList<String>();
+	private ArrayList<String> playeru = new ArrayList<String>();
+	private ArrayList<String> typeu = new ArrayList<String>();
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_list_layout);
-		eventsUndoList.clear();
 		Button back = (Button) findViewById(R.id.bBackL);
 		back.setOnClickListener(goBack);
 
@@ -61,8 +63,8 @@ public class EventsListActivity extends ListActivity {
 
 		int[] to = new int[] { R.id.listrtxt };
 
-		CursorLoader cL = new CursorLoader(this, allTitles,
-				projection, null, null, TeamContentProvider.STATSID + " desc");
+		CursorLoader cL = new CursorLoader(this, allTitles, projection, null,
+				null, TeamContentProvider.STATSID + " desc");
 		Cursor c1 = cL.loadInBackground();
 
 		SimpleCursorAdapter reminders = new SimpleCursorAdapter(this,
@@ -70,7 +72,7 @@ public class EventsListActivity extends ListActivity {
 
 		setListAdapter(reminders);
 	}
-	
+
 	OnClickListener goBack = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -93,37 +95,81 @@ public class EventsListActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case R.id.menu_delete1:
 			// // Delete a row / player
-			String strTemp = "";
+			String teamTemp = "",
+			stats1Temp = "",
+			stats2Temp = "";
+			String playerTemp = "",
+			typeTemp = "";
 			Uri uri = TeamContentProvider.CONTENT_URI_2;
+			String[] projection = { TeamContentProvider.STATS1,
+					TeamContentProvider.STATS2,
+					TeamContentProvider.STATSPLAYER,
+					TeamContentProvider.STATSTYPE,
+					TeamContentProvider.STATSTEAM };
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			String[] args = { Long.toString(info.id) };
-			Cursor c1 = this.getContentResolver().query(uri, null,
+			Cursor c1 = this.getContentResolver().query(uri, projection,
 					"_id=?", args, null);
 			if (c1.getCount() > 0) {
 				c1.moveToFirst();
-				strTemp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				teamTemp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
+				stats1Temp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
+				stats2Temp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+				playerTemp = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSPLAYER));
+				typeTemp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTYPE));
 			}
 			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
 			this.getContentResolver().delete(uri, null, null);
-			Toast.makeText(this, "stats entry deleted",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "stats entry deleted", Toast.LENGTH_LONG)
+					.show();
+			
+			teamu.add(teamTemp);
+			stats1u.add(stats1Temp);
+			stats2u.add(stats2Temp);
+			playeru.add(playerTemp);
+			typeu.add(typeTemp);
 			fillData();
-			eventsUndoList.add(strTemp);
-//			((Startup) getActivity()).getFragmentScore().undo(strTemp);
+//			 ((Startup) getActivity()).getFragmentScore().undo(strTemp);
 			return true;
 		}
 		return super.onContextItemSelected(item);
 	}
-	
+
 	public void finish() {
-		  // Prepare data intent 
-		  Intent i = new Intent();
-		  i.putStringArrayListExtra("eventsUndoList", eventsUndoList);
-		  // Activity finished ok, return the data
-		  setResult(RESULT_OK, i);
-		  super.finish();
-		} 
+		// Prepare data intent
+		if (teamu.size()>0){
+			String[] team = new String[teamu.size()];
+			String[] stats1 = new String[teamu.size()];
+			String[] stats2 = new String[teamu.size()];
+			String[] player = new String[teamu.size()];
+			String[] type = new String[teamu.size()];
+					
+			for (int j = 0; j < teamu.size(); j++) {
+				team[j]=teamu.get(j);
+				stats1[j]=stats1u.get(j);
+				stats2[j]=stats2u.get(j);
+				player[j]=playeru.get(j);
+				type[j]=typeu.get(j);		
+			}
+			Intent i = new Intent();
+			i.putExtra("team",team);
+			i.putExtra("stats1",stats1);
+			i.putExtra("stats2",stats2);
+			i.putExtra("player",player);
+			i.putExtra("type",type);
+			setResult(RESULT_OK, i);
+		}
+		else {
+			setResult(RESULT_OK);
+		}
+		super.finish();
+	}
 
 }

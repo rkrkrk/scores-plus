@@ -1708,13 +1708,14 @@ public class TeamOneFragment extends Fragment {
 	public void updateCards() {
 		int cardY = 0, cardB = 0, cardR = 0;
 		tCards.setText("");
-		cardLines = 0;
+		cardLines = 1;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
-		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE };
 		strBuilderCards.setLength(0);
 		CursorLoader cL;
-		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
+		String[] projection = { TeamContentProvider.STATSLINE };
+		String[] args = { tTeamHome.getText().toString(), "t", "%card%" };
+		cL = new CursorLoader(getActivity(), allTitles, projection,
+				"team=? AND type=? AND stats2 LIKE ? ", args,
 				TeamContentProvider.STATSID);
 		Cursor c1 = cL.loadInBackground();
 		if (c1.getCount() > 0) {
@@ -1725,20 +1726,18 @@ public class TeamOneFragment extends Fragment {
 				// insert players into positions
 				str[i] = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				if (str[i].indexOf(tTeamHome.getText().toString()) >= 0) {
-					if (str[i].indexOf("red card") >= 0) {
-						cardR++;
-						strBuilderCards.append("\n" + str[i]);
-						cardLines++;
-					} else if (str[i].indexOf("yellow card") >= 0) {
-						cardY++;
-						strBuilderCards.append("\n" + str[i]);
-						cardLines++;
-					} else if (str[i].indexOf("black card") >= 0) {
-						cardB++;
-						strBuilderCards.append("\n" + str[i]);
-						cardLines++;
-					}
+				if (str[i].indexOf("red card") >= 0) {
+					cardR++;
+					strBuilderCards.append("\n" + str[i]);
+					cardLines++;
+				} else if (str[i].indexOf("yellow card") >= 0) {
+					cardY++;
+					strBuilderCards.append("\n" + str[i]);
+					cardLines++;
+				} else if (str[i].indexOf("black card") >= 0) {
+					cardB++;
+					strBuilderCards.append("\n" + str[i]);
+					cardLines++;
 				}
 				i++;
 			} while (c1.moveToNext());
@@ -1755,16 +1754,17 @@ public class TeamOneFragment extends Fragment {
 	public void updateSubsList() {
 		tSubs.setText("");
 		strBuilderSub.setLength(0);
-		subLines = 0;
+		subLines = 1;
 		int numSubs = 0;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
-		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE };
-		StringBuilder strBuilder = new StringBuilder();
 		CursorLoader cL;
-		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
-				TeamContentProvider.STATSID);
+
+		String[] projection = { TeamContentProvider.STATSLINE };
+		String[] args = { tTeamHome.getText().toString(), "u" };
+		cL = new CursorLoader(getActivity(), allTitles, projection,
+				"team=? AND type=? ", args, TeamContentProvider.STATSID);
 		Cursor c1 = cL.loadInBackground();
+		StringBuilder strBuilder = new StringBuilder();
 		if (c1.getCount() > 0) {
 			String str[] = new String[c1.getCount()];
 			int i = 0;
@@ -1773,16 +1773,13 @@ public class TeamOneFragment extends Fragment {
 				// insert players into positions
 				str[i] = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
-				if ((str[i].indexOf("--> off:") >= 0)
-						&& (str[i].indexOf(panelName) >= 0)) {
-					strBuilder.append("\n" + str[i]);
-					strBuilderSub.append("\n"
-							+ str[i].replace("substitution", ""));
-					subLines++;
-					if (str[i].indexOf("blood sub") < 0) {
-						numSubs++;
-					}
+				strBuilder.append("\n" + str[i]);
+				strBuilderSub.append("\n" + str[i].replace("substitution", ""));
+				subLines++;
+				if (str[i].indexOf("blood sub") < 0) {
+					numSubs++;
 				}
+
 				i++;
 			} while (c1.moveToNext());
 			c1.close();
@@ -1794,6 +1791,7 @@ public class TeamOneFragment extends Fragment {
 						+ " substitutions made");
 			}
 			tSubs.setText(strBuilder.toString());
+
 		}
 	}
 

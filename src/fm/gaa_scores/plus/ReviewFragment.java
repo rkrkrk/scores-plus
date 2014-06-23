@@ -227,44 +227,6 @@ public class ReviewFragment extends Fragment {
 			settOppPoints(oppPoints);
 		}
 
-		// setup shots/frees/puckouts values from persisted data
-//		shotGoalsHome = sharedPref.getInt("SHOTGOALSHOME", 0);
-//		shotPointsHome = sharedPref.getInt("SHOTPOINTSHOME", 0);
-//		shotWidesHome = sharedPref.getInt("SHOTWIDESHOME", 0);
-//		shot45Home = sharedPref.getInt("SHOT45HOME", 0);
-//		shotSavedHome = sharedPref.getInt("SHOTSAVEDHOME", 0);
-//		shotPostsHome = sharedPref.getInt("SHOTPOSTSHOME", 0);
-//		shotGoalsPlayHome = sharedPref.getInt("SHOTGOALSPLAYHOME", 0);
-//		shotPointsPlayHome = sharedPref.getInt("SHOTPOINTSPLAYHOME", 0);
-//		shotWidesPlayHome = sharedPref.getInt("SHOTPOINTSWIDESHOME", 0);
-//		shot45PlayHome = sharedPref.getInt("SHOTPOINTS45HOME", 0);
-//		shotSavedPlayHome = sharedPref.getInt("SHOTPOINTSSAVEDHOME", 0);
-//		shotPostsPlayHome = sharedPref.getInt("SHOTPOINTSPOSTSHOME", 0);
-//
-//		shotGoalsOpp = sharedPref.getInt("SHOTGOALSOPP", 0);
-//		shotPointsOpp = sharedPref.getInt("SHOTPOINTSOPP", 0);
-//		shotWidesOpp = sharedPref.getInt("SHOTWIDESOPP", 0);
-//		shotSavedOpp = sharedPref.getInt("SHOTSAVEDOPP", 0);
-//		shotPostsOpp = sharedPref.getInt("SHOTPOSTSOPP", 0);
-//		shot45Opp = sharedPref.getInt("SHOT45OPP", 0);
-//		shotGoalsPlayOpp = sharedPref.getInt("SHOTGOALSPLAYOPP", 0);
-//		shotPointsPlayOpp = sharedPref.getInt("SHOTPOINTSPLAYOPP", 0);
-//		shotWidesPlayOpp = sharedPref.getInt("SHOTPOINTSWIDESOPP", 0);
-//		shot45PlayOpp = sharedPref.getInt("SHOTPOINTS45OPP", 0);
-//		shotSavedPlayOpp = sharedPref.getInt("SHOTPOINTSSAVEDOPP", 0);
-//		shotPostsPlayOpp = sharedPref.getInt("SHOTPOINTSPOSTSOPP", 0);
-//
-//		freeConcededHome = sharedPref.getInt("FREEWONHOME", 0);
-//		freeConcededOpp = sharedPref.getInt("FREEWONOPP", 0);
-//
-//		totPHome = sharedPref.getInt("TOTPHOME", 0);
-//		puckWonCleanHome = sharedPref.getInt("PUCKWONCLEANHOME", 0);
-//		puckLostCleanHome = sharedPref.getInt("PUCKLOSTCLEANHOME", 0);
-//
-//		totPOpp = sharedPref.getInt("TOTPOPP", 0);
-//		puckWonCleanOpp = sharedPref.getInt("PUCKWONCLEANOPP", 0);
-//		puckLostCleanOpp = sharedPref.getInt("PUCKLOSTCLEANOPP", 0);
-
 		bSendAll = (Button) v.findViewById(R.id.bSendAll);
 		bSendAll.setOnClickListener(sendAllListener);
 		bTweetAll = (Button) v.findViewById(R.id.bTweetAll);
@@ -284,7 +246,7 @@ public class ReviewFragment extends Fragment {
 		return v;
 
 	}
-	
+
 	// ///////////////////////////END OF ONCREATE///////////////////////////
 
 	@Override
@@ -344,7 +306,6 @@ public class ReviewFragment extends Fragment {
 		editor.commit();
 	}
 
-	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -352,7 +313,6 @@ public class ReviewFragment extends Fragment {
 		updateCardsSubs();
 		updateShotsPerCent();
 	}
-
 
 	public void fillData() {
 		String team, stats1, stats2;
@@ -604,25 +564,50 @@ public class ReviewFragment extends Fragment {
 		switch (item.getItemId()) {
 		case R.id.menu_delete1:
 			// // Delete a row / player
-			String strTemp = "";
+			String teamTemp = "",
+			stats1Temp = "",
+			stats2Temp = "";
+			String playerTemp = "",
+			typeTemp = "";
 			Uri uri = TeamContentProvider.CONTENT_URI_2;
+			String[] projection = { TeamContentProvider.STATS1,
+					TeamContentProvider.STATS2,
+					TeamContentProvider.STATSPLAYER,
+					TeamContentProvider.STATSTYPE,
+					TeamContentProvider.STATSTEAM };
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			String[] args = { Long.toString(info.id) };
-			Cursor c1 = getActivity().getContentResolver().query(uri, null,
-					"_id=?", args, null);
+			Cursor c1 = getActivity().getContentResolver().query(uri,
+					projection, "_id=?", args, null);
 			if (c1.getCount() > 0) {
 				c1.moveToFirst();
-				strTemp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				teamTemp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
+				stats1Temp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
+				stats2Temp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+				playerTemp = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSPLAYER));
+				typeTemp = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTYPE));
 			}
 			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
 			getActivity().getContentResolver().delete(uri, null, null);
 			Toast.makeText(getActivity(), "stats entry deleted",
 					Toast.LENGTH_LONG).show();
 			updateListView();
-			String[] strArray = { strTemp };
-//			((Startup) getActivity()).getFragmentScore().undo(strArray);
+			String[] teamu = { teamTemp };
+			String[] stats1u = { stats1Temp };
+			String[] stats2u = { stats2Temp };
+			String[] playeru = { playerTemp };
+			String[] typeu = { typeTemp };
+
+			((Startup) getActivity()).getFragmentScore().undo(teamu, stats1u,
+					stats2u, playeru, typeu);
+			fillData();
 			return true;
 		}
 		return super.onContextItemSelected(item);
@@ -755,7 +740,6 @@ public class ReviewFragment extends Fragment {
 		updateCardsSubs();
 	}
 
-
 	public void updateListView() {
 
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
@@ -883,20 +867,17 @@ public class ReviewFragment extends Fragment {
 	};
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ArrayList<String> eventsUndoList = new ArrayList<String>();
-		String str;
 		if (requestCode == 1) {
 			// A contact was picked. Here we will just display it
 			// to the user.
-			if (data.hasExtra("eventsUndoList")) {
-				eventsUndoList = data.getStringArrayListExtra("eventsUndoList");
-			}
-			if (eventsUndoList.size() > 0) {
-				String[] strArray = new String[eventsUndoList.size()];
-				for (int i = 0; i < eventsUndoList.size(); i++) {
-					strArray[i] = eventsUndoList.get(i);
-				}
-//				((Startup) getActivity()).getFragmentScore().undo(strArray);
+			if (data != null && data.hasExtra("team")) {
+				String[] teamu = data.getStringArrayExtra("team");
+				String[] stats1u = data.getStringArrayExtra("stats1");
+				String[] stats2u = data.getStringArrayExtra("stats2");
+				String[] playeru = data.getStringArrayExtra("player");
+				String[] typeu = data.getStringArrayExtra("type");					
+				((Startup) getActivity()).getFragmentScore().undo(teamu,
+						stats1u, stats2u, playeru, typeu);
 			}
 		}
 	}
