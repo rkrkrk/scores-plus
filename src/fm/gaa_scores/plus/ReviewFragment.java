@@ -866,6 +866,7 @@ public class ReviewFragment extends Fragment {
 		};
 	};
 
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			// A contact was picked. Here we will just display it

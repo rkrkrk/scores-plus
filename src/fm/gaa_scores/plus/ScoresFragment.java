@@ -35,7 +35,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,7 +43,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,7 +51,6 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -1002,10 +999,9 @@ public class ScoresFragment extends Fragment {
 
 	// //////////////////////////////////////////////////////////////////////
 	// method to update score and update shots data in review scrreen
-	public void updateStatsDatabase(int button, int count) {
-		switch (button) {
-		case R.id.buttonShotHome:
-			team = tOurTeam.getText().toString();
+	public void updateStatsDatabase(String teamName, int count) {
+
+		if (teamName.equals(tOurTeam.getText().toString())) {
 			// for home team commit
 			// WRITE TO REVIEW PAGE///////////////////////////////////
 			if (stats1.equals("goal")) {
@@ -1045,10 +1041,7 @@ public class ScoresFragment extends Fragment {
 							Toast.LENGTH_SHORT).show();
 				}
 			}
-			break;
-
-		case R.id.buttonShotOpp:
-			team = tOppTeam.getText().toString();
+		} else if (teamName.equals(tOppTeam.getText().toString())) {
 			// for opposition team
 			// WRITE TO REVIEW PAGE///////////////////////////////////
 			if (stats1.equals("goal")) {
@@ -1082,7 +1075,7 @@ public class ScoresFragment extends Fragment {
 							Toast.LENGTH_SHORT).show();
 				}
 			}
-			break;
+
 		}
 		// add to stats database
 		if (!(stats1.equals("") && stats2.equals("") && player.equals(""))) {
@@ -1091,15 +1084,15 @@ public class ScoresFragment extends Fragment {
 			if (starttime > 10) {
 				temp1 = getTime();
 				temp2 = bPeriod.getText().toString();
-				values.put("line", temp1 + "mins " + temp2 + " " + team + " "
+				values.put("line", temp1 + "mins " + temp2 + " " + teamName + " "
 						+ stats1 + " " + stats2 + " " + player);
 			} else {
-				values.put("line", team + " " + stats1 + " " + stats2 + " "
+				values.put("line", teamName + " " + stats1 + " " + stats2 + " "
 						+ player);
 			}
 			values.put("type", "t");
 			values.put("time", temp1);
-			values.put("team", team);
+			values.put("team", teamName);
 			Log.e("player", " " + player);
 			values.put("player", player);
 			values.put("period", temp2);
@@ -1113,8 +1106,8 @@ public class ScoresFragment extends Fragment {
 			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		}
 		// add to scorers database
-		if (!team.equals("")) {
-			updateScorers(stats1, stats2, player, team, PLUS);
+		if (!teamName.equals("")) {
+			updateScorers(stats1, stats2, player, teamName, PLUS);
 		}
 
 		// update display list
@@ -1329,117 +1322,159 @@ public class ScoresFragment extends Fragment {
 	/*-------------------DIALOG FOR STATS INPUT*---------------------------*///
 	// handles button clicks for shot / free / puckout ///
 	// **********************************************************************//
+
 	OnClickListener statsClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View w) {
-			// clear default values from input/output textfields
-			player = "";
-			stats1 = "";
-			stats2 = "";
-			// get team name from button
 			int tempButton = ((Button) w).getId();
+			String teamName = "";
 			switch (tempButton) {
 			case R.id.buttonShotHome:
 				getTeam(tOurTeam.getText().toString());
+				teamName = tOurTeam.getText().toString();
 				break;
 			case R.id.buttonShotOpp:
 				getTeam(tOppTeam.getText().toString());
+				teamName = tOppTeam.getText().toString();
 				break;
 			}
-
-			// use statsButton to store which button was pressed
-			statsButton = ((Button) w).getId();
-
-			// throw up stats input screen layout
-			LayoutInflater inflater = getActivity().getLayoutInflater();
-			View vv = inflater.inflate(R.layout.stats_layout, null);
-			int apk = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
-			RadioButton[] rbrshot = new RadioButton[9];
-			RadioButton[] rbtShot = new RadioButton[8];
-			if (apk <= 16) {
-				Resources r = context.getResources();
-				int px = (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 29, r.getDisplayMetrics());
-				for (int i = 0; i < 9; i++) {
-					rbrshot[i] = (RadioButton) vv.findViewById(getResources()
-							.getIdentifier(
-									"radio_shot_r" + String.format("%02d", i),
-									"id", "fm.gaa_scores.plus"));
-					rbrshot[i].setPadding(px, 0, 0, 0);
-				}
-				for (int i = 0; i < 8; i++) {
-					rbtShot[i] = (RadioButton) vv.findViewById(getResources()
-							.getIdentifier(
-									"radio_shot_t" + String.format("%02d", i),
-									"id", "fm.gaa_scores.plus"));
-					rbtShot[i].setPadding(px, 0, 0, 0);
-				}
-			}
-
-			// ///////////
-			AlertDialog.Builder builder;
-
-			builder = new AlertDialog.Builder(getActivity()).setView(vv)
-			// ok button just closes the dialog
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
-									// light up the save button
-
-									updateStatsDatabase(statsButton, 1);
-
-									dialog.dismiss();
-								}
-							});
-
-			// 9 choices for shots
-			// RadioButton[] rbrshot = new RadioButton[9];
-			for (int i = 0; i < 9; i++) {
-				rbrshot[i] = (RadioButton) vv.findViewById(getResources()
-						.getIdentifier(
-								"radio_shot_r" + String.format("%02d", i),
-								"id", "fm.gaa_scores.plus"));
-				rbrshot[i].setOnClickListener(getStats1ClickListener);
-			}
-
-			// 8 options for shot type
-			// RadioButton[] rbtShot = new RadioButton[8];
-			for (int i = 0; i < 8; i++) {
-				rbtShot[i] = (RadioButton) vv.findViewById(getResources()
-						.getIdentifier(
-								"radio_shot_t" + String.format("%02d", i),
-								"id", "fm.gaa_scores.plus"));
-				rbtShot[i].setOnClickListener(getStats2ClickListener);
-			}
-
-			// for shots assign clickListener and names to team layout from
-			// teamLineUp
-			Button[] bb;
-			switch (statsButton) {
-			case R.id.buttonShotHome:
-			case R.id.buttonShotOpp:
-				bb = new Button[16];
-				for (int i = 1; i <= 15; i++) {
-					bb[i] = (Button) vv.findViewById(getResources()
-							.getIdentifier(
-									"ButtonP" + String.format("%02d", i), "id",
-									"fm.gaa_scores.plus"));
-					// For Home team assign player name to team lineup
-					// For Opposition just use position numbers
-					bb[i].setText(teamLineUp[i]);
-					bb[i].setOnClickListener(getPlayerClickListener);
-				}
-				break;
-			}
-
-			ScoresFragment.this.alertshot = builder.create();
-			ScoresFragment.this.alertshot.show();
+			Intent input = new Intent(getActivity(), InputActivity.class);
+			input.putExtra("teamLineup", teamLineUp);
+			input.putExtra("teamName", teamName);
+			startActivityForResult(input, 9);
 		}
-
 	};
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 9) {
+			// A contact was picked. Here we will just display it
+			// to the user.
+			if (data != null) {
+				stats1 = data.getStringExtra("stats1");
+				stats2 = data.getStringExtra("stats2");
+				player = data.getStringExtra("player");
+				String teamName = data.getStringExtra("teamName");
+				if (!(stats1.equals("") && stats2.equals("") && player
+						.equals(""))) {
+					updateStatsDatabase(teamName, 1);
+				}
+			}
+		}
+	}
+
+	// OnClickListener statsClickListener = new OnClickListener() {
+	//
+	// @Override
+	// public void onClick(View w) {
+	// // clear default values from input/output textfields
+	// player = "";
+	// stats1 = "";
+	// stats2 = "";
+	// // get team name from button
+	// int tempButton = ((Button) w).getId();
+	// switch (tempButton) {
+	// case R.id.buttonShotHome:
+	// getTeam(tOurTeam.getText().toString());
+	// break;
+	// case R.id.buttonShotOpp:
+	// getTeam(tOppTeam.getText().toString());
+	// break;
+	// }
+	//
+	// // use statsButton to store which button was pressed
+	// statsButton = ((Button) w).getId();
+	//
+	// // throw up stats input screen layout
+	// LayoutInflater inflater = getActivity().getLayoutInflater();
+	// View vv = inflater.inflate(R.layout.stats_layout, null);
+	// int apk = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+	// RadioButton[] rbrshot = new RadioButton[9];
+	// RadioButton[] rbtShot = new RadioButton[8];
+	// if (apk <= 16) {
+	// Resources r = context.getResources();
+	// int px = (int) TypedValue.applyDimension(
+	// TypedValue.COMPLEX_UNIT_DIP, 29, r.getDisplayMetrics());
+	// for (int i = 0; i < 9; i++) {
+	// rbrshot[i] = (RadioButton) vv.findViewById(getResources()
+	// .getIdentifier(
+	// "radio_shot_r" + String.format("%02d", i),
+	// "id", "fm.gaa_scores.plus"));
+	// rbrshot[i].setPadding(px, 0, 0, 0);
+	// }
+	// for (int i = 0; i < 8; i++) {
+	// rbtShot[i] = (RadioButton) vv.findViewById(getResources()
+	// .getIdentifier(
+	// "radio_shot_t" + String.format("%02d", i),
+	// "id", "fm.gaa_scores.plus"));
+	// rbtShot[i].setPadding(px, 0, 0, 0);
+	// }
+	// }
+	//
+	// // ///////////
+	// AlertDialog.Builder builder;
+	//
+	// builder = new AlertDialog.Builder(getActivity()).setView(vv)
+	// // ok button just closes the dialog
+	// .setPositiveButton("OK",
+	// new DialogInterface.OnClickListener() {
+	// @Override
+	// public void onClick(DialogInterface dialog,
+	// int id) {
+	// // light up the save button
+	//
+	// updateStatsDatabase(statsButton, 1);
+	//
+	// dialog.dismiss();
+	// }
+	// });
+	//
+	// // 9 choices for shots
+	// // RadioButton[] rbrshot = new RadioButton[9];
+	// for (int i = 0; i < 9; i++) {
+	// rbrshot[i] = (RadioButton) vv.findViewById(getResources()
+	// .getIdentifier(
+	// "radio_shot_r" + String.format("%02d", i),
+	// "id", "fm.gaa_scores.plus"));
+	// rbrshot[i].setOnClickListener(getStats1ClickListener);
+	// }
+	//
+	// // 8 options for shot type
+	// // RadioButton[] rbtShot = new RadioButton[8];
+	// for (int i = 0; i < 8; i++) {
+	// rbtShot[i] = (RadioButton) vv.findViewById(getResources()
+	// .getIdentifier(
+	// "radio_shot_t" + String.format("%02d", i),
+	// "id", "fm.gaa_scores.plus"));
+	// rbtShot[i].setOnClickListener(getStats2ClickListener);
+	// }
+	//
+	// // for shots assign clickListener and names to team layout from
+	// // teamLineUp
+	// Button[] bb;
+	// switch (statsButton) {
+	// case R.id.buttonShotHome:
+	// case R.id.buttonShotOpp:
+	// bb = new Button[16];
+	// for (int i = 1; i <= 15; i++) {
+	// bb[i] = (Button) vv.findViewById(getResources()
+	// .getIdentifier(
+	// "ButtonP" + String.format("%02d", i), "id",
+	// "fm.gaa_scores.plus"));
+	// // For Home team assign player name to team lineup
+	// // For Opposition just use position numbers
+	// bb[i].setText(teamLineUp[i]);
+	// bb[i].setOnClickListener(getPlayerClickListener);
+	// }
+	// break;
+	// }
+	//
+	// ScoresFragment.this.alertshot = builder.create();
+	// ScoresFragment.this.alertshot.show();
+	// }
+	//
+	// };
 
 	// Listener to get player name
 	OnClickListener getPlayerClickListener = new OnClickListener() {

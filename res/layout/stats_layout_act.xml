@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView30"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1.7"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="1dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1.1"
+            android:orientation="horizontal"
+            android:padding="0dp" >
+
+            <RadioGroup
+                android:id="@+id/radioGroup_shot_r"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r00"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="goal"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r01"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="point"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r02"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="wide"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r03"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="out for 45/65"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r04"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="off posts"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r05"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="saved/short"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r06"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="free/pen conceded"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/radioGroup_shot_t"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:measureWithLargestChild="false"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t00"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="from play"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t01"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="from free"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t02"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="from penalty"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t03"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="from 45/65"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t04"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="from sideline"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t05"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight=".97"
+                    android:background="@drawable/btn_yellow"
+                    android:text="black card"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t06"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="yellow card"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_t07"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_yellow"
+                    android:text="red card"
+                    android:textSize="14sp" />
+            </RadioGroup>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:fillViewport="true"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r07"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan2"
+                    android:paddingRight="10dp"
+                    android:text="puck out / kick out WON"
+                    android:textSize="13sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r08"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan2"
+                    android:paddingRight="10dp"
+                    android:text="puck out / kick out LOST"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1.3"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:fillViewport="true"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/ButtonP15"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="LCF"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP14"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="FF"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP13"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="RCF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/ButtonP12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="LHF"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP11"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="CF"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP10"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="RHF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/ButtonP09"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="MF9"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP08"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="MF8"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:baselineAligned="false" >
+
+                <Button
+                    android:id="@+id/ButtonP07"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="LHB"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP06"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="CB"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP05"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="RHB"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/ButtonP04"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="LFB"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP03"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="FB"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP02"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="RFB"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight=".92"
+                android:baselineAligned="false"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp" >
+
+                <Button
+                    android:id="@+id/Bcancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_red"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="CANCEL"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/ButtonP01"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_custom"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="GOAL"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/Bok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_green"
+                    android:includeFontPadding="true"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="OK"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

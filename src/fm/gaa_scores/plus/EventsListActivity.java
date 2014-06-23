@@ -13,18 +13,14 @@ package fm.gaa_scores.plus;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +28,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class EventsListActivity extends ListActivity {
@@ -142,6 +137,7 @@ public class EventsListActivity extends ListActivity {
 		return super.onContextItemSelected(item);
 	}
 
+	@Override
 	public void finish() {
 		// Prepare data intent
 		if (teamu.size()>0){
