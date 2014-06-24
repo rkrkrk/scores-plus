@@ -1084,8 +1084,8 @@ public class ScoresFragment extends Fragment {
 			if (starttime > 10) {
 				temp1 = getTime();
 				temp2 = bPeriod.getText().toString();
-				values.put("line", temp1 + "mins " + temp2 + " " + teamName + " "
-						+ stats1 + " " + stats2 + " " + player);
+				values.put("line", temp1 + "mins " + temp2 + " " + teamName
+						+ " " + stats1 + " " + stats2 + " " + player);
 			} else {
 				values.put("line", teamName + " " + stats1 + " " + stats2 + " "
 						+ player);
@@ -1093,7 +1093,6 @@ public class ScoresFragment extends Fragment {
 			values.put("type", "t");
 			values.put("time", temp1);
 			values.put("team", teamName);
-			Log.e("player", " " + player);
 			values.put("player", player);
 			values.put("period", temp2);
 			values.put("stats1", stats1);
@@ -1112,59 +1111,62 @@ public class ScoresFragment extends Fragment {
 
 		// update display list
 		((Startup) getActivity()).getFragmentReview().fillData();
+		((Startup) getActivity()).getFragmentEvent().fillData();
 		updateStatsList(true);
 	}
 
-	private void updateScorers(String stats1, String stats2, String playerIn,
-			String team, int NUMBER) {
-		String player = (playerIn.equals("")) ? "unknown" : playerIn;
+	private void updateScorers(String stats1Temp, String stats2Temp,
+			String playerIn, String teamTemp, int NUMBER) {
+		String playerThis = (playerIn.equals("")) ? "unknown" : playerIn;
 		// update scores and misses
-		if ((stats1.equals("goal")) || (stats1.equals("point"))
-				|| (stats1.equals("wide")) || (stats1.equals("saved/short"))
-				|| (stats1.equals("off posts"))
-				|| (stats1.equals("out for 45/65"))) {
+		if ((stats1Temp.equals("goal")) || (stats1Temp.equals("point"))
+				|| (stats1Temp.equals("wide"))
+				|| (stats1Temp.equals("saved/short"))
+				|| (stats1Temp.equals("off posts"))
+				|| (stats1Temp.equals("out for 45/65"))) {
 			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, missF = 0, id;
 			// deal with goal
-			if (stats1.equals("goal")) {
+			if (stats1Temp.equals("goal")) {
 				goal = NUMBER;
-				if ((stats2.equals("from free"))
-						|| (stats2.equals("from penalty"))
-						|| (stats2.equals("from sideline"))
-						|| (stats2.equals("from 45/65"))) {
+				if ((stats2Temp.equals("from free"))
+						|| (stats2Temp.equals("from penalty"))
+						|| (stats2Temp.equals("from sideline"))
+						|| (stats2Temp.equals("from 45/65"))) {
 					goalF = NUMBER;
 				}
 			}
 			// deal with point
-			else if (stats1.equals("point")) {
+			else if (stats1Temp.equals("point")) {
 				point = NUMBER;
-				if ((stats2.equals("from free"))
-						|| (stats2.equals("from penalty"))
-						|| (stats2.equals("from sideline"))
-						|| (stats2.equals("from 45/65"))) {
+				if ((stats2Temp.equals("from free"))
+						|| (stats2Temp.equals("from penalty"))
+						|| (stats2Temp.equals("from sideline"))
+						|| (stats2Temp.equals("from 45/65"))) {
 					pointF = NUMBER;
 				}
-			} else if ((stats1.equals("wide")) || (stats1.equals("off posts"))
-					|| (stats1.equals("saved/short"))
-					|| (stats1.equals("out for 45/65"))) {
+			} else if ((stats1Temp.equals("wide"))
+					|| (stats1Temp.equals("off posts"))
+					|| (stats1Temp.equals("saved/short"))
+					|| (stats1Temp.equals("out for 45/65"))) {
 				miss = NUMBER;
-				if ((stats2.equals("from free"))
-						|| (stats2.equals("from penalty"))
-						|| (stats2.equals("from sideline"))
-						|| (stats2.equals("from 45/65"))) {
+				if ((stats2Temp.equals("from free"))
+						|| (stats2Temp.equals("from penalty"))
+						|| (stats2Temp.equals("from sideline"))
+						|| (stats2Temp.equals("from 45/65"))) {
 					missF = NUMBER;
 				}
 			}
 
 			// check if entry in database for player name and team
 			Uri allTitles = TeamContentProvider.CONTENT_URI_3;
-			String[] args = { player, team };
+			String[] args = { playerThis, teamTemp };
 			Cursor c1 = getActivity().getContentResolver().query(allTitles,
 					null, "name=? AND team=?", args, null);
 			if (c1.getCount() <= 0) {
 				// add new entry to database
 				ContentValues values = new ContentValues();
-				values.put(TeamContentProvider.SCORESNAME, player);
-				values.put(TeamContentProvider.SCORESTEAM, team);
+				values.put(TeamContentProvider.SCORESNAME, playerThis);
+				values.put(TeamContentProvider.SCORESTEAM, teamTemp);
 				values.put(TeamContentProvider.SCORESGOALS, goal);
 				values.put(TeamContentProvider.SCORESPOINTS, point);
 				values.put(TeamContentProvider.SCORESTOTAL, (goal * 3) + point);
@@ -1199,8 +1201,8 @@ public class ScoresFragment extends Fragment {
 				id = c1.getInt(c1
 						.getColumnIndexOrThrow(TeamContentProvider.SCORESID));
 				ContentValues values = new ContentValues();
-				values.put(TeamContentProvider.SCORESNAME, player);
-				values.put(TeamContentProvider.SCORESTEAM, team);
+				values.put(TeamContentProvider.SCORESNAME, playerThis);
+				values.put(TeamContentProvider.SCORESTEAM, teamTemp);
 				values.put(TeamContentProvider.SCORESGOALS, goal);
 				values.put(TeamContentProvider.SCORESPOINTS, point);
 				values.put(TeamContentProvider.SCORESTOTAL, (goal * 3) + point);
@@ -1277,7 +1279,7 @@ public class ScoresFragment extends Fragment {
 	}
 
 	private void updateOtherFragments() {
-		((Startup) getActivity()).getFragmentReview().updateListView();
+		// ((Startup) getActivity()).getFragmentReview().updateListView();
 		((Startup) getActivity()).getFragmentReview().updateCardsSubs();
 		((Startup) getActivity()).getFragmentTeamOne().updateCards();
 		((Startup) getActivity()).getFragmentTeamOne().updateSubsList();
@@ -1363,151 +1365,6 @@ public class ScoresFragment extends Fragment {
 			}
 		}
 	}
-
-	// OnClickListener statsClickListener = new OnClickListener() {
-	//
-	// @Override
-	// public void onClick(View w) {
-	// // clear default values from input/output textfields
-	// player = "";
-	// stats1 = "";
-	// stats2 = "";
-	// // get team name from button
-	// int tempButton = ((Button) w).getId();
-	// switch (tempButton) {
-	// case R.id.buttonShotHome:
-	// getTeam(tOurTeam.getText().toString());
-	// break;
-	// case R.id.buttonShotOpp:
-	// getTeam(tOppTeam.getText().toString());
-	// break;
-	// }
-	//
-	// // use statsButton to store which button was pressed
-	// statsButton = ((Button) w).getId();
-	//
-	// // throw up stats input screen layout
-	// LayoutInflater inflater = getActivity().getLayoutInflater();
-	// View vv = inflater.inflate(R.layout.stats_layout, null);
-	// int apk = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
-	// RadioButton[] rbrshot = new RadioButton[9];
-	// RadioButton[] rbtShot = new RadioButton[8];
-	// if (apk <= 16) {
-	// Resources r = context.getResources();
-	// int px = (int) TypedValue.applyDimension(
-	// TypedValue.COMPLEX_UNIT_DIP, 29, r.getDisplayMetrics());
-	// for (int i = 0; i < 9; i++) {
-	// rbrshot[i] = (RadioButton) vv.findViewById(getResources()
-	// .getIdentifier(
-	// "radio_shot_r" + String.format("%02d", i),
-	// "id", "fm.gaa_scores.plus"));
-	// rbrshot[i].setPadding(px, 0, 0, 0);
-	// }
-	// for (int i = 0; i < 8; i++) {
-	// rbtShot[i] = (RadioButton) vv.findViewById(getResources()
-	// .getIdentifier(
-	// "radio_shot_t" + String.format("%02d", i),
-	// "id", "fm.gaa_scores.plus"));
-	// rbtShot[i].setPadding(px, 0, 0, 0);
-	// }
-	// }
-	//
-	// // ///////////
-	// AlertDialog.Builder builder;
-	//
-	// builder = new AlertDialog.Builder(getActivity()).setView(vv)
-	// // ok button just closes the dialog
-	// .setPositiveButton("OK",
-	// new DialogInterface.OnClickListener() {
-	// @Override
-	// public void onClick(DialogInterface dialog,
-	// int id) {
-	// // light up the save button
-	//
-	// updateStatsDatabase(statsButton, 1);
-	//
-	// dialog.dismiss();
-	// }
-	// });
-	//
-	// // 9 choices for shots
-	// // RadioButton[] rbrshot = new RadioButton[9];
-	// for (int i = 0; i < 9; i++) {
-	// rbrshot[i] = (RadioButton) vv.findViewById(getResources()
-	// .getIdentifier(
-	// "radio_shot_r" + String.format("%02d", i),
-	// "id", "fm.gaa_scores.plus"));
-	// rbrshot[i].setOnClickListener(getStats1ClickListener);
-	// }
-	//
-	// // 8 options for shot type
-	// // RadioButton[] rbtShot = new RadioButton[8];
-	// for (int i = 0; i < 8; i++) {
-	// rbtShot[i] = (RadioButton) vv.findViewById(getResources()
-	// .getIdentifier(
-	// "radio_shot_t" + String.format("%02d", i),
-	// "id", "fm.gaa_scores.plus"));
-	// rbtShot[i].setOnClickListener(getStats2ClickListener);
-	// }
-	//
-	// // for shots assign clickListener and names to team layout from
-	// // teamLineUp
-	// Button[] bb;
-	// switch (statsButton) {
-	// case R.id.buttonShotHome:
-	// case R.id.buttonShotOpp:
-	// bb = new Button[16];
-	// for (int i = 1; i <= 15; i++) {
-	// bb[i] = (Button) vv.findViewById(getResources()
-	// .getIdentifier(
-	// "ButtonP" + String.format("%02d", i), "id",
-	// "fm.gaa_scores.plus"));
-	// // For Home team assign player name to team lineup
-	// // For Opposition just use position numbers
-	// bb[i].setText(teamLineUp[i]);
-	// bb[i].setOnClickListener(getPlayerClickListener);
-	// }
-	// break;
-	// }
-	//
-	// ScoresFragment.this.alertshot = builder.create();
-	// ScoresFragment.this.alertshot.show();
-	// }
-	//
-	// };
-
-	// Listener to get player name
-	OnClickListener getPlayerClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View vvv) {
-			Button b = (Button) vvv;
-
-			player = (b.getText().toString());
-
-			// close off dialog if necessary
-			if (ScoresFragment.this.alertpitch != null)
-				ScoresFragment.this.alertpitch.dismiss();
-		}
-	};
-
-	// Listener to get shot outcome
-	OnClickListener getStats1ClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View vvv) {
-			RadioButton rB = (RadioButton) vvv;
-			stats1 = (rB.getText().toString());
-
-		}
-	};
-
-	// listener to get shot type
-	OnClickListener getStats2ClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View vvv) {
-			RadioButton rB = (RadioButton) vvv;
-			stats2 = (rB.getText().toString());
-		}
-	};
 
 	// *******************************************************************//
 	// *******************************************************************//
@@ -1737,95 +1594,87 @@ public class ScoresFragment extends Fragment {
 				getActivity().getContentResolver().delete(
 						Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 								+ rowIdTemp), null, null);
-				String[] teamu = { teamTemp };
-				String[] stats1u = { stats1Temp };
-				String[] stats2u = { stats2Temp };
-				String[] playeru = { playerTemp };
-				String[] typeu = { typeTemp };
+
 				((Startup) getActivity()).getFragmentReview().fillData();
-				undo(teamu, stats1u, stats2u, playeru, typeu);
+				((Startup) getActivity()).getFragmentEvent().fillData();
+				undo(teamTemp, stats1Temp, stats2Temp, playerTemp, typeTemp);
 			}
 		}
 	};
 
-	public void undo(String[] teamTemp, String[] stats1Temp,
-			String[] stats2Temp, String[] playerTemp, String[] typeTemp) {
+	public void undo(String teamTemp, String stats1Temp, String stats2Temp,
+			String playerTemp, String typeTemp) {
 		// undo scores on this page first
-		for (int i = 0; i < teamTemp.length; i++) {
-			if (typeTemp[i].equals("t")) {
-				String teamu = teamTemp[i];
-				String stats1u = stats1Temp[i];
-				String stats2u = stats2Temp[i];
-				String playeru = playerTemp[i];
-				// check for goal
-				if (stats1u.equals("goal")) {
-					// check which team
-					if (teamu.equals(tOurTeam.getText().toString())) {
-						if (homeGoals - 1 >= 0) {
-							homeGoals = homeGoals - 1;
-							bHomeGoals.setText(String.valueOf(homeGoals));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settHomeGoals(homeGoals);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-						}
-					} else if (teamu.equals(tOppTeam.getText().toString())) {
-						if (oppGoals - 1 >= 0) {
-							oppGoals = oppGoals - 1;
-							bOppGoals.setText(String.valueOf(oppGoals));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settOppGoals(oppGoals);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-						}
+
+		if (typeTemp.equals("t")) {
+			// check for goal
+			if (stats1Temp.equals("goal")) {
+				// check which team
+				if (teamTemp.equals(tOurTeam.getText().toString())) {
+					if (homeGoals - 1 >= 0) {
+						homeGoals = homeGoals - 1;
+						bHomeGoals.setText(String.valueOf(homeGoals));
+						// update totals
+						setTotals();
+						// increment score in REVIEW fragment
+						((Startup) getActivity()).getFragmentReview()
+								.settHomeGoals(homeGoals);
+						// remind user score is updated in case they try and
+						// do it manually
+						Toast.makeText(getActivity(), "Score Updated",
+								Toast.LENGTH_SHORT).show();
+					}
+				} else if (teamTemp.equals(tOppTeam.getText().toString())) {
+					if (oppGoals - 1 >= 0) {
+						oppGoals = oppGoals - 1;
+						bOppGoals.setText(String.valueOf(oppGoals));
+						// update totals
+						setTotals();
+						// increment score in REVIEW fragment
+						((Startup) getActivity()).getFragmentReview()
+								.settOppGoals(oppGoals);
+						// remind user score is updated in case they try and
+						// do it manually
+						Toast.makeText(getActivity(), "Score Updated",
+								Toast.LENGTH_SHORT).show();
 					}
 				}
-				// check for point
-				else if (stats1u.equals("point")) {
-					// check which team
-					if (teamu.equals(tOurTeam.getText().toString())) {
-						// decrement puckout total
-						if (homePoints - 1 >= 0) {
-							homePoints = homePoints - 1;
-							bHomePoints.setText(String.valueOf(homePoints));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settHomePoints(homePoints);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-						}
-					} else if (teamu.equals(tOppTeam.getText().toString())) {
-						if (oppPoints - 1 >= 0) {
-							oppPoints = oppPoints - 1;
-							bOppPoints.setText(String.valueOf(oppPoints));
-							// update totals
-							setTotals();
-							// increment score in REVIEW fragment
-							((Startup) getActivity()).getFragmentReview()
-									.settOppPoints(oppPoints);
-							// remind user score is updated in case they try and
-							// do it manually
-							Toast.makeText(getActivity(), "Score Updated",
-									Toast.LENGTH_SHORT).show();
-						}
-					}
-				}
-				updateScorers(stats1u, stats2u, playeru, teamu, MINUS);
 			}
+			// check for point
+			else if (stats1Temp.equals("point")) {
+				// check which team
+				if (teamTemp.equals(tOurTeam.getText().toString())) {
+					// decrement puckout total
+					if (homePoints - 1 >= 0) {
+						homePoints = homePoints - 1;
+						bHomePoints.setText(String.valueOf(homePoints));
+						// update totals
+						setTotals();
+						// increment score in REVIEW fragment
+						((Startup) getActivity()).getFragmentReview()
+								.settHomePoints(homePoints);
+						// remind user score is updated in case they try and
+						// do it manually
+						Toast.makeText(getActivity(), "Score Updated",
+								Toast.LENGTH_SHORT).show();
+					}
+				} else if (teamTemp.equals(tOppTeam.getText().toString())) {
+					if (oppPoints - 1 >= 0) {
+						oppPoints = oppPoints - 1;
+						bOppPoints.setText(String.valueOf(oppPoints));
+						// update totals
+						setTotals();
+						// increment score in REVIEW fragment
+						((Startup) getActivity()).getFragmentReview()
+								.settOppPoints(oppPoints);
+						// remind user score is updated in case they try and
+						// do it manually
+						Toast.makeText(getActivity(), "Score Updated",
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+			}
+			updateScorers(stats1Temp, stats2Temp, playerTemp, teamTemp, MINUS);
 		}
 		updateStatsList(true);
 	}

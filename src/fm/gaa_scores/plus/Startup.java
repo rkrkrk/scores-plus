@@ -31,12 +31,13 @@ public class Startup extends FragmentActivity {
 	private TabsAdapterfm mTabsAdapter;
 	private ViewPager mViewPager;
 	private String tabFragmentScore, tabFragmentReview, tabFragmentTeamOne;
-	private String tabFragmentTeamTwo, tabFragmentScorers;
+	private String tabFragmentTeamTwo, tabFragmentScorers, tabFragmentEvent;
 	private ScoresFragment fragmentScore;
 	private ScorersFragment fragmentScorers;
 	private ReviewFragment fragmentReview;
 	private TeamOneFragment fragmentTeamOne;
 	private TeamTwoFragment fragmentTeamTwo;
+	private EventsListFragment fragmentEvent;
 	private Bundle bundle;
 	private ActionBar actionBar;
 
@@ -67,6 +68,8 @@ public class Startup extends FragmentActivity {
 				ReviewFragment.class, null);
 		mTabsAdapter.addTab(actionBar.newTab().setText("scorers"),
 				ScorersFragment.class, null);
+		mTabsAdapter.addTab(actionBar.newTab().setText("events"),
+				EventsListFragment.class, null);
 		// if restarting program, return to the last active tab/fragment
 		if (savedInstanceState != null) {
 			actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
@@ -233,5 +236,30 @@ public class Startup extends FragmentActivity {
 							tabFragmentTeamTwo);
 		return fragmentTeamTwo;
 	}
+	
+	// this method is called by the REVIEW fragment (MatchReviewFragment) which
+		// passes its tag name into here once it starts up. This parent Activity
+		// can use that tag name to create a reference to the fragment
+		public void setTagFragmentEvents(String t) {
+			tabFragmentEvent = t;
+			fragmentEvent = (EventsListFragment) this.getSupportFragmentManager()
+					.findFragmentByTag(tabFragmentEvent);
+		}
+
+		// method returns the tag name of the active REVIEW fragment
+		public String getTagFragmentEvent() {
+			return tabFragmentEvent;
+		}
+
+		// method called by SETUP and RECORD fragments to get a reference to the
+		// REVIEW
+		// fragment so that they can make method calls/access variables
+		public EventsListFragment getFragmentEvent() {
+			if (fragmentEvent == null)
+				fragmentEvent = (EventsListFragment) this
+						.getSupportFragmentManager().findFragmentByTag(
+								tabFragmentEvent);
+			return fragmentEvent;
+		}
 
 }

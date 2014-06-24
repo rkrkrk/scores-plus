@@ -55,7 +55,7 @@ public class TabsAdapterfm extends FragmentPagerAdapter implements
 		mViewPager.setOnPageChangeListener(this);
 		// set up so that all 3 fragments are always active
 		// otherwise they can start and stop when wiped off current screen
-		mViewPager.setOffscreenPageLimit(2);
+		mViewPager.setOffscreenPageLimit(3);
 	}
 
 	public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {

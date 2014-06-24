@@ -978,7 +978,7 @@ public class TeamOneFragment extends Fragment {
 
 		updateSubsList();
 		((Startup) getActivity()).getFragmentScore().updateStatsList(false);
-		((Startup) getActivity()).getFragmentReview().updateListView();
+//		((Startup) getActivity()).getFragmentReview().updateListView();
 	}
 
 	// reset team positions to numbers
@@ -1089,8 +1089,8 @@ public class TeamOneFragment extends Fragment {
 							panelName, "");
 					((Startup) getActivity()).getFragmentScorers()
 							.setTeamNames(panelName, "");
-					((Startup) getActivity()).getFragmentReview()
-							.updateListView();
+//					((Startup) getActivity()).getFragmentReview()
+//							.updateListView();
 					((Startup) getActivity()).getFragmentScore()
 							.updateStatsList(false);
 					((Startup) getActivity()).getFragmentTeamTwo().setTeam(

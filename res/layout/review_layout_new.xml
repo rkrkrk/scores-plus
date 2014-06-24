@@ -29,10 +29,9 @@
             <TextView
                 android:id="@+id/textViewRevHome"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="OWN TEAM"
                 android:textColor="#FF0000"
@@ -42,14 +41,14 @@
             <RelativeLayout
                 android:id="@+id/LayoutRevLeft"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight=".98"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tVHomeGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tVHomeDash"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
@@ -60,7 +59,8 @@
                 <TextView
                     android:id="@+id/tVHomeDash"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tVHomePoints"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
@@ -73,7 +73,8 @@
                 <TextView
                     android:id="@+id/tVHomePoints"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="2dp"
                     android:layout_toLeftOf="@+id/Textmiddle"
                     android:layout_weight="1"
@@ -85,15 +86,17 @@
                 <TextView
                     android:id="@+id/Textmiddle"
                     android:layout_width="2dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
                     android:textColor="#000000"
                     android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/TextView45"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@id/Textmiddle"
                     android:layout_weight="1"
@@ -105,7 +108,8 @@
                 <TextView
                     android:id="@+id/tVHomeTotal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/TextView45"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
@@ -116,7 +120,8 @@
                 <TextView
                     android:id="@+id/TextView01"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tVHomeTotal"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
@@ -128,10 +133,12 @@
             <LinearLayout
                 android:id="@+id/Linear05"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight=".97"
+                android:layout_height="wrap_content"
                 android:background="#999999"
-                android:orientation="horizontal" >
+                android:minHeight="18dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/blankkk"
@@ -162,10 +169,12 @@
             <LinearLayout
                 android:id="@+id/Linear06"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView02"
@@ -174,7 +183,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Goals"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsGoalNo"
@@ -183,7 +192,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVGoalsHomePlay"
@@ -192,16 +201,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear07"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView05"
@@ -210,7 +221,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Points"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsPointNo"
@@ -219,7 +230,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVPointsHomePlay"
@@ -228,16 +239,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear08"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView06"
@@ -246,7 +259,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Wides"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsWideNo"
@@ -255,7 +268,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVWidesHomePlay"
@@ -264,16 +277,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear09"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView07"
@@ -282,7 +297,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Out for 45/65"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwHome45"
@@ -291,7 +306,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tV45HomePlay"
@@ -300,16 +315,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear10"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView77"
@@ -318,7 +335,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Off Posts"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsPostsNo"
@@ -327,7 +344,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVPostsHomePlay"
@@ -336,16 +353,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear11"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView15"
@@ -354,7 +373,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Saved/Short"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsSavedNo"
@@ -363,7 +382,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVSavedHomePlay"
@@ -372,54 +391,62 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear12"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="24dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/tTotalShotsHome"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
                     android:minHeight="14dp"
                     android:text="Total Shots:"
-                    android:textSize="10sp" />
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear13"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/tShotsPlayHome"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
-                    android:minHeight="14dp"
+                    android:minHeight="24dp"
                     android:text="Shot from play:"
-                    android:textSize="10sp" />
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear14"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp" >
 
                 <TextView
                     android:id="@+id/TextView35"
@@ -428,7 +455,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Frees conceded"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwFreeWonHome"
@@ -437,7 +464,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwFreeWonHomeP"
@@ -451,28 +478,30 @@
             <LinearLayout
                 android:id="@+id/Linear15"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView10"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
-                    android:text="Total Puck/Kick Outs***"
-                    android:textSize="10sp" />
+                    android:text="Total Own Puck/Kick Outs***"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tVwHomeTotPuck"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="bottom|center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/TextView11"
@@ -486,33 +515,35 @@
             <LinearLayout
                 android:id="@+id/Linear16"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView33"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
-                    android:text="Own Puck/Kick Out Won"
-                    android:textSize="10sp" />
+                    android:text="Won"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tVwPuckWonCleanHome"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="bottom|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/TextView121"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="12sp" />
@@ -521,19 +552,21 @@
             <LinearLayout
                 android:id="@+id/Linear17"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView36"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
-                    android:text="Own Puck/Kick Out Lost"
-                    android:textSize="10sp" />
+                    android:text="Lost"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tVPuckLostCleanHome"
@@ -542,12 +575,12 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwPuckLostCleanHomeP"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="12sp" />
@@ -556,18 +589,20 @@
             <LinearLayout
                 android:id="@+id/Linear18"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp" >
 
                 <TextView
                     android:id="@+id/cardsHome"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#bbdddd"
-                    android:textSize="10sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -598,10 +633,9 @@
             <TextView
                 android:id="@+id/textViewRevOpp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="OPPOSITION"
                 android:textColor="#FF0000"
@@ -611,14 +645,13 @@
             <RelativeLayout
                 android:id="@+id/LayoutRevLeft"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight=".98"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/tVOppGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/TextView43"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
@@ -629,7 +662,7 @@
                 <TextView
                     android:id="@+id/TextView43"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/tVOppPoints"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
@@ -642,7 +675,7 @@
                 <TextView
                     android:id="@+id/tVOppPoints"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_toLeftOf="@+id/Textmiddle1"
                     android:layout_weight="1"
@@ -654,7 +687,7 @@
                 <TextView
                     android:id="@+id/Textmiddle1"
                     android:layout_width="2dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:textColor="#000000"
                     android:textSize="12sp" />
@@ -662,7 +695,7 @@
                 <TextView
                     android:id="@+id/TextView452"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@id/Textmiddle1"
                     android:layout_weight="1"
@@ -674,7 +707,7 @@
                 <TextView
                     android:id="@+id/tVOppTotal"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/TextView452"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
@@ -685,7 +718,7 @@
                 <TextView
                     android:id="@+id/TextView0111"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tVOppTotal"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
@@ -697,10 +730,12 @@
             <LinearLayout
                 android:id="@+id/Linear05"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight=".97"
+                android:layout_height="wrap_content"
                 android:background="#999999"
-                android:orientation="horizontal" >
+                android:minHeight="dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/blankkk"
@@ -731,10 +766,12 @@
             <LinearLayout
                 android:id="@+id/Linear06"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView66"
@@ -743,7 +780,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Goals"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsGoalsOppNo"
@@ -752,7 +789,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVGoalsOppPlay"
@@ -761,16 +798,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear07"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView53"
@@ -779,7 +818,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Points"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsPointsOppNo"
@@ -788,7 +827,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVPointsOppPlay"
@@ -797,16 +836,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear08"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView52"
@@ -815,7 +856,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Wides"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsWidesOppNo"
@@ -824,7 +865,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVWidesOppPlay"
@@ -833,16 +874,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear09"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView14"
@@ -851,7 +894,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Out for 45/65"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwOpp45"
@@ -860,7 +903,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tV45OppPlay"
@@ -869,16 +912,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear10"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/tVwShotsPostsP3"
@@ -887,7 +932,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Off Posts"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsPostsOppNo"
@@ -896,7 +941,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVPostsOppPlay"
@@ -905,16 +950,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear11"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView57"
@@ -923,7 +970,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Saved/Short"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwShotsSavedOppNo"
@@ -932,7 +979,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVSavedOppPlay"
@@ -941,16 +988,18 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear12"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="24dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/tTotalShotsOpp"
@@ -960,16 +1009,19 @@
                     android:gravity="left|center_vertical"
                     android:minHeight="14dp"
                     android:text="Total Shots:"
-                    android:textSize="10sp" />
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear13"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/tShotsPlayOpp"
@@ -977,18 +1029,21 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
-                    android:minHeight="14dp"
+                    android:minHeight="24dp"
                     android:text="Shot from play:"
-                    android:textSize="10sp" />
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear14"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView81"
@@ -997,7 +1052,7 @@
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
                     android:text="Frees conceded"
-                    android:textSize="10sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tVwFreeWonOpp"
@@ -1006,7 +1061,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwFreeWonOppP"
@@ -1014,16 +1069,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear15"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView18"
@@ -1031,17 +1088,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
-                    android:text="Total Puck/Kick Outs***"
-                    android:textSize="10sp" />
+                    android:text="Total Own Puck/Kick Outs***"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tVwOppTotPuck"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="bottom|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/TextView19"
@@ -1049,16 +1106,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear16"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView91"
@@ -1066,8 +1125,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
-                    android:text="Own Puck/Kick Out Won"
-                    android:textSize="10sp" />
+                    android:text="Won"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwPuckWonCleanOpp"
@@ -1076,7 +1135,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwPuckWonCleanOppP"
@@ -1084,16 +1143,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear17"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#cccccc"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/TextView95"
@@ -1101,17 +1162,17 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".3"
                     android:gravity="left|center_vertical"
-                    android:text="Own Puck/Kick Out Lost"
-                    android:textSize="10sp" />
+                    android:text="Lost"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVPuckLostCleanOpp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tVwPuckLostCleanOppP"
@@ -1119,16 +1180,18 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/Linear18"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:background="#bbdddd"
-                android:orientation="horizontal" >
+                android:minHeight="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp" >
 
                 <TextView
                     android:id="@+id/cardsOpp"
@@ -1136,7 +1199,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#bbdddd"
-                    android:textSize="10sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -1144,7 +1207,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="10"
+        android:layout_weight="13"
+        android:minHeight="28dp"
         android:orientation="horizontal" >
 
         <Button

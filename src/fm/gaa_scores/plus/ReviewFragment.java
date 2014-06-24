@@ -131,7 +131,7 @@ public class ReviewFragment extends Fragment {
 	// start main method to display screen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.review_layout, container, false);
+		View v = inflater.inflate(R.layout.review_layout_new, container, false);
 		// Open up shared preferences file to read in persisted data on startup
 		SharedPreferences sharedPref = getActivity().getSharedPreferences(
 				"team_stats_review_data", Context.MODE_PRIVATE);
@@ -231,17 +231,10 @@ public class ReviewFragment extends Fragment {
 		bSendAll.setOnClickListener(sendAllListener);
 		bTweetAll = (Button) v.findViewById(R.id.bTweetAll);
 		bTweetAll.setOnClickListener(tweetAllListener);
-		bEvents = (Button) v.findViewById(R.id.bViewEvents);
-		bEvents.setOnClickListener(listEvents);
 
-		// fill in list view with datavbase
-		listViewStats = (ListView) v.findViewById(R.id.listView1);
-
-		updateListView();
 		updateCardsSubs();
 		updateShotsPerCent();
 
-		registerForContextMenu(listViewStats);
 		fillData();
 		return v;
 
@@ -549,75 +542,13 @@ public class ReviewFragment extends Fragment {
 		updateShotsPerCent();
 	}
 
-	// set up long press menu to delete entry from stats db
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater mi = getActivity().getMenuInflater();
-		mi.inflate(R.menu.list_menu_longpress, menu);
-	}
-
-	@Override
-	// deal with selection from long press menu
-	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_delete1:
-			// // Delete a row / player
-			String teamTemp = "",
-			stats1Temp = "",
-			stats2Temp = "";
-			String playerTemp = "",
-			typeTemp = "";
-			Uri uri = TeamContentProvider.CONTENT_URI_2;
-			String[] projection = { TeamContentProvider.STATS1,
-					TeamContentProvider.STATS2,
-					TeamContentProvider.STATSPLAYER,
-					TeamContentProvider.STATSTYPE,
-					TeamContentProvider.STATSTEAM };
-			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-					.getMenuInfo();
-			String[] args = { Long.toString(info.id) };
-			Cursor c1 = getActivity().getContentResolver().query(uri,
-					projection, "_id=?", args, null);
-			if (c1.getCount() > 0) {
-				c1.moveToFirst();
-				teamTemp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
-				stats1Temp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
-				stats2Temp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
-				playerTemp = c1
-						.getString(c1
-								.getColumnIndexOrThrow(TeamContentProvider.STATSPLAYER));
-				typeTemp = c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSTYPE));
-			}
-			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + info.id);
-			getActivity().getContentResolver().delete(uri, null, null);
-			Toast.makeText(getActivity(), "stats entry deleted",
-					Toast.LENGTH_LONG).show();
-			updateListView();
-			String[] teamu = { teamTemp };
-			String[] stats1u = { stats1Temp };
-			String[] stats2u = { stats2Temp };
-			String[] playeru = { playerTemp };
-			String[] typeu = { typeTemp };
-
-			((Startup) getActivity()).getFragmentScore().undo(teamu, stats1u,
-					stats2u, playeru, typeu);
-			fillData();
-			return true;
-		}
-		return super.onContextItemSelected(item);
-	}
+	
 
 	public void updateShotsPerCent() {
 		tShotsTotalHome.setText("Total shots:");
-		tShotsPlayHome.setText("Shot from play:");
+		tShotsPlayHome.setText("Shots from play:");
 		tShotsTotalOpp.setText("Total shots:");
-		tShotsPlayOpp.setText("Shot from play:");
+		tShotsPlayOpp.setText("Shots from play:");
 
 		int totalShotsHome, totalShotsOpp, shotsPlayHome, shotsPlayOpp;
 		int shotsScoredHome, shotsScoredOpp, shotsScoredPlayHome, shotsScoredPlayOpp;
@@ -740,24 +671,6 @@ public class ReviewFragment extends Fragment {
 		updateCardsSubs();
 	}
 
-	public void updateListView() {
-
-		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
-		String[] from = new String[] { TeamContentProvider.STATSLINE };
-		String[] projection = { TeamContentProvider._ID,
-				TeamContentProvider.STATSLINE };
-
-		int[] to = new int[] { R.id.listrtxt };
-
-		CursorLoader cL = new CursorLoader(getActivity(), allTitles,
-				projection, null, null, TeamContentProvider.STATSID + " desc");
-		Cursor c1 = cL.loadInBackground();
-
-		SimpleCursorAdapter reminders = new SimpleCursorAdapter(getActivity(),
-				R.layout.single_row_list_layout, c1, from, to, 0);
-
-		listViewStats.setAdapter(reminders);
-	}
 
 	// this method is called from the SETUP fragment to update the names of the
 	// home and away teams and to receive team line and teams from setup screen
@@ -833,23 +746,23 @@ public class ReviewFragment extends Fragment {
 
 		if (redHome > 0 || yellowHome > 0 || blackHome > 0) {
 			cardHome = "Cards: " + blackHome + "B  " + yellowHome + "Y  "
-					+ redHome + "R    ";
+					+ redHome + "R  ";
 		} else {
 			cardHome = "";
 		}
 		if (redOpp > 0 || yellowOpp > 0 || blackOpp > 0) {
 			cardOpp = "Cards: " + blackOpp + "B  " + yellowOpp + "Y  " + redOpp
-					+ "R    ";
+					+ "R  ";
 		} else {
 			cardOpp = "";
 		}
 		if (subH > 0) {
-			subHome = "Subs used: " + subH;
+			subHome = "\nSubs used: " + subH;
 		} else {
 			subHome = "";
 		}
 		if (subO > 0) {
-			subOpp = "Subs used: " + subO;
+			subOpp = "\nSubs used: " + subO;
 		} else {
 			subOpp = "";
 		}
@@ -857,31 +770,6 @@ public class ReviewFragment extends Fragment {
 		tCardOpp.setText(cardOpp + subOpp);
 	}
 
-	OnClickListener listEvents = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Intent events = new Intent(getActivity(), EventsListActivity.class);
-			startActivityForResult(events, 1);
-
-		};
-	};
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
-			// A contact was picked. Here we will just display it
-			// to the user.
-			if (data != null && data.hasExtra("team")) {
-				String[] teamu = data.getStringArrayExtra("team");
-				String[] stats1u = data.getStringArrayExtra("stats1");
-				String[] stats2u = data.getStringArrayExtra("stats2");
-				String[] playeru = data.getStringArrayExtra("player");
-				String[] typeu = data.getStringArrayExtra("type");					
-				((Startup) getActivity()).getFragmentScore().undo(teamu,
-						stats1u, stats2u, playeru, typeu);
-			}
-		}
-	}
 
 	// for reset buttons diplay message to long click, won't work with ordinary
 	// click
