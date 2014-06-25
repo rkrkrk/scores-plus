@@ -127,17 +127,17 @@ public final class R {
         public static final int button_setup_reset=0x7f0800e8;
         public static final int cardsHome=0x7f080041;
         public static final int cardsOpp=0x7f08006b;
-        public static final int createNewTeam=0x7f0800f9;
+        public static final int createNewTeam=0x7f0800fe;
         public static final int dec_home_goals=0x7f080099;
         public static final int dec_home_points=0x7f08009c;
         public static final int dec_opp_goals=0x7f0800a3;
         public static final int dec_opp_points=0x7f0800a6;
         public static final int decrease_timer=0x7f080092;
-        public static final int deletePlayer=0x7f0800f7;
-        public static final int deleteTeam=0x7f0800fb;
-        public static final int downloadTeam=0x7f0800ff;
+        public static final int deletePlayer=0x7f0800fc;
+        public static final int deleteTeam=0x7f080100;
+        public static final int downloadTeam=0x7f080104;
         public static final int etLoc=0x7f0800ab;
-        public static final int exportTeam=0x7f0800fe;
+        public static final int exportTeam=0x7f080103;
         public static final int goals_label=0x7f080097;
         public static final int goals_label2=0x7f0800a1;
         public static final int head1=0x7f080001;
@@ -147,7 +147,7 @@ public final class R {
         public static final int head6=0x7f080075;
         public static final int head7=0x7f080076;
         public static final int head8=0x7f080077;
-        public static final int helpTeam=0x7f0800f1;
+        public static final int helpTeam=0x7f0800f6;
         public static final int help_page=0x7f080004;
         public static final int homeTeam=0x7f0800e3;
         public static final int homeTeamName=0x7f0800e4;
@@ -155,8 +155,10 @@ public final class R {
         public static final int home_goals=0x7f08009a;
         public static final int home_points=0x7f08009b;
         public static final int home_total=0x7f08009d;
-        public static final int importTeam=0x7f0800fd;
+        public static final int importTeam=0x7f080102;
         public static final int increase_timer=0x7f080094;
+        public static final int item1=0x7f0800f3;
+        public static final int item2=0x7f0800f4;
         public static final int layoutRecorddm=0x7f08008a;
         public static final int layoutRev=0x7f080006;
         public static final int layoutRevm=0x7f080005;
@@ -168,8 +170,11 @@ public final class R {
         public static final int listrtxt=0x7f080002;
         public static final int listviewlayout=0x7f080082;
         public static final int loadPanel=0x7f0800ee;
-        public static final int loadSavedTeam=0x7f0800fa;
+        public static final int loadSavedTeam=0x7f0800ff;
+        public static final int menu_delete=0x7f0800f5;
         public static final int menu_delete1=0x7f0800f0;
+        public static final int menu_edit=0x7f0800f1;
+        public static final int menu_insert=0x7f0800f2;
         public static final int mins_label=0x7f08008c;
         public static final int mins_per_half=0x7f08008f;
         public static final int oppTeam=0x7f0800a0;
@@ -177,7 +182,7 @@ public final class R {
         public static final int opp_points=0x7f0800a5;
         public static final int opp_total=0x7f0800a7;
         public static final int ourTeam=0x7f080096;
-        public static final int phone=0x7f0800f2;
+        public static final int phone=0x7f0800f7;
         public static final int points_label=0x7f080098;
         public static final int points_label2=0x7f0800a2;
         public static final int radioGroup_shot_r=0x7f0800b9;
@@ -199,12 +204,12 @@ public final class R {
         public static final int radio_shot_t05=0x7f0800c9;
         public static final int radio_shot_t06=0x7f0800ca;
         public static final int radio_shot_t07=0x7f0800cb;
-        public static final int renamePlayer=0x7f0800f8;
-        public static final int resetAll=0x7f0800f6;
-        public static final int resetScore=0x7f0800f4;
-        public static final int resetStats=0x7f0800f5;
-        public static final int resetTeam=0x7f0800fc;
-        public static final int resetTimer=0x7f0800f3;
+        public static final int renamePlayer=0x7f0800fd;
+        public static final int resetAll=0x7f0800fb;
+        public static final int resetScore=0x7f0800f9;
+        public static final int resetStats=0x7f0800fa;
+        public static final int resetTeam=0x7f080101;
+        public static final int resetTimer=0x7f0800f8;
         public static final int reset_all=0x7f0800b5;
         public static final int rvTextView01=0x7f080013;
         public static final int savePanel=0x7f0800ef;
@@ -313,10 +318,11 @@ public final class R {
     public static final class menu {
         public static final int activity_main=0x7f070000;
         public static final int list_menu_longpress=0x7f070001;
-        public static final int review_menu=0x7f070002;
-        public static final int scorers_menu=0x7f070003;
-        public static final int scores_menu=0x7f070004;
-        public static final int team1_menu=0x7f070005;
+        public static final int list_menu_shortpress=0x7f070002;
+        public static final int review_menu=0x7f070003;
+        public static final int scorers_menu=0x7f070004;
+        public static final int scores_menu=0x7f070005;
+        public static final int team1_menu=0x7f070006;
     }
     public static final class string {
         public static final int app_name=0x7f040004;

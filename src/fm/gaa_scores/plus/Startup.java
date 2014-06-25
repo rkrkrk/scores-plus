@@ -93,17 +93,17 @@ public class Startup extends FragmentActivity {
 	public void onResume() {
 		super.onResume(); // Always call the superclass method first
 		//start up middle fragment for 100 so that all fragments instantiatded
-		actionBar.setSelectedNavigationItem(2);
-		Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				SharedPreferences sharedPref = getSharedPreferences(
-						"team_stats_record_data", Context.MODE_PRIVATE);
-
-				actionBar.setSelectedNavigationItem(sharedPref.getInt("TAB",2));
-				}
-		}, 10);	
+//		actionBar.setSelectedNavigationItem(2);
+//		Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				SharedPreferences sharedPref = getSharedPreferences(
+//						"team_stats_record_data", Context.MODE_PRIVATE);
+//
+//				actionBar.setSelectedNavigationItem(sharedPref.getInt("TAB",2));
+//				}
+//		}, 10);	
 	}
 
 	@Override

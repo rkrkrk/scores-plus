@@ -8,1206 +8,1208 @@
     android:orientation="vertical"
     android:paddingRight="2dp" >
 
-    <LinearLayout
-        android:id="@+id/layoutRev"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/bg_custom"
-        android:orientation="horizontal" >
+        android:layout_weight="1" >
 
         <LinearLayout
-            android:id="@+id/LayoutRevLeft"
+            android:id="@+id/layoutRev"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingBottom="2dp"
-            android:paddingLeft="2dp" >
+            android:background="@drawable/bg_custom"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/textViewRevHome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="OWN TEAM"
-                android:textColor="#FF0000"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/LayoutRevLeft"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingBottom="2dp"
+                android:paddingLeft="2dp" >
 
                 <TextView
-                    android:id="@+id/tVHomeGoals"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewRevHome"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/tVHomeDash"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVHomeDash"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/tVHomePoints"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:text="-"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVHomePoints"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="2dp"
-                    android:layout_toLeftOf="@+id/Textmiddle"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/Textmiddle"
-                    android:layout_width="2dp"
-                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/TextView45"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="2dp"
-                    android:layout_toRightOf="@id/Textmiddle"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:text="("
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVHomeTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/TextView45"
-                    android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/TextView01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tVHomeTotal"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:text=")"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear05"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#999999"
-                android:minHeight="18dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/blankkk"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/TextView04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="No."
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/rvTextView01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="from play"
-                    android:textSize="8sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear06"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView02"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Goals"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsGoalNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVGoalsHomePlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear07"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView05"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Points"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsPointNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVPointsHomePlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear08"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView06"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Wides"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsWideNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVWidesHomePlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear09"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView07"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Out for 45/65"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwHome45"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tV45HomePlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView77"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Off Posts"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsPostsNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVPostsHomePlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView15"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Saved/Short"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsSavedNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVSavedHomePlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="24dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/tTotalShotsHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:minHeight="14dp"
-                    android:text="Total Shots:"
-                    android:textSize="13sp"
+                    android:text="OWN TEAM"
+                    android:textColor="#FF0000"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/Linear13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/tShotsPlayHome"
+                <RelativeLayout
+                    android:id="@+id/LayoutRevLeft"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:minHeight="24dp"
-                    android:text="Shot from play:"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:orientation="horizontal" >
 
-            <LinearLayout
-                android:id="@+id/Linear14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp" >
+                    <TextView
+                        android:id="@+id/tVHomeGoals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tVHomeDash"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/TextView35"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Frees conceded"
-                    android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tVHomeDash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tVHomePoints"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tVwFreeWonHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tVHomePoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:layout_toLeftOf="@+id/Textmiddle"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tVwFreeWonHomeP"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/Textmiddle"
+                        android:layout_width="2dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
 
-            <LinearLayout
-                android:id="@+id/Linear15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
+                    <TextView
+                        android:id="@+id/TextView45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/Textmiddle"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="("
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/TextView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Total Own Puck/Kick Outs***"
-                    android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tVHomeTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/TextView45"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tVwHomeTotPuck"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="bottom|center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tVHomeTotal"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text=")"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/TextView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView33"
+                <LinearLayout
+                    android:id="@+id/Linear05"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Won"
-                    android:textSize="13sp" />
+                    android:background="#999999"
+                    android:minHeight="18dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
 
-                <TextView
-                    android:id="@+id/tVwPuckWonCleanHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="bottom|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/blankkk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/TextView121"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="No."
+                        android:textSize="12sp" />
 
-            <LinearLayout
-                android:id="@+id/Linear17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
+                    <TextView
+                        android:id="@+id/rvTextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="from play"
+                        android:textSize="8sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/TextView36"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Lost"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tVPuckLostCleanHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwPuckLostCleanHomeP"
+                <LinearLayout
+                    android:id="@+id/Linear06"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp" >
-
-                <TextView
-                    android:id="@+id/cardsHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:background="#bbdddd"
-                    android:textSize="13sp" />
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Goals"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsGoalNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVGoalsHomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView05"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Points"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsPointNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVPointsHomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear08"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Wides"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsWideNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVWidesHomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear09"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView07"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Out for 45/65"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwHome45"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tV45HomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView77"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Off Posts"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsPostsNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVPostsHomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Saved/Short"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsSavedNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVSavedHomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="24dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tTotalShotsHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="14dp"
+                        android:text="Total Shots:"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tShotsPlayHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="24dp"
+                        android:text="Shot from play:"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" >
+
+                    <TextView
+                        android:id="@+id/TextView35"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Frees conceded"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwFreeWonHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwFreeWonHomeP"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Total Own Puck/Kick Outs***"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tVwHomeTotPuck"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/TextView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView33"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Won"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tVwPuckWonCleanHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/TextView121"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView36"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Lost"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tVPuckLostCleanHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwPuckLostCleanHomeP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" >
+
+                    <TextView
+                        android:id="@+id/cardsHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#bbdddd"
+                        android:textSize="13sp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewRevMid"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="0dp"
-            android:background="#000000"
-            android:text="|"
-            android:textColor="#000000"
-            android:textSize="12sp" />
-
-        <LinearLayout
-            android:id="@+id/LayoutRevLeft"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingBottom="2dp"
-            android:paddingLeft="2dp" >
 
             <TextView
-                android:id="@+id/textViewRevOpp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewRevMid"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="false"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="OPPOSITION"
-                android:textColor="#FF0000"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="0dp"
+                android:background="#000000"
+                android:text="|"
+                android:textColor="#000000"
+                android:textSize="12sp" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/LayoutRevLeft"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingBottom="2dp"
+                android:paddingLeft="2dp" >
 
                 <TextView
-                    android:id="@+id/tVOppGoals"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewRevOpp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/TextView43"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/TextView43"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/tVOppPoints"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:text="-"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVOppPoints"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_toLeftOf="@+id/Textmiddle1"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/Textmiddle1"
-                    android:layout_width="2dp"
-                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/TextView452"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_toRightOf="@id/Textmiddle1"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:text="("
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVOppTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/TextView452"
-                    android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/TextView0111"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tVOppTotal"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:text=")"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear05"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#999999"
-                android:minHeight="dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/blankkk"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/TextView04"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="No."
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/rvTextView01"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="from play"
-                    android:textSize="8sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear06"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView66"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Goals"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsGoalsOppNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVGoalsOppPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear07"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView53"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Points"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsPointsOppNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVPointsOppPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear08"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView52"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Wides"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsWidesOppNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVWidesOppPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear09"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView14"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Out for 45/65"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwOpp45"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tV45OppPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/tVwShotsPostsP3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Off Posts"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsPostsOppNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVPostsOppPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView57"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Saved/Short"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwShotsSavedOppNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVSavedOppPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="24dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/tTotalShotsOpp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:minHeight="14dp"
-                    android:text="Total Shots:"
-                    android:textSize="13sp"
+                    android:text="OPPOSITION"
+                    android:textColor="#FF0000"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/Linear13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/tShotsPlayOpp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:minHeight="24dp"
-                    android:text="Shot from play:"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView81"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Frees conceded"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tVwFreeWonOpp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwFreeWonOppP"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView18"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Total Own Puck/Kick Outs***"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tVwOppTotPuck"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="bottom|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/TextView19"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView91"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Won"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwPuckWonCleanOpp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVwPuckWonCleanOppP"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Linear17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cccccc"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
-
-                <TextView
-                    android:id="@+id/TextView95"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="left|center_vertical"
-                    android:text="Lost"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tVPuckLostCleanOpp"
+                <RelativeLayout
+                    android:id="@+id/LayoutRevLeft"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="0"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/tVwPuckLostCleanOppP"
+                    <TextView
+                        android:id="@+id/tVOppGoals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/TextView43"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/TextView43"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/tVOppPoints"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_toLeftOf="@+id/Textmiddle1"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/Textmiddle1"
+                        android:layout_width="2dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/TextView452"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/Textmiddle1"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="("
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/TextView452"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/TextView0111"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tVOppTotal"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text=")"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear05"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="#999999"
+                    android:minHeight="dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
 
-            <LinearLayout
-                android:id="@+id/Linear18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#bbdddd"
-                android:minHeight="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
-                android:paddingTop="1dp" >
+                    <TextView
+                        android:id="@+id/blankkk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/cardsOpp"
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="No."
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/rvTextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="from play"
+                        android:textSize="8sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear06"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:background="#bbdddd"
-                    android:textSize="13sp" />
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView66"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Goals"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsGoalsOppNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVGoalsOppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView53"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Points"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsPointsOppNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVPointsOppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear08"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView52"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Wides"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsWidesOppNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVWidesOppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear09"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Out for 45/65"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwOpp45"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tV45OppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tVwShotsPostsP3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Off Posts"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsPostsOppNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVPostsOppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView57"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Saved/Short"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsSavedOppNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVSavedOppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="24dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tTotalShotsOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="14dp"
+                        android:text="Total Shots:"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tShotsPlayOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="24dp"
+                        android:text="Shot from play:"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" >
+
+                    <TextView
+                        android:id="@+id/TextView81"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Frees conceded"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tVwFreeWonOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwFreeWonOppP"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Total Own Puck/Kick Outs***"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tVwOppTotPuck"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/TextView19"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView91"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Won"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwPuckWonCleanOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwPuckWonCleanOppP"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#cccccc"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView95"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Lost"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVPuckLostCleanOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwPuckLostCleanOppP"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/cardsOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#bbdddd"
+                        android:textSize="13sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="13"
+        android:layout_weight="11"
         android:minHeight="28dp"
         android:orientation="horizontal" >
 

@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:showAsAction="always|withText"
+        android:title="edit this event"/>
+    <item
+        android:id="@+id/menu_insert"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always|withText"
+        android:title="insert new event"/>
+    <item android:id="@+id/item1">
+    </item>
+    <item android:id="@+id/item2">
+    </item>
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="always|withText"
+        android:title="delete this event"/>
+
+</menu>

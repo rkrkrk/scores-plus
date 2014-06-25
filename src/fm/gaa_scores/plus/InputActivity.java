@@ -11,15 +11,18 @@
  */
 package fm.gaa_scores.plus;
 
-
 import fm.gaa_scores.plus.GRadioGroup;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class InputActivity extends Activity {
 	private String player = "", stats1 = "", stats2 = "", teamName = "";
@@ -35,6 +38,10 @@ public class InputActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		String teamLineup[] = extras.getStringArray("teamLineup");
 		teamName = extras.getString("teamName");
+		stats1 = extras.getString("stats1");
+		stats2 = extras.getString("stats2");
+		player = extras.getString("player");
+		Log.e("inpiut",stats1+" - "+stats2+" - "+player+" - "+teamName);
 
 		Button back = (Button) findViewById(R.id.Bcancel);
 		back.setOnClickListener(goBack);
@@ -49,7 +56,26 @@ public class InputActivity extends Activity {
 			// For Home team assign player name to team lineup
 			// For Opposition just use position numbers
 			bb[i].setText(teamLineup[i]);
-			bb[i].setOnClickListener(getPlayerClickListener);
+			// bb[i].setOnClickListener(getPlayerClickListener);
+			bb[i].setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_UP) {
+						// if(event.getAction()==MotionEvent.ACTION_DOWN) return
+						// true;
+						// if(event.getAction()!=MotionEvent.ACTION_UP) return
+						// false;
+						player = ((Button) v).getText().toString();
+						((Button) v).setPressed(true);
+						resetButton();
+						return true;
+					}
+					return false;
+				}
+			});
+			if (player!=null && player.equals(teamLineup[i])) {
+				bb[i].setPressed(true);
+			}
 		}
 
 		// 9 choices for shots
@@ -58,6 +84,9 @@ public class InputActivity extends Activity {
 					.getIdentifier("radio_shot_r" + String.format("%02d", i),
 							"id", "fm.gaa_scores.plus"));
 			rbrshot[i].setOnClickListener(getStats1ClickListener);
+			if(stats1!=null && stats1.equals(rbrshot[i].getText().toString())){
+				rbrshot[i].setChecked(true);
+			}
 		}
 		grStats1 = new GRadioGroup(rbrshot[0], rbrshot[1], rbrshot[2],
 				rbrshot[3], rbrshot[4], rbrshot[5], rbrshot[6], rbrshot[7],
@@ -69,6 +98,9 @@ public class InputActivity extends Activity {
 					.getIdentifier("radio_shot_t" + String.format("%02d", i),
 							"id", "fm.gaa_scores.plus"));
 			rbtShot[i].setOnClickListener(getStats2ClickListener);
+			if(stats2!=null && stats2.equals(rbtShot[i].getText().toString())){
+				rbtShot[i].setChecked(true);
+			}
 		}
 
 	}
@@ -116,6 +148,12 @@ public class InputActivity extends Activity {
 			InputActivity.this.finish();
 		}
 	};
+
+	private void resetButton() {
+		for (int i = 1; i <= 15; i++) {
+			bb[i].setPressed(false);
+		}
+	}
 
 	private void getReason() {
 		switch (grStats1.getID()) {
