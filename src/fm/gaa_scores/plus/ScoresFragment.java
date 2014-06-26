@@ -77,7 +77,8 @@ public class ScoresFragment extends Fragment {
 	private Button bUndo, btweetScore, btweetRecent, bTweetLast;
 	private Button btextScore, btextRecent, bTextLast;
 	private int statsButton, txtButton, periodInt = 0;
-	private String player, stats1, stats2, team, phone, periodStr;
+	private String player, stats1, stats2, team, phone, periodStr,
+			teamNameInput;
 	private EditText tLoc, input;
 	private Handler h = new Handler();
 	private long starttime = 0;
@@ -999,8 +1000,12 @@ public class ScoresFragment extends Fragment {
 
 	// //////////////////////////////////////////////////////////////////////
 	// method to update score and update shots data in review scrreen
-	public void updateStatsDatabase(String teamName, int count) {
-
+	//input=1 is from eventslistfragment
+	public void updateStatsDatabase(String teamName, String stats1In,
+			String stats2In, String playerIn, int count,int input) {
+		stats1 = stats1In;
+		stats2 = stats2In;
+		player = playerIn;
 		if (teamName.equals(tOurTeam.getText().toString())) {
 			// for home team commit
 			// WRITE TO REVIEW PAGE///////////////////////////////////
@@ -1078,7 +1083,9 @@ public class ScoresFragment extends Fragment {
 
 		}
 		// add to stats database
-		if (!(stats1.equals("") && stats2.equals("") && player.equals(""))) {
+		//input=1 is from eventslistfragment
+		if (!(stats1.equals("") && stats2.equals("") && player.equals(""))
+				&& input == 0) {
 			ContentValues values = new ContentValues();
 			String temp1 = "", temp2 = "";
 			if (starttime > 10) {
@@ -1091,6 +1098,7 @@ public class ScoresFragment extends Fragment {
 						+ player);
 			}
 			values.put("type", "t");
+			values.put("sort", System.currentTimeMillis());
 			values.put("time", temp1);
 			values.put("team", teamName);
 			values.put("player", player);
@@ -1330,20 +1338,18 @@ public class ScoresFragment extends Fragment {
 		@Override
 		public void onClick(View w) {
 			int tempButton = ((Button) w).getId();
-			String teamName = "";
 			switch (tempButton) {
 			case R.id.buttonShotHome:
 				getTeam(tOurTeam.getText().toString());
-				teamName = tOurTeam.getText().toString();
+				teamNameInput = tOurTeam.getText().toString();
 				break;
 			case R.id.buttonShotOpp:
 				getTeam(tOppTeam.getText().toString());
-				teamName = tOppTeam.getText().toString();
+				teamNameInput = tOppTeam.getText().toString();
 				break;
 			}
 			Intent input = new Intent(getActivity(), InputActivity.class);
 			input.putExtra("teamLineup", teamLineUp);
-			input.putExtra("teamName", teamName);
 			startActivityForResult(input, 9);
 		}
 	};
@@ -1357,10 +1363,14 @@ public class ScoresFragment extends Fragment {
 				stats1 = data.getStringExtra("stats1");
 				stats2 = data.getStringExtra("stats2");
 				player = data.getStringExtra("player");
-				String teamName = data.getStringExtra("teamName");
+				Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
+				stats1 = (stats1 == null) ? "" : stats1;
+				stats2 = (stats2 == null) ? "" : stats2;
+				player = (player == null) ? "" : player;
 				if (!(stats1.equals("") && stats2.equals("") && player
 						.equals(""))) {
-					updateStatsDatabase(teamName, 1);
+					updateStatsDatabase(teamNameInput, stats1, stats2, player,
+							1,0);
 				}
 			}
 		}

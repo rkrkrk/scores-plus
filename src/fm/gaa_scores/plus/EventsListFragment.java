@@ -39,7 +39,12 @@ import android.widget.Toast;
 
 public class EventsListFragment extends ListFragment {
 	private String[] teamLineUp = new String[26];
-	private Long ID;
+	private String teamTemp, typeTemp, timeTemp;
+	private String periodTemp;
+	private String stats1Before, stats2Before;
+	private String playerBefore;
+	private long ID;
+	private long sortTemp = (long) 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,37 +97,47 @@ public class EventsListFragment extends ListFragment {
 	@Override
 	// deal with selection from long press menu
 	public boolean onContextItemSelected(MenuItem item) {
-		String teamTemp = "", stats1Temp = "", stats2Temp = "";
-		String playerTemp = "", typeTemp = "";
+		stats1Before = "";
+		stats2Before = "";
+		playerBefore = "";
+		typeTemp = "";
+		sortTemp = 0;
+		timeTemp = "";
+		periodTemp = "";
 		Uri uri = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATS1,
 				TeamContentProvider.STATS2, TeamContentProvider.STATSPLAYER,
-				TeamContentProvider.STATSTYPE, TeamContentProvider.STATSTEAM };
+				TeamContentProvider.STATSTYPE, TeamContentProvider.STATSTEAM,
+				TeamContentProvider.STATSSORT, TeamContentProvider.STATSTIME,
+				TeamContentProvider.STATSPERIOD };
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		ID = info.id;
 		String[] args = { Long.toString(ID) };
 		Cursor c1 = getActivity().getContentResolver().query(uri, projection,
-				"_id=?", args, null);
+				"_id=?", args, TeamContentProvider.STATSSORT);
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
 			teamTemp = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
-			stats1Temp = c1.getString(c1
+			stats1Before = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATS1));
-			stats2Temp = c1.getString(c1
+			stats2Before = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATS2));
-			playerTemp = c1.getString(c1
+			playerBefore = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATSPLAYER));
 			typeTemp = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATSTYPE));
+			sortTemp = c1.getLong(c1
+					.getColumnIndexOrThrow(TeamContentProvider.STATSSORT));
+			timeTemp = c1.getString(c1
+					.getColumnIndexOrThrow(TeamContentProvider.STATSTIME));
+			periodTemp = c1.getString(c1
+					.getColumnIndexOrThrow(TeamContentProvider.STATSPERIOD));
 		}
 		switch (item.getItemId()) {
 		case R.id.menu_delete:
 			// // Delete a row / player
-			Log.e("del", " ");
-			Toast.makeText(getActivity(), "wtf", Toast.LENGTH_LONG).show();
-
 			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + ID);
 			getActivity().getContentResolver().delete(uri, null, null);
 			Toast.makeText(getActivity(), "stats entry deleted",
@@ -130,22 +145,20 @@ public class EventsListFragment extends ListFragment {
 			fillData();
 			((Startup) getActivity()).getFragmentReview().fillData();
 			((Startup) getActivity()).getFragmentScore().undo(teamTemp,
-					stats1Temp, stats2Temp, playerTemp, typeTemp);
+					stats1Before, stats2Before, playerBefore, typeTemp);
 			return true;
 
 		case R.id.menu_edit:
 			getTeam(teamTemp);
 			Intent input = new Intent(getActivity(), InputActivity.class);
 			input.putExtra("teamLineup", teamLineUp);
-			input.putExtra("stats1", stats1Temp);
-			input.putExtra("stats2", stats2Temp);
-			input.putExtra("player", playerTemp);
-			input.putExtra("teamName", teamTemp);
+			input.putExtra("stats1", stats1Before);
+			input.putExtra("stats2", stats2Before);
+			input.putExtra("player", playerBefore);
 			startActivityForResult(input, 9);
 			return true;
 		case R.id.menu_insert:
 			Log.e("inserty", " ");
-			Toast.makeText(getActivity(), "insert", Toast.LENGTH_LONG).show();
 			return true;
 		}
 		return super.onContextItemSelected(item);
@@ -153,21 +166,38 @@ public class EventsListFragment extends ListFragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		//handle edit
+
+		// handle edit
 		if (requestCode == 9) {
 			// A contact was picked. Here we will just display it
 			// to the user.
 			if (data != null) {
-				String stats1 = data.getStringExtra("stats1");
-				String stats2 = data.getStringExtra("stats2");
-				String player = data.getStringExtra("player");
-				String teamName = data.getStringExtra("teamName");
-				if (!(stats1.equals("") && stats2.equals("") && player
-						.equals(""))) {
+				String stats1, stats2, player;
+				stats1 = data.getStringExtra("stats1");
+				stats2 = data.getStringExtra("stats2");
+				player = data.getStringExtra("player");
+				Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
+				stats1 = (stats1 == null) ? "" : stats1;
+				stats2 = (stats2 == null) ? "" : stats2;
+				player = (player == null) ? "" : player;
+				if (!stats1.equals(stats1Before)
+						|| !stats2.equals(stats2Before) || !player
+							.equals(playerBefore)) {
+					//undo first then add
 					Log.e("eventback", stats1 + " - " + stats2 + " - " + player
-							+ " - " + teamName + " - "+ID);
+							+ " - " + teamTemp + " - " + ID);
+					((Startup) getActivity()).getFragmentScore().undo(teamTemp,
+							stats1Before, stats2Before, playerBefore, typeTemp);
 					ContentValues values = new ContentValues();
-					values.put("team", teamName);
+					if (!timeTemp.equals("")) {
+						values.put("line", timeTemp + "mins " + periodTemp
+								+ " " + teamTemp + " " + stats1 + " " + stats2
+								+ " " + player);
+					} else {
+						values.put("line", teamTemp + " " + stats1 + " "
+								+ stats2 + " " + player);
+					}
+					values.put("team", teamTemp);
 					values.put("player", player);
 					values.put("stats1", stats1);
 					values.put("stats2", stats2);
@@ -175,8 +205,11 @@ public class EventsListFragment extends ListFragment {
 							+ ID);
 					getActivity().getContentResolver().update(uri, values,
 							null, null);
+					((Startup) getActivity()).getFragmentScore().updateStatsDatabase(teamTemp,
+							stats1, stats2, player, 1,1);
+					fillData();
 				}
-				fillData();
+				
 			}
 		}
 	}

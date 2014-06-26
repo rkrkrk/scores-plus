@@ -74,6 +74,7 @@ public class TeamContentProvider extends DatabaseSetup {
 	public static final String STATSLINE = "line";
 	//version 5
 	public static final String STATSTIME = "time";
+	public static final String STATSSORT = "sort";
 	public static final String STATSPERIOD = "period";
 	public static final String STATSTEAM = "team";
 	public static final String STATSPLAYER = "player";

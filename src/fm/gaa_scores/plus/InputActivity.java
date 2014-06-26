@@ -25,7 +25,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class InputActivity extends Activity {
-	private String player = "", stats1 = "", stats2 = "", teamName = "";
+	private String player = "", stats1 = "", stats2 = "";
 	private Button[] bb = new Button[16];
 	private RadioButton[] rbtShot = new RadioButton[8];
 	private RadioButton[] rbrshot = new RadioButton[9];
@@ -34,19 +34,20 @@ public class InputActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stats_layout_act);
+		setContentView(R.layout.stats_layout_edit);
 		Bundle extras = getIntent().getExtras();
 		String teamLineup[] = extras.getStringArray("teamLineup");
-		teamName = extras.getString("teamName");
 		stats1 = extras.getString("stats1");
 		stats2 = extras.getString("stats2");
 		player = extras.getString("player");
-		Log.e("inpiut",stats1+" - "+stats2+" - "+player+" - "+teamName);
+		Log.e("inpiut", stats1 + " - " + stats2 + " - " + player + " - ");
 
 		Button back = (Button) findViewById(R.id.Bcancel);
 		back.setOnClickListener(goBack);
 		Button ok = (Button) findViewById(R.id.Bok);
 		ok.setOnClickListener(goOK);
+		Button reset = (Button) findViewById(R.id.Breset);
+		reset.setOnClickListener(goReset);
 
 		bb = new Button[16];
 		for (int i = 1; i <= 15; i++) {
@@ -73,7 +74,7 @@ public class InputActivity extends Activity {
 					return false;
 				}
 			});
-			if (player!=null && player.equals(teamLineup[i])) {
+			if (player != null && player.equals(teamLineup[i])) {
 				bb[i].setPressed(true);
 			}
 		}
@@ -84,7 +85,8 @@ public class InputActivity extends Activity {
 					.getIdentifier("radio_shot_r" + String.format("%02d", i),
 							"id", "fm.gaa_scores.plus"));
 			rbrshot[i].setOnClickListener(getStats1ClickListener);
-			if(stats1!=null && stats1.equals(rbrshot[i].getText().toString())){
+			if (stats1 != null
+					&& stats1.equals(rbrshot[i].getText().toString())) {
 				rbrshot[i].setChecked(true);
 			}
 		}
@@ -92,13 +94,13 @@ public class InputActivity extends Activity {
 				rbrshot[3], rbrshot[4], rbrshot[5], rbrshot[6], rbrshot[7],
 				rbrshot[8]);
 
-		RadioButton[] rbtShot = new RadioButton[8];
 		for (int i = 0; i < 8; i++) {
 			rbtShot[i] = (RadioButton) findViewById(getResources()
 					.getIdentifier("radio_shot_t" + String.format("%02d", i),
 							"id", "fm.gaa_scores.plus"));
 			rbtShot[i].setOnClickListener(getStats2ClickListener);
-			if(stats2!=null && stats2.equals(rbtShot[i].getText().toString())){
+			if (stats2 != null
+					&& stats2.equals(rbtShot[i].getText().toString())) {
 				rbtShot[i].setChecked(true);
 			}
 		}
@@ -144,8 +146,30 @@ public class InputActivity extends Activity {
 	OnClickListener goOK = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			getReason();
+			if (grStats1.getID() > 0) {
+				getReason();
+			}
 			InputActivity.this.finish();
+		}
+	};
+
+	OnClickListener goReset = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Log.e("reset", "ff");
+			for (int i = 1; i <= 15; i++) {
+				bb[i].setPressed(false);
+			}
+			for (int i = 0; i < 8; i++) {
+				rbtShot[i].setChecked(false);
+			}
+			for (int i = 0; i < 9; i++) {
+				grStats1.radios.get(i).setChecked(false);
+			}
+			stats1 = "";
+			stats2 = "";
+			player = "";
+			grStats1.setID(-1);
 		}
 	};
 
@@ -194,7 +218,6 @@ public class InputActivity extends Activity {
 		getIntent().putExtra("stats1", stats1);
 		getIntent().putExtra("stats2", stats2);
 		getIntent().putExtra("player", player);
-		getIntent().putExtra("teamName", teamName);
 		setResult(RESULT_OK, getIntent());
 		super.finish();
 	}
