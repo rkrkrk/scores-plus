@@ -45,6 +45,7 @@ public class EventsListFragment extends ListFragment {
 	private String playerBefore;
 	private long ID;
 	private long sortTemp = (long) 0;
+	private Intent input;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,8 +72,9 @@ public class EventsListFragment extends ListFragment {
 		String[] projection = { TeamContentProvider._ID,
 				TeamContentProvider.STATSLINE };
 		int[] to = new int[] { R.id.listrtxt };
-		Cursor c1 = getActivity().getContentResolver().query(allTitles,
-				projection, null, null, TeamContentProvider.STATSID + " DESC");
+		Cursor c1 = getActivity().getContentResolver()
+				.query(allTitles, projection, null, null,
+						TeamContentProvider.STATSSORT + " DESC");
 		SimpleCursorAdapter reminders = new SimpleCursorAdapter(getActivity(),
 				R.layout.event_row_layout, c1, from, to, 0);
 		setListAdapter(reminders);
@@ -135,81 +137,136 @@ public class EventsListFragment extends ListFragment {
 			periodTemp = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATSPERIOD));
 		}
-		switch (item.getItemId()) {
-		case R.id.menu_delete:
-			// // Delete a row / player
-			uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + ID);
-			getActivity().getContentResolver().delete(uri, null, null);
-			Toast.makeText(getActivity(), "stats entry deleted",
-					Toast.LENGTH_LONG).show();
-			fillData();
-			((Startup) getActivity()).getFragmentReview().fillData();
-			((Startup) getActivity()).getFragmentScore().undo(teamTemp,
-					stats1Before, stats2Before, playerBefore, typeTemp);
-			return true;
+		c1.close();
+		if (typeTemp.equals("t")) {
+			switch (item.getItemId()) {
+			case R.id.menu_delete:
+				delete(null, null, null);
+				return true;
+			case R.id.menu_edit:
+			case R.id.menu_insert:
+				getTeam(teamTemp);
+				input = new Intent(getActivity(), InputActivity.class);
+				input.putExtra("teamLineup", teamLineUp);
+				if (item.getItemId() == R.id.menu_edit) {
+					input.putExtra("stats1", stats1Before);
+					input.putExtra("stats2", stats2Before);
+					input.putExtra("player", playerBefore);
+					// 9 is for edit
+					startActivityForResult(input, 9);
+				} else {
+					// 10 is for insert
+					startActivityForResult(input, 10);
+				}
+				return true;
+			}
+		} else if (typeTemp.equals("u")) {
+			switch (item.getItemId()) {
+			case R.id.menu_delete:
+				delete(null, null, null);
+				return true;
 
-		case R.id.menu_edit:
-			getTeam(teamTemp);
-			Intent input = new Intent(getActivity(), InputActivity.class);
-			input.putExtra("teamLineup", teamLineUp);
-			input.putExtra("stats1", stats1Before);
-			input.putExtra("stats2", stats2Before);
-			input.putExtra("player", playerBefore);
-			startActivityForResult(input, 9);
-			return true;
-		case R.id.menu_insert:
-			Log.e("inserty", " ");
-			return true;
+			case R.id.menu_edit:
+				Toast.makeText(getActivity(),
+						"Edit option not available for Subs yet.",
+						Toast.LENGTH_LONG).show();
+				return true;
+			case R.id.menu_insert:
+				Toast.makeText(getActivity(),
+						"Insert option not available for Subs yet.",
+						Toast.LENGTH_LONG).show();
+				return true;
+			}
+		} else if (typeTemp.equals("s")) {
+			switch (item.getItemId()) {
+			case R.id.menu_delete:
+				delete(null, null, null);
+			case R.id.menu_edit:
+			case R.id.menu_insert:
+				Toast.makeText(getActivity(),
+						"Start / End times cannot be changed",
+						Toast.LENGTH_LONG).show();
+				return true;
+			}
 		}
+
 		return super.onContextItemSelected(item);
+	}
+
+	private void delete(String stats1Temp, String stats2Temp, String playerTemp) {
+		// // Delete a row / player
+		Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + ID);
+		getActivity().getContentResolver().delete(uri, null, null);
+		Toast.makeText(getActivity(), "stats entry deleted", Toast.LENGTH_LONG)
+				.show();
+		fillData();
+		((Startup) getActivity()).getFragmentReview().fillData();
+		if (typeTemp == "t") {
+			((Startup) getActivity()).getFragmentScore().undo(teamTemp,
+					stats1Temp, stats2Temp, playerTemp, typeTemp);
+		}
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		// handle edit
-		if (requestCode == 9) {
-			// A contact was picked. Here we will just display it
-			// to the user.
-			if (data != null) {
-				String stats1, stats2, player;
-				stats1 = data.getStringExtra("stats1");
-				stats2 = data.getStringExtra("stats2");
-				player = data.getStringExtra("player");
-				Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
-				stats1 = (stats1 == null) ? "" : stats1;
-				stats2 = (stats2 == null) ? "" : stats2;
-				player = (player == null) ? "" : player;
+		if (data != null) {
+			String stats1, stats2, player;
+			stats1 = data.getStringExtra("stats1");
+			stats2 = data.getStringExtra("stats2");
+			player = data.getStringExtra("player");
+			Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
+			stats1 = (stats1 == null) ? "" : stats1;
+			stats2 = (stats2 == null) ? "" : stats2;
+			player = (player == null) ? "" : player;
+			Log.e("eventback", stats1 + " - " + stats2 + " - " + player + " - "
+					+ teamTemp + " - " + ID);
+
+			ContentValues values = new ContentValues();
+			if (!timeTemp.equals("")) {
+				values.put("line", timeTemp + "mins " + periodTemp + " "
+						+ teamTemp + " " + stats1 + " " + stats2 + " " + player);
+			} else {
+				values.put("line", teamTemp + " " + stats1 + " " + stats2 + " "
+						+ player);
+			}
+			values.put("team", teamTemp);
+			values.put("player", player);
+			values.put("stats1", stats1);
+			values.put("stats2", stats2);
+			if (requestCode == 9) {
 				if (!stats1.equals(stats1Before)
-						|| !stats2.equals(stats2Before) || !player
-							.equals(playerBefore)) {
-					//undo first then add
-					Log.e("eventback", stats1 + " - " + stats2 + " - " + player
-							+ " - " + teamTemp + " - " + ID);
+						|| !stats2.equals(stats2Before)
+						|| !player.equals(playerBefore)) {
+					// undo first then add
 					((Startup) getActivity()).getFragmentScore().undo(teamTemp,
 							stats1Before, stats2Before, playerBefore, typeTemp);
-					ContentValues values = new ContentValues();
-					if (!timeTemp.equals("")) {
-						values.put("line", timeTemp + "mins " + periodTemp
-								+ " " + teamTemp + " " + stats1 + " " + stats2
-								+ " " + player);
-					} else {
-						values.put("line", teamTemp + " " + stats1 + " "
-								+ stats2 + " " + player);
-					}
-					values.put("team", teamTemp);
-					values.put("player", player);
-					values.put("stats1", stats1);
-					values.put("stats2", stats2);
 					Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 							+ ID);
 					getActivity().getContentResolver().update(uri, values,
 							null, null);
-					((Startup) getActivity()).getFragmentScore().updateStatsDatabase(teamTemp,
-							stats1, stats2, player, 1,1);
+					((Startup) getActivity()).getFragmentScore()
+							.updateStatsDatabase(teamTemp, stats1, stats2,
+									player, 1, 1);
 					fillData();
 				}
-				
+			} else if (requestCode == 10) {
+				if (!(stats1.equals("")
+						&& stats2.equals("")
+						&& player.equals(""))) {
+					sortTemp = sortTemp + 10;
+					values.put("type", typeTemp);
+					values.put("sort", sortTemp);
+					values.put("time", timeTemp);
+					values.put("period", periodTemp);
+					getActivity().getContentResolver().insert(
+							TeamContentProvider.CONTENT_URI_2, values);
+					((Startup) getActivity()).getFragmentScore()
+							.updateStatsDatabase(teamTemp, stats1, stats2,
+									player, 1, 1);
+					fillData();
+				}
 			}
 		}
 	}

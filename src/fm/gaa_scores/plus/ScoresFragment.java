@@ -397,10 +397,10 @@ public class ScoresFragment extends Fragment {
 
 		// populate undolist
 		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE };
+				TeamContentProvider.STATSLINE,TeamContentProvider.STATSSORT };
 		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
-				TeamContentProvider.STATSID);
+				TeamContentProvider.STATSSORT);
 		Cursor c1 = cL.loadInBackground();
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
@@ -1243,10 +1243,10 @@ public class ScoresFragment extends Fragment {
 		// load panel from database and assign to arraylist
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE };
+				TeamContentProvider.STATSLINE,TeamContentProvider.STATSSORT };
 		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
-				TeamContentProvider.STATSID);
+				TeamContentProvider.STATSSORT);
 		Cursor c1 = cL.loadInBackground();
 		undoList.clear();
 		if (c1.getCount() > 0) {

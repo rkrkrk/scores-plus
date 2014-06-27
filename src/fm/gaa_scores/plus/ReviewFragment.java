@@ -571,25 +571,25 @@ public class ReviewFragment extends Fragment {
 			perCent = Integer
 					.toString((shotsScoredHome * 100) / totalShotsHome);
 			tShotsTotalHome.setText("Total shots:" + totalShotsHome
-					+ "  Scored:" + shotsScoredHome + " (" + perCent + "%)");
+					+ "  Scored:" + shotsScoredHome + "\n(" + perCent + "%)");
 		}
 		if (totalShotsOpp > 0) {
 			perCent = Integer.toString((shotsScoredOpp * 100) / totalShotsOpp);
 			tShotsTotalOpp.setText("Total shots:" + totalShotsOpp + "  Scored:"
-					+ shotsScoredOpp + " (" + perCent + "%)");
+					+ shotsScoredOpp + "\n(" + perCent + "%)");
 		}
 		if (shotsPlayHome > 0) {
 			perCent = Integer.toString((shotsScoredPlayHome * 100)
 					/ shotsPlayHome);
 			tShotsPlayHome
 					.setText("Shot from play:" + shotsPlayHome + "  Scored:"
-							+ shotsScoredPlayHome + " (" + perCent + "%)");
+							+ shotsScoredPlayHome + "\n(" + perCent + "%)");
 		}
 		if (shotsPlayOpp > 0) {
 			perCent = Integer.toString((shotsScoredPlayOpp * 100)
 					/ shotsPlayOpp);
 			tShotsPlayOpp.setText("Shot from play:" + shotsPlayOpp
-					+ "  Scored:" + shotsScoredPlayOpp + " (" + perCent + "%)");
+					+ "  Scored:" + shotsScoredPlayOpp + "\n(" + perCent + "%)");
 		}
 	}
 
