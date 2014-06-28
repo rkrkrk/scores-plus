@@ -25,23 +25,56 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class InputActivity extends Activity {
-	private String player = "", stats1 = "", stats2 = "";
+	private String player = "", stats1 = "", stats2 = "",
+			homeTeam = "OWN TEAM", oppTeam = "OPPOSITION", teamBack = "",
+			teamOriginal = "";
+	private String[] teamLineUpHome, teamLineUpOpp,
+			teamLineUp = new String[26];
 	private Button[] bb = new Button[16];
 	private RadioButton[] rbtShot = new RadioButton[8];
 	private RadioButton[] rbrshot = new RadioButton[9];
-	private GRadioGroup grStats1;
+	private RadioButton bHomeTeam, bOppTeam;
+	private GRadioGroup grStats1, grTeam;
+	private int call = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.stats_layout_edit);
 		Bundle extras = getIntent().getExtras();
-		String teamLineup[] = extras.getStringArray("teamLineup");
+		teamLineUpHome = extras.getStringArray("teamLineUpHome");
+		teamLineUpOpp = extras.getStringArray("teamLineUpOpp");
+		call = extras.getInt("call");
 		stats1 = extras.getString("stats1");
 		stats2 = extras.getString("stats2");
 		player = extras.getString("player");
+		homeTeam = extras.getString("homeTeam");
+		oppTeam = extras.getString("oppTeam");
+		teamOriginal = extras.getString("teamOriginal");
+		teamOriginal = (teamOriginal == null) ? "" : teamOriginal;
+		teamBack = homeTeam;
+		// player = (player == null) ? "" : player;
 		Log.e("inpiut", stats1 + " - " + stats2 + " - " + player + " - ");
-
+		if (call == 1) {
+			setContentView(R.layout.stats_layout_edit);
+			if (teamOriginal.equals(homeTeam)) {
+				teamLineUp = teamLineUpHome;
+			} else if (teamOriginal.equals(oppTeam)) {
+				teamLineUp = teamLineUpOpp;
+			} else if (!teamOriginal.equals("")) {
+				for (int j = 1; j <= 15; j++) {
+					teamLineUp[j] = String.valueOf(j);
+					teamLineUpHome[j] = String.valueOf(j);
+					homeTeam = teamOriginal;
+				}
+			} else {
+				teamLineUp = teamLineUpHome;
+			}
+		} else {
+			setContentView(R.layout.stats_layout);
+			teamLineUp = teamLineUpHome;
+		}
+		// set up player arrays
 		Button back = (Button) findViewById(R.id.Bcancel);
 		back.setOnClickListener(goBack);
 		Button ok = (Button) findViewById(R.id.Bok);
@@ -56,7 +89,7 @@ public class InputActivity extends Activity {
 					"fm.gaa_scores.plus"));
 			// For Home team assign player name to team lineup
 			// For Opposition just use position numbers
-			bb[i].setText(teamLineup[i]);
+			bb[i].setText(teamLineUp[i]);
 			// bb[i].setOnClickListener(getPlayerClickListener);
 			bb[i].setOnTouchListener(new OnTouchListener() {
 				@Override
@@ -74,7 +107,7 @@ public class InputActivity extends Activity {
 					return false;
 				}
 			});
-			if (player != null && player.equals(teamLineup[i])) {
+			if (player != null && player.equals(teamLineUp[i])) {
 				bb[i].setPressed(true);
 			}
 		}
@@ -84,7 +117,6 @@ public class InputActivity extends Activity {
 			rbrshot[i] = (RadioButton) findViewById(getResources()
 					.getIdentifier("radio_shot_r" + String.format("%02d", i),
 							"id", "fm.gaa_scores.plus"));
-			rbrshot[i].setOnClickListener(getStats1ClickListener);
 			if (stats1 != null
 					&& stats1.equals(rbrshot[i].getText().toString())) {
 				rbrshot[i].setChecked(true);
@@ -105,7 +137,46 @@ public class InputActivity extends Activity {
 			}
 		}
 
+		if (call == 1) {
+			bHomeTeam = (RadioButton) findViewById(R.id.teamHome);
+			bHomeTeam.setText(homeTeam);
+			bHomeTeam.setOnClickListener(getTeamClickListener);
+			bOppTeam = (RadioButton) findViewById(R.id.teamOpp);
+			bOppTeam.setText(oppTeam);
+			bOppTeam.setOnClickListener(getTeamClickListener);
+			bHomeTeam.setChecked(true);
+			if (teamOriginal.equals(oppTeam)) {
+				bOppTeam.setChecked(true);
+			}
+		}
+
 	}
+
+	// Listener to get player name
+	OnClickListener getTeamClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View vvv) {
+			Button b = (Button) vvv;
+			switch (b.getId()) {
+			case R.id.teamHome:
+				bHomeTeam.setChecked(true);
+				bOppTeam.setChecked(false);
+				teamBack = homeTeam;
+				for (int i = 1; i <= 15; i++) {
+					bb[i].setText(teamLineUpHome[i]);
+				}
+				break;
+			case R.id.teamOpp:
+				bHomeTeam.setChecked(false);
+				bOppTeam.setChecked(true);
+				teamBack = oppTeam;
+				for (int i = 1; i <= 15; i++) {
+					bb[i].setText(teamLineUpOpp[i]);
+				}
+				break;
+			}
+		}
+	};
 
 	// Listener to get player name
 	OnClickListener getPlayerClickListener = new OnClickListener() {
@@ -122,14 +193,6 @@ public class InputActivity extends Activity {
 		public void onClick(View vvv) {
 			RadioButton rB = (RadioButton) vvv;
 			stats2 = (rB.getText().toString());
-		}
-	};
-
-	OnClickListener getStats1ClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View vvv) {
-			RadioButton rB = (RadioButton) vvv;
-			getReason();
 		}
 	};
 
@@ -170,6 +233,22 @@ public class InputActivity extends Activity {
 			stats2 = "";
 			player = "";
 			grStats1.setID(-1);
+			if (teamOriginal.equals(homeTeam) && teamBack.equals(oppTeam)) {
+				bHomeTeam.setChecked(true);
+				bOppTeam.setChecked(false);
+				teamBack = homeTeam;
+				for (int i = 1; i <= 15; i++) {
+					bb[i].setText(teamLineUpHome[i]);
+				}
+			} else if (teamOriginal.equals(oppTeam)
+					&& teamBack.equals(homeTeam)) {
+				bHomeTeam.setChecked(false);
+				bOppTeam.setChecked(true);
+				teamBack = oppTeam;
+				for (int i = 1; i <= 15; i++) {
+					bb[i].setText(teamLineUpOpp[i]);
+				}
+			}
 		}
 	};
 
@@ -218,6 +297,9 @@ public class InputActivity extends Activity {
 		getIntent().putExtra("stats1", stats1);
 		getIntent().putExtra("stats2", stats2);
 		getIntent().putExtra("player", player);
+		if (call == 1) {
+			getIntent().putExtra("teamBack", teamBack);
+		}
 		setResult(RESULT_OK, getIntent());
 		super.finish();
 	}

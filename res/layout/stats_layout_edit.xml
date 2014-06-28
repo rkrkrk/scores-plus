@@ -65,7 +65,7 @@
                     android:text="out for 45/65"
                     android:textSize="14sp" />
 
-                <RadioButton
+               <RadioButton
                     android:id="@+id/radio_shot_r04"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -80,14 +80,23 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_cyan"
-                    android:text="saved/short"
+                    android:text="saved"
                     android:textSize="14sp" />
 
                 <RadioButton
                     android:id="@+id/radio_shot_r06"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_cyan"
+                    android:text="short"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_shot_r07"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_yellow"
                     android:text="free/pen conceded"
@@ -109,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2"
+                    android:background="@drawable/btn_cyanb"
                     android:text="from play"
                     android:textSize="14sp" />
 
@@ -118,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2"
+                    android:background="@drawable/btn_cyanb"
                     android:text="from free"
                     android:textSize="14sp" />
 
@@ -127,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2"
+                    android:background="@drawable/btn_cyanb"
                     android:text="from penalty"
                     android:textSize="14sp" />
 
@@ -136,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2"
+                    android:background="@drawable/btn_cyanb"
                     android:text="from 45/65"
                     android:textSize="14sp" />
 
@@ -145,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2"
+                    android:background="@drawable/btn_cyanb"
                     android:text="from sideline"
                     android:textSize="14sp" />
 
@@ -196,24 +205,26 @@
                 android:orientation="horizontal" >
 
                 <RadioButton
-                    android:id="@+id/radio_shot_r07"
+                    android:id="@+id/radio_shot_r08"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_lime2"
+                    android:gravity="center_vertical|center_horizontal"
                     android:paddingRight="10dp"
                     android:text="puck out / kick out WON"
                     android:textSize="13sp" />
 
                 <RadioButton
-                    android:id="@+id/radio_shot_r08"
+                    android:id="@+id/radio_shot_r09"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_lime"
+                    android:gravity="center_vertical|center_horizontal"
                     android:paddingRight="10dp"
                     android:text="puck out / kick out LOST"
                     android:textSize="13sp" />
@@ -241,7 +252,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_blue"
+                    android:background="@drawable/btn_cyan2"
                     android:paddingRight="10dp"
                     android:text="Home Team"
                     android:textSize="13sp" />
@@ -253,7 +264,7 @@
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_blue"
+                    android:background="@drawable/btn_cyan2b"
                     android:paddingRight="10dp"
                     android:text="Opp Team"
                     android:textSize="13sp" />

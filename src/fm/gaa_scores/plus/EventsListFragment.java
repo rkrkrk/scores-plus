@@ -15,8 +15,10 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,10 +40,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class EventsListFragment extends ListFragment {
-	private String[] teamLineUp = new String[26];
-	private String teamTemp, typeTemp, timeTemp;
+	private String[] teamLineUpHome = new String[26];
+	private String[] teamLineUpOpp = new String[26];
+	private String teamBefore, typeTemp, timeTemp, homeTeam, oppTeam;
 	private String periodTemp;
-	private String stats1Before, stats2Before;
+	private String stats1Before, stats2Before, teamBack;
 	private String playerBefore;
 	private long ID;
 	private long sortTemp = (long) 0;
@@ -54,6 +57,14 @@ public class EventsListFragment extends ListFragment {
 
 		String myTag = getTag();
 		((Startup) getActivity()).setTagFragmentEvents(myTag);
+
+		SharedPreferences sharedPref = getActivity().getSharedPreferences(
+				"team_stats_review_data", Context.MODE_PRIVATE);
+		Log.e("getting teams in eventList", "");
+		homeTeam = sharedPref.getString("OWNTEAM", "OWN TEAM");
+		oppTeam = sharedPref.getString("OPPTEAM", "OPPOSITION");
+		teamLineUpHome = getTeam(homeTeam);
+		teamLineUpOpp = getTeam(oppTeam);
 
 		return v;
 	}
@@ -120,7 +131,7 @@ public class EventsListFragment extends ListFragment {
 				"_id=?", args, TeamContentProvider.STATSSORT);
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
-			teamTemp = c1.getString(c1
+			teamBefore = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
 			stats1Before = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATS1));
@@ -145,10 +156,15 @@ public class EventsListFragment extends ListFragment {
 				return true;
 			case R.id.menu_edit:
 			case R.id.menu_insert:
-				getTeam(teamTemp);
+				// getTeam(teamTemp);
 				input = new Intent(getActivity(), InputActivity.class);
-				input.putExtra("teamLineup", teamLineUp);
+				input.putExtra("teamLineUpHome", teamLineUpHome);
+				input.putExtra("teamLineUpOpp", teamLineUpOpp);
+				input.putExtra("homeTeam", homeTeam);
+				input.putExtra("oppTeam", oppTeam);	
+				input.putExtra("call", 1);
 				if (item.getItemId() == R.id.menu_edit) {
+					input.putExtra("teamOriginal", teamBefore);
 					input.putExtra("stats1", stats1Before);
 					input.putExtra("stats2", stats2Before);
 					input.putExtra("player", playerBefore);
@@ -202,7 +218,7 @@ public class EventsListFragment extends ListFragment {
 		fillData();
 		((Startup) getActivity()).getFragmentReview().fillData();
 		if (typeTemp == "t") {
-			((Startup) getActivity()).getFragmentScore().undo(teamTemp,
+			((Startup) getActivity()).getFragmentScore().undo(teamBefore,
 					stats1Temp, stats2Temp, playerTemp, typeTemp);
 		}
 	}
@@ -216,22 +232,24 @@ public class EventsListFragment extends ListFragment {
 			stats1 = data.getStringExtra("stats1");
 			stats2 = data.getStringExtra("stats2");
 			player = data.getStringExtra("player");
-			Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
+			teamBack = data.getStringExtra("teamBack");
+			Log.e("back from input", stats1 + " - " + stats2 + " - " + player + " - "+teamBack);
 			stats1 = (stats1 == null) ? "" : stats1;
 			stats2 = (stats2 == null) ? "" : stats2;
 			player = (player == null) ? "" : player;
+			teamBack = (player == null) ? teamBefore : teamBack;
 			Log.e("eventback", stats1 + " - " + stats2 + " - " + player + " - "
-					+ teamTemp + " - " + ID);
+					+ teamBack + " - " + ID);
 
 			ContentValues values = new ContentValues();
 			if (!timeTemp.equals("")) {
 				values.put("line", timeTemp + "mins " + periodTemp + " "
-						+ teamTemp + " " + stats1 + " " + stats2 + " " + player);
+						+ teamBack + " " + stats1 + " " + stats2 + " " + player);
 			} else {
-				values.put("line", teamTemp + " " + stats1 + " " + stats2 + " "
+				values.put("line", teamBack + " " + stats1 + " " + stats2 + " "
 						+ player);
 			}
-			values.put("team", teamTemp);
+			values.put("team", teamBack);
 			values.put("player", player);
 			values.put("stats1", stats1);
 			values.put("stats2", stats2);
@@ -240,21 +258,20 @@ public class EventsListFragment extends ListFragment {
 						|| !stats2.equals(stats2Before)
 						|| !player.equals(playerBefore)) {
 					// undo first then add
-					((Startup) getActivity()).getFragmentScore().undo(teamTemp,
+					((Startup) getActivity()).getFragmentScore().undo(teamBefore,
 							stats1Before, stats2Before, playerBefore, typeTemp);
 					Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 							+ ID);
 					getActivity().getContentResolver().update(uri, values,
 							null, null);
 					((Startup) getActivity()).getFragmentScore()
-							.updateStatsDatabase(teamTemp, stats1, stats2,
+							.updateStatsDatabase(teamBack, stats1, stats2,
 									player, 1, 1);
 					fillData();
 				}
 			} else if (requestCode == 10) {
-				if (!(stats1.equals("")
-						&& stats2.equals("")
-						&& player.equals(""))) {
+				if (!(stats1.equals("") && stats2.equals("") && player
+						.equals(""))) {
 					sortTemp = sortTemp + 10;
 					values.put("type", typeTemp);
 					values.put("sort", sortTemp);
@@ -263,7 +280,7 @@ public class EventsListFragment extends ListFragment {
 					getActivity().getContentResolver().insert(
 							TeamContentProvider.CONTENT_URI_2, values);
 					((Startup) getActivity()).getFragmentScore()
-							.updateStatsDatabase(teamTemp, stats1, stats2,
+							.updateStatsDatabase(teamBack, stats1, stats2,
 									player, 1, 1);
 					fillData();
 				}
@@ -271,7 +288,9 @@ public class EventsListFragment extends ListFragment {
 		}
 	}
 
-	private void getTeam(String teamName) {
+	private String[] getTeam(String teamName) {
+		String[] teamLineUp = new String[26];
+
 		// load panel from database and assign to arraylist
 		Uri allTitles = TeamContentProvider.CONTENT_URI;
 		String[] projection = { TeamContentProvider.PANELID,
@@ -301,6 +320,7 @@ public class EventsListFragment extends ListFragment {
 			} while (c1.moveToNext());
 		}
 		c1.close();
+		return teamLineUp;
 	}
 
 }

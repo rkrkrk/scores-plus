@@ -86,7 +86,6 @@ public class ScoresFragment extends Fragment {
 	private SimpleDateFormat sdf, sdftime;
 	private AlertDialog alertshot = null, alertpitch = null;
 	private String[] teamLineUp = new String[26];
-	private String[] teamLineUpOpp = new String[26];
 	private String[] minsList, tList;
 	private boolean[] tListChecked;
 	private String[] undoString = new String[6];
@@ -1307,8 +1306,9 @@ public class ScoresFragment extends Fragment {
 		for (int j = 1; j <= 25; j++) {
 			teamLineUp[j] = String.valueOf(j);
 		}
+		String[] args = { teamName };
 		cL = new CursorLoader(getActivity(), allTitles, projection,
-				TeamContentProvider.TEAM + " = '" + teamName + "'", null,
+				"team=?",args, 
 				TeamContentProvider.NAME);
 		Cursor c1 = cL.loadInBackground();
 		playerIDLookUp.clear();
@@ -1349,7 +1349,7 @@ public class ScoresFragment extends Fragment {
 				break;
 			}
 			Intent input = new Intent(getActivity(), InputActivity.class);
-			input.putExtra("teamLineup", teamLineUp);
+			input.putExtra("teamLineUpHome", teamLineUp);
 			startActivityForResult(input, 9);
 		}
 	};
