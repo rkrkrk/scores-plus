@@ -962,6 +962,7 @@ public class TeamTwoFragment extends Fragment {
 		ContentValues values = new ContentValues();
 		values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
 				+ "--> off: " + playerOff + "  on: " + playerOn);
+		values.put("sort", System.currentTimeMillis());
 		values.put("type", "u");
 		values.put("time", temp1);
 		values.put("team", panelName);

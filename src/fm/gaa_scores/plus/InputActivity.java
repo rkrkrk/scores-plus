@@ -32,7 +32,7 @@ public class InputActivity extends Activity {
 			teamLineUp = new String[26];
 	private Button[] bb = new Button[16];
 	private RadioButton[] rbtShot = new RadioButton[8];
-	private RadioButton[] rbrshot = new RadioButton[9];
+	private RadioButton[] rbrshot = new RadioButton[10];
 	private RadioButton bHomeTeam, bOppTeam;
 	private GRadioGroup grStats1, grTeam;
 	private int call = 0;
@@ -113,7 +113,7 @@ public class InputActivity extends Activity {
 		}
 
 		// 9 choices for shots
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 10; i++) {
 			rbrshot[i] = (RadioButton) findViewById(getResources()
 					.getIdentifier("radio_shot_r" + String.format("%02d", i),
 							"id", "fm.gaa_scores.plus"));
@@ -124,7 +124,7 @@ public class InputActivity extends Activity {
 		}
 		grStats1 = new GRadioGroup(rbrshot[0], rbrshot[1], rbrshot[2],
 				rbrshot[3], rbrshot[4], rbrshot[5], rbrshot[6], rbrshot[7],
-				rbrshot[8]);
+				rbrshot[8],rbrshot[9]);
 
 		for (int i = 0; i < 8; i++) {
 			rbtShot[i] = (RadioButton) findViewById(getResources()
@@ -143,10 +143,15 @@ public class InputActivity extends Activity {
 			bHomeTeam.setOnClickListener(getTeamClickListener);
 			bOppTeam = (RadioButton) findViewById(R.id.teamOpp);
 			bOppTeam.setText(oppTeam);
-			bOppTeam.setOnClickListener(getTeamClickListener);
-			bHomeTeam.setChecked(true);
-			if (teamOriginal.equals(oppTeam)) {
+			bOppTeam.setOnClickListener(getTeamClickListener);			
+			bHomeTeam.setChecked(false);
+			bOppTeam.setChecked(false);
+			if (teamOriginal.equals(homeTeam) ||teamOriginal.equals("")) {
+				bHomeTeam.setChecked(true);
+				teamBack = homeTeam;
+			} else if (teamOriginal.equals(oppTeam)) {
 				bOppTeam.setChecked(true);
+				teamBack = oppTeam;
 			}
 		}
 
@@ -276,15 +281,18 @@ public class InputActivity extends Activity {
 			stats1 = "off posts";
 			break;
 		case R.id.radio_shot_r05:
-			stats1 = "saved/short";
+			stats1 = "saved";
 			break;
 		case R.id.radio_shot_r06:
-			stats1 = "free/pen conceded";
+			stats1 = "short";
 			break;
 		case R.id.radio_shot_r07:
-			stats1 = "own puck/kick out won";
+			stats1 = "free/pen conceded";
 			break;
 		case R.id.radio_shot_r08:
+			stats1 = "own puck/kick out won";
+			break;
+		case R.id.radio_shot_r09:
 			stats1 = "own puck/kick out lost";
 			break;
 		}

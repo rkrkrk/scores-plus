@@ -281,7 +281,7 @@ public class ScoresFragment extends Fragment {
 					} else {
 						sPeriod = "Score after 2nd half extra time: ";
 					}
-
+					values.put("sort", System.currentTimeMillis());
 					values.put(
 							"line",
 							locn
@@ -860,6 +860,7 @@ public class ScoresFragment extends Fragment {
 		((Startup) getActivity()).getFragmentReview().resetStats();
 		((Startup) getActivity()).getFragmentTeamOne().resetCardsSubs();
 		((Startup) getActivity()).getFragmentTeamTwo().resetCardsSubs();
+		((Startup) getActivity()).getFragmentEvent().fillData();
 		updateStatsList(true);
 		tStats.setText("");
 		// delete image files in dir
@@ -1128,7 +1129,8 @@ public class ScoresFragment extends Fragment {
 		// update scores and misses
 		if ((stats1Temp.equals("goal")) || (stats1Temp.equals("point"))
 				|| (stats1Temp.equals("wide"))
-				|| (stats1Temp.equals("saved/short"))
+				|| (stats1Temp.equals("saved"))
+				|| (stats1Temp.equals("short"))
 				|| (stats1Temp.equals("off posts"))
 				|| (stats1Temp.equals("out for 45/65"))) {
 			int goal = 0, point = 0, goalF = 0, pointF = 0, miss = 0, missF = 0, id;
@@ -1153,7 +1155,8 @@ public class ScoresFragment extends Fragment {
 				}
 			} else if ((stats1Temp.equals("wide"))
 					|| (stats1Temp.equals("off posts"))
-					|| (stats1Temp.equals("saved/short"))
+					|| (stats1Temp.equals("saved"))
+					|| (stats1Temp.equals("short"))
 					|| (stats1Temp.equals("out for 45/65"))) {
 				miss = NUMBER;
 				if ((stats2Temp.equals("from free"))

@@ -237,7 +237,7 @@ public class EventsListFragment extends ListFragment {
 			stats1 = (stats1 == null) ? "" : stats1;
 			stats2 = (stats2 == null) ? "" : stats2;
 			player = (player == null) ? "" : player;
-			teamBack = (player == null) ? teamBefore : teamBack;
+			teamBack = (teamBack == null) ? teamBefore : teamBack;
 			Log.e("eventback", stats1 + " - " + stats2 + " - " + player + " - "
 					+ teamBack + " - " + ID);
 
@@ -256,7 +256,7 @@ public class EventsListFragment extends ListFragment {
 			if (requestCode == 9) {
 				if (!stats1.equals(stats1Before)
 						|| !stats2.equals(stats2Before)
-						|| !player.equals(playerBefore)) {
+						|| !player.equals(playerBefore) || !teamBack.equals(teamBefore)) {
 					// undo first then add
 					((Startup) getActivity()).getFragmentScore().undo(teamBefore,
 							stats1Before, stats2Before, playerBefore, typeTemp);

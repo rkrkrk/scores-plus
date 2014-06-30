@@ -156,16 +156,16 @@
                         android:id="@+id/TextView04"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="No."
-                        android:textSize="12sp" />
+                        android:text="Total"
+                        android:textSize="9sp" />
 
                     <TextView
                         android:id="@+id/rvTextView01"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="from play"
                         android:textSize="8sp" />
@@ -175,7 +175,7 @@
                     android:id="@+id/Linear06"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -194,7 +194,7 @@
                         android:id="@+id/tVwShotsGoalNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -203,7 +203,7 @@
                         android:id="@+id/tVGoalsHomePlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -213,7 +213,7 @@
                     android:id="@+id/Linear07"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -232,7 +232,7 @@
                         android:id="@+id/tVwShotsPointNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -241,7 +241,7 @@
                         android:id="@+id/tVPointsHomePlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -251,7 +251,7 @@
                     android:id="@+id/Linear08"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -270,7 +270,7 @@
                         android:id="@+id/tVwShotsWideNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -279,7 +279,7 @@
                         android:id="@+id/tVWidesHomePlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -289,7 +289,7 @@
                     android:id="@+id/Linear09"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -308,7 +308,7 @@
                         android:id="@+id/tVwHome45"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -317,7 +317,7 @@
                         android:id="@+id/tV45HomePlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -327,7 +327,7 @@
                     android:id="@+id/Linear10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -346,7 +346,7 @@
                         android:id="@+id/tVwShotsPostsNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -355,13 +355,50 @@
                         android:id="@+id/tVPostsHomePlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Linear11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Saved"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsSavedNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVSavedHomePlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+ <LinearLayout
                     android:id="@+id/Linear11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -377,28 +414,28 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".3"
                         android:gravity="left|center_vertical"
-                        android:text="Saved/Short"
+                        android:text="Short"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsSavedNo"
+                        android:id="@+id/tVwShotsShortNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVSavedHomePlay"
+                        android:id="@+id/tVShortHomePlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
                 </LinearLayout>
-
+                
                 <LinearLayout
                     android:id="@+id/Linear12"
                     android:layout_width="match_parent"
@@ -464,7 +501,7 @@
                         android:id="@+id/tVwFreeWonHome"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -473,7 +510,7 @@
                         android:id="@+id/tVwFreeWonHomeP"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -501,7 +538,7 @@
                         android:id="@+id/tVwHomeTotPuck"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="bottom|center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -510,7 +547,7 @@
                         android:id="@+id/TextView11"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -538,7 +575,7 @@
                         android:id="@+id/tVwPuckWonCleanHome"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="bottom|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -547,7 +584,7 @@
                         android:id="@+id/TextView121"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -575,7 +612,7 @@
                         android:id="@+id/tVPuckLostCleanHome"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -584,7 +621,7 @@
                         android:id="@+id/tVwPuckLostCleanHomeP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -735,7 +772,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#999999"
-                    android:minHeight="dp"
+
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
                     android:paddingTop="1dp" >
@@ -745,22 +782,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight=".3"
+                        android:minHeight="18dp"
                         android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/TextView04"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="No."
-                        android:textSize="12sp" />
+                        android:text="Total"
+                        android:textSize="9sp" />
 
                     <TextView
                         android:id="@+id/rvTextView01"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="from play"
                         android:textSize="8sp" />
@@ -770,7 +808,7 @@
                     android:id="@+id/Linear06"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -789,7 +827,7 @@
                         android:id="@+id/tVwShotsGoalsOppNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -798,7 +836,7 @@
                         android:id="@+id/tVGoalsOppPlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -808,7 +846,7 @@
                     android:id="@+id/Linear07"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -827,7 +865,7 @@
                         android:id="@+id/tVwShotsPointsOppNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -836,7 +874,7 @@
                         android:id="@+id/tVPointsOppPlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -846,7 +884,7 @@
                     android:id="@+id/Linear08"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -865,7 +903,7 @@
                         android:id="@+id/tVwShotsWidesOppNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -874,7 +912,7 @@
                         android:id="@+id/tVWidesOppPlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -884,7 +922,7 @@
                     android:id="@+id/Linear09"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -903,7 +941,7 @@
                         android:id="@+id/tVwOpp45"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -912,7 +950,7 @@
                         android:id="@+id/tV45OppPlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -922,7 +960,7 @@
                     android:id="@+id/Linear10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -941,7 +979,7 @@
                         android:id="@+id/tVwShotsPostsOppNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -950,13 +988,50 @@
                         android:id="@+id/tVPostsOppPlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Linear11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/TextView57"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="left|center_vertical"
+                        android:text="Saved"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVwShotsSavedOppNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVSavedOppPlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                 <LinearLayout
                     android:id="@+id/Linear11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -972,23 +1047,23 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".3"
                         android:gravity="left|center_vertical"
-                        android:text="Saved/Short"
+                        android:text="Short"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVwShotsSavedOppNo"
+                        android:id="@+id/tVwShotsShortOppNo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVSavedOppPlay"
+                        android:id="@+id/tVShortOppPlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -1059,7 +1134,7 @@
                         android:id="@+id/tVwFreeWonOpp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -1068,7 +1143,7 @@
                         android:id="@+id/tVwFreeWonOppP"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -1096,7 +1171,7 @@
                         android:id="@+id/tVwOppTotPuck"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="bottom|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -1105,7 +1180,7 @@
                         android:id="@+id/TextView19"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -1133,7 +1208,7 @@
                         android:id="@+id/tVwPuckWonCleanOpp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -1142,7 +1217,7 @@
                         android:id="@+id/tVwPuckWonCleanOppP"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -1170,7 +1245,7 @@
                         android:id="@+id/tVPuckLostCleanOpp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="0"
                         android:textSize="14sp" />
@@ -1179,7 +1254,7 @@
                         android:id="@+id/tVwPuckLostCleanOppP"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>

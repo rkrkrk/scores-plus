@@ -961,6 +961,7 @@ public class TeamOneFragment extends Fragment {
 		ContentValues values = new ContentValues();
 		values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
 				+ "--> off: " + playerOff + "  on: " + playerOn);
+		values.put("sort", System.currentTimeMillis());
 		values.put("type", "u");
 		values.put("time", temp1);
 		values.put("team", panelName);	
@@ -978,6 +979,7 @@ public class TeamOneFragment extends Fragment {
 
 		updateSubsList();
 		((Startup) getActivity()).getFragmentScore().updateStatsList(false);
+		((Startup) getActivity()).getFragmentEvent().fillData();;
 //		((Startup) getActivity()).getFragmentReview().updateListView();
 	}
 
