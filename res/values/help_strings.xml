@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="eventsListHelp">
+<![CDATA[
+<h1>EVENTS HELP</h1>    
+<p>This screen lists individual match events recorded from the <b>MATCH</b>
+screen.  IF you make errors in recording events they can be edited or deleted
+from this screen. If you miss events, they can be inserted from here.</p>
+
+<p>Tap on a match event to get options to edit or delete existing events or to insert
+new events or substitutions</p>
+
+<p>Inserted events are added immediately after the selected event with the same
+time stamp<p>
+
+<p><b>IMPORTANT SUBSTITUTION LIMITATION</b><br> 
+ Substitutions edited or inserted from this page will be updated in the list of match
+ events, in the list of substitutions on the <b>TEAM</b> screen and in the
+ summary <b>REVIEW</b> screen.  However the team lineup used in the <b>TEAM</b> screens
+ and in recording stats events is <b>NOT</b> updated automatically. If you want substitutions
+ to be reflected in the team lineups you\'ll have to go to <b>TEAM</b> page
+ and make the change manually
+</p>
+
+    
+    ]]>
+    </string>
+    
+    
     <string name="teamHelp">
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
@@ -166,8 +193,6 @@ Use the <b> change team name</b> button to give your team a meaningful name and 
  
  ]]>
     </string>
-    
-    
     <string name="scoresHelp">
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
@@ -244,7 +269,6 @@ separate the phone numbers.<br/>
 </p>
 ]]>
     </string>
-    
     <string name="reviewHelp">
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
@@ -281,7 +305,6 @@ cards, substitutions list of match/stats events recorded, list of scorers.
 
 ]]>
     </string>
-    
     <string name="scorersHelp">
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
@@ -308,7 +331,6 @@ What it says!</p>
 Email the Scorers List</p>
 
 ]]>
-    </string>    
-    
+    </string>
 
 </resources>

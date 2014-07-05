@@ -24,18 +24,10 @@
                 android:gravity="center_horizontal"
                 android:padding="2dp"
                 android:text="MATCH EVENTS"
+                android:textColor="#ff0000"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/head1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="long press on a row to delete match event"
-                android:textColor="#ff0000"
-                android:textSize="9sp" />
         </LinearLayout>
 
         <LinearLayout

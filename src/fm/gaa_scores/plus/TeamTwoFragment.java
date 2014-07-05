@@ -952,22 +952,28 @@ public class TeamTwoFragment extends Fragment {
 		}
 		getTeam(panelName);
 		// write to stats
-		String temp1 = "", temp2 = "", temp3 = "";
+		String temp1 = "", temp2 = "", temp3 = "", temp4;
 		if (((Startup) getActivity()).getFragmentScore().getTime() != "") {
 			temp1 = ((Startup) getActivity()).getFragmentScore().getTime();
 			temp2 = ((Startup) getActivity()).getFragmentScore().bPeriod
 					.getText().toString();
 		}
 		temp3 = (bloodSub) ? " blood sub " : " substitution ";
-		ContentValues values = new ContentValues();
-		values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
-				+ "--> off: " + playerOff + "  on: " + playerOn);
+		temp4 = (bloodSub) ? "true" : "false";
+			ContentValues values = new ContentValues();
+		if (temp1.equals("")) {
+			values.put("line",  temp3 + panelName
+					+ "--> off: " + playerOff + "  on: " + playerOn);
+		} else {
+			values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
+					+ "--> off: " + playerOff + "  on: " + playerOn);
+		}
 		values.put("sort", System.currentTimeMillis());
 		values.put("type", "u");
 		values.put("time", temp1);
 		values.put("team", panelName);
 		values.put("period", temp2);
-		values.put("blood", temp3);
+		values.put("blood", temp4);
 		values.put("subon", playerOn);
 		values.put("suboff", playerOff);
 		getActivity().getContentResolver().insert(
@@ -980,7 +986,7 @@ public class TeamTwoFragment extends Fragment {
 
 		updateSubsList();
 		((Startup) getActivity()).getFragmentScore().updateStatsList(false);
-//		((Startup) getActivity()).getFragmentReview().updateListView();
+		// ((Startup) getActivity()).getFragmentReview().updateListView();
 	}
 
 	// reset team positions to numbers
@@ -1091,8 +1097,8 @@ public class TeamTwoFragment extends Fragment {
 							"", panelName);
 					((Startup) getActivity()).getFragmentScorers()
 							.setTeamNames("", panelName);
-//					((Startup) getActivity()).getFragmentReview()
-//							.updateListView();
+					// ((Startup) getActivity()).getFragmentReview()
+					// .updateListView();
 					((Startup) getActivity()).getFragmentScore()
 							.updateStatsList(false);
 					((Startup) getActivity()).getFragmentTeamOne().setTeam(

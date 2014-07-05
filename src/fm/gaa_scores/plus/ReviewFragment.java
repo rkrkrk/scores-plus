@@ -65,7 +65,7 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotGoalsHome;
 	private TextView tShotWidesHome;
 	private TextView tShotPointsHome;
-	private TextView tShotSavedHome,tShotShortHome;
+	private TextView tShotSavedHome, tShotShortHome;
 	private TextView tShotPostsHome;
 	private TextView tShot45Home;
 	private TextView tTotPuckHome;
@@ -76,15 +76,16 @@ public class ReviewFragment extends Fragment {
 	private TextView tFreeConcededHome;
 	private TextView tFreeConcededOpp;
 	private TextView tShotPointsPlayOpp;
-	private TextView tPuckWonCleanHome;
-	private TextView tPuckLostCleanHome;
-	private TextView tPuckWonCleanOpp;
-	private TextView tPuckLostCleanOpp;
+	private TextView tPuckWonCleanHome, tPuckWonCleanHomePerCent;
+	private TextView tPuckLostCleanHome, tPuckLostCleanHomePerCent;
+	private TextView tPuckWonCleanOpp, tPuckWonCleanOppPerCent;
+	private TextView tPuckLostCleanOpp, tPuckLostCleanOppPerCent;
 	private TextView tOwnTeam, tOppTeam;
 	private TextView tCardHome, tCardOpp;
 	private TextView tShotPointsPlayWidesHome, tShotPointsPlayWidesOpp;
 	private TextView tShotPointsPlay45Home, tShotPointsPlay45Opp;
-	private TextView tShotPointsPlaySavedHome, tShotPointsPlaySavedOpp,tShotPointsPlayShortHome,tShotPointsPlayShortOpp;
+	private TextView tShotPointsPlaySavedHome, tShotPointsPlaySavedOpp,
+			tShotPointsPlayShortHome, tShotPointsPlayShortOpp;
 	private TextView tShotPointsPlayPostsHome, tShotPointsPlayPostsOpp;
 	private Button bSendAll, bTweetAll, bEvents;
 	private int red = 0, yellow = 0, sub = 0;
@@ -97,17 +98,18 @@ public class ReviewFragment extends Fragment {
 	private int shotSavedPlayHome = 0, shotSavedPlayOpp = 0;
 	private int shotShortPlayHome = 0, shotShortPlayOpp = 0;
 	private int shotPostsPlayHome = 0, shotPostsPlayOpp = 0;
-	private int shotWidesHome = 0, shotSavedHome = 0,shotShortHome = 0, shotPostsHome = 0;
+	private int shotWidesHome = 0, shotSavedHome = 0, shotShortHome = 0,
+			shotPostsHome = 0;
 	private int freeConcededHome = 0;
 	private int freeConcededOpp = 0;
 	private int shot45Home = 0, shot45Opp = 0;
 	private int totPHome = 0, totPOpp = 0;
-	private int puckWonCleanHome = 0, puckWonCleanHomePerCent = 0;
-	int puckLostCleanHome = 0, puckLostCleanHomePerCent = 0;
+	private int puckWonCleanHome = 0, puckWonHomePerCent = 0;
+	int puckLostCleanHome = 0, puckLostHomePerCent = 0;
 	int puckWonBreakHome = 0, puckWonBreakHomePerCent = 0;
 	int puckLostBreakHome = 0, puckLostBreakHomePerCent = 0;
-	int puckWonCleanOpp = 0, puckWonCleanOppPerCent = 0;
-	int puckLostCleanOpp = 0, puckLostCleanOppPerCen = 0;
+	int puckWonCleanOpp = 0, puckWonOppPerCent = 0;
+	int puckLostCleanOpp = 0, puckLostOppPerCent = 0;
 	int puckWonBreakOpp = 0, puckWonBreakOppPerCent = 0;
 	int puckLostBreakOpp = 0, puckLostBreakOppPerCent = 0;
 	int puckOutTotalHome = 0, puckOutTotalOpp = 0;
@@ -118,12 +120,13 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotGoalsOpp, tShotGoalsPlayOpp;
 	private TextView tShotWidesOpp;
 	private TextView tShotPointsOpp;
-	private TextView tShotSavedOpp,tShotShortOpp;
+	private TextView tShotSavedOpp, tShotShortOpp;
 	private TextView tShotPostsOpp;
 	private TextView tShot45Opp;
 	private TextView tTotPuckOpp;
 	private int shotGoalsOpp = 0, shotPointsOpp = 0;
-	private int shotWidesOpp = 0, shotSavedOpp = 0,shotShortOpp = 0, shotPostsOpp = 0;
+	private int shotWidesOpp = 0, shotSavedOpp = 0, shotShortOpp = 0,
+			shotPostsOpp = 0;
 	private ListView listViewStats;
 	private String cardHome = "", subHome = "";
 	private String cardOpp = "", subOpp = "";
@@ -164,7 +167,7 @@ public class ReviewFragment extends Fragment {
 		tShot45Home = (TextView) v.findViewById(R.id.tVwHome45);
 		tShotSavedHome = (TextView) v.findViewById(R.id.tVwShotsSavedNo);
 		tShotShortHome = (TextView) v.findViewById(R.id.tVwShotsShortNo);
-			tShotPostsHome = (TextView) v.findViewById(R.id.tVwShotsPostsNo);
+		tShotPostsHome = (TextView) v.findViewById(R.id.tVwShotsPostsNo);
 
 		tShotGoalsPlayHome = (TextView) v.findViewById(R.id.tVGoalsHomePlay);
 		tShotPointsPlayHome = (TextView) v.findViewById(R.id.tVPointsHomePlay);
@@ -219,6 +222,14 @@ public class ReviewFragment extends Fragment {
 				.findViewById(R.id.tVPuckLostCleanHome);
 		tPuckWonCleanOpp = (TextView) v.findViewById(R.id.tVwPuckWonCleanOpp);
 		tPuckLostCleanOpp = (TextView) v.findViewById(R.id.tVPuckLostCleanOpp);
+		tPuckWonCleanHomePerCent = (TextView) v
+				.findViewById(R.id.tVHomePuckOutWonPerCent);
+		tPuckLostCleanHomePerCent = (TextView) v
+				.findViewById(R.id.tVHomePuckOutLostPerCent);
+		tPuckWonCleanOppPerCent = (TextView) v
+				.findViewById(R.id.tVOppPuckOutWonPerCent);
+		tPuckLostCleanOppPerCent = (TextView) v
+				.findViewById(R.id.tVOppPuckOutLostPerCent);
 
 		// Read in score from persisted data
 		homeGoals = sharedPref.getInt("HOMEGOALS", 0);
@@ -338,6 +349,8 @@ public class ReviewFragment extends Fragment {
 		freeConcededHome = 0;
 		puckWonCleanHome = 0;
 		puckLostCleanHome = 0;
+		puckWonHomePerCent = 0;
+		puckLostHomePerCent = 0;
 		totPHome = 0;
 		shotGoalsOpp = 0;
 		shotGoalsPlayOpp = 0;
@@ -356,6 +369,8 @@ public class ReviewFragment extends Fragment {
 		freeConcededOpp = 0;
 		puckWonCleanOpp = 0;
 		puckLostCleanOpp = 0;
+		puckWonOppPerCent = 0;
+		puckLostOppPerCent = 0;
 
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		// get home team first then opposition
@@ -507,7 +522,7 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotSavedPlayOpp++;
 					}
-				}else if (stats1.equals("short")) {
+				} else if (stats1.equals("short")) {
 					// increment counter in review page
 					shotShortOpp++;
 					if ((!stats2.equals("from free"))
@@ -579,8 +594,6 @@ public class ReviewFragment extends Fragment {
 		updateShotsPerCent();
 	}
 
-	
-
 	public void updateShotsPerCent() {
 		tShotsTotalHome.setText("Total shots:");
 		tShotsPlayHome.setText("Shots from play:");
@@ -593,16 +606,38 @@ public class ReviewFragment extends Fragment {
 		totalShotsHome = shotGoalsHome + shotPointsHome + shotWidesHome
 				+ shotSavedHome + shotShortHome + shotPostsHome + shot45Home;
 		totalShotsOpp = shotGoalsOpp + shotPointsOpp + shotWidesOpp
-				+ shotSavedOpp+ shotShortOpp + shotPostsOpp + shot45Opp;
+				+ shotSavedOpp + shotShortOpp + shotPostsOpp + shot45Opp;
 		shotsPlayHome = shotGoalsPlayHome + shotPointsPlayHome
-				+ shotWidesPlayHome + shot45PlayHome + shotSavedPlayHome+ shotShortPlayHome
-				+ shotPostsPlayHome;
+				+ shotWidesPlayHome + shot45PlayHome + shotSavedPlayHome
+				+ shotShortPlayHome + shotPostsPlayHome;
 		shotsPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp + shotWidesPlayOpp
-				+ shot45PlayOpp + shotSavedPlayOpp+ shotShortPlayOpp + shotPostsPlayOpp;
+				+ shot45PlayOpp + shotSavedPlayOpp + shotShortPlayOpp
+				+ shotPostsPlayOpp;
 		shotsScoredHome = shotGoalsHome + shotPointsHome;
 		shotsScoredOpp = shotGoalsOpp + shotPointsOpp;
 		shotsScoredPlayHome = shotGoalsPlayHome + shotPointsPlayHome;
 		shotsScoredPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp;
+
+		if ((puckWonCleanHome + puckLostCleanHome) > 0) {
+			puckWonHomePerCent = puckWonCleanHome*100
+					/ (puckWonCleanHome + puckLostCleanHome);
+			puckLostHomePerCent = puckLostCleanHome*100
+					/ (puckWonCleanHome + puckLostCleanHome);
+			tPuckWonCleanHomePerCent.setText(String.valueOf(puckWonHomePerCent)
+					+ "%");
+			tPuckLostCleanHomePerCent.setText(String
+					.valueOf(puckLostHomePerCent) + "%");
+		}
+		if ((puckWonCleanOpp + puckLostCleanOpp) > 0) {
+			puckWonOppPerCent = puckWonCleanOpp*100
+					/ (puckWonCleanOpp + puckLostCleanOpp) ;
+			puckLostOppPerCent = puckLostCleanOpp*100
+					/ (puckWonCleanOpp + puckLostCleanOpp) ;
+			tPuckWonCleanOppPerCent.setText(String.valueOf(puckWonOppPerCent)
+					+ "%");
+			tPuckLostCleanOppPerCent.setText(String.valueOf(puckLostOppPerCent)
+					+ "%");
+		}
 
 		if (totalShotsHome > 0) {
 			perCent = Integer
@@ -618,15 +653,16 @@ public class ReviewFragment extends Fragment {
 		if (shotsPlayHome > 0) {
 			perCent = Integer.toString((shotsScoredPlayHome * 100)
 					/ shotsPlayHome);
-			tShotsPlayHome
-					.setText("Shot from play:" + shotsPlayHome + "  Scored:"
-							+ shotsScoredPlayHome + "\n(" + perCent + "%)");
+			tShotsPlayHome.setText("Shot from play:" + shotsPlayHome
+					+ "  Scored:" + shotsScoredPlayHome + "\n(" + perCent
+					+ "%)");
 		}
 		if (shotsPlayOpp > 0) {
 			perCent = Integer.toString((shotsScoredPlayOpp * 100)
 					/ shotsPlayOpp);
-			tShotsPlayOpp.setText("Shot from play:" + shotsPlayOpp
-					+ "  Scored:" + shotsScoredPlayOpp + "\n(" + perCent + "%)");
+			tShotsPlayOpp
+					.setText("Shot from play:" + shotsPlayOpp + "  Scored:"
+							+ shotsScoredPlayOpp + "\n(" + perCent + "%)");
 		}
 	}
 
@@ -719,7 +755,7 @@ public class ReviewFragment extends Fragment {
 		tShotWidesOpp.setText("0");
 		tShotSavedOpp.setText("0");
 		tShotShortOpp.setText("0");
-			tShotPostsOpp.setText("0");
+		tShotPostsOpp.setText("0");
 		tShot45Opp.setText("0");
 		tShotGoalsPlayOpp.setText("0");
 		tShotPointsPlayOpp.setText("0");
@@ -736,6 +772,10 @@ public class ReviewFragment extends Fragment {
 		tPuckLostCleanHome.setText("0");
 		tPuckWonCleanOpp.setText("0");
 		tPuckLostCleanOpp.setText("0");
+		tPuckWonCleanHomePerCent.setText("");
+		tPuckLostCleanHomePerCent.setText("");
+		tPuckWonCleanOppPerCent.setText("");
+		tPuckLostCleanOppPerCent.setText("");
 		tTotPuckHome.setText("0");
 		tTotPuckOpp.setText("0");
 		tCardHome.setText("");
@@ -747,7 +787,6 @@ public class ReviewFragment extends Fragment {
 		tShotsPlayOpp.setText("Shot from play:");
 		updateCardsSubs();
 	}
-
 
 	// this method is called from the SETUP fragment to update the names of the
 	// home and away teams and to receive team line and teams from setup screen
@@ -846,7 +885,6 @@ public class ReviewFragment extends Fragment {
 		tCardHome.setText(cardHome + subHome);
 		tCardOpp.setText(cardOpp + subOpp);
 	}
-
 
 	// for reset buttons diplay message to long click, won't work with ordinary
 	// click
@@ -1029,10 +1067,10 @@ public class ReviewFragment extends Fragment {
 					+ " wides from play\n");
 			sb.append(shot45Home + " total out for 45/65. " + shot45PlayHome
 					+ " out for 45/65 from play\n");
-			sb.append(shotSavedHome + " total saved. "
-					+ shotSavedPlayHome + " saved from play \n");
-			sb.append(shotShortHome + " total short. "
-					+ shotShortPlayHome + " short from play \n");
+			sb.append(shotSavedHome + " total saved. " + shotSavedPlayHome
+					+ " saved from play \n");
+			sb.append(shotShortHome + " total short. " + shotShortPlayHome
+					+ " short from play \n");
 			sb.append(shotPostsHome + " total off posts. " + shotPostsPlayHome
 					+ " off posts from play\n");
 			sb.append(tShotsTotalHome.getText().toString() + "\n");

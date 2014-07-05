@@ -6,11 +6,15 @@
         android:showAsAction="always|withText"
         android:title="edit this event"/>
     <item
-        android:id="@+id/menu_insert"
+        android:id="@+id/menu_insert_event"
         android:icon="@android:drawable/ic_menu_add"
         android:showAsAction="always|withText"
-        android:title="insert new event"/>
-    <item android:id="@+id/item1">
+        android:title="insert new match event"/>
+    <item
+        android:id="@+id/menu_insert_sub"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always|withText"
+        android:title="insert new substitution">
     </item>
     <item android:id="@+id/item2">
     </item>
@@ -19,5 +23,9 @@
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="always|withText"
         android:title="delete this event"/>
+     <item
+        android:id="@+id/menu_cancel"
+        android:showAsAction="always|withText"
+        android:title="cancel"/>
 
 </menu>

@@ -13,10 +13,13 @@ package fm.gaa_scores.plus;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -40,15 +43,20 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class EventsListFragment extends ListFragment {
-	private String[] teamLineUpHome = new String[26];
+	private ArrayList<String> panelList = new ArrayList<String>();
+
+	private String[] teamLineUpHome = new String[26], panelCurrent;
 	private String[] teamLineUpOpp = new String[26];
 	private String teamBefore, typeTemp, timeTemp, homeTeam, oppTeam;
-	private String periodTemp;
+	private String periodTemp, playerOn, playerOff;
 	private String stats1Before, stats2Before, teamBack;
-	private String playerBefore;
+	private String playerBefore, subonTemp, suboffTemp, bloodTemp;
+	private String[] inSetup;
 	private long ID;
 	private long sortTemp = (long) 0;
 	private Intent input;
+	private boolean bloodSub, subMade = false;
+	private boolean[] checked = { false, false, false };
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +65,7 @@ public class EventsListFragment extends ListFragment {
 
 		String myTag = getTag();
 		((Startup) getActivity()).setTagFragmentEvents(myTag);
-
+		this.setHasOptionsMenu(true);
 		SharedPreferences sharedPref = getActivity().getSharedPreferences(
 				"team_stats_review_data", Context.MODE_PRIVATE);
 		Log.e("getting teams in eventList", "");
@@ -117,12 +125,15 @@ public class EventsListFragment extends ListFragment {
 		sortTemp = 0;
 		timeTemp = "";
 		periodTemp = "";
+		teamBack = "";
 		Uri uri = TeamContentProvider.CONTENT_URI_2;
 		String[] projection = { TeamContentProvider.STATS1,
 				TeamContentProvider.STATS2, TeamContentProvider.STATSPLAYER,
 				TeamContentProvider.STATSTYPE, TeamContentProvider.STATSTEAM,
 				TeamContentProvider.STATSSORT, TeamContentProvider.STATSTIME,
-				TeamContentProvider.STATSPERIOD };
+				TeamContentProvider.STATSPERIOD,
+				TeamContentProvider.STATSSUBON,
+				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		ID = info.id;
@@ -147,63 +158,71 @@ public class EventsListFragment extends ListFragment {
 					.getColumnIndexOrThrow(TeamContentProvider.STATSTIME));
 			periodTemp = c1.getString(c1
 					.getColumnIndexOrThrow(TeamContentProvider.STATSPERIOD));
+			subonTemp = c1.getString(c1
+					.getColumnIndexOrThrow(TeamContentProvider.STATSSUBON));
+			suboffTemp = c1.getString(c1
+					.getColumnIndexOrThrow(TeamContentProvider.STATSSUBOFF));
+			bloodTemp = c1.getString(c1
+					.getColumnIndexOrThrow(TeamContentProvider.STATSBLOOD));
 		}
 		c1.close();
-		if (typeTemp.equals("t")) {
-			switch (item.getItemId()) {
-			case R.id.menu_delete:
-				delete(null, null, null);
-				return true;
-			case R.id.menu_edit:
-			case R.id.menu_insert:
-				// getTeam(teamTemp);
-				input = new Intent(getActivity(), InputActivity.class);
-				input.putExtra("teamLineUpHome", teamLineUpHome);
-				input.putExtra("teamLineUpOpp", teamLineUpOpp);
-				input.putExtra("homeTeam", homeTeam);
-				input.putExtra("oppTeam", oppTeam);	
-				input.putExtra("call", 1);
-				if (item.getItemId() == R.id.menu_edit) {
-					input.putExtra("teamOriginal", teamBefore);
-					input.putExtra("stats1", stats1Before);
-					input.putExtra("stats2", stats2Before);
-					input.putExtra("player", playerBefore);
-					// 9 is for edit
-					startActivityForResult(input, 9);
-				} else {
-					// 10 is for insert
-					startActivityForResult(input, 10);
-				}
-				return true;
-			}
-		} else if (typeTemp.equals("u")) {
-			switch (item.getItemId()) {
-			case R.id.menu_delete:
-				delete(null, null, null);
-				return true;
 
-			case R.id.menu_edit:
+		switch (item.getItemId()) {
+		case R.id.menu_delete:
+			if (typeTemp.equals("s")) {
 				Toast.makeText(getActivity(),
-						"Edit option not available for Subs yet.",
+						"Start / End times cannot be changed",
 						Toast.LENGTH_LONG).show();
-				return true;
-			case R.id.menu_insert:
-				Toast.makeText(getActivity(),
-						"Insert option not available for Subs yet.",
-						Toast.LENGTH_LONG).show();
-				return true;
-			}
-		} else if (typeTemp.equals("s")) {
-			switch (item.getItemId()) {
-			case R.id.menu_delete:
+			} else {
 				delete(null, null, null);
-			case R.id.menu_edit:
-			case R.id.menu_insert:
+			}
+			return true;
+
+		case R.id.menu_edit:
+			if (typeTemp.equals("s")) {
 				Toast.makeText(getActivity(),
 						"Start / End times cannot be changed",
 						Toast.LENGTH_LONG).show();
 				return true;
+			} else if (typeTemp.equals("t")) {
+				input = new Intent(getActivity(), InputActivity.class);
+				input.putExtra("teamLineUpHome", teamLineUpHome);
+				input.putExtra("teamLineUpOpp", teamLineUpOpp);
+				input.putExtra("homeTeam", homeTeam);
+				input.putExtra("oppTeam", oppTeam);
+				input.putExtra("call", 1);
+
+				input.putExtra("teamOriginal", teamBefore);
+				input.putExtra("stats1", stats1Before);
+				input.putExtra("stats2", stats2Before);
+				input.putExtra("player", playerBefore);
+				// 9 is for edit
+				startActivityForResult(input, 9);
+			} else if (typeTemp.equals("u")) {
+				recordSub(true);
 			}
+			return true;
+
+		case R.id.menu_insert_event:
+
+			input = new Intent(getActivity(), InputActivity.class);
+			input.putExtra("teamLineUpHome", teamLineUpHome);
+			input.putExtra("teamLineUpOpp", teamLineUpOpp);
+			input.putExtra("homeTeam", homeTeam);
+			input.putExtra("oppTeam", oppTeam);
+			input.putExtra("call", 1);
+
+			// 10 is for insert
+			startActivityForResult(input, 10);
+
+			return true;
+
+		case R.id.menu_insert_sub:
+			recordSub(false);
+			return true;
+			
+		case R.id.menu_cancel:
+			return true;
 		}
 
 		return super.onContextItemSelected(item);
@@ -233,7 +252,8 @@ public class EventsListFragment extends ListFragment {
 			stats2 = data.getStringExtra("stats2");
 			player = data.getStringExtra("player");
 			teamBack = data.getStringExtra("teamBack");
-			Log.e("back from input", stats1 + " - " + stats2 + " - " + player + " - "+teamBack);
+			Log.e("back from input", stats1 + " - " + stats2 + " - " + player
+					+ " - " + teamBack);
 			stats1 = (stats1 == null) ? "" : stats1;
 			stats2 = (stats2 == null) ? "" : stats2;
 			player = (player == null) ? "" : player;
@@ -242,7 +262,8 @@ public class EventsListFragment extends ListFragment {
 					+ teamBack + " - " + ID);
 
 			ContentValues values = new ContentValues();
-			if (!timeTemp.equals("")) {
+			Log.e("break", timeTemp + " - " + periodTemp + " - " + teamBack);
+			if (timeTemp != null && !timeTemp.isEmpty()) {
 				values.put("line", timeTemp + "mins " + periodTemp + " "
 						+ teamBack + " " + stats1 + " " + stats2 + " " + player);
 			} else {
@@ -256,10 +277,12 @@ public class EventsListFragment extends ListFragment {
 			if (requestCode == 9) {
 				if (!stats1.equals(stats1Before)
 						|| !stats2.equals(stats2Before)
-						|| !player.equals(playerBefore) || !teamBack.equals(teamBefore)) {
+						|| !player.equals(playerBefore)
+						|| !teamBack.equals(teamBefore)) {
 					// undo first then add
-					((Startup) getActivity()).getFragmentScore().undo(teamBefore,
-							stats1Before, stats2Before, playerBefore, typeTemp);
+					((Startup) getActivity()).getFragmentScore().undo(
+							teamBefore, stats1Before, stats2Before,
+							playerBefore, typeTemp);
 					Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/"
 							+ ID);
 					getActivity().getContentResolver().update(uri, values,
@@ -321,6 +344,280 @@ public class EventsListFragment extends ListFragment {
 		}
 		c1.close();
 		return teamLineUp;
+	}
+
+	private void recordSub(final boolean edit) {
+		// take out team in other page
+		inSetup = new String[3];
+		inSetup[0] = homeTeam;
+		inSetup[1] = oppTeam;
+		inSetup[2] = "Blood Sub?";
+		bloodSub = false;
+		teamBack = "";
+		subMade = false;
+		checked[0] = false;
+		checked[1] = false;
+		checked[2] = false;
+		if (edit) {
+			if (teamBefore.equals(homeTeam)) {
+				checked[0] = true;
+				teamBack = homeTeam;
+			} else if (teamBefore.equals(oppTeam)) {
+				checked[1] = true;
+				teamBack = oppTeam;
+			}
+			if (bloodTemp.equals("true")) {
+				checked[2] = true;
+				bloodSub = true;
+			}
+		}
+
+		final Builder builder = new Builder(getActivity());
+		builder.setTitle("SUBSTITUTION - select team\n(read ? help file for limitations)");
+		// builder.setCancelable(true);
+		builder.setMultiChoiceItems(inSetup, checked,
+				new DialogInterface.OnMultiChoiceClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which,
+							boolean isChecked) {
+						// if (isChecked) {
+						// If the user checked the item, add it
+						// to the selected items
+						if (which == 0) {
+							final AlertDialog alert = (AlertDialog) dialog;
+							ListView list = alert.getListView();
+							list.setItemChecked(1, false);
+							// checked[0] = !checked[0];
+							if (checked[1]) {
+								checked[1] = false;
+							}
+							if (checked[0]) {
+								teamBack = inSetup[0];
+							} else {
+								teamBack = "";
+							}
+							Log.e("checked 0", " " + checked[0] + " "
+									+ checked[1] + " " + checked[2] + " "
+									+ teamBack);
+						} else if (which == 1) {
+							final AlertDialog alert = (AlertDialog) dialog;
+							ListView list = alert.getListView();
+							list.setItemChecked(0, false);
+							// checked[1] = !checked[1];
+							if (checked[0]) {
+								checked[0] = false;
+							}
+							if (checked[1]) {
+								teamBack = inSetup[1];
+							} else {
+								teamBack = "";
+							}
+							Log.e("checked 0", " " + checked[0] + " "
+									+ checked[1] + " " + checked[2] + " "
+									+ teamBack);
+						} else if (which == 2) {
+							bloodSub = !bloodSub;
+						}
+						// }
+					}
+				});
+		builder.setNegativeButton("CANCEL", null);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				// call method to display list of players
+				Log.e("GOT", " " + teamBack + " " + bloodSub);
+				int default1 = 0, default2 = 0;
+				if (!teamBack.equals("")) {
+					if (!teamBack.equals("")) {
+						getPanel(teamBack);
+						// set default
+						if (edit) {
+							for (int i = 0; i < panelCurrent.length; i++) {
+								if (panelCurrent[i].equals(subonTemp)) {
+									default1 = i;
+									break;
+								}
+							}
+							for (int i = 0; i < panelCurrent.length; i++) {
+								if (panelCurrent[i].equals(suboffTemp)) {
+									default2 = i;
+									break;
+								}
+							}
+
+						}
+					}
+					final int def1 = default1;
+					final int def2 = default2;
+					subMade = true;
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(
+							getActivity());
+					builder1.setTitle("select who is going on");
+					// builder.setCancelable(true);
+					builder1.setSingleChoiceItems(panelCurrent, def1,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									playerOn = panelCurrent[which];
+									// dialog to see who is goping on
+
+									// Get whois coming off swap with going on
+									// and write
+									// change to databse
+									AlertDialog.Builder builder2 = new AlertDialog.Builder(
+											getActivity());
+									// builder1.setCancelable(true);
+									builder2.setTitle("select who is coming off");
+									builder2.setSingleChoiceItems(
+											panelCurrent,
+											def2,
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(
+														DialogInterface dialog,
+														int which) {
+													playerOff = panelCurrent[which];
+													dialog.dismiss();
+													panelList.clear();
+													handleSubInfo(edit);
+												}
+											});
+									AlertDialog alert2 = builder2.create();
+									alert2.show();
+									dialog.dismiss();
+								}
+							});
+					AlertDialog alert1 = builder1.create();
+					alert1.show();
+					Log.e("hi dere", "back froml getsubinoff " + playerOn + "-"
+							+ playerOff);
+				}
+			}
+		});
+		// alert = builder.create();
+		builder.show();
+	}
+
+	public void handleSubInfo(boolean edit) {
+		Log.e("hi dere", "oh no DB " + subMade);
+		if (subMade && !edit) {
+			// new entry
+			String temp = (bloodSub) ? " blood sub " : " substitution ";
+			String temp1 = (bloodSub) ? "true" : "false";
+
+			ContentValues values = new ContentValues();
+			Log.e("qweqeqe", " " + timeTemp + "-" + edit);
+			if (timeTemp == null || timeTemp.isEmpty()) {
+				values.put("line", temp + teamBack + "--> off: " + playerOff
+						+ "  on: " + playerOn);
+			} else {
+				values.put("line", timeTemp + "mins " + periodTemp + temp
+						+ teamBack + "--> off: " + playerOff + "  on: "
+						+ playerOn);
+			}
+			values.put("sort", sortTemp + 10);
+			values.put("type", "u");
+			values.put("time", timeTemp);
+			values.put("team", teamBack);
+			values.put("period", periodTemp);
+			values.put("blood", temp1);
+			values.put("subon", playerOn);
+			values.put("suboff", playerOff);
+			Log.e("hi dere", "insert DB");
+			getActivity().getContentResolver().insert(
+					TeamContentProvider.CONTENT_URI_2, values);
+
+			// increment subsused counter
+			if (!bloodSub) {
+				((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+			}
+
+			fillData();
+			((Startup) getActivity()).getFragmentScore().updateStatsList(false);
+		} else if (subMade && edit) {
+			// new entry
+			String temp = (bloodSub) ? " blood sub " : " substitution ";
+			String temp1 = (bloodSub) ? "true" : "false";
+			ContentValues values = new ContentValues();
+			if (timeTemp == null || timeTemp.isEmpty()) {
+				values.put("line", temp + teamBack + "--> off: " + playerOff
+						+ "  on: " + playerOn);
+			} else {
+				values.put("line", timeTemp + "mins " + periodTemp + temp
+						+ teamBack + "--> off: " + playerOff + "  on: "
+						+ playerOn);
+			}
+			values.put("team", teamBack);
+			values.put("blood", temp1);
+			values.put("subon", playerOn);
+			values.put("suboff", playerOff);
+			Log.e("edit sub", "team-" + teamBack + " blood-" + temp1
+					+ " subon-" + playerOn + " suboff-" + playerOff);
+			Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + ID);
+			getActivity().getContentResolver().update(uri, values, null, null);
+			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
+			fillData();
+			((Startup) getActivity()).getFragmentScore().updateStatsList(false);
+		}
+	}
+
+	private void getPanel(String panelName) {
+		// load panel from database and assign to arraylist
+		String[] projection = { TeamContentProvider.NAME };
+		CursorLoader cL;
+		Uri allTitles = TeamContentProvider.CONTENT_URI;
+		// reset line up and read from database
+
+		cL = new CursorLoader(getActivity(), allTitles, projection, "team=?",
+				new String[] { panelName }, TeamContentProvider.NAME);
+		// cL = new CursorLoader(getActivity(), allTitles, projection,
+		// TeamContentProvider.TEAM + " = '" + panelName + "'", null,
+		// TeamContentProvider.NAME);
+		Cursor c1 = cL.loadInBackground();
+		panelList.clear();
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			do {
+				// read in player nicknames
+				panelList.add(c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.NAME)));
+
+			} while (c1.moveToNext());
+			panelCurrent = new String[panelList.size()];
+			panelCurrent[0] = "unknown";
+			for (int j = 1; j < panelList.size(); j++) {
+				panelCurrent[j] = panelList.get(j);
+			}
+		} else {
+			panelCurrent = new String[1];
+			panelCurrent[0] = "unknown";
+		}
+		c1.close();
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+		inflater.inflate(R.menu.events_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent ihelp;
+		switch (item.getItemId()) {
+		case 0:
+			// menu pointer do nothing
+		case R.id.helpTeam:
+			ihelp = new Intent(getActivity(), HelpActivity.class);
+			ihelp.putExtra("HELP_ID", R.string.eventsListHelp);
+			startActivity(ihelp);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

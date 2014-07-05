@@ -40,7 +40,8 @@ public class InputActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stats_layout_edit);
+//		setContentView(R.layout.stats_layout_edit);
+ 
 		Bundle extras = getIntent().getExtras();
 		teamLineUpHome = extras.getStringArray("teamLineUpHome");
 		teamLineUpOpp = extras.getStringArray("teamLineUpOpp");
@@ -70,9 +71,11 @@ public class InputActivity extends Activity {
 			} else {
 				teamLineUp = teamLineUpHome;
 			}
+			getActionBar().setTitle("insert/edit stats entry"); 
 		} else {
 			setContentView(R.layout.stats_layout);
 			teamLineUp = teamLineUpHome;
+			getActionBar().setTitle("enter stats for "+teamOriginal);  
 		}
 		// set up player arrays
 		Button back = (Button) findViewById(R.id.Bcancel);

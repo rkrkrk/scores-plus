@@ -398,7 +398,8 @@
                         android:text="0"
                         android:textSize="14sp" />
                 </LinearLayout>
- <LinearLayout
+
+                <LinearLayout
                     android:id="@+id/Linear11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -435,7 +436,7 @@
                         android:text="0"
                         android:textSize="14sp" />
                 </LinearLayout>
-                
+
                 <LinearLayout
                     android:id="@+id/Linear12"
                     android:layout_width="match_parent"
@@ -452,6 +453,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:minHeight="14dp"
+                        android:minLines="2"
                         android:text="Total Shots:"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -473,8 +475,31 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:minHeight="24dp"
+                        android:minLines="2"
                         android:text="Shot from play:"
                         android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear56"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tShotsFreeHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="24dp"
+                        android:minLines="2"
+                        android:text="Shot from frees/45s/65s:"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -482,7 +507,7 @@
                     android:id="@+id/Linear14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="2dp"
@@ -519,7 +544,7 @@
                     android:id="@+id/Linear15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -556,7 +581,7 @@
                     android:id="@+id/Linear16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -566,7 +591,7 @@
                         android:id="@+id/TextView33"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".3"
+                        android:layout_weight=".5"
                         android:gravity="left|center_vertical"
                         android:text="Won"
                         android:textSize="13sp" />
@@ -581,19 +606,19 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/TextView121"
+                        android:id="@+id/tVHomePuckOutWonPerCent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".9"
+                        android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Linear17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -603,7 +628,7 @@
                         android:id="@+id/TextView36"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".3"
+                        android:layout_weight=".5"
                         android:gravity="left|center_vertical"
                         android:text="Lost"
                         android:textSize="13sp" />
@@ -618,19 +643,19 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVwPuckLostCleanHomeP"
+                        android:id="@+id/tVHomePuckOutLostPerCent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".9"
+                        android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Linear18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="2dp"
@@ -641,7 +666,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#bbdddd"
+                        android:background="#cccccc"
                         android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -772,7 +797,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#999999"
-
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
                     android:paddingTop="1dp" >
@@ -1031,7 +1055,8 @@
                         android:text="0"
                         android:textSize="14sp" />
                 </LinearLayout>
-                 <LinearLayout
+
+                <LinearLayout
                     android:id="@+id/Linear11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1085,6 +1110,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:minHeight="14dp"
+                        android:minLines="2"
                         android:text="Total Shots:"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -1106,8 +1132,31 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:minHeight="24dp"
+                        android:minLines="2"
                         android:text="Shot from play:"
                         android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Linear55"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bbdddd"
+                    android:minHeight="20dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:paddingTop="1dp" >
+
+                    <TextView
+                        android:id="@+id/tShotsFreeOpp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="24dp"
+                        android:minLines="2"
+                        android:text="Shot from free/45/65:"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -1115,7 +1164,7 @@
                     android:id="@+id/Linear14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="2dp"
@@ -1152,7 +1201,7 @@
                     android:id="@+id/Linear15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -1189,7 +1238,7 @@
                     android:id="@+id/Linear16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -1199,7 +1248,7 @@
                         android:id="@+id/TextView91"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".3"
+                        android:layout_weight=".5"
                         android:gravity="left|center_vertical"
                         android:text="Won"
                         android:textSize="14sp" />
@@ -1214,10 +1263,10 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVwPuckWonCleanOppP"
+                        android:id="@+id/tVOppPuckOutWonPerCent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".9"
+                        android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -1226,7 +1275,7 @@
                     android:id="@+id/Linear17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cccccc"
+                    android:background="#bbdddd"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -1236,7 +1285,7 @@
                         android:id="@+id/TextView95"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".3"
+                        android:layout_weight=".5"
                         android:gravity="left|center_vertical"
                         android:text="Lost"
                         android:textSize="14sp" />
@@ -1251,10 +1300,10 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tVwPuckLostCleanOppP"
+                        android:id="@+id/tVOppPuckOutLostPerCent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".9"
+                        android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -1263,7 +1312,7 @@
                     android:id="@+id/Linear18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#bbdddd"
+                    android:background="#cccccc"
                     android:minHeight="20dp"
                     android:orientation="horizontal"
                     android:paddingBottom="1dp"
@@ -1274,7 +1323,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#bbdddd"
+                        android:background="#cccccc"
                         android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>

@@ -414,19 +414,19 @@ public class ScoresFragment extends Fragment {
 		}
 		String undo1 = "", undo2 = "", undo3 = "", undo4 = "";
 		if (c1.getCount() >= 4) {
-			undo1 = undoList.get(c1.getCount() - 4);
-			undo2 = undoList.get(c1.getCount() - 3);
-			undo3 = undoList.get(c1.getCount() - 2);
-			undo4 = undoList.get(c1.getCount() - 1);
+			undo1 = undoList.get(c1.getCount() - 1);
+			undo2 = undoList.get(c1.getCount() - 2);
+			undo3 = undoList.get(c1.getCount() - 3);
+			undo4 = undoList.get(c1.getCount() - 4);
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3 + "\n" + undo4);
 		} else if (c1.getCount() == 3) {
-			undo1 = undoList.get(c1.getCount() - 3);
+			undo1 = undoList.get(c1.getCount() - 1);
 			undo2 = undoList.get(c1.getCount() - 2);
-			undo3 = undoList.get(c1.getCount() - 1);
+			undo3 = undoList.get(c1.getCount() - 3);
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3);
 		} else if (c1.getCount() == 2) {
-			undo1 = undoList.get(c1.getCount() - 2);
-			undo2 = undoList.get(c1.getCount() - 1);
+			undo1 = undoList.get(c1.getCount() - 1);
+			undo2 =undoList.get(c1.getCount() - 2);
 			tStats.setText(undo1 + "\n" + undo2);
 		} else if (c1.getCount() == 1) {
 			undo1 = undoList.get(c1.getCount() - 1);
@@ -1263,19 +1263,19 @@ public class ScoresFragment extends Fragment {
 		}
 		String undo1 = "", undo2 = "", undo3 = "", undo4 = "";
 		if (c1.getCount() >= 4) {
-			undo1 = undoList.get(c1.getCount() - 4);
-			undo2 = undoList.get(c1.getCount() - 3);
-			undo3 = undoList.get(c1.getCount() - 2);
-			undo4 = undoList.get(c1.getCount() - 1);
+			undo1 = undoList.get(c1.getCount() - 1);
+			undo2 = undoList.get(c1.getCount() - 2);
+			undo3 = undoList.get(c1.getCount() - 3);
+			undo4 = undoList.get(c1.getCount() - 4);
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3 + "\n" + undo4);
 		} else if (c1.getCount() == 3) {
-			undo1 = undoList.get(c1.getCount() - 3);
+			undo1 = undoList.get(c1.getCount() - 1);
 			undo2 = undoList.get(c1.getCount() - 2);
-			undo3 = undoList.get(c1.getCount() - 1);
+			undo3 = undoList.get(c1.getCount() - 3);
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3);
 		} else if (c1.getCount() == 2) {
-			undo1 = undoList.get(c1.getCount() - 2);
-			undo2 = undoList.get(c1.getCount() - 1);
+			undo1 = undoList.get(c1.getCount() - 1);
+			undo2 = undoList.get(c1.getCount() - 2);
 			tStats.setText(undo1 + "\n" + undo2);
 		} else if (c1.getCount() == 1) {
 			undo1 = undoList.get(c1.getCount() - 1);
@@ -1353,6 +1353,7 @@ public class ScoresFragment extends Fragment {
 			}
 			Intent input = new Intent(getActivity(), InputActivity.class);
 			input.putExtra("teamLineUpHome", teamLineUp);
+			input.putExtra("teamOriginal", teamNameInput);
 			startActivityForResult(input, 9);
 		}
 	};
