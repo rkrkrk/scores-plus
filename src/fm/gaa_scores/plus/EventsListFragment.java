@@ -48,10 +48,11 @@ public class EventsListFragment extends ListFragment {
 	private String[] teamLineUpHome = new String[26], panelCurrent;
 	private String[] teamLineUpOpp = new String[26];
 	private String teamBefore, typeTemp, timeTemp, homeTeam, oppTeam;
-	private String periodTemp, playerOn, playerOff;
+	private String periodTemp, playerOn, playerOff, filter;
 	private String stats1Before, stats2Before, teamBack;
 	private String playerBefore, subonTemp, suboffTemp, bloodTemp;
 	private String[] inSetup;
+	private Button bHome, bAll, bOpp;
 	private long ID;
 	private long sortTemp = (long) 0;
 	private Intent input;
@@ -68,14 +69,41 @@ public class EventsListFragment extends ListFragment {
 		this.setHasOptionsMenu(true);
 		SharedPreferences sharedPref = getActivity().getSharedPreferences(
 				"team_stats_review_data", Context.MODE_PRIVATE);
-		Log.e("getting teams in eventList", "");
 		homeTeam = sharedPref.getString("OWNTEAM", "OWN TEAM");
 		oppTeam = sharedPref.getString("OPPTEAM", "OPPOSITION");
 		teamLineUpHome = getTeam(homeTeam);
 		teamLineUpOpp = getTeam(oppTeam);
+		filter = "all";
+
+		bHome = (Button) v.findViewById(R.id.bHome);
+		bAll = (Button) v.findViewById(R.id.bAll);
+		bOpp = (Button) v.findViewById(R.id.bOpp);
+		bHome.setText(homeTeam + " only");
+		bOpp.setText(oppTeam + " only");
+		bHome.setOnClickListener(getFilter);
+		bAll.setOnClickListener(getFilter);
+		bOpp.setOnClickListener(getFilter);
 
 		return v;
 	}
+
+	OnClickListener getFilter = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			switch (((Button) v).getId()) {
+			case R.id.bHome:
+				filter = homeTeam;
+				break;
+			case R.id.bAll:
+				filter = "all";
+				break;
+			case R.id.bOpp:
+				filter = oppTeam;
+				break;
+			}
+			fillData();
+		}
+	};
 
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,13 +115,22 @@ public class EventsListFragment extends ListFragment {
 	public void fillData() {
 		// retreive shots info from database
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
+		Cursor c1;
 		String[] from = new String[] { TeamContentProvider.STATSLINE };
 		String[] projection = { TeamContentProvider._ID,
 				TeamContentProvider.STATSLINE };
+		String[] args = { filter };
 		int[] to = new int[] { R.id.listrtxt };
-		Cursor c1 = getActivity().getContentResolver()
-				.query(allTitles, projection, null, null,
-						TeamContentProvider.STATSSORT + " DESC");
+		if (filter.equals("all")) {
+			c1 = getActivity().getContentResolver().query(allTitles,
+					projection, null,null,
+					TeamContentProvider.STATSSORT + " DESC");
+		} else {
+			c1 = getActivity().getContentResolver().query(allTitles,
+					projection, "team=?", args,
+					TeamContentProvider.STATSSORT + " DESC");
+		}
+
 		SimpleCursorAdapter reminders = new SimpleCursorAdapter(getActivity(),
 				R.layout.event_row_layout, c1, from, to, 0);
 		setListAdapter(reminders);
@@ -220,7 +257,7 @@ public class EventsListFragment extends ListFragment {
 		case R.id.menu_insert_sub:
 			recordSub(false);
 			return true;
-			
+
 		case R.id.menu_cancel:
 			return true;
 		}
@@ -252,17 +289,12 @@ public class EventsListFragment extends ListFragment {
 			stats2 = data.getStringExtra("stats2");
 			player = data.getStringExtra("player");
 			teamBack = data.getStringExtra("teamBack");
-			Log.e("back from input", stats1 + " - " + stats2 + " - " + player
-					+ " - " + teamBack);
 			stats1 = (stats1 == null) ? "" : stats1;
 			stats2 = (stats2 == null) ? "" : stats2;
 			player = (player == null) ? "" : player;
 			teamBack = (teamBack == null) ? teamBefore : teamBack;
-			Log.e("eventback", stats1 + " - " + stats2 + " - " + player + " - "
-					+ teamBack + " - " + ID);
 
 			ContentValues values = new ContentValues();
-			Log.e("break", timeTemp + " - " + periodTemp + " - " + teamBack);
 			if (timeTemp != null && !timeTemp.isEmpty()) {
 				values.put("line", timeTemp + "mins " + periodTemp + " "
 						+ teamBack + " " + stats1 + " " + stats2 + " " + player);
@@ -396,9 +428,6 @@ public class EventsListFragment extends ListFragment {
 							} else {
 								teamBack = "";
 							}
-							Log.e("checked 0", " " + checked[0] + " "
-									+ checked[1] + " " + checked[2] + " "
-									+ teamBack);
 						} else if (which == 1) {
 							final AlertDialog alert = (AlertDialog) dialog;
 							ListView list = alert.getListView();
@@ -412,9 +441,6 @@ public class EventsListFragment extends ListFragment {
 							} else {
 								teamBack = "";
 							}
-							Log.e("checked 0", " " + checked[0] + " "
-									+ checked[1] + " " + checked[2] + " "
-									+ teamBack);
 						} else if (which == 2) {
 							bloodSub = !bloodSub;
 						}
@@ -427,7 +453,6 @@ public class EventsListFragment extends ListFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				// call method to display list of players
-				Log.e("GOT", " " + teamBack + " " + bloodSub);
 				int default1 = 0, default2 = 0;
 				if (!teamBack.equals("")) {
 					if (!teamBack.equals("")) {
@@ -492,8 +517,6 @@ public class EventsListFragment extends ListFragment {
 							});
 					AlertDialog alert1 = builder1.create();
 					alert1.show();
-					Log.e("hi dere", "back froml getsubinoff " + playerOn + "-"
-							+ playerOff);
 				}
 			}
 		});
@@ -502,14 +525,12 @@ public class EventsListFragment extends ListFragment {
 	}
 
 	public void handleSubInfo(boolean edit) {
-		Log.e("hi dere", "oh no DB " + subMade);
 		if (subMade && !edit) {
 			// new entry
 			String temp = (bloodSub) ? " blood sub " : " substitution ";
 			String temp1 = (bloodSub) ? "true" : "false";
 
 			ContentValues values = new ContentValues();
-			Log.e("qweqeqe", " " + timeTemp + "-" + edit);
 			if (timeTemp == null || timeTemp.isEmpty()) {
 				values.put("line", temp + teamBack + "--> off: " + playerOff
 						+ "  on: " + playerOn);
@@ -526,7 +547,6 @@ public class EventsListFragment extends ListFragment {
 			values.put("blood", temp1);
 			values.put("subon", playerOn);
 			values.put("suboff", playerOff);
-			Log.e("hi dere", "insert DB");
 			getActivity().getContentResolver().insert(
 					TeamContentProvider.CONTENT_URI_2, values);
 
@@ -554,8 +574,6 @@ public class EventsListFragment extends ListFragment {
 			values.put("blood", temp1);
 			values.put("subon", playerOn);
 			values.put("suboff", playerOff);
-			Log.e("edit sub", "team-" + teamBack + " blood-" + temp1
-					+ " subon-" + playerOn + " suboff-" + playerOff);
 			Uri uri = Uri.parse(TeamContentProvider.CONTENT_URI_2 + "/" + ID);
 			getActivity().getContentResolver().update(uri, values, null, null);
 			((Startup) getActivity()).getFragmentReview().updateCardsSubs();
@@ -597,14 +615,13 @@ public class EventsListFragment extends ListFragment {
 		}
 		c1.close();
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.events_menu, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent ihelp;

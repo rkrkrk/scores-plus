@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -80,6 +81,7 @@ public class ReviewFragment extends Fragment {
 	private TextView tPuckLostCleanHome, tPuckLostCleanHomePerCent;
 	private TextView tPuckWonCleanOpp, tPuckWonCleanOppPerCent;
 	private TextView tPuckLostCleanOpp, tPuckLostCleanOppPerCent;
+	private TextView tShotsFreeHome, tShotsFreeOpp;
 	private TextView tOwnTeam, tOppTeam;
 	private TextView tCardHome, tCardOpp;
 	private TextView tShotPointsPlayWidesHome, tShotPointsPlayWidesOpp;
@@ -87,6 +89,8 @@ public class ReviewFragment extends Fragment {
 	private TextView tShotPointsPlaySavedHome, tShotPointsPlaySavedOpp,
 			tShotPointsPlayShortHome, tShotPointsPlayShortOpp;
 	private TextView tShotPointsPlayPostsHome, tShotPointsPlayPostsOpp;
+	private TextView[] tVFreesHome = new TextView[7];
+	private TextView[] tVFreesOpp = new TextView[7];
 	private Button bSendAll, bTweetAll, bEvents;
 	private int red = 0, yellow = 0, sub = 0;
 
@@ -105,17 +109,13 @@ public class ReviewFragment extends Fragment {
 	private int shot45Home = 0, shot45Opp = 0;
 	private int totPHome = 0, totPOpp = 0;
 	private int puckWonCleanHome = 0, puckWonHomePerCent = 0;
-	int puckLostCleanHome = 0, puckLostHomePerCent = 0;
-	int puckWonBreakHome = 0, puckWonBreakHomePerCent = 0;
-	int puckLostBreakHome = 0, puckLostBreakHomePerCent = 0;
-	int puckWonCleanOpp = 0, puckWonOppPerCent = 0;
-	int puckLostCleanOpp = 0, puckLostOppPerCent = 0;
-	int puckWonBreakOpp = 0, puckWonBreakOppPerCent = 0;
-	int puckLostBreakOpp = 0, puckLostBreakOppPerCent = 0;
-	int puckOutTotalHome = 0, puckOutTotalOpp = 0;
-	int puckOtherHome = 0, puckOtherHomePerCent = 0;
-	int puckOtherOpp = 0, puckOtherOppPerCent = 0;
-
+	private int puckLostCleanHome = 0, puckLostHomePerCent = 0;
+	private int puckWonCleanOpp = 0, puckWonOppPerCent = 0;
+	private int puckLostCleanOpp = 0, puckLostOppPerCent = 0;
+	private int shotsFreeHome = 0, shotsFreeOpp = 0, shotsScoredFreeHome,
+			shotsScoredFreeOpp;
+	private int[] freeHome = new int[7];
+	private int[] freeOpp = new int[7];
 	private TextView tOppTotal;
 	private TextView tShotGoalsOpp, tShotGoalsPlayOpp;
 	private TextView tShotWidesOpp;
@@ -146,7 +146,6 @@ public class ReviewFragment extends Fragment {
 		String myTag = getTag();
 		((Startup) getActivity()).setTagFragmentReview(myTag);
 		this.setHasOptionsMenu(true);
-
 		// set up text buttons edittexts etc.
 		tOwnTeam = (TextView) v.findViewById(R.id.textViewRevHome);
 		tOppTeam = (TextView) v.findViewById(R.id.textViewRevOpp);
@@ -208,6 +207,8 @@ public class ReviewFragment extends Fragment {
 		tShotsPlayHome = (TextView) v.findViewById(R.id.tShotsPlayHome);
 		tShotsTotalOpp = (TextView) v.findViewById(R.id.tTotalShotsOpp);
 		tShotsPlayOpp = (TextView) v.findViewById(R.id.tShotsPlayOpp);
+		tShotsFreeHome = (TextView) v.findViewById(R.id.tShotsFreeHome);
+		tShotsFreeOpp = (TextView) v.findViewById(R.id.tShotsFreeOpp);
 
 		tCardHome = (TextView) v.findViewById(R.id.cardsHome);
 		tCardOpp = (TextView) v.findViewById(R.id.cardsOpp);
@@ -215,6 +216,21 @@ public class ReviewFragment extends Fragment {
 		// Set up output for frees
 		tFreeConcededHome = (TextView) v.findViewById(R.id.tVwFreeWonHome);
 		tFreeConcededOpp = (TextView) v.findViewById(R.id.tVwFreeWonOpp);
+
+		tVFreesHome[0] = (TextView) v.findViewById(R.id.tVHomeGoalsFree);
+		tVFreesHome[1] = (TextView) v.findViewById(R.id.tVHomePointsFree);
+		tVFreesHome[2] = (TextView) v.findViewById(R.id.tVHomeWidesFree);
+		tVFreesHome[3] = (TextView) v.findViewById(R.id.tVHomeOutFree);
+		tVFreesHome[4] = (TextView) v.findViewById(R.id.tVHomePostsFree);
+		tVFreesHome[5] = (TextView) v.findViewById(R.id.tVHomeSavedFree);
+		tVFreesHome[6] = (TextView) v.findViewById(R.id.tVHomeShortFree);
+		tVFreesOpp[0] = (TextView) v.findViewById(R.id.tVOppGoalsFree);
+		tVFreesOpp[1] = (TextView) v.findViewById(R.id.tVOppPointsFree);
+		tVFreesOpp[2] = (TextView) v.findViewById(R.id.tVOppWidesFree);
+		tVFreesOpp[3] = (TextView) v.findViewById(R.id.tVOppOutFree);
+		tVFreesOpp[4] = (TextView) v.findViewById(R.id.tVOppPostsFree);
+		tVFreesOpp[5] = (TextView) v.findViewById(R.id.tVOppSavedFree);
+		tVFreesOpp[6] = (TextView) v.findViewById(R.id.tVOppShortFree);
 
 		// Set up output for puckouts
 		tPuckWonCleanHome = (TextView) v.findViewById(R.id.tVwPuckWonCleanHome);
@@ -276,48 +292,6 @@ public class ReviewFragment extends Fragment {
 		editor.putInt("HOMEPOINTS", homePoints);
 		editor.putInt("OPPGOALS", oppGoals);
 		editor.putInt("OPPPOINTS", oppPoints);
-
-		editor.putInt("SHOTGOALSHOME", shotGoalsHome);
-		editor.putInt("SHOTPOINTSHOME", shotPointsHome);
-		editor.putInt("SHOTWIDESHOME", shotWidesHome);
-		editor.putInt("SHOTSAVEDHOME", shotSavedHome);
-		editor.putInt("SHOTSHORTHOME", shotShortHome);
-		editor.putInt("SHOTPOSTSHOME", shotPostsHome);
-		editor.putInt("SHOTGOALSPLAYHOME", shotGoalsPlayHome);
-		editor.putInt("SHOTPOINTSPLAYHOME", shotPointsPlayHome);
-		editor.putInt("SHOTGOALSOPP", shotGoalsOpp);
-		editor.putInt("SHOTPOINTSOPP", shotPointsOpp);
-		editor.putInt("SHOTWIDESOPP", shotWidesOpp);
-		editor.putInt("SHOTSAVEDOPP", shotSavedOpp);
-		editor.putInt("SHOTSHORTOPP", shotShortOpp);
-		editor.putInt("SHOTPOSTSOPP", shotPostsOpp);
-		editor.putInt("SHOTGOALSPLAYOPP", shotGoalsPlayOpp);
-		editor.putInt("SHOTPOINTSPLAYOPP", shotPointsPlayOpp);
-
-		editor.putInt("SHOTPOINTSWIDESHOME", shotWidesPlayHome);
-		editor.putInt("SHOTPOINTS45HOME", shot45PlayHome);
-		editor.putInt("SHOTPOINTSSAVEDHOME", shotSavedPlayHome);
-		editor.putInt("SHOTPOINTSSHORTHOME", shotShortPlayHome);
-		editor.putInt("SHOTPOINTSPOSTSHOME", shotPostsPlayHome);
-		editor.putInt("SHOTPOINTSWIDESOPP", shotWidesPlayOpp);
-		editor.putInt("SHOTPOINTS45OPP", shot45PlayOpp);
-		editor.putInt("SHOTPOINTSSAVEDOPP", shotSavedPlayOpp);
-		editor.putInt("SHOTPOINTSSHORTOPP", shotShortPlayOpp);
-		editor.putInt("SHOTPOINTSPOSTSOPP", shotPostsPlayOpp);
-
-		editor.putInt("FREEWONHOME", freeConcededHome);
-		editor.putInt("FREEWONOPP", freeConcededOpp);
-
-		editor.putInt("PUCKWONCLEANHOME", puckWonCleanHome);
-		editor.putInt("PUCKLOSTCLEANHOME", puckLostCleanHome);
-		editor.putInt("PUCKWONCLEANOPP", puckWonCleanOpp);
-		editor.putInt("PUCKLOSTCLEANOPP", puckLostCleanOpp);
-
-		editor.putInt("SHOT45HOME", shot45Home);
-		editor.putInt("SHOT45OPP", shot45Opp);
-		editor.putInt("TOTPHOME", totPHome);
-		editor.putInt("TOTPOPP", totPOpp);
-
 		editor.commit();
 	}
 
@@ -371,6 +345,10 @@ public class ReviewFragment extends Fragment {
 		puckLostCleanOpp = 0;
 		puckWonOppPerCent = 0;
 		puckLostOppPerCent = 0;
+		for (int i = 0; i < freeHome.length; i++) {
+			freeHome[i] = 0;
+			freeOpp[i] = 0;
+		}
 
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		// get home team first then opposition
@@ -395,6 +373,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotGoalsPlayHome++;
 					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[0] = freeHome[0] + 1;
+					}
 				} else if (stats1.equals("point")) {
 					totPOpp++;
 					shotPointsHome++;
@@ -403,6 +386,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from penalty"))
 							&& (!stats2.equals("from sideline"))) {
 						shotPointsPlayHome++;
+					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[1] = freeHome[1] + 1;
 					}
 				} else if (stats1.equals("wide")) {
 					// increment counter in review page
@@ -414,6 +402,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotWidesPlayHome++;
 					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[2] = freeHome[2] + 1;
+					}
 				} else if (stats1.equals("out for 45/65")) {
 					// increment counter in review page
 					shot45Home++;
@@ -422,6 +415,25 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from penalty"))
 							&& (!stats2.equals("from sideline"))) {
 						shot45PlayHome++;
+					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[3] = freeHome[3] + 1;
+					}
+				} else if (stats1.equals("off posts")) {
+					// increment counter in review page
+					shotPostsHome++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotPostsPlayHome++;
+					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[4] = freeHome[4] + 1;
 					}
 				} else if (stats1.equals("saved")) {
 					// increment counter in review page
@@ -432,6 +444,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotSavedPlayHome++;
 					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[5] = freeHome[5] + 1;
+					}
 				} else if (stats1.equals("short")) {
 					// increment counter in review page
 					shotShortHome++;
@@ -441,14 +458,10 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotShortPlayHome++;
 					}
-				} else if (stats1.equals("off posts")) {
-					// increment counter in review page
-					shotPostsHome++;
-					if ((!stats2.equals("from free"))
-							&& (!stats2.equals("from 45/65"))
-							&& (!stats2.equals("from penalty"))
-							&& (!stats2.equals("from sideline"))) {
-						shotPostsPlayHome++;
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeHome[6] = freeHome[6] + 1;
 					}
 				} else if (stats1.equals("free/pen conceded")) {
 					// increment counter in review page
@@ -485,6 +498,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotGoalsPlayOpp++;
 					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[0] = freeOpp[0] + 1;
+					}
 				} else if (stats1.equals("point")) {
 					totPHome++;
 					shotPointsOpp++;
@@ -493,6 +511,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from penalty"))
 							&& (!stats2.equals("from sideline"))) {
 						shotPointsPlayOpp++;
+					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[1] = freeOpp[1] + 1;
 					}
 				} else if (stats1.equals("wide")) {
 					// increment counter in review page
@@ -504,6 +527,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotWidesPlayOpp++;
 					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[2] = freeOpp[2] + 1;
+					}
 				} else if (stats1.equals("out for 45/65")) {
 					// increment counter in review page
 					shot45Opp++;
@@ -512,6 +540,25 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from penalty"))
 							&& (!stats2.equals("from sideline"))) {
 						shot45PlayOpp++;
+					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[3] = freeOpp[3] + 1;
+					}
+				} else if (stats1.equals("off posts")) {
+					// increment counter in review page
+					shotPostsOpp++;
+					if ((!stats2.equals("from free"))
+							&& (!stats2.equals("from 45/65"))
+							&& (!stats2.equals("from penalty"))
+							&& (!stats2.equals("from sideline"))) {
+						shotPostsPlayOpp++;
+					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[4] = freeOpp[4] + 1;
 					}
 				} else if (stats1.equals("saved")) {
 					// increment counter in review page
@@ -522,6 +569,11 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotSavedPlayOpp++;
 					}
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[5] = freeOpp[5] + 1;
+					}
 				} else if (stats1.equals("short")) {
 					// increment counter in review page
 					shotShortOpp++;
@@ -531,14 +583,10 @@ public class ReviewFragment extends Fragment {
 							&& (!stats2.equals("from sideline"))) {
 						shotShortPlayOpp++;
 					}
-				} else if (stats1.equals("off posts")) {
-					// increment counter in review page
-					shotPostsOpp++;
-					if ((!stats2.equals("from free"))
-							&& (!stats2.equals("from 45/65"))
-							&& (!stats2.equals("from penalty"))
-							&& (!stats2.equals("from sideline"))) {
-						shotPostsPlayOpp++;
+					if ((stats2.equals("from free"))
+							|| (stats2.equals("from 45/65"))
+							|| (stats2.equals("from penalty"))) {
+						freeOpp[6] = freeOpp[6] + 1;
 					}
 				} else if (stats1.equals("free/pen conceded")) {
 					// increment counter in review page
@@ -590,17 +638,24 @@ public class ReviewFragment extends Fragment {
 		tPuckWonCleanOpp.setText(String.valueOf(puckWonCleanOpp));
 		tPuckLostCleanOpp.setText(String.valueOf(puckLostCleanOpp));
 		tTotPuckHome.setText(String.valueOf(totPHome));
+		for (int i = 0; i < 7; i++) {
+			tVFreesHome[i].setText(String.valueOf(freeHome[i]));
+			tVFreesOpp[i].setText(String.valueOf(freeOpp[i]));
+		}
 
 		updateShotsPerCent();
 	}
 
 	public void updateShotsPerCent() {
-		tShotsTotalHome.setText("Total shots:");
+		tShotsTotalHome.setText("TOTAL SHOTS:");
 		tShotsPlayHome.setText("Shots from play:");
-		tShotsTotalOpp.setText("Total shots:");
+		tShotsTotalOpp.setText("TOTAL SHOTS:");
 		tShotsPlayOpp.setText("Shots from play:");
+		tShotsFreeHome.setText("Shots from free/pen/45/65:");
+		tShotsFreeOpp.setText("Shots from free/pen/45/65:");
 
 		int totalShotsHome, totalShotsOpp, shotsPlayHome, shotsPlayOpp;
+		shotsFreeHome = 0; shotsFreeOpp = 0;
 		int shotsScoredHome, shotsScoredOpp, shotsScoredPlayHome, shotsScoredPlayOpp;
 		String perCent;
 		totalShotsHome = shotGoalsHome + shotPointsHome + shotWidesHome
@@ -613,15 +668,21 @@ public class ReviewFragment extends Fragment {
 		shotsPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp + shotWidesPlayOpp
 				+ shot45PlayOpp + shotSavedPlayOpp + shotShortPlayOpp
 				+ shotPostsPlayOpp;
+		for (int i = 0; i < 7; i++) {
+			shotsFreeHome = shotsFreeHome + freeHome[i];
+			shotsFreeOpp = shotsFreeOpp + freeOpp[i];
+		}
 		shotsScoredHome = shotGoalsHome + shotPointsHome;
 		shotsScoredOpp = shotGoalsOpp + shotPointsOpp;
 		shotsScoredPlayHome = shotGoalsPlayHome + shotPointsPlayHome;
 		shotsScoredPlayOpp = shotGoalsPlayOpp + shotPointsPlayOpp;
+		shotsScoredFreeHome = freeHome[0] + freeHome[1];
+		shotsScoredFreeOpp = freeOpp[0] + freeOpp[1];
 
 		if ((puckWonCleanHome + puckLostCleanHome) > 0) {
-			puckWonHomePerCent = puckWonCleanHome*100
+			puckWonHomePerCent = puckWonCleanHome * 100
 					/ (puckWonCleanHome + puckLostCleanHome);
-			puckLostHomePerCent = puckLostCleanHome*100
+			puckLostHomePerCent = puckLostCleanHome * 100
 					/ (puckWonCleanHome + puckLostCleanHome);
 			tPuckWonCleanHomePerCent.setText(String.valueOf(puckWonHomePerCent)
 					+ "%");
@@ -629,10 +690,10 @@ public class ReviewFragment extends Fragment {
 					.valueOf(puckLostHomePerCent) + "%");
 		}
 		if ((puckWonCleanOpp + puckLostCleanOpp) > 0) {
-			puckWonOppPerCent = puckWonCleanOpp*100
-					/ (puckWonCleanOpp + puckLostCleanOpp) ;
-			puckLostOppPerCent = puckLostCleanOpp*100
-					/ (puckWonCleanOpp + puckLostCleanOpp) ;
+			puckWonOppPerCent = puckWonCleanOpp * 100
+					/ (puckWonCleanOpp + puckLostCleanOpp);
+			puckLostOppPerCent = puckLostCleanOpp * 100
+					/ (puckWonCleanOpp + puckLostCleanOpp);
 			tPuckWonCleanOppPerCent.setText(String.valueOf(puckWonOppPerCent)
 					+ "%");
 			tPuckLostCleanOppPerCent.setText(String.valueOf(puckLostOppPerCent)
@@ -642,27 +703,42 @@ public class ReviewFragment extends Fragment {
 		if (totalShotsHome > 0) {
 			perCent = Integer
 					.toString((shotsScoredHome * 100) / totalShotsHome);
-			tShotsTotalHome.setText("Total shots:" + totalShotsHome
+			tShotsTotalHome.setText("TOTAL SHOTS:" + totalShotsHome
 					+ "  Scored:" + shotsScoredHome + "\n(" + perCent + "%)");
 		}
 		if (totalShotsOpp > 0) {
 			perCent = Integer.toString((shotsScoredOpp * 100) / totalShotsOpp);
-			tShotsTotalOpp.setText("Total shots:" + totalShotsOpp + "  Scored:"
+			tShotsTotalOpp.setText("TOTAL SHOTS:" + totalShotsOpp + "  Scored:"
 					+ shotsScoredOpp + "\n(" + perCent + "%)");
 		}
 		if (shotsPlayHome > 0) {
 			perCent = Integer.toString((shotsScoredPlayHome * 100)
 					/ shotsPlayHome);
-			tShotsPlayHome.setText("Shot from play:" + shotsPlayHome
-					+ "  Scored:" + shotsScoredPlayHome + "\n(" + perCent
+			tShotsPlayHome.setText("Shots from play:" + shotsPlayHome
+					+ " Scored:" + shotsScoredPlayHome + "\n(" + perCent
 					+ "%)");
 		}
 		if (shotsPlayOpp > 0) {
 			perCent = Integer.toString((shotsScoredPlayOpp * 100)
 					/ shotsPlayOpp);
 			tShotsPlayOpp
-					.setText("Shot from play:" + shotsPlayOpp + "  Scored:"
+					.setText("Shots from play:" + shotsPlayOpp + " Scored:"
 							+ shotsScoredPlayOpp + "\n(" + perCent + "%)");
+		}
+		if (shotsFreeHome > 0) {
+			perCent = Integer.toString((shotsScoredFreeHome * 100)
+					/ shotsFreeHome);
+			tShotsFreeHome.setText("Shots from free/pen/45/65:" + shotsFreeHome
+					+ "  Scored:" + shotsScoredFreeHome + "  (" + perCent
+					+ "%)");
+		}
+		if (shotsFreeOpp > 0) {
+			perCent = Integer.toString((shotsScoredFreeOpp * 100)
+					/ shotsFreeOpp);
+			tShotsFreeOpp
+					.setText("Shots from free/pen/45/65:" + shotsFreeOpp
+							+ "  Scored:" + shotsScoredFreeOpp + "  ("
+							+ perCent + "%)");
 		}
 	}
 
@@ -735,6 +811,14 @@ public class ReviewFragment extends Fragment {
 		freeConcededOpp = 0;
 		puckWonCleanOpp = 0;
 		puckLostCleanOpp = 0;
+		puckWonOppPerCent = 0;
+		puckLostOppPerCent = 0;
+		puckWonHomePerCent = 0;
+		puckLostHomePerCent = 0;
+		for (int i = 0; i < freeHome.length; i++) {
+			freeHome[i] = 0;
+			freeOpp[i] = 0;
+		}
 		tShotGoalsHome.setText("0");
 		tShotPointsHome.setText("0");
 		tShotWidesHome.setText("0");
@@ -749,6 +833,10 @@ public class ReviewFragment extends Fragment {
 		tShotPointsPlaySavedHome.setText("0");
 		tShotPointsPlayShortHome.setText("0");
 		tShotPointsPlayPostsHome.setText("0");
+		for (int i = 0; i < 7; i++) {
+			tVFreesHome[i].setText("0");
+			tVFreesOpp[i].setText("0");
+		}
 
 		tShotGoalsOpp.setText("0");
 		tShotPointsOpp.setText("0");
@@ -772,19 +860,21 @@ public class ReviewFragment extends Fragment {
 		tPuckLostCleanHome.setText("0");
 		tPuckWonCleanOpp.setText("0");
 		tPuckLostCleanOpp.setText("0");
-		tPuckWonCleanHomePerCent.setText("");
-		tPuckLostCleanHomePerCent.setText("");
-		tPuckWonCleanOppPerCent.setText("");
-		tPuckLostCleanOppPerCent.setText("");
+		tPuckWonCleanHomePerCent.setText("--");
+		tPuckLostCleanHomePerCent.setText("--");
+		tPuckWonCleanOppPerCent.setText("--");
+		tPuckLostCleanOppPerCent.setText("--");
 		tTotPuckHome.setText("0");
 		tTotPuckOpp.setText("0");
 		tCardHome.setText("");
 		tCardOpp.setText("");
 
-		tShotsTotalHome.setText("Total shots:");
+		tShotsTotalHome.setText("TOTAL SHOTS:");
 		tShotsPlayHome.setText("Shot from play:");
-		tShotsTotalOpp.setText("Total shots:");
+		tShotsTotalOpp.setText("TOTAL SHOTS:");
 		tShotsPlayOpp.setText("Shot from play:");
+		tShotsFreeHome.setText("Shots from free/pen/45/65:");
+		tShotsFreeOpp.setText("Shots from free/pen/45/65:");
 		updateCardsSubs();
 	}
 
@@ -843,7 +933,7 @@ public class ReviewFragment extends Fragment {
 			c1.close();
 		}
 
-		String[] args2 = { "u", " substitution " };
+		String[] args2 = { "u", "false" };
 		c1 = getActivity().getContentResolver().query(allTitles, null,
 				"type=? AND blood=?", args2, null);
 		if (c1.getCount() > 0) {
@@ -1061,47 +1151,65 @@ public class ReviewFragment extends Fragment {
 			sb.append("\nTeam 1: " + tOwnTeam.getText() + "\n");
 			sb.append(shotGoalsHome + " Goals,  " + shotPointsHome
 					+ " Points.  Total:" + tHomeTotal.getText() + "\n");
-			sb.append(shotGoalsPlayHome + " goals from play  "
-					+ shotPointsPlayHome + " points from play \n");
+			sb.append(shotGoalsPlayHome + " goals from play.  " + freeHome[0]
+					+ " goals from frees/pen/45/65 \n");
+			sb.append(shotPointsPlayHome + " points from play.  " + freeHome[1]
+					+ " points from frees/pen/45/65 \n");
 			sb.append(shotWidesHome + " total wides. " + shotWidesPlayHome
-					+ " wides from play\n");
+					+ " wides from play. " + freeHome[2]
+					+ " wides from frees/pen/45/65 \n");
 			sb.append(shot45Home + " total out for 45/65. " + shot45PlayHome
-					+ " out for 45/65 from play\n");
-			sb.append(shotSavedHome + " total saved. " + shotSavedPlayHome
-					+ " saved from play \n");
-			sb.append(shotShortHome + " total short. " + shotShortPlayHome
-					+ " short from play \n");
+					+ " out for 45/65 from play. " + freeHome[3]
+					+ " out for 45/65 from frees/pen/45/65 \n");
 			sb.append(shotPostsHome + " total off posts. " + shotPostsPlayHome
-					+ " off posts from play\n");
+					+ " off posts from play. " + freeHome[4]
+					+ " off posts frees/pen/45/65 \n");
+			sb.append(shotSavedHome + " total saved. " + shotSavedPlayHome
+					+ " saved from play. " + freeHome[5]
+					+ " saved from frees/pen/45/65 \n");
+			sb.append(shotShortHome + " total short. " + shotShortPlayHome
+					+ " short from play. " + freeHome[6]
+					+ " short from frees/pen/45/65 \n");
+
 			sb.append(tShotsTotalHome.getText().toString() + "\n");
 			sb.append(tShotsPlayHome.getText().toString() + "\n");
-			sb.append("frees conceded: " + freeConcededHome + "\n");
+			sb.append(tShotsFreeHome.getText().toString() + "\n");
+			sb.append("Frees conceded: " + freeConcededHome + "\n");
 			sb.append("Total puck/kick outs: " + totPHome + "\n");
-			sb.append("own puck/kick outs won: " + puckWonCleanHome + "\n");
-			sb.append("own puck/kick outs lost: " + puckLostCleanHome + "\n");
+			sb.append("own puck/kick outs won: " + puckWonCleanHome + "(" + puckWonHomePerCent + "%) \n");
+			sb.append("own puck/kick outs lost: " + puckLostCleanHome + "(" + puckLostHomePerCent + "%) \n");
 			sb.append(cardHome + subHome + "\n");
+
 
 			sb.append("\nTeam 2: " + tOppTeam.getText() + "\n");
 			sb.append(shotGoalsOpp + " Goals,  " + shotPointsOpp
 					+ " Points.  Total:" + tOppTotal.getText() + "\n");
-			sb.append(shotGoalsPlayOpp + " goals from play  "
-					+ shotPointsPlayOpp + " points from play \n");
+			sb.append(shotGoalsPlayOpp + " goals from play.  " + freeOpp[0]
+					+ " goals from frees/pen/45/65 \n");
+			sb.append(shotPointsPlayOpp + " points from play.  " + freeOpp[1]
+					+ " points from frees/pen/45/65 \n");
 			sb.append(shotWidesOpp + " total wides. " + shotWidesPlayOpp
-					+ " wides from play\n");
+					+ " wides from play. " + freeOpp[2]
+					+ " wides from frees/pen/45/65 \n");
 			sb.append(shot45Opp + " total out for 45/65. " + shot45PlayOpp
-					+ " out for 45/65 from play\n");
-			sb.append(shotSavedOpp + " total saved. " + shotSavedPlayOpp
-					+ " saved from play \n");
-			sb.append(shotShortOpp + " total short. " + shotShortPlayOpp
-					+ " short from play \n");
+					+ " out for 45/65 from play. " + freeOpp[3]
+					+ " out for 45/65 from frees/pen/45/65 \n");
 			sb.append(shotPostsOpp + " total off posts. " + shotPostsPlayOpp
-					+ " off posts from play\n");
+					+ " off posts from play. " + freeOpp[4]
+					+ " off posts frees/pen/45/65 \n");
+			sb.append(shotSavedOpp + " total saved. " + shotSavedPlayOpp
+					+ " saved from play. " + freeOpp[5]
+					+ " saved from frees/pen/45/65 \n");
+			sb.append(shotShortOpp + " total short. " + shotShortPlayOpp
+					+ " short from play. " + freeOpp[6]
+					+ " short from frees/pen/45/65 \n");
 			sb.append(tShotsTotalOpp.getText().toString() + "\n");
 			sb.append(tShotsPlayOpp.getText().toString() + "\n");
+			sb.append(tShotsFreeOpp.getText().toString() + "\n");
 			sb.append("frees conceded: " + freeConcededOpp + "\n");
 			sb.append("Total puck/kick outs: " + totPOpp + "\n");
-			sb.append("own puck/kick outs won: " + puckWonCleanOpp + "\n");
-			sb.append("own puck/kick outs lost: " + puckLostCleanOpp + "\n");
+			sb.append("own puck/kick outs won: " + puckWonCleanOpp + "(" + puckWonOppPerCent + "%) \n");
+			sb.append("own puck/kick outs lost: " + puckLostCleanOpp + "(" + puckLostOppPerCent + "%) \n");
 			sb.append(cardOpp + subOpp + "\n\n\n");
 
 			sb.append("LIST OF SCORERS \n");
@@ -1306,14 +1414,14 @@ public class ReviewFragment extends Fragment {
 
 	public Bitmap createBitmap() {
 		// Create Bitmap to display team selection
-		Bitmap bitmap = Bitmap.createBitmap(700, 520, Bitmap.Config.ARGB_8888);
+		Bitmap bitmap = Bitmap.createBitmap(700, 640, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(bitmap);
 		canvas.drawColor(Color.rgb(204, 255, 204));
 		Paint paint = new Paint();
 		paint.setColor(Color.rgb(255, 255, 219));
-		canvas.drawRect(350, 0, 700, 520, paint);
+		canvas.drawRect(350, 0, 700, 640, paint);
 		paint.setColor(Color.BLACK);
-		canvas.drawLine(350, 0, 350, 430, paint);
+		canvas.drawLine(350, 0, 350, 580, paint);
 		paint.setAntiAlias(true);
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(22);
@@ -1323,123 +1431,164 @@ public class ReviewFragment extends Fragment {
 		canvas.drawText(tOwnTeam.getText().toString(), 175, 25, paint);
 		canvas.drawText(homeGoals + "-" + homePoints + " (" + homeTotal + ")",
 				175, 50, paint);
+
 		paint.setTextAlign(Align.LEFT);
 		paint.setColor(Color.RED);
-		canvas.drawText("No.", 225, 75, paint);
 		paint.setTextSize(18);
-		canvas.drawText("from play", 270, 75, paint);
+		canvas.drawText("from", 230, 80, paint);
+		canvas.drawText("free/pen", 283, 80, paint);
+		paint.setTextSize(22);
+		canvas.drawText("Total", 160, 100, paint);
+		paint.setTextSize(18);
+		canvas.drawText("play", 235, 100, paint);
+		canvas.drawText("45/65", 295, 100, paint);
+
 		paint.setTextSize(22);
 		paint.setColor(Color.BLACK);
-		canvas.drawText("Goals", 5, 100, paint);
-		canvas.drawText(homeGoals + " ", 235, 100, paint);
-		canvas.drawText(shotGoalsPlayHome + " ", 305, 100, paint);
+		canvas.drawText("Goals", 5, 125, paint);
+		canvas.drawText(homeGoals + " ", 180, 125, paint);
+		canvas.drawText(shotGoalsPlayHome + " ", 245, 125, paint);
+		canvas.drawText(freeHome[0] + " ", 310, 125, paint);
 
-		canvas.drawText("Points", 5, 125, paint);
-		canvas.drawText(homePoints + " ", 235, 125, paint);
-		canvas.drawText(shotPointsPlayHome + " ", 305, 125, paint);
+		canvas.drawText("Points", 5, 150, paint);
+		canvas.drawText(homePoints + " ", 180, 150, paint);
+		canvas.drawText(shotPointsPlayHome + " ", 245, 150, paint);
+		canvas.drawText(freeHome[1] + " ", 310, 150, paint);
 
-		canvas.drawText("Wides", 5, 150, paint);
-		canvas.drawText(shotWidesHome + " ", 235, 150, paint);
-		canvas.drawText(shotWidesPlayHome + " ", 305, 150, paint);
+		canvas.drawText("Wides", 5, 175, paint);
+		canvas.drawText(shotWidesHome + " ", 180, 175, paint);
+		canvas.drawText(shotWidesPlayHome + " ", 245, 175, paint);
+		canvas.drawText(freeHome[2] + " ", 310, 175, paint);
 
-		canvas.drawText("Out for 45/65", 5, 175, paint);
-		canvas.drawText(shot45Home + " ", 235, 175, paint);
-		canvas.drawText(shot45PlayHome + " ", 305, 175, paint);
+		canvas.drawText("Out for 45/65", 5, 200, paint);
+		canvas.drawText(shot45Home + " ", 180, 200, paint);
+		canvas.drawText(shot45PlayHome + " ", 245, 200, paint);
+		canvas.drawText(freeHome[3] + " ", 310, 200, paint);
 
-		canvas.drawText("Saved", 5, 200, paint);
-		canvas.drawText(shotSavedHome + " ", 235, 200, paint);
-		canvas.drawText(shotSavedPlayHome + " ", 305, 200, paint);
+		canvas.drawText("Off Posts", 5, 225, paint);
+		canvas.drawText(shotPostsHome + " ", 180, 225, paint);
+		canvas.drawText(shotPostsPlayHome + " ", 245, 225, paint);
+		canvas.drawText(freeHome[4] + " ", 310, 225, paint);
 
-		canvas.drawText("Short", 5, 225, paint);
-		canvas.drawText(shotShortHome + " ", 235, 225, paint);
-		canvas.drawText(shotShortPlayHome + " ", 305, 225, paint);
+		canvas.drawText("Saved", 5, 250, paint);
+		canvas.drawText(shotSavedHome + " ", 180, 250, paint);
+		canvas.drawText(shotSavedPlayHome + " ", 245, 250, paint);
+		canvas.drawText(freeHome[5] + " ", 310, 250, paint);
 
-		canvas.drawText("Off Posts", 5, 250, paint);
-		canvas.drawText(shotPostsHome + " ", 235, 250, paint);
-		canvas.drawText(shotPostsPlayHome + " ", 305, 250, paint);
+		canvas.drawText("Short", 5, 275, paint);
+		canvas.drawText(shotShortHome + " ", 180, 275, paint);
+		canvas.drawText(shotShortPlayHome + " ", 245, 275, paint);
+		canvas.drawText(freeHome[6] + " ", 310, 275, paint);
 
 		paint.setTextSize(20);
-		canvas.drawText(tShotsTotalHome.getText().toString(), 5, 275, paint);
-		canvas.drawText(tShotsPlayHome.getText().toString(), 5, 300, paint);
+		canvas.drawText(tShotsTotalHome.getText().toString(), 5, 315, paint);
+		canvas.drawText(tShotsPlayHome.getText().toString(), 5, 350, paint);
+		canvas.drawText("Shots from frees/pen/45/65: " + shotsFreeHome, 5, 385,paint);
+		canvas.drawText("Scored: "+shotsScoredFreeHome+" ("+Integer.toString((shotsScoredFreeHome * 100)
+				/ shotsFreeHome)+"%)", 5, 410, paint);
 
 		paint.setTextSize(22);
-		canvas.drawText("Frees Conceded", 5, 325, paint);
-		canvas.drawText(freeConcededHome + " ", 235, 325, paint);
+		canvas.drawText("Frees Conceded", 5, 450, paint);
+		canvas.drawText(freeConcededHome + " ", 250, 450, paint);
 		paint.setTextSize(20);
-		canvas.drawText("Total Puck/Kick Outs", 5, 350, paint);
-		canvas.drawText(totPHome + " ", 235, 350, paint);
+		canvas.drawText("Total Puck/Kick Outs", 5, 485, paint);
+		canvas.drawText(totPHome + " ", 250, 485, paint);
 
-		canvas.drawText("Own Puck/Kick Out Won", 5, 375, paint);
-		canvas.drawText(puckWonCleanHome + " ", 235, 375, paint);
+		canvas.drawText("Own Puck/Kick Out Won", 5, 510, paint);
+		canvas.drawText(puckWonCleanHome + " ", 250, 510, paint);
+		canvas.drawText("(" + puckWonHomePerCent + "%) ", 280, 510, paint);
 
-		canvas.drawText("Own Puck/Kick Out Lost", 5, 400, paint);
-		canvas.drawText(puckLostCleanHome + " ", 235, 400, paint);
+		canvas.drawText("Own Puck/Kick Out Lost", 5, 535, paint);
+		canvas.drawText(puckLostCleanHome + " ", 250, 535, paint);
+		canvas.drawText("(" + puckLostHomePerCent + "%) ", 280, 535, paint);
+		
 		paint.setTextSize(22);
-		canvas.drawText(cardHome + subHome, 5, 425, paint);
+		canvas.drawText(cardHome + subHome, 5, 570, paint);
 
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText(tOppTeam.getText().toString(), 550, 25, paint);
 		canvas.drawText(oppGoals + "-" + oppPoints + " (" + oppTotal + ")",
 				525, 50, paint);
 		paint.setTextAlign(Align.LEFT);
+
+		paint.setTextAlign(Align.LEFT);
 		paint.setColor(Color.RED);
-		canvas.drawText("No.", 570, 75, paint);
 		paint.setTextSize(18);
-		canvas.drawText("from play", 620, 75, paint);
+		canvas.drawText("from", 580, 80, paint);
+		canvas.drawText("free/pen", 632, 80, paint);
+		paint.setTextSize(22);
+		canvas.drawText("Total", 515, 100, paint);
+		paint.setTextSize(18);
+		canvas.drawText("play", 585, 100, paint);
+		canvas.drawText("45/65", 640, 100, paint);
+
 		paint.setTextSize(22);
 		paint.setColor(Color.BLACK);
-		canvas.drawText("Goals", 355, 100, paint);
-		canvas.drawText(oppGoals + " ", 580, 100, paint);
-		canvas.drawText(shotGoalsPlayOpp + " ", 655, 100, paint);
+		canvas.drawText("Goals", 355, 125, paint);
+		canvas.drawText(oppGoals + " ", 535, 125, paint);
+		canvas.drawText(shotGoalsPlayOpp + " ", 595, 125, paint);
+		canvas.drawText(freeOpp[0] + " ", 655, 125, paint);
 
-		canvas.drawText("Points", 355, 125, paint);
-		canvas.drawText(oppPoints + " ", 580, 125, paint);
-		canvas.drawText(shotPointsPlayOpp + " ", 655, 125, paint);
+		canvas.drawText("Points", 355, 150, paint);
+		canvas.drawText(oppPoints + " ", 535, 150, paint);
+		canvas.drawText(shotPointsPlayOpp + " ", 595, 150, paint);
+		canvas.drawText(freeOpp[1] + " ", 655, 150, paint);
 
-		canvas.drawText("Wides", 355, 150, paint);
-		canvas.drawText(shotWidesOpp + " ", 580, 150, paint);
-		canvas.drawText(shotWidesPlayOpp + " ", 655, 150, paint);
+		canvas.drawText("Wides", 355, 175, paint);
+		canvas.drawText(shotWidesOpp + " ", 535, 175, paint);
+		canvas.drawText(shotWidesPlayOpp + " ", 595, 175, paint);
+		canvas.drawText(freeOpp[2] + " ", 655, 175, paint);
 
-		canvas.drawText("O" + "ut for 45/65", 355, 175, paint);
-		canvas.drawText(shot45Opp + " ", 580, 175, paint);
-		canvas.drawText(shot45PlayOpp + " ", 655, 175, paint);
+		canvas.drawText("O" + "ut for 45/65", 355, 200, paint);
+		canvas.drawText(shot45Opp + " ", 535, 200, paint);
+		canvas.drawText(shot45PlayOpp + " ", 595, 200, paint);
+		canvas.drawText(freeOpp[3] + " ", 655, 200, paint);
 
-		canvas.drawText("Saved", 355, 200, paint);
-		canvas.drawText(shotSavedOpp + " ", 580, 200, paint);
-		canvas.drawText(shotSavedPlayOpp + " ", 655, 200, paint);
+		canvas.drawText("Off Posts", 355, 225, paint);
+		canvas.drawText(shotPostsOpp + " ", 535, 225, paint);
+		canvas.drawText(shotPostsPlayOpp + " ", 595, 225, paint);
+		canvas.drawText(freeOpp[4] + " ", 655, 225, paint);
 
-		canvas.drawText("Short", 355, 225, paint);
-		canvas.drawText(shotShortOpp + " ", 580, 225, paint);
-		canvas.drawText(shotShortPlayOpp + " ", 655, 225, paint);
+		canvas.drawText("Saved", 355, 250, paint);
+		canvas.drawText(shotSavedOpp + " ", 535, 250, paint);
+		canvas.drawText(shotSavedPlayOpp + " ", 595, 250, paint);
+		canvas.drawText(freeOpp[5] + " ", 655, 250, paint);
 
-		canvas.drawText("Off Posts", 355, 250, paint);
-		canvas.drawText(shotPostsOpp + " ", 580, 250, paint);
-		canvas.drawText(shotPostsPlayOpp + " ", 655, 250, paint);
+		canvas.drawText("Short", 355, 275, paint);
+		canvas.drawText(shotShortOpp + " ", 535, 275, paint);
+		canvas.drawText(shotShortPlayOpp + " ", 595, 275, paint);
+		canvas.drawText(freeOpp[6] + " ", 655, 275, paint);
 
 		paint.setTextSize(20);
-		canvas.drawText(tShotsTotalOpp.getText().toString(), 355, 275, paint);
-		canvas.drawText(tShotsPlayOpp.getText().toString(), 355, 300, paint);
+		canvas.drawText(tShotsTotalOpp.getText().toString(), 355, 315, paint);
+		canvas.drawText(tShotsPlayOpp.getText().toString(), 355, 350, paint);
+		canvas.drawText("Shots from frees/pen/45/65: " + shotsFreeOpp, 355, 385,paint);
+		canvas.drawText("Scored: "+shotsScoredFreeOpp+" ("+Integer.toString((shotsScoredFreeOpp * 100)
+				/ shotsFreeOpp)+"%)", 355, 410, paint);
 		paint.setTextSize(22);
 
-		canvas.drawText("Frees Conceded", 355, 325, paint);
-		canvas.drawText(freeConcededOpp + " ", 580, 325, paint);
+		canvas.drawText("Frees Conceded", 355, 450, paint);
+		canvas.drawText(freeConcededOpp + " ", 600, 450, paint);
 		paint.setTextSize(20);
-		canvas.drawText("Total Puck/Kick Outs", 355, 350, paint);
-		canvas.drawText(totPOpp + " ", 580, 350, paint);
+		canvas.drawText("Total Puck/Kick Outs", 355, 485, paint);
+		canvas.drawText(totPOpp + " ", 600, 485, paint);
 
-		canvas.drawText("Own Puck/Kick Out Won", 355, 375, paint);
-		canvas.drawText(puckWonCleanOpp + " ", 580, 375, paint);
+		canvas.drawText("Own Puck/Kick Out Won", 355, 510, paint);
+		canvas.drawText(puckWonCleanOpp + " ", 600, 510, paint);
+		canvas.drawText("(" + puckWonOppPerCent + "%) ", 625, 510, paint);
 
-		canvas.drawText("Own Puck/Kick Out Lost", 355, 400, paint);
-		canvas.drawText(puckLostCleanOpp + " ", 580, 400, paint);
+		canvas.drawText("Own Puck/Kick Out Lost", 355, 535, paint);
+		canvas.drawText(puckLostCleanOpp + " ", 600, 535, paint);
+		canvas.drawText("(" + puckLostOppPerCent + "%) ", 625, 535, paint);
+
 		paint.setTextSize(22);
-		canvas.drawText(cardOpp + subOpp, 355, 425, paint);
+		canvas.drawText(cardOpp + subOpp, 355, 570, paint);
 
 		paint.setColor(Color.GRAY);
 		paint.setTextSize(16);
 		paint.setTextAlign(Align.CENTER);
-		canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 480, paint);
-		canvas.drawText("Available free from Google Play Store", 350, 500,
+		canvas.drawText("GAA Scores Stats Plus - Android App.", 350, 610, paint);
+		canvas.drawText("Available free from Google Play Store", 350, 630,
 				paint);
 		return bitmap;
 	}

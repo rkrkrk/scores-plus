@@ -1367,7 +1367,6 @@ public class ScoresFragment extends Fragment {
 				stats1 = data.getStringExtra("stats1");
 				stats2 = data.getStringExtra("stats2");
 				player = data.getStringExtra("player");
-				Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
 				stats1 = (stats1 == null) ? "" : stats1;
 				stats2 = (stats2 == null) ? "" : stats2;
 				player = (player == null) ? "" : player;

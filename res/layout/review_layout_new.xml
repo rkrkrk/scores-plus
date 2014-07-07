@@ -149,7 +149,7 @@
                         android:id="@+id/blankkk"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".48"
                         android:textSize="10sp" />
 
                     <TextView
@@ -169,6 +169,16 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:text="from play"
                         android:textSize="8sp" />
+
+                    <TextView
+                        android:id="@+id/rvTextView72"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".85"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="frees 45/65 peno"
+                        android:textSize="8sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -185,7 +195,7 @@
                         android:id="@+id/TextView02"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Goals"
                         android:textSize="14sp" />
@@ -205,8 +215,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                     <TextView
+                         android:id="@+id/tVHomeGoalsFree"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".9"
+                         android:gravity="center_vertical|center_horizontal"
+                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -223,7 +241,7 @@
                         android:id="@+id/TextView05"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Points"
                         android:textSize="14sp" />
@@ -243,8 +261,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVHomePointsFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -261,7 +287,7 @@
                         android:id="@+id/TextView06"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Wides"
                         android:textSize="14sp" />
@@ -281,8 +307,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVHomeWidesFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -299,10 +333,10 @@
                         android:id="@+id/TextView07"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Out for 45/65"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tVwHome45"
@@ -319,8 +353,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVHomeOutFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -337,7 +379,7 @@
                         android:id="@+id/TextView77"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Off Posts"
                         android:textSize="14sp" />
@@ -357,8 +399,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVHomePostsFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -375,7 +425,7 @@
                         android:id="@+id/TextView15"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Saved"
                         android:textSize="14sp" />
@@ -395,8 +445,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVHomeSavedFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -413,7 +471,7 @@
                         android:id="@+id/TextView15"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Short"
                         android:textSize="14sp" />
@@ -433,8 +491,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVHomeShortFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -498,7 +564,7 @@
                         android:gravity="left|center_vertical"
                         android:minHeight="24dp"
                         android:minLines="2"
-                        android:text="Shot from frees/45s/65s:"
+                        android:text="Shot from free/pen/45/65:"
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -611,7 +677,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
+                        android:text="--"
                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -648,7 +716,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
+                        android:text="--"
                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -805,11 +875,11 @@
                         android:id="@+id/blankkk"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".48"
                         android:minHeight="18dp"
                         android:textSize="10sp" />
 
-                    <TextView
+                   <TextView
                         android:id="@+id/TextView04"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -826,6 +896,16 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:text="from play"
                         android:textSize="8sp" />
+
+                    <TextView
+                        android:id="@+id/rvTextView72"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".85"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="frees 45/65 peno"
+                        android:textSize="8sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -842,7 +922,7 @@
                         android:id="@+id/TextView66"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Goals"
                         android:textSize="14sp" />
@@ -862,7 +942,14 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
+                        android:textSize="14sp" />
+                
+                    <TextView
+                        android:id="@+id/tVOppGoalsFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -880,7 +967,7 @@
                         android:id="@+id/TextView53"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Points"
                         android:textSize="14sp" />
@@ -900,8 +987,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppPointsFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -918,7 +1013,7 @@
                         android:id="@+id/TextView52"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Wides"
                         android:textSize="14sp" />
@@ -938,8 +1033,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppWidesFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -956,7 +1059,7 @@
                         android:id="@+id/TextView14"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Out for 45/65"
                         android:textSize="14sp" />
@@ -976,8 +1079,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppOutFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -994,7 +1105,7 @@
                         android:id="@+id/tVwShotsPostsP3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Off Posts"
                         android:textSize="14sp" />
@@ -1014,8 +1125,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppPostsFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -1032,7 +1151,7 @@
                         android:id="@+id/TextView57"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Saved"
                         android:textSize="14sp" />
@@ -1052,8 +1171,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppSavedFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -1070,7 +1197,7 @@
                         android:id="@+id/TextView57"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".3"
+                        android:layout_weight=".45"
                         android:gravity="left|center_vertical"
                         android:text="Short"
                         android:textSize="14sp" />
@@ -1090,8 +1217,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".9"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="0"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tVOppShortFree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -1155,7 +1290,7 @@
                         android:gravity="left|center_vertical"
                         android:minHeight="24dp"
                         android:minLines="2"
-                        android:text="Shot from free/45/65:"
+                        android:text="Shot from free/pen/45/65:"
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -1268,7 +1403,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
+                        android:text="--"
                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -1305,7 +1442,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight=".8"
                         android:gravity="center_vertical|center_horizontal"
+                        android:text="--"
                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout

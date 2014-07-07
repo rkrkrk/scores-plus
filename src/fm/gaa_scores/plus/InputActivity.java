@@ -54,8 +54,6 @@ public class InputActivity extends Activity {
 		teamOriginal = extras.getString("teamOriginal");
 		teamOriginal = (teamOriginal == null) ? "" : teamOriginal;
 		teamBack = homeTeam;
-		// player = (player == null) ? "" : player;
-		Log.e("inpiut", stats1 + " - " + stats2 + " - " + player + " - ");
 		if (call == 1) {
 			setContentView(R.layout.stats_layout_edit);
 			if (teamOriginal.equals(homeTeam)) {
@@ -227,7 +225,6 @@ public class InputActivity extends Activity {
 	OnClickListener goReset = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Log.e("reset", "ff");
 			for (int i = 1; i <= 15; i++) {
 				bb[i].setPressed(false);
 			}
