@@ -214,7 +214,13 @@ public class EventsListFragment extends ListFragment {
 								+ " " + player;
 					}
 				} else {
-					lineArray[i] = "error old data incompatible with this version, reset stats and start new match and you should be good to go. If you still get this error uninstall the app and reinstall from Play Store. Note that any teams in the App will be lost so export them to text file first so you can reload them in the new app  ";
+					lineArray[i] = "error old event data incompatible with this new version,"
+							+ " reset stats and start new match and you should be good "
+							+ "to go. If you still get this error uninstall the app "
+							+ "and reinstall from Play Store. Note that any teams in"
+							+ " the App will be lost when you do this so export them to"
+							+ " text file first "
+							+ "so you can reload them in the new app  ";
 				}
 				i++;
 			} while (c1.moveToNext());
