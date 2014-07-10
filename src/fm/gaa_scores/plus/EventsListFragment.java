@@ -139,7 +139,7 @@ public class EventsListFragment extends ListFragment {
 				TeamContentProvider.STATSPLAYER, TeamContentProvider.STATSTYPE,
 				TeamContentProvider.STATSTEAM, TeamContentProvider.STATSSORT,
 				TeamContentProvider.STATSTIME, TeamContentProvider.STATSPERIOD,
-				TeamContentProvider.STATSSUBON,	TeamContentProvider.STATSLINE,
+				TeamContentProvider.STATSSUBON, TeamContentProvider.STATSLINE,
 				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		String[] args = { filter };
 		if (filter.equals("all")) {
@@ -188,9 +188,9 @@ public class EventsListFragment extends ListFragment {
 						.getColumnIndexOrThrow(TeamContentProvider.STATSBLOOD));
 
 				idArray[i] = id;
-				if (type.equals("s")) {
+				if (type != null && type.equals("s")) {
 					lineArray[i] = line;
-				} else if (type.equals("u")) {
+				} else if (type != null && type.equals("u")) {
 					String temp1 = time, temp2 = period, temp3 = "";
 					if (blood.equals("true")) {
 						temp3 = " blood sub ";
@@ -204,7 +204,7 @@ public class EventsListFragment extends ListFragment {
 						lineArray[i] = temp1 + "mins " + temp2 + temp3 + teamm
 								+ "--> off: " + suboff + "  on: " + subon;
 					}
-				} else if (type.equals("t")) {
+				} else if (type != null && type.equals("t")) {
 
 					if (!time.equals("")) {
 						lineArray[i] = time + "mins " + period + " " + teamm
@@ -213,13 +213,17 @@ public class EventsListFragment extends ListFragment {
 						lineArray[i] = teamm + " " + stats1 + " " + stats2
 								+ " " + player;
 					}
+				} else {
+					lineArray[i] = "error old data incompatible with this version, reset stats and start new match and you should be good to go. If you still get this error uninstall the app and reinstall from Play Store. Note that any teams in the App will be lost so export them to text file first so you can reload them in the new app  ";
 				}
 				i++;
 			} while (c1.moveToNext());
+		} else {
+			lineArray = new String[] { "No events recorded yet" };
 		}
 		c1.close();
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
-				R.layout.event_row_layout, lineArray);
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+				getActivity(), R.layout.event_row_layout, lineArray);
 		listView.setAdapter(arrayAdapter);
 	}
 

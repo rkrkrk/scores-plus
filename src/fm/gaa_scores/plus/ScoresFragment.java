@@ -1295,8 +1295,7 @@ public class ScoresFragment extends Fragment {
 				blood = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSBLOOD));
 
-				if (type.equals("s")) {
-				} else if (type.equals("u")) {
+			 if (type != null && type.equals("u")) {
 					String temp1 = time, temp2 = period, temp3 = "";
 					if (blood.equals("true")) {
 						temp3 = " blood sub ";
@@ -1310,7 +1309,7 @@ public class ScoresFragment extends Fragment {
 						line_ = temp1 + "mins " + temp2 + temp3 + teamm
 								+ "--> off: " + suboff + "  on: " + subon;
 					}
-				} else if (type.equals("t")) {
+				} else if (type != null && type.equals("t")) {
 
 					if (!time.equals("")) {
 						line_ = time + "mins " + period + " " + teamm + " "
