@@ -396,7 +396,7 @@ public class ScoresFragment extends Fragment {
 
 		// populate undolist
 		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE,TeamContentProvider.STATSSORT };
+				TeamContentProvider.STATSLINE, TeamContentProvider.STATSSORT };
 		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
 				TeamContentProvider.STATSSORT);
@@ -426,7 +426,7 @@ public class ScoresFragment extends Fragment {
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3);
 		} else if (c1.getCount() == 2) {
 			undo1 = undoList.get(c1.getCount() - 1);
-			undo2 =undoList.get(c1.getCount() - 2);
+			undo2 = undoList.get(c1.getCount() - 2);
 			tStats.setText(undo1 + "\n" + undo2);
 		} else if (c1.getCount() == 1) {
 			undo1 = undoList.get(c1.getCount() - 1);
@@ -858,8 +858,8 @@ public class ScoresFragment extends Fragment {
 				TeamContentProvider.CONTENT_URI_3, null, null);
 		((Startup) getActivity()).getFragmentScorers().fillData();
 		((Startup) getActivity()).getFragmentReview().resetStats();
-		((Startup) getActivity()).getFragmentTeamOne().resetCardsSubs();
-		((Startup) getActivity()).getFragmentTeamTwo().resetCardsSubs();
+		// ((Startup) getActivity()).getFragmentTeamOne().resetCardsSubs();
+		// ((Startup) getActivity()).getFragmentTeamTwo().resetCardsSubs();
 		((Startup) getActivity()).getFragmentEvent().fillData();
 		updateStatsList(true);
 		tStats.setText("");
@@ -1000,9 +1000,9 @@ public class ScoresFragment extends Fragment {
 
 	// //////////////////////////////////////////////////////////////////////
 	// method to update score and update shots data in review scrreen
-	//input=1 is from eventslistfragment
+	// input=1 is from eventslistfragment
 	public void updateStatsDatabase(String teamName, String stats1In,
-			String stats2In, String playerIn, int count,int input) {
+			String stats2In, String playerIn, int count, int input) {
 		stats1 = stats1In;
 		stats2 = stats2In;
 		player = playerIn;
@@ -1083,7 +1083,7 @@ public class ScoresFragment extends Fragment {
 
 		}
 		// add to stats database
-		//input=1 is from eventslistfragment
+		// input=1 is from eventslistfragment
 		if (!(stats1.equals("") && stats2.equals("") && player.equals(""))
 				&& input == 0) {
 			ContentValues values = new ContentValues();
@@ -1128,8 +1128,7 @@ public class ScoresFragment extends Fragment {
 		String playerThis = (playerIn.equals("")) ? "unknown" : playerIn;
 		// update scores and misses
 		if ((stats1Temp.equals("goal")) || (stats1Temp.equals("point"))
-				|| (stats1Temp.equals("wide"))
-				|| (stats1Temp.equals("saved"))
+				|| (stats1Temp.equals("wide")) || (stats1Temp.equals("saved"))
 				|| (stats1Temp.equals("short"))
 				|| (stats1Temp.equals("off posts"))
 				|| (stats1Temp.equals("out for 45/65"))) {
@@ -1242,10 +1241,25 @@ public class ScoresFragment extends Fragment {
 	}
 
 	public void updateStatsList(boolean updateOthers) {
+		String line_ = "";
+		String stats1_ = "";
+		String stats2_ = "";
+		String player_ = "";
+		String type = "";
+		String time = "";
+		String period = "";
+		String teamm = "";
+		String subon = "";
+		String suboff = "";
+		String blood = "";
 		// load panel from database and assign to arraylist
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
-		String[] projection = { TeamContentProvider.STATSID,
-				TeamContentProvider.STATSLINE,TeamContentProvider.STATSSORT };
+		String[] projection = { TeamContentProvider.STATS1,
+				TeamContentProvider.STATS2, TeamContentProvider.STATSPLAYER,
+				TeamContentProvider.STATSTYPE, TeamContentProvider.STATSTEAM,
+				TeamContentProvider.STATSTIME, TeamContentProvider.STATSPERIOD,
+				TeamContentProvider.STATSSUBON, TeamContentProvider.STATSLINE,
+				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
 				TeamContentProvider.STATSSORT);
@@ -1253,14 +1267,65 @@ public class ScoresFragment extends Fragment {
 		undoList.clear();
 		if (c1.getCount() > 0) {
 			c1.moveToFirst();
+			int i = 0;
 			do {
-				// read in lines
-				undoList.add(c1.getString(c1
-						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE)));
+				teamm = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
+				line_ = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				stats1_ = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
+				stats2_ = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+				player_ = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSPLAYER));
+				type = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTYPE));
+				time = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTIME));
+				period = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSPERIOD));
+				subon = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSSUBON));
+				suboff = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSSUBOFF));
+				blood = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSBLOOD));
+
+				if (type.equals("s")) {
+				} else if (type.equals("u")) {
+					String temp1 = time, temp2 = period, temp3 = "";
+					if (blood.equals("true")) {
+						temp3 = " blood sub ";
+					} else {
+						temp3 = " substitution ";
+					}
+					if (temp1.equals("")) {
+						line_ = temp3 + teamm + "--> off: " + suboff + "  on: "
+								+ subon;
+					} else {
+						line_ = temp1 + "mins " + temp2 + temp3 + teamm
+								+ "--> off: " + suboff + "  on: " + subon;
+					}
+				} else if (type.equals("t")) {
+
+					if (!time.equals("")) {
+						line_ = time + "mins " + period + " " + teamm + " "
+								+ stats1_ + " " + stats2_ + " " + player_;
+					} else {
+						line_ = teamm + " " + stats1_ + " " + stats2_ + " "
+								+ player_;
+					}
+				}
+				undoList.add(line_);
 			} while (c1.moveToNext());
 		} else {
 			tStats.setText("");
 		}
+
 		String undo1 = "", undo2 = "", undo3 = "", undo4 = "";
 		if (c1.getCount() >= 4) {
 			undo1 = undoList.get(c1.getCount() - 1);
@@ -1281,6 +1346,7 @@ public class ScoresFragment extends Fragment {
 			undo1 = undoList.get(c1.getCount() - 1);
 			tStats.setText(undo1);
 		}
+		undoList.clear();
 		// call update in review
 		c1.close();
 		if (updateOthers) {
@@ -1310,9 +1376,8 @@ public class ScoresFragment extends Fragment {
 			teamLineUp[j] = String.valueOf(j);
 		}
 		String[] args = { teamName };
-		cL = new CursorLoader(getActivity(), allTitles, projection,
-				"team=?",args, 
-				TeamContentProvider.NAME);
+		cL = new CursorLoader(getActivity(), allTitles, projection, "team=?",
+				args, TeamContentProvider.NAME);
 		Cursor c1 = cL.loadInBackground();
 		playerIDLookUp.clear();
 		if (c1.getCount() > 0) {
@@ -1367,13 +1432,14 @@ public class ScoresFragment extends Fragment {
 				stats1 = data.getStringExtra("stats1");
 				stats2 = data.getStringExtra("stats2");
 				player = data.getStringExtra("player");
+				Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
 				stats1 = (stats1 == null) ? "" : stats1;
 				stats2 = (stats2 == null) ? "" : stats2;
 				player = (player == null) ? "" : player;
 				if (!(stats1.equals("") && stats2.equals("") && player
 						.equals(""))) {
 					updateStatsDatabase(teamNameInput, stats1, stats2, player,
-							1,0);
+							1, 0);
 				}
 			}
 		}

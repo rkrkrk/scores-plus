@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -58,6 +59,9 @@ public class EventsListFragment extends ListFragment {
 	private Intent input;
 	private boolean bloodSub, subMade = false;
 	private boolean[] checked = { false, false, false };
+	private long[] idArray;
+	private String[] lineArray;
+	private ListView listView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,32 +112,115 @@ public class EventsListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		registerForContextMenu(getListView());
+		listView = getListView();
 		fillData();
 	}
 
 	// method to read in panel list from database and list contents on screen
 	public void fillData() {
-		// retreive shots info from database
+		// // retreive shots info from database
+
+		String line = "";
+		String stats1 = "";
+		String stats2 = "";
+		String player = "";
+		String type = "";
+		long sort = 0, id = 0;
+		String time = "";
+		String period = "";
+		String teamm = "";
+		String subon = "";
+		String suboff = "";
+		String blood = "";
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		Cursor c1;
-		String[] from = new String[] { TeamContentProvider.STATSLINE };
-		String[] projection = { TeamContentProvider._ID,
-				TeamContentProvider.STATSLINE };
+		String[] projection = { TeamContentProvider.STATS1,
+				TeamContentProvider.STATSID, TeamContentProvider.STATS2,
+				TeamContentProvider.STATSPLAYER, TeamContentProvider.STATSTYPE,
+				TeamContentProvider.STATSTEAM, TeamContentProvider.STATSSORT,
+				TeamContentProvider.STATSTIME, TeamContentProvider.STATSPERIOD,
+				TeamContentProvider.STATSSUBON,	TeamContentProvider.STATSLINE,
+				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		String[] args = { filter };
-		int[] to = new int[] { R.id.listrtxt };
 		if (filter.equals("all")) {
 			c1 = getActivity().getContentResolver().query(allTitles,
-					projection, null,null,
+					projection, null, null,
 					TeamContentProvider.STATSSORT + " DESC");
 		} else {
 			c1 = getActivity().getContentResolver().query(allTitles,
 					projection, "team=?", args,
 					TeamContentProvider.STATSSORT + " DESC");
 		}
+		if (c1.getCount() > 0) {
+			c1.moveToFirst();
+			idArray = new long[c1.getCount()];
+			lineArray = new String[c1.getCount()];
+			int i = 0;
+			do {
+				id = c1.getLong(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSID));
+				teamm = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTEAM));
+				line = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSLINE));
+				stats1 = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS1));
+				stats2 = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATS2));
+				player = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSPLAYER));
+				type = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTYPE));
+				sort = c1.getLong(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSSORT));
+				time = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSTIME));
+				period = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSPERIOD));
+				subon = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSSUBON));
+				suboff = c1
+						.getString(c1
+								.getColumnIndexOrThrow(TeamContentProvider.STATSSUBOFF));
+				blood = c1.getString(c1
+						.getColumnIndexOrThrow(TeamContentProvider.STATSBLOOD));
 
-		SimpleCursorAdapter reminders = new SimpleCursorAdapter(getActivity(),
-				R.layout.event_row_layout, c1, from, to, 0);
-		setListAdapter(reminders);
+				idArray[i] = id;
+				if (type.equals("s")) {
+					lineArray[i] = line;
+				} else if (type.equals("u")) {
+					String temp1 = time, temp2 = period, temp3 = "";
+					if (blood.equals("true")) {
+						temp3 = " blood sub ";
+					} else {
+						temp3 = " substitution ";
+					}
+					if (temp1.equals("")) {
+						lineArray[i] = temp3 + teamm + "--> off: " + suboff
+								+ "  on: " + subon;
+					} else {
+						lineArray[i] = temp1 + "mins " + temp2 + temp3 + teamm
+								+ "--> off: " + suboff + "  on: " + subon;
+					}
+				} else if (type.equals("t")) {
+
+					if (!time.equals("")) {
+						lineArray[i] = time + "mins " + period + " " + teamm
+								+ " " + stats1 + " " + stats2 + " " + player;
+					} else {
+						lineArray[i] = teamm + " " + stats1 + " " + stats2
+								+ " " + player;
+					}
+				}
+				i++;
+			} while (c1.moveToNext());
+		}
+		c1.close();
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+				R.layout.event_row_layout, lineArray);
+		listView.setAdapter(arrayAdapter);
 	}
 
 	@Override
@@ -173,7 +260,7 @@ public class EventsListFragment extends ListFragment {
 				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
-		ID = info.id;
+		ID = idArray[info.position];
 		String[] args = { Long.toString(ID) };
 		Cursor c1 = getActivity().getContentResolver().query(uri, projection,
 				"_id=?", args, TeamContentProvider.STATSSORT);

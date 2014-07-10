@@ -1312,7 +1312,7 @@
                         android:layout_weight=".3"
                         android:gravity="left|center_vertical"
                         android:text="Frees conceded"
-                        android:textSize="13sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tVwFreeWonOpp"

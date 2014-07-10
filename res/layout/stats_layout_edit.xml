@@ -252,7 +252,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2"
+                    android:background="@drawable/btn_home"
                     android:paddingRight="10dp"
                     android:text="Home Team"
                     android:textSize="13sp" />
@@ -264,7 +264,7 @@
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_cyan2b"
+                    android:background="@drawable/btn_opp"
                     android:paddingRight="10dp"
                     android:text="Opp Team"
                     android:textSize="13sp" />

@@ -90,7 +90,6 @@ public class TeamTwoFragment extends Fragment {
 	private SimpleDateFormat sdfdate;
 	private EditText input;
 	private int index, indexOff, indexOn, sub = 0, subLines = 0, cardLines = 0;
-	private TextView tCards, tSubs;
 	private boolean bloodSub = false;
 	private StringBuilder strBuilderSub = new StringBuilder();
 	private StringBuilder strBuilderCards = new StringBuilder();
@@ -143,8 +142,6 @@ public class TeamTwoFragment extends Fragment {
 		setButtons(v);
 		getTeam(panelName);
 
-		tCards = (TextView) v.findViewById(R.id.tCards);
-		tSubs = (TextView) v.findViewById(R.id.tSubs);
 		updateCards();
 		updateSubsList();
 
@@ -960,10 +957,10 @@ public class TeamTwoFragment extends Fragment {
 		}
 		temp3 = (bloodSub) ? " blood sub " : " substitution ";
 		temp4 = (bloodSub) ? "true" : "false";
-			ContentValues values = new ContentValues();
+		ContentValues values = new ContentValues();
 		if (temp1.equals("")) {
-			values.put("line",  temp3 + panelName
-					+ "--> off: " + playerOff + "  on: " + playerOn);
+			values.put("line", temp3 + panelName + "--> off: " + playerOff
+					+ "  on: " + playerOn);
 		} else {
 			values.put("line", temp1 + "mins " + temp2 + temp3 + panelName
 					+ "--> off: " + playerOff + "  on: " + playerOn);
@@ -1065,11 +1062,6 @@ public class TeamTwoFragment extends Fragment {
 					count = getActivity().getContentResolver().update(
 							TeamContentProvider.CONTENT_URI, values, "team=?",
 							new String[] { panelName });
-					// count = getActivity().getContentResolver()
-					// .update(TeamContentProvider.CONTENT_URI,
-					// values,
-					// TeamContentProvider.TEAM + " = '"
-					// + panelName + "'", null);
 					// if team doesnt exist, create it
 					if (count == 0) {
 						values = new ContentValues();
@@ -1078,6 +1070,14 @@ public class TeamTwoFragment extends Fragment {
 						values.put("team", inName);
 						getActivity().getContentResolver().insert(
 								TeamContentProvider.CONTENT_URI, values);
+					} else {
+						// update other dbs
+						getActivity().getContentResolver().update(
+								TeamContentProvider.CONTENT_URI_2, values,
+								"team=?", new String[] { panelName });
+						getActivity().getContentResolver().update(
+								TeamContentProvider.CONTENT_URI_3, values,
+								"team=?", new String[] { panelName });
 					}
 
 					Toast.makeText(getActivity(), "panel renamed",
@@ -1386,12 +1386,42 @@ public class TeamTwoFragment extends Fragment {
 																values,
 																"name=?",
 																new String[] { player });
+												values.clear();
+												values.put("player", inName);
+												// update eventts database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_2,
+																values,
+																"player=?",
+																new String[] { player });
+												values.clear();
+												values.put("subon", inName);
+												// update eventts database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_2,
+																values,
+																"subon=?",
+																new String[] { player });
+												values.clear();
+												values.put("suboff", inName);
+												// update eventts database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_2,
+																values,
+																"suboff=?",
+																new String[] { player });
 												getTeam(panelName);
 												((Startup) getActivity())
 														.getFragmentScorers()
 														.fillData();
 												updateCards();
 												updateSubsList();
+												((Startup) getActivity())
+														.getFragmentScore()
+														.updateStatsList(false);
 											} else {
 												Toast.makeText(
 														getActivity(),
@@ -1714,7 +1744,6 @@ public class TeamTwoFragment extends Fragment {
 
 	public void updateCards() {
 		int cardY = 0, cardB = 0, cardR = 0;
-		tCards.setText("");
 		cardLines = 1;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		strBuilderCards.setLength(0);
@@ -1754,12 +1783,10 @@ public class TeamTwoFragment extends Fragment {
 				strBuilderCards.insert(0, "Summary:  " + cardY + " yellow  "
 						+ cardB + " black  " + cardR + " red");
 			}
-			tCards.setText(strBuilderCards.toString());
 		}
 	}
 
 	public void updateSubsList() {
-		tSubs.setText("");
 		strBuilderSub.setLength(0);
 		subLines = 1;
 		int numSubs = 0;
@@ -1797,7 +1824,6 @@ public class TeamTwoFragment extends Fragment {
 				strBuilderSub.insert(0, "Summary:  " + numSubs
 						+ " substitutions made");
 			}
-			tSubs.setText(strBuilder.toString());
 
 		}
 	}
@@ -2073,11 +2099,6 @@ public class TeamTwoFragment extends Fragment {
 		catch (Exception ex) {
 			Log.e("error with deleting downloads", ex.toString());
 		}
-	}
-
-	public void resetCardsSubs() {
-		tCards.setText("");
-		tSubs.setText("");
 	}
 
 	@Override

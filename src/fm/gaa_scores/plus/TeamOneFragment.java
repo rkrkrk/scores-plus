@@ -89,7 +89,6 @@ public class TeamOneFragment extends Fragment {
 	private SimpleDateFormat sdfdate;
 	private EditText input;
 	private int index, indexOff, indexOn, sub = 0, subLines = 0, cardLines = 0;
-	private TextView tCards, tSubs;
 	private boolean bloodSub = false;
 	private StringBuilder strBuilderSub = new StringBuilder();
 	private StringBuilder strBuilderCards = new StringBuilder();
@@ -142,8 +141,6 @@ public class TeamOneFragment extends Fragment {
 		setButtons(v);
 		getTeam(panelName);
 
-		tCards = (TextView) v.findViewById(R.id.tCards);
-		tSubs = (TextView) v.findViewById(R.id.tSubs);
 		updateCards();
 		updateSubsList();
 
@@ -951,7 +948,7 @@ public class TeamOneFragment extends Fragment {
 		}
 		getTeam(panelName);
 		// write to stats
-		String temp1 = "", temp2 = "", temp3 = "",temp4;
+		String temp1 = "", temp2 = "", temp3 = "", temp4;
 		if (((Startup) getActivity()).getFragmentScore().getTime() != "") {
 			temp1 = ((Startup) getActivity()).getFragmentScore().getTime();
 			temp2 = ((Startup) getActivity()).getFragmentScore().bPeriod
@@ -1079,6 +1076,14 @@ public class TeamOneFragment extends Fragment {
 						values.put("team", inName);
 						getActivity().getContentResolver().insert(
 								TeamContentProvider.CONTENT_URI, values);
+					} else {
+						// update other dbs
+						getActivity().getContentResolver().update(
+								TeamContentProvider.CONTENT_URI_2, values,
+								"team=?", new String[] { panelName });
+						getActivity().getContentResolver().update(
+								TeamContentProvider.CONTENT_URI_3, values,
+								"team=?", new String[] { panelName });
 					}
 
 					Toast.makeText(getActivity(), "panel renamed",
@@ -1387,12 +1392,42 @@ public class TeamOneFragment extends Fragment {
 																values,
 																"name=?",
 																new String[] { player });
+												values.clear();
+												values.put("player", inName);
+												// update eventts database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_2,
+																values,
+																"player=?",
+																new String[] { player });
+												values.clear();
+												values.put("subon", inName);
+												// update eventts database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_2,
+																values,
+																"subon=?",
+																new String[] { player });
+												values.clear();
+												values.put("suboff", inName);
+												// update eventts database
+												getActivity()
+														.getContentResolver()
+														.update(TeamContentProvider.CONTENT_URI_2,
+																values,
+																"suboff=?",
+																new String[] { player });
 												getTeam(panelName);
 												((Startup) getActivity())
 														.getFragmentScorers()
 														.fillData();
 												updateCards();
 												updateSubsList();
+												((Startup) getActivity())
+														.getFragmentScore()
+														.updateStatsList(false);
 											} else {
 												Toast.makeText(
 														getActivity(),
@@ -1715,7 +1750,6 @@ public class TeamOneFragment extends Fragment {
 
 	public void updateCards() {
 		int cardY = 0, cardB = 0, cardR = 0;
-		tCards.setText("");
 		cardLines = 1;
 		Uri allTitles = TeamContentProvider.CONTENT_URI_2;
 		strBuilderCards.setLength(0);
@@ -1755,12 +1789,10 @@ public class TeamOneFragment extends Fragment {
 				strBuilderCards.insert(0, "Summary:  " + cardY + " yellow  "
 						+ cardB + " black  " + cardR + " red");
 			}
-			tCards.setText(strBuilderCards.toString());
 		}
 	}
 
 	public void updateSubsList() {
-		tSubs.setText("");
 		strBuilderSub.setLength(0);
 		subLines = 1;
 		int numSubs = 0;
@@ -1798,8 +1830,6 @@ public class TeamOneFragment extends Fragment {
 				strBuilderSub.insert(0, "Summary:  " + numSubs
 						+ " substitutions made");
 			}
-			tSubs.setText(strBuilder.toString());
-
 		}
 	}
 
@@ -2074,11 +2104,6 @@ public class TeamOneFragment extends Fragment {
 		catch (Exception ex) {
 			Log.e("error with deleting downloads", ex.toString());
 		}
-	}
-
-	public void resetCardsSubs() {
-		tCards.setText("");
-		tSubs.setText("");
 	}
 
 	@Override

@@ -25,7 +25,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="1dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_green"
+                android:background="@drawable/btn_home"
                 android:padding="4dp"
                 android:text="Home Team Only"
                 android:textSize="12sp" />
@@ -49,7 +49,7 @@
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_lime"
+                android:background="@drawable/btn_opp"
                 android:padding="4dp"
                 android:text="Opposition Team Only"
                 android:textSize="12sp" />
