@@ -32,14 +32,17 @@ time stamp<p>
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
 <b>email:</b> gaaapps@gmail.com<br/>
+Suggestions for improvements or error reports are welcome.<br/><br/>
+
 follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
 
  <h1>HELP - TEAM SCREEN</h1>
-<p><b>NB: Dont change team name or load a new team or import a team during a match i.e.
-when the match timer is running. Doing so may break stuff!</b></p> 
+
 <p>Touch <b>change team name</b> button to enter a new name for the current team. (Dont use 
 duplicate team names. Always use a unique name.)<br/><br/></p>
 <p>
+<p>Touch <b>reset team selection</b> to reset all positions back to a number.  Note that player 
+names already entered are saved for reuse.</p>
 <b>TEAM SELECTION</b><br/>
 Select the team lineup by touching any of the position buttons to get option to <b>enter 
 new player name</b> or select from list of available players.<br/>
@@ -63,12 +66,8 @@ Touch <b>make substitution</b> or
  name must have been entered previously (see paragraph above).) <br/><br/></p>
 <p>Touch <b>view subs/cards</b> to display list of cards and subs full screen<br/><br/></p>
 
-<p>Touch <b>reset team selection</b> to reset all positions back to a number.  Note that player 
-names already entered are saved for reuse.</p>
+
 </p> 
-<p><b>Cards</b> - Any black/yellow/red cards recorded in <b>enter stats</b> in the <b>SCORES</b> screen will
-be displayed here</p>
-<p><b>Subs</b> - Substitutions made will be displayed here.</p>
 
 <p><b>tweet selection</b><br/>
 To send Tweets, you need to have the Twitter App, or equivalent, installed on your device and you must
@@ -197,6 +196,8 @@ Use the <b> change team name</b> button to give your team a meaningful name and 
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
 <b>email:</b> gaaapps@gmail.com<br/>
+Suggestions for improvements or error reports are welcome.<br/><br/>
+
 follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
 
 
@@ -273,7 +274,7 @@ separate the phone numbers.<br/>
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
 <b>email:</b> gaaapps@gmail.com<br/>
-follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
+Suggestions for improvements or error reports are welcome.<br/><br/>
 
 <h1>HELP - REVIEW SCREEN</h1>
 <p>
@@ -291,8 +292,7 @@ to scroll.<br/><br/>
 You can long press on any of the rows to delete that particular stats entry / match event.
 Displayed scores and stats will be adjusted automatically where relevant.
 </p>
-<p><b>view all match eventss</b><br/>
-Touch to see list of match events in full screen mode</p>
+
 <p>
 <p><b>tweet match stats</b><br/>
 What it says!</p>
@@ -309,6 +309,8 @@ cards, substitutions list of match/stats events recorded, list of scorers.
 <![CDATA[
 <h1>CONTACT DETAILS</h1>
 <b>email:</b> gaaapps@gmail.com<br/>
+Suggestions for improvements or error reports are welcome.<br/><br/>
+
 follow twitter<b> @gaaapps</b> for updates and team downloads<br/><br/>
 
 <h1>HELP - SCORERS SCREEN</h1>

@@ -655,7 +655,8 @@ public class ReviewFragment extends Fragment {
 		tShotsFreeOpp.setText("Shots from free/pen/45/65:");
 
 		int totalShotsHome, totalShotsOpp, shotsPlayHome, shotsPlayOpp;
-		shotsFreeHome = 0; shotsFreeOpp = 0;
+		shotsFreeHome = 0;
+		shotsFreeOpp = 0;
 		int shotsScoredHome, shotsScoredOpp, shotsScoredPlayHome, shotsScoredPlayOpp;
 		String perCent;
 		totalShotsHome = shotGoalsHome + shotPointsHome + shotWidesHome
@@ -714,16 +715,15 @@ public class ReviewFragment extends Fragment {
 		if (shotsPlayHome > 0) {
 			perCent = Integer.toString((shotsScoredPlayHome * 100)
 					/ shotsPlayHome);
-			tShotsPlayHome.setText("Shots from play:" + shotsPlayHome
-					+ " Scored:" + shotsScoredPlayHome + "\n(" + perCent
-					+ "%)");
+			tShotsPlayHome
+					.setText("Shots from play:" + shotsPlayHome + " Scored:"
+							+ shotsScoredPlayHome + "\n(" + perCent + "%)");
 		}
 		if (shotsPlayOpp > 0) {
 			perCent = Integer.toString((shotsScoredPlayOpp * 100)
 					/ shotsPlayOpp);
-			tShotsPlayOpp
-					.setText("Shots from play:" + shotsPlayOpp + " Scored:"
-							+ shotsScoredPlayOpp + "\n(" + perCent + "%)");
+			tShotsPlayOpp.setText("Shots from play:" + shotsPlayOpp
+					+ " Scored:" + shotsScoredPlayOpp + "\n(" + perCent + "%)");
 		}
 		if (shotsFreeHome > 0) {
 			perCent = Integer.toString((shotsScoredFreeHome * 100)
@@ -1176,10 +1176,11 @@ public class ReviewFragment extends Fragment {
 			sb.append(tShotsFreeHome.getText().toString() + "\n");
 			sb.append("Frees conceded: " + freeConcededHome + "\n");
 			sb.append("Total puck/kick outs: " + totPHome + "\n");
-			sb.append("own puck/kick outs won: " + puckWonCleanHome + "(" + puckWonHomePerCent + "%) \n");
-			sb.append("own puck/kick outs lost: " + puckLostCleanHome + "(" + puckLostHomePerCent + "%) \n");
+			sb.append("own puck/kick outs won: " + puckWonCleanHome + "("
+					+ puckWonHomePerCent + "%) \n");
+			sb.append("own puck/kick outs lost: " + puckLostCleanHome + "("
+					+ puckLostHomePerCent + "%) \n");
 			sb.append(cardHome + subHome + "\n");
-
 
 			sb.append("\nTeam 2: " + tOppTeam.getText() + "\n");
 			sb.append(shotGoalsOpp + " Goals,  " + shotPointsOpp
@@ -1208,8 +1209,10 @@ public class ReviewFragment extends Fragment {
 			sb.append(tShotsFreeOpp.getText().toString() + "\n");
 			sb.append("frees conceded: " + freeConcededOpp + "\n");
 			sb.append("Total puck/kick outs: " + totPOpp + "\n");
-			sb.append("own puck/kick outs won: " + puckWonCleanOpp + "(" + puckWonOppPerCent + "%) \n");
-			sb.append("own puck/kick outs lost: " + puckLostCleanOpp + "(" + puckLostOppPerCent + "%) \n");
+			sb.append("own puck/kick outs won: " + puckWonCleanOpp + "("
+					+ puckWonOppPerCent + "%) \n");
+			sb.append("own puck/kick outs lost: " + puckLostCleanOpp + "("
+					+ puckLostOppPerCent + "%) \n");
 			sb.append(cardOpp + subOpp + "\n\n\n");
 
 			sb.append("LIST OF SCORERS \n");
@@ -1483,9 +1486,18 @@ public class ReviewFragment extends Fragment {
 		paint.setTextSize(20);
 		canvas.drawText(tShotsTotalHome.getText().toString(), 5, 315, paint);
 		canvas.drawText(tShotsPlayHome.getText().toString(), 5, 350, paint);
-		canvas.drawText("Shots from frees/pen/45/65: " + shotsFreeHome, 5, 385,paint);
-		canvas.drawText("Scored: "+shotsScoredFreeHome+" ("+Integer.toString((shotsScoredFreeHome * 100)
-				/ shotsFreeHome)+"%)", 5, 410, paint);
+		canvas.drawText("Shots from frees/pen/45/65: " + shotsFreeHome, 5, 385,
+				paint);
+		if (shotsFreeHome > 0) {
+			canvas.drawText(
+					"Scored: "
+							+ shotsScoredFreeHome
+							+ " ("
+							+ Integer.toString((shotsScoredFreeHome * 100)
+									/ shotsFreeHome) + "%)", 5, 410, paint);
+		} else {
+			canvas.drawText("Scored: " + shotsScoredFreeHome, 5, 410, paint);
+		}
 
 		paint.setTextSize(22);
 		canvas.drawText("Frees Conceded", 5, 450, paint);
@@ -1501,7 +1513,7 @@ public class ReviewFragment extends Fragment {
 		canvas.drawText("Own Puck/Kick Out Lost", 5, 535, paint);
 		canvas.drawText(puckLostCleanHome + " ", 250, 535, paint);
 		canvas.drawText("(" + puckLostHomePerCent + "%) ", 280, 535, paint);
-		
+
 		paint.setTextSize(22);
 		canvas.drawText(cardHome + subHome, 5, 570, paint);
 
@@ -1562,9 +1574,18 @@ public class ReviewFragment extends Fragment {
 		paint.setTextSize(20);
 		canvas.drawText(tShotsTotalOpp.getText().toString(), 355, 315, paint);
 		canvas.drawText(tShotsPlayOpp.getText().toString(), 355, 350, paint);
-		canvas.drawText("Shots from frees/pen/45/65: " + shotsFreeOpp, 355, 385,paint);
-		canvas.drawText("Scored: "+shotsScoredFreeOpp+" ("+Integer.toString((shotsScoredFreeOpp * 100)
-				/ shotsFreeOpp)+"%)", 355, 410, paint);
+		canvas.drawText("Shots from frees/pen/45/65: " + shotsFreeOpp, 355,
+				385, paint);
+		if (shotsFreeOpp > 0) {
+			canvas.drawText(
+					"Scored: "
+							+ shotsScoredFreeOpp
+							+ " ("
+							+ Integer.toString((shotsScoredFreeOpp * 100)
+									/ shotsFreeOpp) + "%)", 355, 410, paint);
+		} else {
+			canvas.drawText("Scored: " + shotsScoredFreeOpp, 355, 410, paint);
+		}
 		paint.setTextSize(22);
 
 		canvas.drawText("Frees Conceded", 355, 450, paint);
