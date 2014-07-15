@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -26,7 +25,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -40,7 +38,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class EventsListFragment extends ListFragment {
@@ -55,7 +52,7 @@ public class EventsListFragment extends ListFragment {
 	private String[] inSetup;
 	private Button bHome, bAll, bOpp;
 	private long ID;
-	private long sortTemp = (long) 0;
+	private long sortTemp = 0;
 	private Intent input;
 	private boolean bloodSub, subMade = false;
 	private boolean[] checked = { false, false, false };
@@ -109,6 +106,7 @@ public class EventsListFragment extends ListFragment {
 		}
 	};
 
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		registerForContextMenu(getListView());
@@ -242,6 +240,7 @@ public class EventsListFragment extends ListFragment {
 		l.showContextMenuForChild(v);
 	}
 
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
