@@ -206,7 +206,7 @@ public class EventsListFragment extends ListFragment {
 					}
 				} else if (type != null && type.equals("t")) {
 
-					if (!time.equals("")) {
+					if (time != null && !time.equals("")) {
 						lineArray[i] = time + "mins " + period + " " + teamm
 								+ " " + stats1 + " " + stats2 + " " + player;
 					} else {
@@ -308,7 +308,7 @@ public class EventsListFragment extends ListFragment {
 						"Start / End times cannot be changed",
 						Toast.LENGTH_LONG).show();
 			} else {
-				delete(null, null, null);
+				delete(stats1Before, stats2Before, playerBefore);
 			}
 			return true;
 
@@ -370,9 +370,12 @@ public class EventsListFragment extends ListFragment {
 				.show();
 		fillData();
 		((Startup) getActivity()).getFragmentReview().fillData();
-		if (typeTemp == "t") {
+		if (typeTemp.equals("t")) {
 			((Startup) getActivity()).getFragmentScore().undo(teamBefore,
 					stats1Temp, stats2Temp, playerTemp, typeTemp);
+		} else {
+			((Startup) getActivity()).getFragmentScore().updateStatsList(false);
+			;
 		}
 	}
 
@@ -404,6 +407,7 @@ public class EventsListFragment extends ListFragment {
 			values.put("stats1", stats1);
 			values.put("stats2", stats2);
 			if (requestCode == 9) {
+				// edit if there's a change
 				if (!stats1.equals(stats1Before)
 						|| !stats2.equals(stats2Before)
 						|| !player.equals(playerBefore)
@@ -422,10 +426,11 @@ public class EventsListFragment extends ListFragment {
 					fillData();
 				}
 			} else if (requestCode == 10) {
+				// insert
 				if (!(stats1.equals("") && stats2.equals("") && player
 						.equals(""))) {
 					sortTemp = sortTemp + 10;
-					values.put("type", typeTemp);
+					values.put("type", "t");
 					values.put("sort", sortTemp);
 					values.put("time", timeTemp);
 					values.put("period", periodTemp);

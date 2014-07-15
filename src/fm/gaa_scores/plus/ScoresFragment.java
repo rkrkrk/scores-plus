@@ -264,6 +264,10 @@ public class ScoresFragment extends Fragment {
 
 				sdf = new SimpleDateFormat("HH:mm   dd-MM-yy");
 				ContentValues values = new ContentValues();
+				if (starttime > 10) {
+					values.put("period", bPeriod.getText().toString());
+					values.put("time",  getTime());
+				} 		
 				if (b.getText().equals("start")) {
 					// add to database
 					values.put("line", locn + bPeriod.getText() + " start: "
@@ -308,6 +312,7 @@ public class ScoresFragment extends Fragment {
 				getActivity().getContentResolver().insert(
 						TeamContentProvider.CONTENT_URI_2, values);
 				updateStatsList(true);
+				((Startup) getActivity()).getFragmentEvent().fillData();
 				b.setText(str[0]);
 				bPeriod.setText(str[1]);
 			}
@@ -1431,7 +1436,6 @@ public class ScoresFragment extends Fragment {
 				stats1 = data.getStringExtra("stats1");
 				stats2 = data.getStringExtra("stats2");
 				player = data.getStringExtra("player");
-				Log.e("back", stats1 + " - " + stats2 + " - " + player + " - ");
 				stats1 = (stats1 == null) ? "" : stats1;
 				stats2 = (stats2 == null) ? "" : stats2;
 				player = (player == null) ? "" : player;
