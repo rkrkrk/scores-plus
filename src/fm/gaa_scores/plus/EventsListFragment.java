@@ -195,7 +195,7 @@ public class EventsListFragment extends ListFragment {
 					} else {
 						temp3 = " substitution ";
 					}
-					if (temp1.equals("")) {
+					if (temp1==null || temp1.equals("")) {
 						lineArray[i] = temp3 + teamm + "--> off: " + suboff
 								+ "  on: " + subon;
 					} else {

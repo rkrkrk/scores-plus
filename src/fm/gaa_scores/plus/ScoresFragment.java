@@ -263,6 +263,7 @@ public class ScoresFragment extends Fragment {
 
 				sdf = new SimpleDateFormat("HH:mm   dd-MM-yy");
 				ContentValues values = new ContentValues();
+				values.put("sort", System.currentTimeMillis());
 				if (starttime > 10) {
 					values.put("period", bPeriod.getText().toString());
 					values.put("time",  getTime());
@@ -284,7 +285,6 @@ public class ScoresFragment extends Fragment {
 					} else {
 						sPeriod = "Score after 2nd half extra time: ";
 					}
-					values.put("sort", System.currentTimeMillis());
 					values.put(
 							"line",
 							locn
@@ -540,7 +540,7 @@ public class ScoresFragment extends Fragment {
 			String[] projection = { TeamContentProvider.STATSLINE };
 			CursorLoader cL;
 			cL = new CursorLoader(getActivity(), allTitles, projection, null,
-					null, TeamContentProvider.STATSID + " desc");
+					null, TeamContentProvider.STATSSORT + " desc");
 			Cursor c1 = cL.loadInBackground();
 			txtList.clear();// ////////////??????????
 			txtListOut.clear();
@@ -1266,7 +1266,7 @@ public class ScoresFragment extends Fragment {
 				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
-				TeamContentProvider.STATSSORT);
+				TeamContentProvider.STATSSORT+ " desc");
 		Cursor c1 = cL.loadInBackground();
 		undoList.clear();
 		if (c1.getCount() > 0) {
@@ -1306,7 +1306,7 @@ public class ScoresFragment extends Fragment {
 					} else {
 						temp3 = " substitution ";
 					}
-					if (temp1.equals("")) {
+					if (temp1==null || temp1.equals("")) {
 						line_ = temp3 + teamm + "--> off: " + suboff + "  on: "
 								+ subon;
 					} else {
@@ -1315,7 +1315,7 @@ public class ScoresFragment extends Fragment {
 					}
 				} else if (type != null && type.equals("t")) {
 
-					if (!time.equals("")) {
+					if (time!=null && !time.equals("")) {
 						line_ = time + "mins " + period + " " + teamm + " "
 								+ stats1_ + " " + stats2_ + " " + player_;
 					} else {
@@ -1324,29 +1324,29 @@ public class ScoresFragment extends Fragment {
 					}
 				}
 				undoList.add(line_);
-			} while (c1.moveToNext());
+			} while (c1.moveToNext() && undoList.size() < 4);
 		} else {
 			tStats.setText("");
 		}
 
 		String undo1 = "", undo2 = "", undo3 = "", undo4 = "";
 		if (c1.getCount() >= 4) {
-			undo1 = undoList.get(c1.getCount() - 1);
-			undo2 = undoList.get(c1.getCount() - 2);
-			undo3 = undoList.get(c1.getCount() - 3);
-			undo4 = undoList.get(c1.getCount() - 4);
+			undo1 = undoList.get(0);
+			undo2 = undoList.get(1);
+			undo3 = undoList.get(2);
+			undo4 = undoList.get(3);
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3 + "\n" + undo4);
 		} else if (c1.getCount() == 3) {
-			undo1 = undoList.get(c1.getCount() - 1);
-			undo2 = undoList.get(c1.getCount() - 2);
-			undo3 = undoList.get(c1.getCount() - 3);
+			undo1 = undoList.get(0);
+			undo2 = undoList.get(1);
+			undo3 = undoList.get(2);
 			tStats.setText(undo1 + "\n" + undo2 + "\n" + undo3);
 		} else if (c1.getCount() == 2) {
-			undo1 = undoList.get(c1.getCount() - 1);
-			undo2 = undoList.get(c1.getCount() - 2);
+			undo1 = undoList.get(0);
+			undo2 = undoList.get(1);
 			tStats.setText(undo1 + "\n" + undo2);
 		} else if (c1.getCount() == 1) {
-			undo1 = undoList.get(c1.getCount() - 1);
+			undo1 = undoList.get(0);
 			tStats.setText(undo1);
 		}
 		undoList.clear();

@@ -414,7 +414,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:layout_weight="1"
+            android:layout_weight=".98"
             android:orientation="horizontal" >
 
             <Button
