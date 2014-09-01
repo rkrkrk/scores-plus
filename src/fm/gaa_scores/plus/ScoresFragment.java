@@ -62,17 +62,18 @@ public class ScoresFragment extends Fragment {
 	// declare and initialise variables
 	public int minsPerHalf = 30;
 	private int homeGoals = 0, homePoints = 0, oppGoals = 0, oppPoints = 0;
-	private Timer timer;
+	// private Timer timer;
 	private TextView tStartTime, tTimeGone, tTimeToGo, tTimeLeft;
 	private TextView tHomeTotal, tUpDownDrawText, tHomeDifference, tOppTotal;
 	private TextView tStats;
 	private TextView tOurTeam, tOppTeam;
+	private boolean pause = false;
 	private Button bResetAll;
 	private Button bStartStop, bDecreaseTime, bIncreaseTime;
 	private Button bDecHomeGoals, bHomeGoals, bHomePoints, bDecHomePoints;
 	private Button bDecOppGoals, bOppGoals, bOppPoints, bDecOppPoints;
 	private Button bShotHome, bShotOpp, bMinsPerHalf;
-	public Button bPeriod;
+	public Button bPeriod, bPause;
 	private Button bUndo, btweetScore, btweetRecent, bTweetLast;
 	private Button btextScore, btextRecent, bTextLast;
 	private int statsButton, txtButton, periodInt = 0;
@@ -117,6 +118,7 @@ public class ScoresFragment extends Fragment {
 		SharedPreferences sharedPref = getActivity().getSharedPreferences(
 				"team_stats_record_data", Context.MODE_PRIVATE);
 		phone = sharedPref.getString("PHONE", "");
+		pause = sharedPref.getBoolean("PAUSE", false);
 
 		// get the tag name of this Fragment and pass it up to the parent
 		// activity MatchApplication so that this Fragment may be accessed
@@ -137,6 +139,7 @@ public class ScoresFragment extends Fragment {
 		tLoc = (EditText) v.findViewById(R.id.etLoc);
 
 		bStartStop = (Button) v.findViewById(R.id.start_stop_timer);
+		bPause = (Button) v.findViewById(R.id.pause_timer);
 		bDecreaseTime = (Button) v.findViewById(R.id.decrease_timer);
 		bIncreaseTime = (Button) v.findViewById(R.id.increase_timer);
 
@@ -250,70 +253,79 @@ public class ScoresFragment extends Fragment {
 		bStartStop.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Button b = (Button) v;
-				String sPeriod;
-				String locn = "";
-				if (tLoc.getText().length() > 0) {
-					locn = tLoc.getText() + ". ";
-				}
-				String[] str = new String[2];
-				// write start/time to database
-				str = settTimer(b.getText().toString(), bPeriod.getText()
-						.toString());
-
-				sdf = new SimpleDateFormat("HH:mm   dd-MM-yy");
-				ContentValues values = new ContentValues();
-				values.put("sort", System.currentTimeMillis());
-				if (starttime > 10) {
-					values.put("period", bPeriod.getText().toString());
-					values.put("time",  getTime());
-				} 		
-				if (b.getText().equals("start")) {
-					// add to database
-					values.put("line", locn + bPeriod.getText() + " start: "
-							+ sdf.format(starttime) + " " + tOurTeam.getText()
-							+ " v. " + tOppTeam.getText());
-					values.put("type", "s");
-
+				if (pause) {
+					Toast.makeText(getActivity(),
+							"Press RESUME to restart timer first",
+							Toast.LENGTH_LONG).show();
 				} else {
-					if (bPeriod.getText().equals("1st half")) {
-						sPeriod = "Half time score: ";
-					} else if (bPeriod.getText().equals("2nd half")) {
-						sPeriod = "Full time score: ";
-					} else if (bPeriod.getText().equals("ET 1st")) {
-						sPeriod = "Score after 1st half extra time: ";
-					} else {
-						sPeriod = "Score after 2nd half extra time: ";
+					Button b = (Button) v;
+					String sPeriod;
+					String locn = "";
+					if (tLoc.getText().length() > 0) {
+						locn = tLoc.getText() + ". ";
 					}
-					values.put(
-							"line",
-							locn
-									+ sPeriod
-									+ tOurTeam.getText()
-									+ " "
-									+ (bHomeGoals.getText().equals("+") ? "0"
-											: bHomeGoals.getText())
-									+ "-"
-									+ (bHomePoints.getText().equals("+") ? "0"
-											: bHomePoints.getText())
-									+ tHomeTotal.getText()
-									+ "  "
-									+ tOppTeam.getText()
-									+ " "
-									+ (bOppGoals.getText().equals("+") ? "0"
-											: bOppGoals.getText())
-									+ "-"
-									+ (bOppPoints.getText().equals("+") ? "0"
-											: bOppPoints.getText())
-									+ tOppTotal.getText());
-					values.put("type", "s");
+					String[] str = new String[2];
+					// write start/time to database
+					str = settTimer(b.getText().toString(), bPeriod.getText()
+							.toString());
+
+					sdf = new SimpleDateFormat("HH:mm   dd-MM-yy");
+					ContentValues values = new ContentValues();
+					values.put("sort", System.currentTimeMillis());
+					if (starttime > 10) {
+						values.put("period", bPeriod.getText().toString());
+						values.put("time", getTime());
+					}
+					if (b.getText().equals("start")) {
+						// add to database
+						values.put(
+								"line",
+								locn + bPeriod.getText() + " start: "
+										+ sdf.format(starttime) + " "
+										+ tOurTeam.getText() + " v. "
+										+ tOppTeam.getText());
+						values.put("type", "s");
+
+					} else {
+						if (bPeriod.getText().equals("1st half")) {
+							sPeriod = "Half time score: ";
+						} else if (bPeriod.getText().equals("2nd half")) {
+							sPeriod = "Full time score: ";
+						} else if (bPeriod.getText().equals("ET 1st")) {
+							sPeriod = "Score after 1st half extra time: ";
+						} else {
+							sPeriod = "Score after 2nd half extra time: ";
+						}
+						values.put(
+								"line",
+								locn
+										+ sPeriod
+										+ tOurTeam.getText()
+										+ " "
+										+ (bHomeGoals.getText().equals("+") ? "0"
+												: bHomeGoals.getText())
+										+ "-"
+										+ (bHomePoints.getText().equals("+") ? "0"
+												: bHomePoints.getText())
+										+ tHomeTotal.getText()
+										+ "  "
+										+ tOppTeam.getText()
+										+ " "
+										+ (bOppGoals.getText().equals("+") ? "0"
+												: bOppGoals.getText())
+										+ "-"
+										+ (bOppPoints.getText().equals("+") ? "0"
+												: bOppPoints.getText())
+										+ tOppTotal.getText());
+						values.put("type", "s");
+					}
+					getActivity().getContentResolver().insert(
+							TeamContentProvider.CONTENT_URI_2, values);
+					updateStatsList(true);
+					((Startup) getActivity()).getFragmentEvent().fillData();
+					b.setText(str[0]);
+					bPeriod.setText(str[1]);
 				}
-				getActivity().getContentResolver().insert(
-						TeamContentProvider.CONTENT_URI_2, values);
-				updateStatsList(true);
-				((Startup) getActivity()).getFragmentEvent().fillData();
-				b.setText(str[0]);
-				bPeriod.setText(str[1]);
 			}
 		});
 
@@ -348,6 +360,8 @@ public class ScoresFragment extends Fragment {
 				}
 			}
 		});
+
+//		bPause.setOnClickListener(pauseOnClickListener);
 
 		// /////////////////////////////SCORE///////////////////////////////////////
 		// one clickListener handles all input from score buttons
@@ -478,6 +492,7 @@ public class ScoresFragment extends Fragment {
 		editor.putString("OPPTEAM", tOppTeam.getText().toString());
 		editor.putString("STARTTEXT", tStartTime.getText().toString());
 		editor.putString("PHONE", phone);
+		editor.putBoolean("PAUSE", pause);
 		editor.commit();
 	}
 
@@ -813,11 +828,9 @@ public class ScoresFragment extends Fragment {
 	};
 
 	private void resetTime() {
-		if (timer != null) {
-			timer.cancel();
-			timer.purge();
-			h.removeCallbacks(run);
-		}
+
+		h.removeCallbacks(run);
+		pauseOff();
 		tTimeLeft.setText("time left");
 		bStartStop.setText("start");
 		tTimeGone.setText("00:00");
@@ -906,12 +919,13 @@ public class ScoresFragment extends Fragment {
 				tStartTime.setText("Extra Time-2nd Half Start: "
 						+ sdf.format(currentDate));
 			}
-			timer = new Timer();
+
 			tTimeLeft.setText("time left");// new
 			h.postDelayed(run, 0);
 			str[0] = "stop";
 			str[1] = "2nd half";
 			bPeriod.setOnClickListener(nullPeriodClickListener);
+			bPause.setOnClickListener(pauseOnClickListener);
 			return str;
 
 		} else if (bStr.equals("start") && bHalf.equals("ET 2nd")) {
@@ -926,52 +940,45 @@ public class ScoresFragment extends Fragment {
 				tStartTime.setText("Extra Time-2nd Half Start: "
 						+ sdf.format(currentDate));
 			}
-			timer = new Timer();
+
 			tTimeLeft.setText("time left");// new
 			h.postDelayed(run, 0);
 			str[0] = "stop";
 			str[1] = "ET 2nd";
 			bPeriod.setOnClickListener(nullPeriodClickListener);
+			bPause.setOnClickListener(pauseOnClickListener);
 			return str;
 
 		} else if ((bStr.equals("stop") && (bHalf.equals("2nd half") || bHalf
 				.equals("ET 2nd")))) {
 			// 4. second half running
-			if (timer != null) {
-				timer.cancel();
-				timer.purge();
-			}
+
 			h.removeCallbacks(run);
 			starttime = 0;
 			str[0] = "start";
 			str[1] = "1st half";
 			bPeriod.setOnClickListener(periodClickListener);
+			bPause.setOnClickListener(null);
 			return str;
 
 		} else if (bStr.equals("stop") && bHalf.equals("1st half")) {
 			// 2. first half running
-			if (timer != null) {
-				timer.cancel();
-				timer.purge();
-			}
 			h.removeCallbacks(run);
 			starttime = 0;
 			str[0] = "start";
 			str[1] = "2nd half";
 			bPeriod.setOnClickListener(periodClickListener);
+			bPause.setOnClickListener(null);
 			return str;
 
 		} else if (bStr.equals("stop") && bHalf.equals("ET 1st")) {
 			// 2. first half running
-			if (timer != null) {
-				timer.cancel();
-				timer.purge();
-			}
 			h.removeCallbacks(run);
 			starttime = 0;
 			str[0] = "start";
 			str[1] = "ET 2nd";
 			bPeriod.setOnClickListener(periodClickListener);
+			bPause.setOnClickListener(null);
 			return str;
 
 		} else {
@@ -987,7 +994,7 @@ public class ScoresFragment extends Fragment {
 				tStartTime.setText("Extra Time-1st Half Start: "
 						+ sdf.format(currentDate));
 			}
-			timer = new Timer();
+
 			tTimeLeft.setText("time left");// new
 
 			h.postDelayed(run, 0);
@@ -998,6 +1005,7 @@ public class ScoresFragment extends Fragment {
 				str[1] = "ET 1st";
 			}
 			bPeriod.setOnClickListener(nullPeriodClickListener);
+			bPause.setOnClickListener(pauseOnClickListener);
 			return str;
 		}
 	}
@@ -1129,7 +1137,7 @@ public class ScoresFragment extends Fragment {
 
 	private void updateScorers(String stats1Temp, String stats2Temp,
 			String playerIn, String teamTemp, int NUMBER) {
-		String playerThis = (playerIn.equals("")) ? "unknown" : playerIn;
+		String playerThis = (playerIn.equals("")) ? "---" : playerIn;
 		// update scores and misses
 		if ((stats1Temp.equals("goal")) || (stats1Temp.equals("point"))
 				|| (stats1Temp.equals("wide")) || (stats1Temp.equals("saved"))
@@ -1266,7 +1274,7 @@ public class ScoresFragment extends Fragment {
 				TeamContentProvider.STATSSUBOFF, TeamContentProvider.STATSBLOOD };
 		CursorLoader cL;
 		cL = new CursorLoader(getActivity(), allTitles, projection, null, null,
-				TeamContentProvider.STATSSORT+ " desc");
+				TeamContentProvider.STATSSORT + " desc");
 		Cursor c1 = cL.loadInBackground();
 		undoList.clear();
 		if (c1.getCount() > 0) {
@@ -1299,14 +1307,14 @@ public class ScoresFragment extends Fragment {
 				blood = c1.getString(c1
 						.getColumnIndexOrThrow(TeamContentProvider.STATSBLOOD));
 
-			 if (type != null && type.equals("u")) {
+				if (type != null && type.equals("u")) {
 					String temp1 = time, temp2 = period, temp3 = "";
 					if (blood.equals("true")) {
 						temp3 = " blood sub ";
 					} else {
 						temp3 = " substitution ";
 					}
-					if (temp1==null || temp1.equals("")) {
+					if (temp1 == null || temp1.equals("")) {
 						line_ = temp3 + teamm + "--> off: " + suboff + "  on: "
 								+ subon;
 					} else {
@@ -1315,7 +1323,7 @@ public class ScoresFragment extends Fragment {
 					}
 				} else if (type != null && type.equals("t")) {
 
-					if (time!=null && !time.equals("")) {
+					if (time != null && !time.equals("")) {
 						line_ = time + "mins " + period + " " + teamm + " "
 								+ stats1_ + " " + stats2_ + " " + player_;
 					} else {
@@ -1431,7 +1439,7 @@ public class ScoresFragment extends Fragment {
 		if (requestCode == 9) {
 			// A contact was picked. Here we will just display it
 			// to the user.
-			if (data != null) {
+			if (data != null && !data.getBooleanExtra("backPressed", false)) {
 				stats1 = data.getStringExtra("stats1");
 				stats2 = data.getStringExtra("stats2");
 				player = data.getStringExtra("player");
@@ -1439,7 +1447,7 @@ public class ScoresFragment extends Fragment {
 				stats2 = (stats2 == null) ? "" : stats2;
 				player = (player == null) ? "" : player;
 				if (!(stats1.equals("") && stats2.equals("") && player
-						.equals(""))) {
+						.equals(""))&&teamNameInput!=null) {
 					updateStatsDatabase(teamNameInput, stats1, stats2, player,
 							1, 0);
 				}
@@ -1596,23 +1604,57 @@ public class ScoresFragment extends Fragment {
 		}
 	}
 
+	OnClickListener pauseOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			pause = pause ? false : true;
+			if (pause) {
+				pauseOn();
+			} else {
+				pauseOff();
+			}
+		}
+	};
+
+	private void pauseOn() {
+
+		bPause.setBackground(getResources().getDrawable(R.drawable.btn_red));
+		bStartStop
+				.setBackground(getResources().getDrawable(R.drawable.btn_red));
+		bPause.setText("resume");
+	}
+
+	private void pauseOff() {
+		pause = false;
+		bPause.setBackground(getResources().getDrawable(R.drawable.btn_blue));
+		bStartStop.setBackground(getResources()
+				.getDrawable(R.drawable.btn_blue));
+		bPause.setText("pause");
+	}
+
 	// //////////////////////////TIMER///////////////////////////////
 	// set up thread to run match timer
 	private Runnable run = new Runnable() {
 		@Override
 		public void run() {
-			long millis = System.currentTimeMillis() - starttime;
-			int seconds = (int) (millis / 1000);
-			int minutes = seconds / 60;
-			seconds = seconds % 60;
-			tTimeGone.setText(String.format("%02d:%02d", minutes, seconds));
-			if (minsPerHalf - minutes > 0) {
-				tTimeToGo.setText(String.format("%02d:%02d", minsPerHalf - 1
-						- minutes, 60 - seconds));
+			if (pause) {
+				starttime = starttime + 1000;
+
 			} else {
-				tTimeToGo.setText(String.format("%02d:%02d", minutes
-						- minsPerHalf, seconds));
-				tTimeLeft.setText("extra time");
+				long millis = System.currentTimeMillis() - starttime;
+				int seconds = (int) (millis / 1000);
+				int minutes = seconds / 60;
+				seconds = seconds % 60;
+				tTimeGone.setText(String.format("%02d:%02d", minutes, seconds));
+				if (minsPerHalf - minutes > 0) {
+					tTimeToGo.setText(String.format("%02d:%02d", minsPerHalf
+							- 1 - minutes, 60 - seconds));
+				} else {
+					tTimeToGo.setText(String.format("%02d:%02d", minutes
+							- minsPerHalf, seconds));
+					tTimeLeft.setText("extra time");
+
+				}
 			}
 			h.postDelayed(this, 1000);
 		}

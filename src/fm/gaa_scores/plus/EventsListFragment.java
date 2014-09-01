@@ -706,13 +706,13 @@ public class EventsListFragment extends ListFragment {
 
 			} while (c1.moveToNext());
 			panelCurrent = new String[panelList.size()];
-			panelCurrent[0] = "unknown";
+			panelCurrent[0] = "---";
 			for (int j = 1; j < panelList.size(); j++) {
 				panelCurrent[j] = panelList.get(j);
 			}
 		} else {
 			panelCurrent = new String[1];
-			panelCurrent[0] = "unknown";
+			panelCurrent[0] = "---";
 		}
 		c1.close();
 	}

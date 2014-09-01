@@ -332,7 +332,7 @@ public class ScorersFragment extends ListFragment {
 
 		// Create Bitmap to display team selection
 		int length = ((c1.getCount() + c2.getCount()) * 25);
-		Bitmap bitmap = Bitmap.createBitmap(640, length + 255,
+		Bitmap bitmap = Bitmap.createBitmap(640, length + 285,
 				Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(bitmap);
 		canvas.drawColor(Color.rgb(255, 255, 219));
@@ -455,14 +455,26 @@ public class ScorersFragment extends ListFragment {
 
 			} while (c2.moveToNext());
 		}
+		
+		paint.setColor(Color.BLACK);
+		paint.setTextSize(16);
+		paint.setTextAlign(Align.CENTER);
+		canvas.drawText("Misses includes wides, out for 45/65, off posts, saved and short", 320,
+				length + 240, paint);
+
 
 		paint.setColor(Color.GRAY);
 		paint.setTextSize(16);
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText("GAA Scores Stats Plus - Android App.", 320,
-				length + 230, paint);
+				length + 260, paint);
 		canvas.drawText("Available free from Google Play Store", 320,
-				length + 245, paint);
+				length + 275, paint);
+		
+		
+		
+		
+		
 		c1.close();
 		c2.close();
 

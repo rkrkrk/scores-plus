@@ -32,6 +32,7 @@ public class InputActivity extends Activity {
 	private RadioButton[] rbrshot = new RadioButton[10];
 	private RadioButton bHomeTeam, bOppTeam;
 	private GRadioGroup grStats1, grTeam;
+	boolean backPressed = false;
 	private int call = 0;
 
 	@Override
@@ -294,11 +295,17 @@ public class InputActivity extends Activity {
 			break;
 		}
 	}
+	
+	public void onBackPressed() {
+        backPressed=true;   
+        finish();
+	}
 
 	@Override
 	public void finish() {
 		// Prepare data intent
 		// Intent i = new Intent();
+		getIntent().putExtra("backPressed", backPressed);
 		getIntent().putExtra("stats1", stats1);
 		getIntent().putExtra("stats2", stats2);
 		getIntent().putExtra("player", player);

@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginRight="1dp"
+                    android:layout_marginRight="3dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_blue"
                     android:gravity="center_vertical|center_horizontal"
@@ -193,22 +193,49 @@
                     android:text="+"
                     android:textSize="14sp" />
 
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_marginLeft="2dp"
+                     android:layout_marginTop="0dp"
+                     android:layout_weight=".95"
+                     android:orientation="vertical" >
+
                 <TextView
                     android:id="@+id/time_to_go"
                     style="@style/TextShadowB"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="2dp"
-                    android:layout_weight=".95"
+                    android:layout_weight="1.8"
                     android:background="@drawable/btn_cyan"
                     android:gravity="center_vertical|center_horizontal"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:shadowColor="#000"
                     android:text="00:00"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
-            </LinearLayout>
+
+                 <Button
+                     android:id="@+id/pause_timer"
+                     style="@style/TextShadow"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_marginLeft="1dp"
+                     android:layout_marginRight="2dp"
+                     android:layout_marginTop="2dp"
+                     android:layout_weight="1.07"
+                     android:background="@drawable/btn_blue"
+                     android:gravity="center_vertical|center_horizontal"
+                     android:minHeight="0dp"
+                     android:minWidth="0dp"
+                     android:paddingLeft="1dp"
+                     android:paddingRight="1dp"
+                     android:text="PAUSE"
+                     android:textSize="14sp" />
+
+            </LinearLayout> </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
